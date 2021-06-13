@@ -1,0 +1,4 @@
+host: database-hr.chd0wpjqthss.us-east-2.rds.amazonaws.com
+port: 3306
+username: admin
+password: eyNoOscCDrVegIxba3Tw
