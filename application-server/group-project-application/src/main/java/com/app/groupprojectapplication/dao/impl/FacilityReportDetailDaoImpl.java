@@ -1,5 +1,6 @@
-package com.app.groupprojectapplication.dao;
+package com.app.groupprojectapplication.dao.impl;
 
+import com.app.groupprojectapplication.dao.IFacilityReportDetailDao;
 import com.app.groupprojectapplication.domain.FacilityReportDetail;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

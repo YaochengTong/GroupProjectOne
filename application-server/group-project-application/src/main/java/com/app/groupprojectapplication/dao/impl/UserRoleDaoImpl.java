@@ -1,8 +1,6 @@
 package com.app.groupprojectapplication.dao.impl;
 
 import com.app.groupprojectapplication.dao.IUserRoleDao;
-import com.app.groupprojectapplication.domain.Person;
-import com.app.groupprojectapplication.domain.PersonalDocument;
 import com.app.groupprojectapplication.domain.UserRole;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

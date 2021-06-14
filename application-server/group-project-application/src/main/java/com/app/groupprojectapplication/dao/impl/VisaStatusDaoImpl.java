@@ -1,7 +1,6 @@
 package com.app.groupprojectapplication.dao.impl;
 
 import com.app.groupprojectapplication.dao.IVisaStatusDao;
-import com.app.groupprojectapplication.domain.VisaStatus;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
