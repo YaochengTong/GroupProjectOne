@@ -5,6 +5,7 @@ import { PersonalInfoComponent } from './components/personalInfo/personalInfo.co
 import { HousingComponent } from './components/housing/housing.component';
 import { VisaComponent } from './components/visa/visa.component';
 import { EmployeePageComponent } from './components/employee-page/employee-page.component';
+import {OnBoardingComponent} from "./components/on-boarding/on-boarding.component";
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
       { path: 'housing', component: HousingComponent },
       { path: 'personal-info', component: PersonalInfoComponent },
       { path: 'visa', component: VisaComponent },
+      { path: 'on-boarding', component: OnBoardingComponent },
     ],
   },
 ];
