@@ -8,6 +8,8 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository
 public class EmployeeDaoImpl implements IEmployeeDao {
@@ -18,10 +20,17 @@ public class EmployeeDaoImpl implements IEmployeeDao {
     protected SessionFactory sessionFactory;
 
     @Override
+    public List<Employee> getEmployee() {
+        Session session = sessionFactory.getCurrentSession();
+        List<Employee> employeeList = session.createQuery("FROM Employee").getResultList();
+        return employeeList;
+    }
+
+    @Override
     public Employee getEmployeeById(Integer id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         employee = session.get(Employee.class, id);
-        return null;
+        return employee;
     }
 
     @Override
