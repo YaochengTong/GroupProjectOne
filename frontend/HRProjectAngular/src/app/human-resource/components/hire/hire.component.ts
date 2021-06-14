@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpService } from 'src/app/service/http/http.service';
+import { httpRequestService } from 'src/app/service/httpRequest/httpRequest.service';
 
 export interface PeriodicElement {
   name: string;
@@ -29,23 +29,22 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class HireComponent implements OnInit{
 
-  displayedColumns: string[] = ['ID', 'Token', 'Expiration date', 'email', 'Created By'];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = ELEMENT_DATA;
 
-  constructor(private httpService: HttpService) {}
+  constructor() {}
   ngOnInit(): void {
-    this.httpService.getData().subscribe(
-      (data: any) => {
-        console.log(data);
-        const arr = JSON.parse(data);
-        arr.forEach((e: any) => {
-          const temp = new Hero(e.name, e.age, e.gender);
-          this.heroes.push(temp);
-        });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    // this.httpService.getData('/test/get', {"a": 1}).subscribe(
+    //   (data: any) => {
+    //     console.log(data);
+    //     const arr = JSON.parse(data);
+    //     arr.forEach((e: any) => {
+          
+    //     });
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   }
+    // );
   }
 }

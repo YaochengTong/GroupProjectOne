@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class HttpService {
+export class httpRequestService {
 
   constructor(private http: HttpClient) { }
 
