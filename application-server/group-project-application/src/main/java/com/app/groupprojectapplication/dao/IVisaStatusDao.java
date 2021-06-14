@@ -1,5 +1,7 @@
 package com.app.groupprojectapplication.dao;
 
+import com.app.groupprojectapplication.domain.VisaStatus;
+
 import java.util.List;
 
 public interface IVisaStatusDao {
