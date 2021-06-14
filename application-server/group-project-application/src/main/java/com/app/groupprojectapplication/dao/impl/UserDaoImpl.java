@@ -32,20 +32,10 @@ public class UserDaoImpl implements IUserDao {
 
 
     @Override
-    public void insertUser(Object[] info) {
+    public void insertUser(User user) {
         Session session = sessionFactory.openSession();
-        User newUser = new User();
-        newUser.setId((int)info[0]);
-        newUser.setUsername((String)info[1]);
-        newUser.setEmail((String)info[2]);
-        newUser.setPassword((String)info[3]);
-
-        Timestamp date1 = new Timestamp(102, 12, 24, 05, 12, 30, 00);
-        newUser.setCreateDate(date1);
-        Timestamp date2 = new Timestamp(120, 4, 24, 15,24,20,00);
-        newUser.setModificationDate(date2);
         Transaction ts = session.beginTransaction();
-        session.save(newUser);
+        session.save(user);
         ts.commit();
         session.close();
 

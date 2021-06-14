@@ -1,7 +1,10 @@
 package com.app.groupprojectapplication.controller;
 
+import com.app.groupprojectapplication.dao.impl.FacilityDaoImpl;
+import com.app.groupprojectapplication.dao.impl.FacilityReportDaoImpl;
 import com.app.groupprojectapplication.dao.impl.PersonDaoImpl;
 import com.app.groupprojectapplication.dao.impl.UserDaoImpl;
+import com.app.groupprojectapplication.domain.FacilityReport;
 import com.app.groupprojectapplication.domain.Person;
 import com.app.groupprojectapplication.service.ITestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,9 @@ public class TestController {
     @Autowired
     private UserDaoImpl userDao;
 
+    @Autowired
+    private FacilityReportDaoImpl ifacilityReportDao;
+
     @GetMapping("/get")
     //To see the example output, visit http://localhost:8999/test/get?a=1
     public Map<String, Object> testMethod(@RequestParam Map<String, Object> paramMap){
@@ -39,31 +45,24 @@ public class TestController {
     }
 
 
-//    @GetMapping("/getDao")
-//    public void test() {
-//        Person p = personDao.getPersonById(100001);
-//
-//        System.out.println(p.getEmail());
-//    }
-//
-//    @GetMapping("/insertUser")
-//    public void userInsertionTest() {
-//        Object[] info = new Object[]{4, "Shi", "123@gmail.com", "12345", new Timestamp(10000), new Timestamp(100005)};
-//        userDao.insertUser(info);
-//        System.out.println("-----Succeed----");
-//    }
-//
-//
-//    @GetMapping("/deleteUser")
-//    public void userDeleteTest() {
-//        userDao.deleteUserById(555);
-//        System.out.println("----Deleted----");
-//    }
-//
-//
-//    @GetMapping("/updateUser")
-//    public void userUpdate() {
-//        userDao.updateUser(123);
-//        System.out.println("-----Update----");
-//    }
+    @GetMapping("/getDao")
+    public void test() {
+        Person p = personDao.getPersonById(100001);
+
+        System.out.println(p.getEmail());
+    }
+
+
+    @GetMapping("/deleteUser")
+    public void userDeleteTest() {
+        userDao.deleteUserById(555);
+        System.out.println("----Deleted----");
+    }
+
+
+    @GetMapping("/updateUser")
+    public void userUpdate() {
+        userDao.updateUser(123);
+        System.out.println("-----Update----");
+    }
 }

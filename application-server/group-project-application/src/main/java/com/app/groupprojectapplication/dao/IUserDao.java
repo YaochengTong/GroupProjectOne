@@ -7,7 +7,7 @@ import com.app.groupprojectapplication.domain.User;
  */
 public interface IUserDao {
     User getUserById(Integer id);
-    void insertUser(Object[] info);
+    void insertUser(User user);
     void deleteUserById(Integer id);
     void updateUser(Integer id);
 }

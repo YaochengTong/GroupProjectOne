@@ -63,6 +63,8 @@ public class VisaStatus {
         this.employeeSet = employeeSet;
     }
 
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

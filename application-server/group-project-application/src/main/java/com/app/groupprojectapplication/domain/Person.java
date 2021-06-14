@@ -22,7 +22,7 @@ public class Person implements Serializable {
     private Set<User> userSet;
     private Set<Address> addressSet;
     private Set<Contact> contactSet;
-    private Set<House> houseSet;
+//    private Set<House> houseSet;
 
     public Person(int id, String firstName, String lastName, String middleName, String email, String primaryPhone, String alternatePhone, String gender, String ssn) {
         this.id = id;
@@ -167,14 +167,14 @@ public class Person implements Serializable {
         this.contactSet = contactSet;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
-    public Set<House> getHouseSet() {
-        return houseSet;
-    }
-
-    public void setHouseSet(Set<House> houseSet) {
-        this.houseSet = houseSet;
-    }
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
+//    public Set<House> getHouseSet() {
+//        return houseSet;
+//    }
+//
+//    public void setHouseSet(Set<House> houseSet) {
+//        this.houseSet = houseSet;
+//    }
 
     @Override
     public boolean equals(Object o) {
