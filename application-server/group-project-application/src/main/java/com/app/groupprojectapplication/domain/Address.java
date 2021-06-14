@@ -16,6 +16,19 @@ public class Address implements Serializable {
     private String stateAbbr;
     private Person person;
 
+    public Address(String addressLine1, String addressLine2, String city, String zipCode, String stateName, String stateAbbr) {
+        this.addressLine1 = addressLine1;
+        this.addressLine2 = addressLine2;
+        this.city = city;
+        this.zipCode = zipCode;
+        this.stateName = stateName;
+        this.stateAbbr = stateAbbr;
+    }
+
+    public Address() {
+
+    }
+
     @Id
     @Column(name = "id")
     public int getId() {
@@ -107,5 +120,18 @@ public class Address implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id, addressLine1, addressLine2, city, zipCode, stateName, stateAbbr);
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id=" + id +
+                ", addressLine1='" + addressLine1 + '\'' +
+                ", addressLine2='" + addressLine2 + '\'' +
+                ", city='" + city + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", stateName='" + stateName + '\'' +
+                ", stateAbbr='" + stateAbbr + '\'' +
+                '}';
     }
 }

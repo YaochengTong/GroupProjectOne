@@ -1,6 +1,7 @@
 package com.app.groupprojectapplication.domain;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.Set;
@@ -13,6 +14,16 @@ public class VisaStatus {
     private byte isActive;
     private Timestamp modificationDate;
     private Set<Employee> employeeSet;
+    private User user;
+
+    public VisaStatus() {
+    }
+
+    public VisaStatus(String visaType, byte isActive, Timestamp modificationDate) {
+        this.visaType = visaType;
+        this.isActive = isActive;
+        this.modificationDate = modificationDate;
+    }
 
     @Id
     @Column(name = "id")
@@ -63,6 +74,16 @@ public class VisaStatus {
         this.employeeSet = employeeSet;
     }
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "creation_user_id", referencedColumnName = "id")
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -74,5 +95,15 @@ public class VisaStatus {
     @Override
     public int hashCode() {
         return Objects.hash(id, visaType, isActive, modificationDate);
+    }
+
+    @Override
+    public String toString() {
+        return "VisaStatus{" +
+                "id=" + id +
+                ", visaType='" + visaType + '\'' +
+                ", isActive=" + isActive +
+                ", modificationDate=" + modificationDate +
+                '}';
     }
 }

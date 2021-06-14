@@ -22,9 +22,8 @@ public class Person implements Serializable {
     private Set<User> userSet;
     private Set<Address> addressSet;
     private Set<Contact> contactSet;
-    private Set<House> houseSet;
 
-    public Person(int id, String firstName, String lastName, String middleName, String email, String primaryPhone, String alternatePhone, String gender, String ssn) {
+    public Person(int id, String firstName, String lastName, String middleName, String email, String primaryPhone, String alternatePhone, String gender, String ssn, Timestamp dob) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -34,6 +33,7 @@ public class Person implements Serializable {
         this.alternatePhone = alternatePhone;
         this.gender = gender;
         this.ssn = ssn;
+        this.dob = dob;
     }
 
     public Person() {
@@ -167,15 +167,6 @@ public class Person implements Serializable {
         this.contactSet = contactSet;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
-    public Set<House> getHouseSet() {
-        return houseSet;
-    }
-
-    public void setHouseSet(Set<House> houseSet) {
-        this.houseSet = houseSet;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -187,5 +178,21 @@ public class Person implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id, firstName, lastName, middleName, email, primaryPhone, alternatePhone, gender, ssn, dob);
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", email='" + email + '\'' +
+                ", primaryPhone='" + primaryPhone + '\'' +
+                ", alternatePhone='" + alternatePhone + '\'' +
+                ", gender='" + gender + '\'' +
+                ", ssn='" + ssn + '\'' +
+                ", dob=" + dob +
+                '}';
     }
 }

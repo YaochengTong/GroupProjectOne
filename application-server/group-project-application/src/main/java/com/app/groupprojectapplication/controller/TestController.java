@@ -37,33 +37,4 @@ public class TestController {
         //always return a map to the frontend.
         return resultMap;
     }
-
-
-//    @GetMapping("/getDao")
-//    public void test() {
-//        Person p = personDao.getPersonById(100001);
-//
-//        System.out.println(p.getEmail());
-//    }
-//
-//    @GetMapping("/insertUser")
-//    public void userInsertionTest() {
-//        Object[] info = new Object[]{4, "Shi", "123@gmail.com", "12345", new Timestamp(10000), new Timestamp(100005)};
-//        userDao.insertUser(info);
-//        System.out.println("-----Succeed----");
-//    }
-//
-//
-//    @GetMapping("/deleteUser")
-//    public void userDeleteTest() {
-//        userDao.deleteUserById(555);
-//        System.out.println("----Deleted----");
-//    }
-//
-//
-//    @GetMapping("/updateUser")
-//    public void userUpdate() {
-//        userDao.updateUser(123);
-//        System.out.println("-----Update----");
-//    }
 }

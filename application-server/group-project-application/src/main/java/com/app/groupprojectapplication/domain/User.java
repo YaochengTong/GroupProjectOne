@@ -23,6 +23,15 @@ public class User implements Serializable {
     private Person person;
     private Set<PersonalDocument> personalDocumentSet;
 
+    public User() {
+    }
+
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
     @Id
     @Column(name = "id")
     public int getId() {

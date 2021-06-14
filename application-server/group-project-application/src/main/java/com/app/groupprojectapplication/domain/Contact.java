@@ -17,6 +17,18 @@ public class Contact implements Serializable {
     private Person person;
     private Set<House> houseSet;
 
+    public Contact(String relationship, String title, byte isReferrence, byte isEmergency, byte isLandlord) {
+        this.relationship = relationship;
+        this.title = title;
+        this.isReferrence = isReferrence;
+        this.isEmergency = isEmergency;
+        this.isLandlord = isLandlord;
+    }
+
+    public Contact() {
+
+    }
+
     @Id
     @Column(name = "id")
     public int getId() {
@@ -107,5 +119,17 @@ public class Contact implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id, relationship, title, isReferrence, isEmergency, isLandlord);
+    }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "id=" + id +
+                ", relationship='" + relationship + '\'' +
+                ", title='" + title + '\'' +
+                ", isReferrence=" + isReferrence +
+                ", isEmergency=" + isEmergency +
+                ", isLandlord=" + isLandlord +
+                '}';
     }
 }
