@@ -19,8 +19,21 @@ public class UserController {
     public Map<String, Object> login(@RequestParam Map<String, Object> params){
         if(params.get("username") == null || params.get("password") == null){
             Map<String, Object> resultMap = new HashMap<>();
-            resultMap.put("loginSuccess", false);
+            resultMap.put("success", false);
+            resultMap.put("reason", "Invalid username or password for login");
+            return resultMap;
         }
         return iUserService.userLogin(params);
+    }
+
+    @PostMapping("/register")
+    public Map<String, Object> register(@RequestParam Map<String, Object> params){
+        if(params.get("username") == null || params.get("password") == null){
+            Map<String, Object> resultMap = new HashMap<>();
+            resultMap.put("success", false);
+            resultMap.put("reason", "Invalid username or password for register");
+            return resultMap;
+        }
+        return iUserService.userRegister(params);
     }
 }
