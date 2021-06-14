@@ -7,7 +7,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HomeComponent } from './components/home/home.component';
 import { HireComponent } from './components/hire/hire.component';
 import { CheckEmployeeComponent } from './components/check-employee/check-employee.component';
@@ -37,6 +40,10 @@ import { HrPageComponent } from './components/hr-page/hr-page.component';
     MatIconModule,
     MatListModule,
     DragDropModule,
+    MatTableModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [NavComponent],
 })
