@@ -8,9 +8,8 @@ describe('VisaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ VisaComponent ]
-    })
-    .compileComponents();
+      declarations: [VisaComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

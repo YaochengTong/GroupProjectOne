@@ -7,42 +7,43 @@ import { map, shareReplay } from 'rxjs/operators';
 @Component({
   selector: 'employee-nav',
   templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.scss']
+  styleUrls: ['./nav.component.scss'],
 })
 export class EmployeeNavComponent implements OnInit {
+  isHandset$: Observable<boolean> = this.breakpointObserver
+    .observe(Breakpoints.Handset)
+    .pipe(
+      map((result) => result.matches),
+      shareReplay()
+    );
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-  .pipe(
-    map(result => result.matches),
-    shareReplay()
-  );
-
-  showFiller:boolean = false;
+  showFiller: boolean = false;
   homeColor: string = 'primary';
   personColor: string = 'basic';
   visaColor: string = 'basic';
   housingColor: string = 'basic';
 
   selectedStyle: any = {
-    "color": "#3F51B5"
+    color: '#3F51B5',
   };
 
   unselectedStyle: any = {
-    "color": "black"
-  }
+    color: 'black',
+  };
 
   homeStyle: any = {
-    "color": "#3F51B5"
+    color: '#3F51B5',
   };
   personStyle: any = {};
   visaStyle: any = {};
   housingStyle: any = {};
 
+  constructor(
+    private router: Router,
+    private breakpointObserver: BreakpointObserver
+  ) {}
 
-  constructor(private router: Router, private breakpointObserver: BreakpointObserver) { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   clickHome(): void {
     this.homeColor = 'primary';
@@ -58,7 +59,7 @@ export class EmployeeNavComponent implements OnInit {
     this.router.navigate(['/employee/home']);
   }
 
-  clickPeronalInfo(): void{
+  clickPeronalInfo(): void {
     this.homeColor = 'basic';
     this.personColor = 'primary';
     this.visaColor = 'basic';
@@ -72,7 +73,7 @@ export class EmployeeNavComponent implements OnInit {
     this.router.navigate(['/employee/personalInfo']);
   }
 
-  clickVisa(): void{
+  clickVisa(): void {
     this.homeColor = 'basic';
     this.personColor = 'basic';
     this.visaColor = 'primary';
@@ -99,5 +100,4 @@ export class EmployeeNavComponent implements OnInit {
 
     this.router.navigate(['/employee/housing']);
   }
-
 }

@@ -3,13 +3,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-check-employee',
   templateUrl: './check-employee.component.html',
-  styleUrls: ['./check-employee.component.scss']
+  styleUrls: ['./check-employee.component.scss'],
 })
 export class CheckEmployeeComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

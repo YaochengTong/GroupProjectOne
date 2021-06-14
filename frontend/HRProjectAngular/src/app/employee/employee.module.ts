@@ -21,7 +21,7 @@ import { MatMenuModule } from '@angular/material/menu';
 
 import { EmployeeRoutingModule } from './employee-routing.module';
 import { EmployeePageComponent } from './components/employee-page/employee-page.component';
-import {HumanResourceModule} from "../human-resource/human-resource.module";
+import { HumanResourceModule } from '../human-resource/human-resource.module';
 
 @NgModule({
   declarations: [
