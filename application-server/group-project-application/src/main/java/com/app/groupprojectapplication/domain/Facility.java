@@ -16,6 +16,11 @@ public class Facility implements Serializable {
     private int numberOfChairs;
     private House house;
 
+    public Facility() {
+    }
+
+
+
     @Id
     @Column(name = "id")
     public int getId() {

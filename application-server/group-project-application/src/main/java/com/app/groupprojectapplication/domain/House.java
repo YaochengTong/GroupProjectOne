@@ -15,6 +15,14 @@ public class House implements Serializable {
     private Set<Facility> facilitySet;
     private Set<Employee> employeeSet;
 
+    public House() {
+    }
+
+    public House(String address, int numberOfPerson) {
+        this.address = address;
+        this.numberOfPerson = numberOfPerson;
+    }
+
     @Id
     @Column(name = "id")
     public int getId() {
@@ -56,20 +64,20 @@ public class House implements Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "house")
-    public Set<Facility> getFacilities() {
+    public Set<Facility> getFacilitySet() {
         return facilitySet;
     }
 
-    public void setFacilities(Set<Facility> facilitySet) {
+    public void setFacilitySet(Set<Facility> facilitySet) {
         this.facilitySet = facilitySet;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "house")
-    public Set<Employee> getEmployees() {
+    public Set<Employee> getEmployeeSet() {
         return employeeSet;
     }
 
-    public void setEmployees(Set<Employee> employeeSet) {
+    public void setEmployeeSet(Set<Employee> employeeSet) {
         this.employeeSet = employeeSet;
     }
 
