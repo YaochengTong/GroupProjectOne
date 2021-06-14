@@ -10,6 +10,7 @@ import java.util.Set;
 public class Contact implements Serializable {
     private int id;
     private String relationship;
+    private int related_person_id;
     private String title;
     private byte isReferrence;
     private byte isEmergency;
@@ -87,6 +88,16 @@ public class Contact implements Serializable {
 
     public void setIsLandlord(byte isLandlord) {
         this.isLandlord = isLandlord;
+    }
+
+    @Basic
+    @Column(name = "related_person_id")
+    public int getRelated_person_id() {
+        return related_person_id;
+    }
+
+    public void setRelated_person_id(int related_person_id) {
+        this.related_person_id = related_person_id;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)

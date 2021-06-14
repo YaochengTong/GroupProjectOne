@@ -29,4 +29,11 @@ public class ContactDaoImpl implements IContactDao {
         return contactList;
 
     }
+
+    @Override
+    public List<Contact> getEmergencyByPersonId(Integer person_id) {
+        Session session = sessionFactory.getCurrentSession();
+        List<Contact> contactList = session.createQuery("FROM Contact c WHERE (c.person.id = " + person_id + ") AND ( c.isEmergency = 1)").getResultList();
+        return contactList;
+    }
 }
