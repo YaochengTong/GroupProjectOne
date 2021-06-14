@@ -9,29 +9,29 @@
   >
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item (click)="clickHome()">
-        <mat-icon [color]="homeColor">home</mat-icon>
-        <span [style]="homeStyle">&nbsp; Home page</span>
+      <a mat-list-item routerLink="home">
+        <mat-icon>home</mat-icon>
+        <span>&nbsp; Home page</span>
       </a>
-
-      <a mat-list-item (click)="clickProfile()">
-        <mat-icon [color]="profileColor">group</mat-icon>
-        <span [style]="profileStyle">&nbsp; Employee Profile</span>
+      <a mat-list-item routerLink="personal-info">
+        <mat-icon>person</mat-icon>
+        <span>&nbsp; Personal Information</span>
       </a>
-
-      <a mat-list-item (click)="clickVisa()">
-        <mat-icon [color]="visaColor">flight</mat-icon>
-        <span [style]="visaStyle">&nbsp; Visa Management</span>
+      <a mat-list-item routerLink="visa">
+        <mat-icon>flight</mat-icon>
+        <span>&nbsp; Visa Status</span>
       </a>
-
-      <a mat-list-item (click)="clickHousing()">
-        <mat-icon [color]="houseColor">house</mat-icon>
-        <span [style]="houseStyle">&nbsp; Housing Management</span>
+      <a mat-list-item routerLink="housing">
+        <mat-icon>house</mat-icon>
+        <span>&nbsp; Housing</span>
       </a>
-
-      <a mat-list-item (click)="clickHire()">
-        <mat-icon [color]="hireColor">person_add</mat-icon>
-        <span [style]="hireStyle">&nbsp; Hire</span>
+      <a mat-list-item routerLink="check-employee">
+        <mat-icon>group</mat-icon>
+        <span>&nbsp; Check Employee</span></a
+      >
+      <a mat-list-item routerLink="hire">
+        <mat-icon>person_add</mat-icon>
+        <span>&nbsp; Hire</span>
       </a>
     </mat-nav-list>
   </mat-sidenav>
@@ -43,18 +43,13 @@
         mat-icon-button
         (click)="drawer.toggle()"
       >
+        <!--        *ngIf="isHandset$ | async"-->
+
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>Human Resource</span>
-      <span class="example-spacer"></span>
-      <span>Hello, User</span>
-      <button mat-icon-button [matMenuTriggerFor]="beforeMenu">
-        <mat-icon>more_vert</mat-icon>
-      </button>
-      <mat-menu #beforeMenu="matMenu" xPosition="before">
-        <button mat-menu-item>Log out</button>
-      </mat-menu>
+      <span>HumanResource</span>
     </mat-toolbar>
+    <!-- Add Content Here -->
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

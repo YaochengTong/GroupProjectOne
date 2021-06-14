@@ -1,63 +1,43 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { HRHomeComponent } from './components/HRHome/HRHome.component';
-import { HRNavComponent } from './components/nav/nav.component';
-import { HireComponent } from './components/hire/hire.component';
-import { visaStatusManagementComponent } from './components/visaStatusManagement/visaStatusManagement.component';
-import { HouseManagementComponent } from './components/houseManagement/houseManagement.component';
-import { EmployeeProfileComponent } from './components/employeeProfile/employeeProfile.component';
-
-import {MatButtonModule} from '@angular/material/button';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatIconModule} from '@angular/material/icon';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatListModule} from '@angular/material/list';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatTableModule} from '@angular/material/table';
-import {MatCardModule} from '@angular/material/card';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatMenuModule} from '@angular/material/menu';
-
 import { HumanResourceRoutingModule } from './human-resource-routing.module';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { HomeComponent } from './components/home/home.component';
+import { HireComponent } from './components/hire/hire.component';
+import { CheckEmployeeComponent } from './components/check-employee/check-employee.component';
+import { VisaComponent } from './components/visa/visa.component';
+import { NavComponent } from './components/nav/nav.component';
+import { HousingComponent } from './components/housing/housing.component';
+import { PersonalInfoComponent } from './components/personal-info/personal-info.component';
+import { HrPageComponent } from './components/hr-page/hr-page.component';
 
 @NgModule({
   declarations: [
-    HRHomeComponent,
-    HRNavComponent,
+    HousingComponent,
+    HomeComponent,
+    NavComponent,
+    PersonalInfoComponent,
+    VisaComponent,
+    CheckEmployeeComponent,
     HireComponent,
-    visaStatusManagementComponent,
-    HouseManagementComponent,
-    EmployeeProfileComponent
+    HrPageComponent,
   ],
   imports: [
     CommonModule,
     HumanResourceRoutingModule,
-    MatButtonModule,
     MatToolbarModule,
-    MatIconModule,
+    MatButtonModule,
     MatSidenavModule,
-    MatGridListModule,
+    MatIconModule,
     MatListModule,
-    MatDividerModule,
-    MatTableModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatMenuModule
+    DragDropModule,
   ],
-  exports: [
-    CommonModule, 
-    HRHomeComponent,
-    HRNavComponent,
-    HireComponent,
-    visaStatusManagementComponent,
-    HouseManagementComponent,
-    EmployeeProfileComponent
-  ],
-  bootstrap: [HRNavComponent]
+  exports: [NavComponent],
 })
-
-export class HumanResourceModule { }
+export class HumanResourceModule {}
