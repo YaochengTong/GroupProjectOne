@@ -1,46 +1,34 @@
-<div class="container">
-  <h2>Applications</h2>
-
-  <div
-    cdkDropList
-    #todoList="cdkDropList"
-    [cdkDropListData]="todo"
-    [cdkDropListConnectedTo]="doneList"
-    class="list"
-    (cdkDropListDropped)="drop($event)"
-  >
-    <div class="list-item" *ngFor="let item of todo" cdkDrag>{{ item }}</div>
-  </div>
-</div>
-
-<div class="container">
-  <h2>Candidates</h2>
-
-  <div
-    cdkDropList
-    #doneList="cdkDropList"
-    [cdkDropListData]="done"
-    [cdkDropListConnectedTo]="todoList"
-    class="list"
-    (cdkDropListDropped)="drop($event)"
-  >
-    <div class="list-item" *ngFor="let item of candidates" cdkDrag>
-      {{ item }}
-    </div>
-  </div>
-</div>
-
-<div class="container">
-  <h2>Hired</h2>
-
-  <div
-    cdkDropList
-    #doneList="cdkDropList"
-    [cdkDropListData]="done"
-    [cdkDropListConnectedTo]="todoList"
-    class="list"
-    (cdkDropListDropped)="drop($event)"
-  >
-    <div class="list-item" *ngFor="let item of done" cdkDrag>{{ item }}</div>
-  </div>
+<br/>
+<div id="tokenDiv">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+  
+    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+    </ng-container>
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+  
+    <!-- Weight Column -->
+    <ng-container matColumnDef="weight">
+      <th mat-header-cell *matHeaderCellDef> Weight </th>
+      <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+    </ng-container>
+  
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="symbol">
+      <th mat-header-cell *matHeaderCellDef> Symbol </th>
+      <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>  
 </div>

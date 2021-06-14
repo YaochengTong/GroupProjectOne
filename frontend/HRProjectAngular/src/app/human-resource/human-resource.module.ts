@@ -17,6 +17,7 @@ import { HousingComponent } from './components/housing/housing.component';
 import { PersonalInfoComponent } from './components/personal-info/personal-info.component';
 import { HrPageComponent } from './components/hr-page/hr-page.component';
 import {MatMenuModule} from "@angular/material/menu";
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import {MatMenuModule} from "@angular/material/menu";
     MatListModule,
     DragDropModule,
     MatMenuModule,
+    MatTableModule
   ],
   exports: [NavComponent],
 })
