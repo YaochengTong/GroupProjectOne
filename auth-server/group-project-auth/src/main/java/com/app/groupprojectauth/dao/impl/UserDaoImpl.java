@@ -53,10 +53,13 @@ public class UserDaoImpl implements IUserDao {
                 " ) AS t3 " +
                 " LEFT JOIN role AS t4 ON t3.role_id = t4.id  " +
                 "WHERE " +
-                " t3.username = :username  " +
+                " (t3.username = :username or t3.email = :email) " +
                 " AND t3.PASSWORD = :password";
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-        parameterSource.addValue("username", param.get("username").toString());
+        String username = param.get("username") == null? "":param.get("username").toString();
+        parameterSource.addValue("username", username);
+        String email = param.get("email") == null? "":param.get("email").toString();
+        parameterSource.addValue("email", email);
         parameterSource.addValue("password", param.get("password").toString());
         try {
             User user = namedParameterJdbcTemplate.queryForObject(sql, parameterSource, new UserRowMapper());

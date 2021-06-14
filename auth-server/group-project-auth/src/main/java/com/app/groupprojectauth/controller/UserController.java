@@ -22,25 +22,27 @@ public class UserController {
 
     @PostMapping("/login")
     public Map<String, Object> login(@RequestParam Map<String, Object> params){
-        if(params.get("username") == null || params.get("password") == null){
+        if(params.get("username") == null && params.get("email") == null){
             Map<String, Object> resultMap = new HashMap<>();
             resultMap.put("success", false);
-            resultMap.put("reason", "Invalid username or password for login");
+            resultMap.put("reason", "Invalid username or email for login");
             return resultMap;
         }
         Map<String, Object> map =  iUserService.userLogin(params);
         User user = (User) map.get("user");
-        String token = JwtUtil.generateToken(signingKey, user.getUsername());
-        map.put(jwtTokenCookieName, token);
+        if(user != null){
+            String token = JwtUtil.generateToken(signingKey, user.getUsername());
+            map.put(jwtTokenCookieName, token);
+        }
         return map;
     }
 
     @PostMapping("/register")
     public Map<String, Object> register(@RequestParam Map<String, Object> params){
-        if(params.get("username") == null || params.get("password") == null){
+        if(params.get("username") == null && params.get("email") == null){
             Map<String, Object> resultMap = new HashMap<>();
             resultMap.put("success", false);
-            resultMap.put("reason", "Invalid username or password for register");
+            resultMap.put("reason", "Invalid username or email for register");
             return resultMap;
         }
         return iUserService.userRegister(params);
