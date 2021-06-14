@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './components/home/home.component';
 import { HousingComponent } from './components/housing/housing.component';
-import { EmployeeNavComponent } from './components/navigation/nav.component';
+import { EmployeeNavComponent } from './components/employee-nav/nav.component';
 import { PersonalInfoComponent } from './components/personalInfo/personalInfo.component';
 import { VisaComponent } from './components/visa/visa.component';
 
