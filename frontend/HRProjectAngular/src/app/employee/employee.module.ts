@@ -27,9 +27,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
 import { OnBoardingComponent } from './components/on-boarding/on-boarding.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { AsdsaComponent } from './components/asdsa/asdsa.component';
-import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MatNativeDateModule} from "@angular/material/core";
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -40,7 +39,6 @@ import {MatNativeDateModule} from "@angular/material/core";
     VisaComponent,
     EmployeePageComponent,
     OnBoardingComponent,
-    AsdsaComponent,
   ],
   imports: [
     CommonModule,
