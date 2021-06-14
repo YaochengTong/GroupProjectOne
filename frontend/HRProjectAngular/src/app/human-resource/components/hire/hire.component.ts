@@ -28,7 +28,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class HireComponent implements OnInit{
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['ID', 'Token', 'Expiration date', 'email', 'Created By'];
   dataSource = ELEMENT_DATA;
 
   constructor() {}
