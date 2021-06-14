@@ -15,10 +15,11 @@ import { HomeComponent } from './components/home/home.component';
 import { HireComponent } from './components/hire/hire.component';
 import { CheckEmployeeComponent } from './components/check-employee/check-employee.component';
 import { VisaComponent } from './components/visa/visa.component';
-import { NavComponent } from './components/nav/nav.component';
+import { NavComponent } from './components/human-resource-nav/nav.component';
 import { HousingComponent } from './components/housing/housing.component';
 import { PersonalInfoComponent } from './components/personal-info/personal-info.component';
 import { HrPageComponent } from './components/hr-page/hr-page.component';
+import { MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { HrPageComponent } from './components/hr-page/hr-page.component';
     MatTableModule,
     MatInputModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatMenuModule,
   ],
   exports: [NavComponent],
 })

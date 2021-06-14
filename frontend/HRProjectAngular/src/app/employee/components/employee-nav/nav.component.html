@@ -9,29 +9,35 @@
   >
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="home">
+      <a mat-list-item routerLink="home" routerLinkActive="active-list-item">
         <mat-icon>home</mat-icon>
         <span>&nbsp; Home page</span>
       </a>
-      <a mat-list-item routerLink="personal-info">
+
+      <a
+        mat-list-item
+        routerLink="on-boarding"
+        routerLinkActive="active-list-item"
+      >
+        <mat-icon>badge</mat-icon>
+        <span>&nbsp; On Boarding</span>
+      </a>
+
+      <a
+        mat-list-item
+        routerLink="personal-info"
+        routerLinkActive="active-list-item"
+      >
         <mat-icon>person</mat-icon>
         <span>&nbsp; Personal Information</span>
       </a>
-      <a mat-list-item routerLink="visa">
+      <a mat-list-item routerLink="visa" routerLinkActive="active-list-item">
         <mat-icon>flight</mat-icon>
         <span>&nbsp; Visa Status</span>
       </a>
-      <a mat-list-item routerLink="housing">
+      <a mat-list-item routerLink="housing" routerLinkActive="active-list-item">
         <mat-icon>house</mat-icon>
         <span>&nbsp; Housing</span>
-      </a>
-      <a mat-list-item routerLink="check-employee">
-        <mat-icon>group</mat-icon>
-        <span>&nbsp; Check Employee</span></a
-      >
-      <a mat-list-item routerLink="hire">
-        <mat-icon>person_add</mat-icon>
-        <span>&nbsp; Hire</span>
       </a>
     </mat-nav-list>
   </mat-sidenav>
@@ -43,11 +49,18 @@
         mat-icon-button
         (click)="drawer.toggle()"
       >
-        <!--        *ngIf="isHandset$ | async"-->
-
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>HumanResource</span>
+      <span>Employee</span>
+
+      <span class="example-spacer"></span>
+      <span>Hello, User</span>
+      <button mat-icon-button [matMenuTriggerFor]="beforeMenu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #beforeMenu="matMenu" xPosition="before">
+        <button mat-menu-item>Log out</button>
+      </mat-menu>
     </mat-toolbar>
     <!-- Add Content Here -->
     <router-outlet></router-outlet>

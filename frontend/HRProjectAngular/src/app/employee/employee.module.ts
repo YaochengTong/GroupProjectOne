@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './components/home/home.component';
 import { HousingComponent } from './components/housing/housing.component';
-import { EmployeeNavComponent } from './components/navigation/nav.component';
+import { EmployeeNavComponent } from './components/employee-nav/nav.component';
 import { PersonalInfoComponent } from './components/personalInfo/personalInfo.component';
 import { VisaComponent } from './components/visa/visa.component';
 
@@ -22,6 +22,13 @@ import { MatMenuModule } from '@angular/material/menu';
 import { EmployeeRoutingModule } from './employee-routing.module';
 import { EmployeePageComponent } from './components/employee-page/employee-page.component';
 import { HumanResourceModule } from '../human-resource/human-resource.module';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { ReactiveFormsModule } from '@angular/forms';
+import { OnBoardingComponent } from './components/on-boarding/on-boarding.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -31,6 +38,7 @@ import { HumanResourceModule } from '../human-resource/human-resource.module';
     PersonalInfoComponent,
     VisaComponent,
     EmployeePageComponent,
+    OnBoardingComponent,
   ],
   imports: [
     CommonModule,
@@ -48,6 +56,12 @@ import { HumanResourceModule } from '../human-resource/human-resource.module';
     MatInputModule,
     MatMenuModule,
     HumanResourceModule,
+    MatSelectModule,
+    MatRadioModule,
+    ReactiveFormsModule,
+    LayoutModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   exports: [
     CommonModule,

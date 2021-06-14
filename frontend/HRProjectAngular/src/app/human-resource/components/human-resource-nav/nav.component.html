@@ -9,21 +9,37 @@
   >
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item (click)="clickHome()">
-        <mat-icon [color]="homeColor">home</mat-icon>
-        <span [style]="homeStyle">&nbsp; Home page</span>
+      <a mat-list-item routerLink="home" routerLinkActive="active-list-item">
+        <mat-icon>home</mat-icon>
+        <span>&nbsp; Home page</span>
       </a>
-      <a mat-list-item (click)="clickPeronalInfo()">
-        <mat-icon [color]="personColor">person</mat-icon>
-        <span [style]="personStyle">&nbsp; Personal Information</span>
+      <a
+        mat-list-item
+        routerLink="personal-info"
+        routerLinkActive="active-list-item"
+      >
+        <mat-icon>person</mat-icon>
+        <span>&nbsp; Personal Information</span>
       </a>
-      <a mat-list-item (click)="clickVisa()">
-        <mat-icon [color]="visaColor">flight</mat-icon>
-        <span [style]="visaStyle">&nbsp; Visa Status</span>
+      <a mat-list-item routerLink="visa" routerLinkActive="active-list-item">
+        <mat-icon>flight</mat-icon>
+        <span>&nbsp; Visa Status</span>
       </a>
-      <a mat-list-item (click)="clickHousing()">
-        <mat-icon [color]="housingColor">house</mat-icon>
-        <span [style]="housingStyle">&nbsp; Housing</span>
+      <a mat-list-item routerLink="housing" routerLinkActive="active-list-item">
+        <mat-icon>house</mat-icon>
+        <span>&nbsp; Housing</span>
+      </a>
+      <a
+        mat-list-item
+        routerLink="check-employee"
+        routerLinkActive="active-list-item"
+      >
+        <mat-icon>group</mat-icon>
+        <span>&nbsp; Check Employee</span></a
+      >
+      <a mat-list-item routerLink="hire" routerLinkActive="active-list-item">
+        <mat-icon>person_add</mat-icon>
+        <span>&nbsp; Hire</span>
       </a>
     </mat-nav-list>
   </mat-sidenav>
@@ -35,9 +51,11 @@
         mat-icon-button
         (click)="drawer.toggle()"
       >
+        <!--        *ngIf="isHandset$ | async"-->
+
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>Employee</span>
+      <span>Human Resource</span>
 
       <span class="example-spacer"></span>
       <span>Hello, User</span>
