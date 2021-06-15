@@ -1,22 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { LoginRoutingModule } from './login-routing.module';
-import { LoginPageComponent } from './login-page/login-page.component';
+import { RegisterRoutingModule } from './register-routing.module';
+import { RegisterPageComponent } from './register-page/register-page.component';
 import { ExtendedModule, FlexModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
+
 @NgModule({
-  declarations: [LoginPageComponent],
+  declarations: [RegisterPageComponent],
   imports: [
     CommonModule,
-    LoginRoutingModule,
+    RegisterRoutingModule,
     FlexModule,
     ExtendedModule,
-    ReactiveFormsModule,
-    MatSlideToggleModule,
+    ReactiveFormsModule
   ],
-  exports: [LoginPageComponent]
+  exports: [RegisterPageComponent]
 })
-export class LoginModule {}
+export class RegisterModule { }

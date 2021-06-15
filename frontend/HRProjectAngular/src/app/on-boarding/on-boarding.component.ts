@@ -26,13 +26,13 @@ export class OnBoardingComponent {
     isCitizen: [null, Validators.required],
     citizenType: null,
     authorizationType: null,
-    otherAuthorizationType:null,
+    otherAuthorizationType: null,
     authorizationStartDate: null,
     authorizationEndDate: null,
 
-    hasDriverLicense:[null, Validators.required],
-    driverLicense:null,
-    driverLicenseExp:null,
+    hasDriverLicense: [null, Validators.required],
+    driverLicense: null,
+    driverLicenseExp: null,
     // Contact Info
     address: [null, Validators.required],
     address2: null,
@@ -178,7 +178,5 @@ export class OnBoardingComponent {
     return new Date(+yyyy, +mm + 1, 1);
   }
 
-  selectionOnOther() {
-
-  }
+  selectionOnOther() {}
 }

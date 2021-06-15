@@ -16,14 +16,13 @@ export class AuthGuardForEmployee implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    if(!localStorage.getItem('isLogged')){
+    if (!localStorage.getItem('isLogged')) {
       this.router.navigate(['/login']);
       return false;
     }
-    let retrievedObject:any = localStorage.getItem('user');
+    let retrievedObject: any = localStorage.getItem('user');
     let user = JSON.parse(retrievedObject);
-    if(user.roleName !== 'Employee' )
-        return false;
+    if (user.roleName !== 'Employee') return false;
     return true;
   }
 }

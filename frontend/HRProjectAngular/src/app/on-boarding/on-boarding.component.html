@@ -4,13 +4,21 @@
       <mat-card-title>On Boarding Information</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <br/><br/>
+      <br /><br />
       <mat-card-subtitle>Personal Information</mat-card-subtitle>
       <!--      Company      -->
       <div class="row">
         <div class="col">
+          <p>Your registration email:</p>
+        </div>
+        <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="Company" formControlName="company"/>
+            <input
+              matInput
+              placeholder="UserEmail@gmail.com"
+              formControlName="email"
+              required
+            />
           </mat-form-field>
         </div>
       </div>
@@ -61,7 +69,7 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="SSN" formControlName="ssn" required/>
+            <input matInput placeholder="SSN" formControlName="ssn" required />
             <mat-error
               *ngIf="OnBoardingForm.controls['ssn'].hasError('required')"
             >
@@ -109,7 +117,7 @@
         </div>
       </div>
 
-      <br/>
+      <br />
       <!--      Nested Questions      -->
       <div class="row">
         <div class="col">
@@ -162,7 +170,7 @@
       <div class="row">
         <div class="col" *ngIf="isCitizen === false">
           <mat-card-content
-          >Enter Your Authentication Date Range
+            >Enter Your Authentication Date Range
           </mat-card-content>
           <mat-form-field class="full-width">
             <mat-label>Enter a date range</mat-label>
@@ -274,7 +282,7 @@
         </div>
       </div>
 
-      <br/><br/>
+      <br /><br />
       <mat-card-subtitle>Contact Information</mat-card-subtitle>
       <div class="row">
         <div class="col">
@@ -299,16 +307,6 @@
               matInput
               placeholder="Work Phone"
               formControlName="workPhone"
-            />
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input
-              matInput
-              placeholder="UserEmail@gmail.com"
-              formControlName="email"
-              required
             />
           </mat-form-field>
         </div>
@@ -418,31 +416,31 @@
       <!--        </div>-->
       <!--      </div>-->
 
-      <br/><br/>
+      <br /><br />
       <mat-card-subtitle>Car Information</mat-card-subtitle>
       <!--      Car      -->
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="Maker" formControlName="carMaker"/>
+            <input matInput placeholder="Maker" formControlName="carMaker" />
             <mat-hint align="end">Car Make</mat-hint>
           </mat-form-field>
         </div>
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="Model" formControlName="carModel"/>
+            <input matInput placeholder="Model" formControlName="carModel" />
             <mat-hint align="end">Car Model</mat-hint>
           </mat-form-field>
         </div>
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="Color" formControlName="carColor"/>
+            <input matInput placeholder="Color" formControlName="carColor" />
             <mat-hint align="end">Car Color</mat-hint>
           </mat-form-field>
         </div>
       </div>
 
-      <br/><br/>
+      <br /><br />
       <mat-card-subtitle>Reference Information</mat-card-subtitle>
       <div class="row">
         <div class="col">
@@ -453,14 +451,14 @@
               formControlName="reference"
             />
             <mat-hint align="end"
-            >Please Enter First name, Last name, Middle name, Phone, Address,
+              >Please Enter First name, Last name, Middle name, Phone, Address,
               Email, Relationship
             </mat-hint>
           </mat-form-field>
         </div>
       </div>
 
-      <br/><br/>
+      <br /><br />
       <mat-card-subtitle>Emergency Contact</mat-card-subtitle>
       <!--      Emergency Name      -->
       <div class="row">
@@ -564,8 +562,8 @@
         </div>
       </div>
     </mat-card-content>
-    <mat-card-actions >
-      <button mat-raised-button color="primary" type="submit" >Submit</button>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
     </mat-card-actions>
   </mat-card>
 </form>

@@ -21,7 +21,7 @@ import { NavComponent } from './components/human-resource-nav/nav.component';
 import { HousingComponent } from './components/housing/housing.component';
 import { PersonalInfoComponent } from './components/personal-info/personal-info.component';
 import { HrPageComponent } from './components/hr-page/hr-page.component';
-import { MatMenuModule} from "@angular/material/menu";
+import { MatMenuModule } from '@angular/material/menu';
 
 import { HttpClientModule } from '@angular/common/http';
 import { HTTPReq } from '../service/HTTPReq/HTTPReq.service';
@@ -53,7 +53,7 @@ import { HTTPReq } from '../service/HTTPReq/HTTPReq.service';
     ReactiveFormsModule,
     MatMenuModule,
     MatCardModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [HTTPReq],
   exports: [NavComponent],

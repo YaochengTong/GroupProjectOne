@@ -2,9 +2,13 @@
 <div class="card-header"><br><br><br><br>
     <h4 class="card-header-text">Login</h4>
 </div>
+<div class="toggle">
+    Loggin with Username<mat-slide-toggle [checked]="isUsername" (onToggle)="onToggle()"></mat-slide-toggle>
+    Loggin with Email<mat-slide-toggle [checked]="isEmail"></mat-slide-toggle>
+</div>
   <div class="card-body">
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-
+        
         <div class="form-group" *ngIf="isUsername">
             <label for="username">Username</label>
             <br><br>
@@ -42,9 +46,6 @@
 
             <a routerLink="../register" class="link">Register</a>
         </div>
-
-          
       </form>
   </div>
 </div>
-

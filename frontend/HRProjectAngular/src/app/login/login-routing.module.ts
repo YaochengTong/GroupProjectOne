@@ -2,9 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
-// import { MatSelectModule } from '@angular/material/select';
 const routes: Routes = [{ path: '', component: LoginPageComponent }];
 
 @NgModule({
@@ -13,6 +11,6 @@ const routes: Routes = [{ path: '', component: LoginPageComponent }];
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [
-    RouterModule]})
+  exports: [RouterModule],
+})
 export class LoginRoutingModule {}
