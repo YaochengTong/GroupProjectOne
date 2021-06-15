@@ -66,6 +66,8 @@ export class LoginPageComponent implements OnInit{
       (data: any) => {
         console.log(data);
         localStorage.setItem("isLogged", "true");
+        localStorage.setItem("token", data.JWT_TOKEN);
+        localStorage.setItem("user", JSON.stringify(data.user));
         if (data.user.roleName == 'HR') {
           this.router.navigate(['/human-resource'])
         } else {

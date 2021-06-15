@@ -10,13 +10,16 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuardForEmployee implements CanActivate {
   constructor(private router: Router) {}
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
     if (localStorage.getItem('isLogged')) {
+      // let retrievedObject:any = localStorage.getItem('user');
+      // let user = JSON.parse(retrievedObject);
+      // if(user.roleName )
       return true;
     }
 

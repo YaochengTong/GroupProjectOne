@@ -17,7 +17,7 @@ public class UserController {
     @Autowired
     private IUserService iUserService;
 
-    private static final String jwtTokenCookieName = "JWT-TOKEN";
+    private static final String jwtTokenCookieName = "JWT_TOKEN";
     private static final String signingKey = "signingKey";
 
     @PostMapping(value="/login")

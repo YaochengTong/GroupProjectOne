@@ -4,7 +4,7 @@ import { EmployeeModule } from './employee/employee.module';
 import { HumanResourceModule } from './human-resource/human-resource.module';
 import { LoginModule } from './login/login.module';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
-import { AuthGuard } from './core/auth.guard';
+import { AuthGuardForEmployee } from './core/auth.guardForEmployee';
 
 const routes: Routes = [
   {
@@ -16,12 +16,12 @@ const routes: Routes = [
   {
     path: 'employee',
     loadChildren: () => EmployeeModule,
-    //canActivate: [AuthGuard],
+    canActivate: [AuthGuardForEmployee],
   },
   {
     path: 'human-resource',
     loadChildren: () => HumanResourceModule,
-    //canActivate: [AuthGuard],
+    canActivate: [AuthGuardForEmployee],
   },
   { path: '**', component: PageNotFoundComponent },
 ];
