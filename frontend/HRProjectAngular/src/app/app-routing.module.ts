@@ -5,6 +5,7 @@ import { HumanResourceModule } from './human-resource/human-resource.module';
 import { LoginModule } from './login/login.module';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { AuthGuardForEmployee } from './core/auth.guardForEmployee';
+import { AuthGuardForHR } from './core/auth.guardForHR';
 
 const routes: Routes = [
   {
@@ -21,7 +22,7 @@ const routes: Routes = [
   {
     path: 'human-resource',
     loadChildren: () => HumanResourceModule,
-    canActivate: [AuthGuardForEmployee],
+    canActivate: [AuthGuardForHR],
   },
   { path: '**', component: PageNotFoundComponent },
 ];
