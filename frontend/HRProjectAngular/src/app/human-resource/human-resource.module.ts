@@ -21,6 +21,9 @@ import { PersonalInfoComponent } from './components/personal-info/personal-info.
 import { HrPageComponent } from './components/hr-page/hr-page.component';
 import { MatMenuModule} from "@angular/material/menu";
 
+import { HttpClientModule } from '@angular/common/http';
+import { HTTPReq } from '../service/HTTPReq/HTTPReq.service';
+
 @NgModule({
   declarations: [
     HousingComponent,
@@ -46,7 +49,9 @@ import { MatMenuModule} from "@angular/material/menu";
     FormsModule,
     ReactiveFormsModule,
     MatMenuModule,
+    HttpClientModule
   ],
+  providers: [HTTPReq],
   exports: [NavComponent],
 })
 export class HumanResourceModule {}

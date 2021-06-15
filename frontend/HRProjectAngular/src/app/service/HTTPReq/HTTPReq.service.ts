@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'any'
 })
-export class httpRequestService {
+export class HTTPReq {
 
   constructor(private http: HttpClient) { }
 

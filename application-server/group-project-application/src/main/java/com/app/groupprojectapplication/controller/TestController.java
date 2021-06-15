@@ -31,7 +31,7 @@ public class TestController {
         //do not use domain/POJO in the controller.
         //use a map to receive all parameters from the frontend.
         //pass the map to the service layer and create POJO based on the values in the map.
-        iTestService.do_something(paramMap);
+        //iTestService.do_something(paramMap);
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("a", paramMap.get("a"));
         //always return a map to the frontend.
