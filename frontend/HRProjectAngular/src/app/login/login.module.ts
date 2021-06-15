@@ -24,11 +24,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     ExtendedModule,
     MatButtonModule,
     ReactiveFormsModule,
-<<<<<<< HEAD
-    MatSlideToggleModule
-=======
     MatSlideToggleModule,
->>>>>>> cc2c46dc58a20e5a5f1e7fadb7fe07a72d21af4c
   ],
   exports: [LoginPageComponent],
 })

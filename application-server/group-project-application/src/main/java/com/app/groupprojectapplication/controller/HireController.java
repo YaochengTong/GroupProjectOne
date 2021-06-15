@@ -23,7 +23,7 @@ public class HireController {
         String email = params.get("email").toString();
         Integer userId = Integer.parseInt(params.get("user_id").toString());
         iHireService.generateAToken(email, userId);
-        resultMap.put("result", "success"); 
+        resultMap.put("result", "success");
         return resultMap;
     }
 }
