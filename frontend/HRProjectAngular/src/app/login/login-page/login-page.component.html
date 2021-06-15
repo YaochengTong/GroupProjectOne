@@ -1,16 +1,17 @@
 <div class="card">
 <div class="card-header"><br><br><br><br>
-    <h4 class="card-header-text">Login</h4>
+    <h4 class="card-header-text"><strong>Login</strong></h4>
 </div>
-<div class="toggle">
+<!-- <div class="toggle">
     Loggin with Username<mat-slide-toggle [checked]="isUsername" (onToggle)="onToggle()"></mat-slide-toggle>
     Loggin with Email<mat-slide-toggle [checked]="isEmail"></mat-slide-toggle>
-</div>
+</div> -->
   <div class="card-body">
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         
         <div class="form-group" *ngIf="isUsername">
-            <label for="username">Username</label>
+            <label for="username"><strong>Username</strong> &nbsp;  |  &nbsp; 
+                <button (click)="switchLoginType()" style="display: inline; border: none; outline: none; background-color:transparent; color: gray; font-size: medium;">Email</button></label>
             <br><br>
             <input id="username" type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
             <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
@@ -20,7 +21,8 @@
         </div>
 
         <div class="form-group" *ngIf="isEmail">
-            <label for="email">Email</label>
+            <label for="email"><strong>Email</strong> &nbsp;  |  &nbsp; 
+                <button (click)="switchLoginType()" style="display: inline; border: none; outline: none; background-color:transparent; color: gray; font-size: medium;">Username</button></label>
             <br><br>
             <input type="email" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
             <div *ngIf="submitted && f.email.errors" class="invalid-feedback"><br>
@@ -30,7 +32,7 @@
         </div>
 
         <div class="form-group">
-            <label for="password">Password</label>
+            <label for="password"><strong>Password</strong></label>
             <br><br>
             <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
             <div *ngIf="submitted && f.password.errors" class="invalid-feedback"><br>
