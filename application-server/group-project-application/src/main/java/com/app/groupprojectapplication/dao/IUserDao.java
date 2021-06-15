@@ -10,4 +10,5 @@ public interface IUserDao {
     void insertUser(User user);
     void deleteUserById(Integer id);
     void updateUser(Integer id);
+    Integer getEmployeeIdByUserId(Integer userId);
 }
