@@ -16,15 +16,6 @@
 
       <a
         mat-list-item
-        routerLink="on-boarding"
-        routerLinkActive="active-list-item"
-      >
-        <mat-icon>badge</mat-icon>
-        <span>&nbsp; On Boarding</span>
-      </a>
-
-      <a
-        mat-list-item
         routerLink="personal-info"
         routerLinkActive="active-list-item"
       >
@@ -54,7 +45,7 @@
       <span>Employee</span>
 
       <span class="example-spacer"></span>
-      <span>Hello, {{username}}</span>
+      <span>Hello, {{ username }}</span>
       <button mat-icon-button [matMenuTriggerFor]="beforeMenu">
         <mat-icon>more_vert</mat-icon>
       </button>

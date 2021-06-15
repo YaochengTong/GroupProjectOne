@@ -6,6 +6,7 @@ import { LoginModule } from './login/login.module';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { AuthGuardForEmployee } from './core/auth.guardForEmployee';
 import { AuthGuardForHR } from './core/auth.guardForHR';
+import { OnBoardingComponent } from './on-boarding/on-boarding.component';
 
 const routes: Routes = [
   {
@@ -13,7 +14,14 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full',
   },
-  { path: 'login', loadChildren: () => LoginModule },
+  {
+    path: 'on-boarding',
+    component: OnBoardingComponent,
+  },
+  {
+    path: 'login',
+    loadChildren: () => LoginModule,
+  },
   {
     path: 'employee',
     loadChildren: () => EmployeeModule,

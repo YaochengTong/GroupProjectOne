@@ -5,11 +5,11 @@ import { LoginRoutingModule } from './login-routing.module';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { ExtendedModule, FlexModule } from '@angular/flex-layout';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [LoginPageComponent],
@@ -23,7 +23,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatCheckboxModule,
     ExtendedModule,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSlideToggleModule,
   ],
   exports: [LoginPageComponent],
 })
