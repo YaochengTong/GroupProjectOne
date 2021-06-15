@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { Router} from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HTTPReq } from 'src/app/service/HTTPReq/HTTPReq.service';
-
 
 @Component({
   selector: 'app-login-page',
@@ -13,31 +12,33 @@ export class LoginPageComponent implements OnInit{
 
   loginForm!: FormGroup;
   loading = false;
-  loginByEmail = false;
+  isUsername = true;
+  isEmail = false;
   submitted = false;
   endPoint: string = "http://localhost:9999/user/";
 
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
     private httpRequestService: HTTPReq
-    ) {
-      if (localStorage.getItem("isLogged") == "true") {
-        this.router.navigate(['/employee']);
-      }
-    }
+    ) {}
 
   ngOnInit() {
     // redirect to home if already logged in
+    if (localStorage.getItem("isLogged") == "true") {
+      this.router.navigate(['/employee']);
+    }
+
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]]
     })
   }
 
 
   get f() { return this.loginForm.controls; }
+
 
   onSubmit() {
     this.submitted = true;
@@ -48,16 +49,12 @@ export class LoginPageComponent implements OnInit{
 
     console.log(this.f.username.value);
     console.log(this.f.password.value);
-    
-
-    // const formData: Map<String, Object> = new Map<String, Object>();
-    // formData.set("username", this.f.username.value);
-    // formData.set("password", this.f.password.value);
-   // console.log(formData)
+  
 
    let params = {
     "username": this.f.username.value,
-    "password": this.f.password.value
+    "password": this.f.password.value,
+    "email": this.f.email.value
    }
 
     this.httpRequestService.postData('/user/login', 
@@ -81,9 +78,4 @@ export class LoginPageComponent implements OnInit{
     )
 
   }
-
-  // onLogin() {
-  //   localStorage.setItem('isLogged', 'true');
-  //   this.router.navigate(['/employee']);
-  // }
 }
