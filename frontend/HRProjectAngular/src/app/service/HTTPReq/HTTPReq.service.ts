@@ -20,7 +20,7 @@ export class HTTPReq {
   }
 
   postData(path: string, paramObj: any, endPoint: string = 'http://localhost:8999'): Observable<any> {
-    return this.http.post(endPoint + path, {
+    return this.http.post(endPoint + path, null, {
       headers: {
         'Allow-Cross-Origin-Origin0': '*'
       },

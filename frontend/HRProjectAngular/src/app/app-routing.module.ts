@@ -16,12 +16,12 @@ const routes: Routes = [
   {
     path: 'employee',
     loadChildren: () => EmployeeModule,
-    canActivate: [AuthGuard],
+    //canActivate: [AuthGuard],
   },
   {
     path: 'human-resource',
     loadChildren: () => HumanResourceModule,
-    canActivate: [AuthGuard],
+    //canActivate: [AuthGuard],
   },
   { path: '**', component: PageNotFoundComponent },
 ];
