@@ -14,10 +14,12 @@ export interface Tile {
 })
 export class PersonalInfoComponent implements OnInit {
   tiles: Tile[] = [
-    { text: 'One', cols: 3, rows: 1, color: 'lightblue' },
-    { text: 'Two', cols: 1, rows: 2, color: 'lightgreen' },
-    { text: 'Three', cols: 1, rows: 1, color: 'lightpink' },
-    { text: 'Four', cols: 2, rows: 1, color: '#DDBDF1' },
+    { text: 'Name', cols: 2, rows: 2, color: 'lightblue' },
+    { text: 'Address', cols: 2, rows: 2, color: 'lightgreen' },
+    { text: 'Contact Info', cols: 2, rows: 2, color: 'lightpink' },
+    { text: 'Employment', cols: 2, rows: 2, color: '#DDBDF1' },
+    { text: 'Emergency Contact', cols: 2, rows: 2, color: '#DDBDF1' },
+    { text: 'Document Section', cols: 2, rows: 2, color: '#DDBDF1' },
   ];
 
   constructor() {}
