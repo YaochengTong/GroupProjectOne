@@ -12,6 +12,6 @@ const routes: Routes = [{ path: '', component: LoginPageComponent }];
     ReactiveFormsModule,
     // MatSelectModule
   ],
-  exports: [
-    RouterModule]})
+  exports: [RouterModule],
+})
 export class LoginRoutingModule {}

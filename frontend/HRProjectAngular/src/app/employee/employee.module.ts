@@ -24,11 +24,12 @@ import { EmployeePageComponent } from './components/employee-page/employee-page.
 import { HumanResourceModule } from '../human-resource/human-resource.module';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
-import { OnBoardingComponent } from './components/on-boarding/on-boarding.component';
+import { OnBoardingComponent } from '../on-boarding/on-boarding.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { HTTPReq } from '../service/HTTPReq/HTTPReq.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -67,7 +68,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatNativeDateModule,
     MatCheckboxModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    FlexLayoutModule,
   ],
   exports: [
     CommonModule,
