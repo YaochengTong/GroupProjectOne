@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { httpRequestService } from './httpRequest.service';
+import { HTTPReq } from './HTTPReq.service';
 
-describe('httpRequestService', () => {
-  let service: httpRequestService;
+describe('HTTPReq', () => {
+  let service: HTTPReq;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(httpRequestService);
+    service = TestBed.inject(HTTPReq);
   });
 
   it('should be created', () => {

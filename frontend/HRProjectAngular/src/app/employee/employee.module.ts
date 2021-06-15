@@ -30,6 +30,8 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 
+import { HTTPReq } from '../service/HTTPReq/HTTPReq.service';
+
 @NgModule({
   declarations: [
     HomeComponent,
@@ -71,6 +73,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     PersonalInfoComponent,
     VisaComponent,
   ],
+
+  providers: [HTTPReq],
 
   bootstrap: [EmployeeNavComponent],
 })

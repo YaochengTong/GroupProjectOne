@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ExtendedModule, FlexModule } from '@angular/flex-layout';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [LoginPageComponent],
@@ -17,11 +18,12 @@ import { MatButtonModule } from '@angular/material/button';
     LoginRoutingModule,
     FormsModule,
     MatFormFieldModule,
-    MatInputModule,
+    // MatInputModule,
     FlexModule,
     MatCheckboxModule,
     ExtendedModule,
     MatButtonModule,
+    ReactiveFormsModule
   ],
   exports: [LoginPageComponent],
 })
