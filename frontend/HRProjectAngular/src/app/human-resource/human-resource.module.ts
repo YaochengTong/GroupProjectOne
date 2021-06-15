@@ -9,8 +9,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './components/home/home.component';
 import { HireComponent } from './components/hire/hire.component';
 import { CheckEmployeeComponent } from './components/check-employee/check-employee.component';
@@ -43,9 +45,11 @@ import { MatMenuModule} from "@angular/material/menu";
     DragDropModule,
     MatTableModule,
     MatInputModule,
+    MatGridListModule,
     FormsModule,
     ReactiveFormsModule,
     MatMenuModule,
+    MatCardModule,
   ],
   exports: [NavComponent],
 })
