@@ -10,6 +10,7 @@ import { ExtendedModule, FlexModule } from '@angular/flex-layout';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [LoginPageComponent],
@@ -23,7 +24,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatCheckboxModule,
     ExtendedModule,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSlideToggleModule
   ],
   exports: [LoginPageComponent],
 })
