@@ -45,12 +45,15 @@ public class HireServiceImpl implements IHireService {
         registrationToken.setToken(token.toString());
         registrationToken.setEmail(email);
         long timeStamp = System.currentTimeMillis();
-        java.sql.Date expirationDate = new java.sql.Date(timeStamp + 3 * 60 * 60);
+        java.sql.Date expirationDate = new java.sql.Date(timeStamp + 3 * 60 * 60 * 1000);
         registrationToken.setValidUntil(new Timestamp(expirationDate.getTime()));
         iRegistrationTokenDao.insertRegistrationToke(registrationToken);
 
         //send the token through email
-        emailService.sendMail(email, "Registration Token", token.toString());
+        String text = "http://localhost:4200/register?email=" + email + "&" +
+            "token=" + token.toString();
+
+        emailService.sendMail(email, "Registration Token", text);
 
         return true;
     }
