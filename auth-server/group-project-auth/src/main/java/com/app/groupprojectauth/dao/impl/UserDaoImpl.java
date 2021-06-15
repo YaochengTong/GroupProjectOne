@@ -87,22 +87,22 @@ public class UserDaoImpl implements IUserDao {
             return resultMap;
         }
 
-        sql = "select id from person where id=?";
-        rows = jdbcTemplate.queryForList(sql,
-                new Object[]{param.get("person_id").toString()});
-        if(rows.size() == 0){
-            resultMap.put("success", false);
-            resultMap.put("reason", "person does not exist");
-            return resultMap;
-        }
+//        sql = "select id from person where id=?";
+//        rows = jdbcTemplate.queryForList(sql,
+//                new Object[]{param.get("person_id").toString()});
+//        if(rows.size() == 0){
+//            resultMap.put("success", false);
+//            resultMap.put("reason", "person does not exist");
+//            return resultMap;
+//        }
 
         sql = "insert into user (username, email, password, person_id, create_date, modification_date)"
-                + " values (?, ?, ?, ?, ?, ?)";
+                + " values (?, ?, ?, NULL, ?, ?)";
         jdbcTemplate.update(sql, new Object[]{
                 param.get("username"),
                 param.get("email"),
                 param.get("password"),
-                param.get("person_id"),
+                //param.get("person_id"),
                 new java.util.Date(),
                 new java.util.Date()
         });

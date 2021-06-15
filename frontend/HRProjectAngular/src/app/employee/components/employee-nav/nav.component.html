@@ -54,12 +54,12 @@
       <span>Employee</span>
 
       <span class="example-spacer"></span>
-      <span>Hello, User</span>
+      <span>Hello, {{username}}</span>
       <button mat-icon-button [matMenuTriggerFor]="beforeMenu">
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #beforeMenu="matMenu" xPosition="before">
-        <button mat-menu-item>Log out</button>
+        <button mat-menu-item (click)="onLogout()">Log out</button>
       </mat-menu>
     </mat-toolbar>
     <!-- Add Content Here -->

@@ -3,6 +3,7 @@ package com.app.groupprojectapplication.controller;
 import com.app.groupprojectapplication.dao.impl.PersonDaoImpl;
 import com.app.groupprojectapplication.dao.impl.UserDaoImpl;
 import com.app.groupprojectapplication.domain.Person;
+import com.app.groupprojectapplication.email.EmailService;
 import com.app.groupprojectapplication.service.ITestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,9 @@ public class TestController {
     private PersonDaoImpl personDao;
 
     @Autowired
+    private EmailService emailService;
+
+    @Autowired
     private UserDaoImpl userDao;
 
     @GetMapping("/get")
@@ -36,5 +40,11 @@ public class TestController {
         resultMap.put("a", paramMap.get("a"));
         //always return a map to the frontend.
         return resultMap;
+    }
+
+    @GetMapping("/sendEmail")
+    public Map<String, Object> testEmail(@RequestParam Map<String, Object> paramMap){
+        emailService.sendMail("tjfy1992@gmail.com", "Test email", "Test text");
+        return new HashMap<>();
     }
 }

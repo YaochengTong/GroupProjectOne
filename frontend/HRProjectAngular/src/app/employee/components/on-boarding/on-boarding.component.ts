@@ -9,16 +9,31 @@ import { MatDatepicker } from '@angular/material/datepicker';
 })
 export class OnBoardingComponent {
   date = new FormControl(this.getMonthYearString(new Date()));
+  isCitizen: boolean | undefined;
+  hasDriverLicense: boolean | undefined;
+  authorizationSelection: boolean | undefined;
 
   OnBoardingForm = this.fb.group({
-    // Address Info
+    // Personal Info
     company: null,
     firstName: [null, Validators.required],
     lastName: [null, Validators.required],
     middleName: null,
     ssn: [null, Validators.required],
-    gender: null,
+    gender: [null, Validators.required],
     dateOfBirth: [null, Validators.required],
+
+    isCitizen: [null, Validators.required],
+    citizenType: null,
+    authorizationType: null,
+    otherAuthorizationType:null,
+    authorizationStartDate: null,
+    authorizationEndDate: null,
+
+    hasDriverLicense:[null, Validators.required],
+    driverLicense:null,
+    driverLicenseExp:null,
+    // Contact Info
     address: [null, Validators.required],
     address2: null,
     city: [null, Validators.required],
@@ -31,17 +46,31 @@ export class OnBoardingComponent {
         Validators.maxLength(5),
       ]),
     ],
-    // Contact Info
+
+    // Contact Info 2
     cellPhone: [null, Validators.required],
     workPhone: null,
     email: new FormControl(
       { value: null, disabled: true },
       Validators.required
     ),
+    // Reference Info
+    reference: null,
+
     // Car Info
     carMaker: null,
     carModel: null,
     carColor: null,
+
+    // Emergency Contact
+    emergencyFirstName: [null, Validators.required],
+    emergencyLastName: [null, Validators.required],
+    emergencyMiddleName: null,
+    emergencyPhone: [null, Validators.required],
+    emergencyAddress: null,
+    emergencyEmail: null,
+    emergencyRelationship: null,
+
     shipping: ['free', Validators.required],
   });
 
@@ -109,7 +138,13 @@ export class OnBoardingComponent {
     { name: 'Wyoming', abbreviation: 'WY' },
   ];
 
+  // }
+
   constructor(private fb: FormBuilder) {}
+
+  //
+  // selectCitizenshipOnChange(){
+  //
 
   onSubmit(): void {
     alert('Thanks!');
@@ -141,5 +176,9 @@ export class OnBoardingComponent {
     }
     const [mm, yyyy] = s.split('/');
     return new Date(+yyyy, +mm + 1, 1);
+  }
+
+  selectionOnOther() {
+
   }
 }

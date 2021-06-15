@@ -50,21 +50,29 @@ export class LoginPageComponent implements OnInit{
     console.log(this.f.password.value);
     
 
-    const formData: Map<String, Object> = new Map<String, Object>();
-    formData.set("username", this.f.username.value);
-    formData.set("password", this.f.password.value);
-    
+    // const formData: Map<String, Object> = new Map<String, Object>();
+    // formData.set("username", this.f.username.value);
+    // formData.set("password", this.f.password.value);
+   // console.log(formData)
+
+   let params = {
+    "username": this.f.username.value,
+    "password": this.f.password.value
+   }
+
     this.httpRequestService.postData('/user/login', 
-    formData, 
+    params, 
     'http://localhost:9999').subscribe(
       (data: any) => {
         console.log(data);
-        // localStorage.setItem("isLogged", "true");
-        // if (data.get("roleName") == 'HR') {
-        //   this.router.navigate(['/human-resource'])
-        // } else {
-        //   this.router.navigate(['/employee']);
-        // }
+        localStorage.setItem("isLogged", "true");
+        localStorage.setItem("token", data.JWT_TOKEN);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        if (data.user.roleName == 'HR') {
+          this.router.navigate(['/human-resource'])
+        } else {
+          this.router.navigate(['/employee']);
+        }
       },
       (error) => {
         console.log(error);
