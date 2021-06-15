@@ -1,6 +1,7 @@
 package com.app.groupprojectapplication.dao.impl;
 
 import com.app.groupprojectapplication.dao.IUserDao;
+import com.app.groupprojectapplication.domain.Person;
 import com.app.groupprojectapplication.domain.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,6 +9,8 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Query;
+import javax.persistence.criteria.*;
 import java.sql.Timestamp;
 
 /**
@@ -62,5 +65,22 @@ public class UserDaoImpl implements IUserDao {
         Transaction ts = session.beginTransaction();
         ts.commit();
         session.close();
+    }
+
+    @Override
+    public Integer getEmployeeIdByUserId(Integer userId){
+        Session session = sessionFactory.openSession();
+        String hql = "select u.person.id FROM User u where u.id=:user_id";
+        Query query = session.createQuery(hql);
+        query.setParameter("user_id", userId);
+        if(query.getResultList().size() != 1)
+            return null;
+        Integer person_id = (Integer) query.getResultList().get(0);
+        String hql2 = "select e.id FROM Employee e where e.person.id=:person_id";
+        query = session.createQuery(hql2);
+        query.setParameter("person_id", person_id);
+        if(query.getResultList().size() != 1)
+            return null;
+        return (Integer) query.getResultList().get(0);
     }
 }
