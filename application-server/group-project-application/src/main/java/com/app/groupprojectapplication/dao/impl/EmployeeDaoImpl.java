@@ -28,7 +28,7 @@ public class EmployeeDaoImpl implements IEmployeeDao {
 
     @Override
     public Employee getEmployeeById(Integer id) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         employee = session.get(Employee.class, id);
         return employee;
     }

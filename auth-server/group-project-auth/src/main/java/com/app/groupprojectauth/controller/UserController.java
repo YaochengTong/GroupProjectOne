@@ -22,6 +22,8 @@ public class UserController {
 
     @PostMapping(value="/login")
     public Map<String, Object> login(@RequestParam Map<String, Object> params){
+        System.out.println(params);
+        System.out.println("test");
         if(params.get("username") == null && params.get("email") == null){
             Map<String, Object> resultMap = new HashMap<>();
             resultMap.put("success", false);

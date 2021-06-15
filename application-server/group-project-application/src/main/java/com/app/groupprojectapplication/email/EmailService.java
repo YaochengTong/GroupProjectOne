@@ -17,11 +17,10 @@ public class EmailService {
     private String from;
 
     /**
-     * 发送纯文本邮件.
      *
-     * @param to      目标email 地址
-     * @param subject 邮件主题
-     * @param text    纯文本内容
+     * @param to
+     * @param subject
+     * @param text
      */
     public void sendMail(String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();

@@ -5,7 +5,7 @@ import { PersonalInfoComponent } from './components/personalInfo/personalInfo.co
 import { HousingComponent } from './components/housing/housing.component';
 import { VisaComponent } from './components/visa/visa.component';
 import { EmployeePageComponent } from './components/employee-page/employee-page.component';
-import {OnBoardingComponent} from "./components/on-boarding/on-boarding.component";
+import { OnBoardingComponent } from '../on-boarding/on-boarding.component';
 
 const routes: Routes = [
   {

@@ -12,12 +12,24 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { MatMenuModule } from '@angular/material/menu';
+import { HumanResourceModule } from './human-resource/human-resource.module';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,18 +38,29 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     BrowserAnimationsModule,
     FlexModule,
-    MatButtonModule,
+    HttpClientModule,
+    CommonModule,
     MatToolbarModule,
     MatIconModule,
     MatSidenavModule,
+    MatInputModule,
+    MatButtonModule,
     MatGridListModule,
     MatListModule,
     MatDividerModule,
     MatTableModule,
     MatCardModule,
     MatFormFieldModule,
-    MatInputModule,
-    HttpClientModule
+    MatMenuModule,
+    HumanResourceModule,
+    MatSelectModule,
+    MatRadioModule,
+    LayoutModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
