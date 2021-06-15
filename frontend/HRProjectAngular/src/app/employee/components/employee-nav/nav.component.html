@@ -59,7 +59,7 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #beforeMenu="matMenu" xPosition="before">
-        <button mat-menu-item>Log out</button>
+        <button mat-menu-item (click)="onLogout()">Log out</button>
       </mat-menu>
     </mat-toolbar>
     <!-- Add Content Here -->

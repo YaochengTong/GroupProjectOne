@@ -19,4 +19,8 @@ export class EmployeeNavComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit(): void {}
+
+  onLogout() {
+    localStorage.setItem('isLogged', 'false');
+  }
 }
