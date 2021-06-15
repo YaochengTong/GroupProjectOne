@@ -1,52 +1,59 @@
-.login-page {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  width: 50%;
+  height: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
+  margin-bottom: auto;
+}
+
+.card-header {
+  background-color: lightgray;
+  height: 25%;
+  font-size: 2.4em;
   position: relative;
+}
 
-  .content {
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.card-header-text {
+  font-size: 2.4em;
+  margin-left: 0.7em;
+}
 
-    .app-name {
-      margin-top: 0;
-      padding-bottom: 10px;
-      font-size: 32px;
-    }
+.form-group {
+  margin-left: 0.7em;
+  margin-top: 3em;
+  font-size: 2.4em;
+}
 
-    .login-form {
-      padding: 40px;
-      background: white;
-      max-width: 500px;
-      box-shadow: 0 0 20px #ddd;
+.form-control {
+  width: 90%;
+  height: 2em;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1em;
+}
 
-      input:-webkit-autofill {
-        box-shadow: 0 0 0 30px white inset;
-        -webkit-box-shadow: 0 0 0 30px white inset;
-      }
-    }
-  }
+.btn {
+  background-color: #008cba;
+  font-size: 1em;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  height: 3em;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 12px;
+}
 
-  &:after {
-    content: "";
-    background: white;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 50%;
-    right: 0;
-  }
-
-  &:before {
-    content: "";
-    background: white;
-    position: absolute;
-    top: 50%;
-    left: 0;
-    bottom: 0;
-    right: 0;
-  }
+.link {
+  padding: 16px 32px;
+  margin: 4px 2px;
+  text-align: center;
+  color: #008cba;
 }
