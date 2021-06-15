@@ -4,12 +4,14 @@ import com.app.groupprojectauth.domain.User;
 import com.app.groupprojectauth.security.JwtUtil;
 import com.app.groupprojectauth.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -20,7 +22,7 @@ public class UserController {
     private static final String jwtTokenCookieName = "JWT-TOKEN";
     private static final String signingKey = "signingKey";
 
-    @PostMapping("/login")
+    @PostMapping(value="/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Object> login(@RequestParam Map<String, Object> params){
         if(params.get("username") == null && params.get("email") == null){
             Map<String, Object> resultMap = new HashMap<>();
@@ -47,4 +49,6 @@ public class UserController {
         }
         return iUserService.userRegister(params);
     }
+
+
 }
