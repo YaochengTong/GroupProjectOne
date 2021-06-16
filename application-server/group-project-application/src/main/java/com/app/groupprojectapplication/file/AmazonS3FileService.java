@@ -55,25 +55,10 @@ public class AmazonS3FileService implements InitializingBean {
         for(S3ObjectSummary os : objectListing.getObjectSummaries()) {
             System.out.println(os.getKey());
         }
-        S3Object s3object = client.getObject(bucket, "template/i983.pdf");
-        S3ObjectInputStream inputStream = s3object.getObjectContent();
-        try {
-            FileUtils.copyInputStreamToFile(inputStream, new File("i983.pdf"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
-    public void upload(){
-        client.putObject(
-                this.bucket,
-                "asd.txt",
-                new File("C:\\Users\\Administrator\\Desktop\\asd.txt")
-        );
-    }
-
-    private String upload(InputStream input, String key) throws IOException {
-        Date expireDate = new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(30));
+    public String upload(InputStream input, String key) throws IOException {
+        Date expireDate = new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(1800));
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setHttpExpiresDate(expireDate);
         metadata.setContentLength(input.available());

@@ -9,7 +9,14 @@ import com.app.groupprojectapplication.service.IHireService;
 import com.app.groupprojectapplication.service.ITestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
@@ -57,10 +64,26 @@ public class TestController {
         return new HashMap<>();
     }
 
-    @GetMapping("/aws")
-    public Map<String, Object> testAWS(@RequestParam Map<String, Object> paramMap){
-        //amazonS3FileService.printOutName();
-        amazonS3FileService.upload();
+
+    @PostMapping("/fileUpload")
+    public Map<String, Object> testFileUpload(@RequestParam("file") MultipartFile file){
+        InputStream ips = null;
+        File file1 = null;
+        try {
+            file1 = File.createTempFile("temp", null);
+            file.transferTo(file1);
+            ips = new FileInputStream(file1);
+            //change "test/" to {userid}/, so that the user's files will be uploaded to
+            //the folder under his userid.
+            //the result here will be the link to the uploaded file
+            String result = amazonS3FileService.upload(ips, "test/" + file.getOriginalFilename());
+            System.out.println(result);
+            file1.deleteOnExit();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //call this method to print out all files on server
+        amazonS3FileService.printOutName();
         return new HashMap<>();
     }
 }
