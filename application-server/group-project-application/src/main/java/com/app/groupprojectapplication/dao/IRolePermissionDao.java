@@ -6,7 +6,7 @@ import com.app.groupprojectapplication.domain.RolePermission;
 
 import java.util.List;
 
-public interface IRolePermissonDao {
+public interface IRolePermissionDao {
     RolePermission getRolePermissionById(Integer id);
     List<RolePermission> getRolePermissionByPermissionId(Integer permission_id);
     List<RolePermission> getRolePermissionByLastModifiedUserId(Integer user_id);
