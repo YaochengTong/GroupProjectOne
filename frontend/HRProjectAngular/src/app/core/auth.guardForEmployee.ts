@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 })
 export class AuthGuardForEmployee implements CanActivate {
   constructor(private router: Router) {}
+
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -22,7 +23,10 @@ export class AuthGuardForEmployee implements CanActivate {
     }
     let retrievedObject: any = localStorage.getItem('user');
     let user = JSON.parse(retrievedObject);
-    if (user.roleName !== 'Employee') return false;
+    if (user.roleName !== 'Employee') {
+      this.router.navigate(['/login']);
+      return false;
+    }
     return true;
   }
 }
