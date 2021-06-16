@@ -4,6 +4,7 @@ import com.app.groupprojectapplication.dao.impl.PersonDaoImpl;
 import com.app.groupprojectapplication.dao.impl.UserDaoImpl;
 import com.app.groupprojectapplication.domain.Person;
 import com.app.groupprojectapplication.email.EmailService;
+import com.app.groupprojectapplication.file.AmazonS3FileService;
 import com.app.groupprojectapplication.service.IHireService;
 import com.app.groupprojectapplication.service.ITestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class TestController {
     private EmailService emailService;
 
     @Autowired
+    private AmazonS3FileService amazonS3FileService;
+
+    @Autowired
     private IHireService iHireService;
 
     @Autowired
@@ -50,6 +54,13 @@ public class TestController {
     public Map<String, Object> testEmail(@RequestParam Map<String, Object> paramMap){
         //emailService.sendMail("tjfy1992@gmail.com", "Test email", "Test text");
         iHireService.generateAToken("zhongqiu_gao@126.com", 556);
+        return new HashMap<>();
+    }
+
+    @GetMapping("/aws")
+    public Map<String, Object> testAWS(@RequestParam Map<String, Object> paramMap){
+        //amazonS3FileService.printOutName();
+        amazonS3FileService.upload();
         return new HashMap<>();
     }
 }

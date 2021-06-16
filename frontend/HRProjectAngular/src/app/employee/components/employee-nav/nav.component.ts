@@ -20,7 +20,9 @@ export class EmployeeNavComponent implements OnInit {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private router: Router
-  ) {}
+  ) {
+
+  }
 
   username: string = '';
 
