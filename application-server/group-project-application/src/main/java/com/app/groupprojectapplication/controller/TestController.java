@@ -67,6 +67,7 @@ public class TestController {
 
     @PostMapping("/fileUpload")
     public Map<String, Object> testFileUpload(@RequestParam("file") MultipartFile file){
+        Map<String, Object> resultMap = new HashMap<>();
         InputStream ips = null;
         File file1 = null;
         try {
@@ -78,12 +79,13 @@ public class TestController {
             //the result here will be the link to the uploaded file
             String result = amazonS3FileService.upload(ips, "test/" + file.getOriginalFilename());
             System.out.println(result);
+            resultMap.put("link", result);
             file1.deleteOnExit();
         } catch (IOException e) {
             e.printStackTrace();
         }
         //call this method to print out all files on server
         amazonS3FileService.printOutName();
-        return new HashMap<>();
+        return resultMap;
     }
 }
