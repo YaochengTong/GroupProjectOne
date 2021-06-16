@@ -3,6 +3,7 @@ package com.app.groupprojectapplication.service.impl;
 import com.app.groupprojectapplication.dao.IContactDao;
 import com.app.groupprojectapplication.dao.IEmployeeDao;
 import com.app.groupprojectapplication.dao.IPersonDao;
+import com.app.groupprojectapplication.dao.IUserDao;
 import com.app.groupprojectapplication.domain.*;
 import com.app.groupprojectapplication.domain.profile.*;
 import com.app.groupprojectapplication.service.IProfileService;
@@ -27,6 +28,9 @@ public class ProfileServiceImpl implements IProfileService {
     @Autowired
     IPersonDao iPersonDao;
 
+    @Autowired
+    IUserDao iUserDao;
+
     @Override
     @Transactional
     public List<Profile> getProfile() {
@@ -40,7 +44,8 @@ public class ProfileServiceImpl implements IProfileService {
 
     @Override
     @Transactional
-    public Profile getProfileByEmployeeId(Integer employee_id) {
+    public Profile getProfileByEmployeeId(Integer user_id) {
+        Integer employee_id = iUserDao.getEmployeeIdByUserId(user_id);
         Employee employee = iEmployeeDao.getEmployeeById(employee_id);
         return getProfileByEmployee(employee);
     }
@@ -58,17 +63,6 @@ public class ProfileServiceImpl implements IProfileService {
 //        profile.setSummary(setSummary(employee, person));
         return profile;
     }
-
-//    private Summary setSummary(Employee employee, Person person) {
-//        Summary summary = new Summary();
-//        summary.setFullName(getFullName(person));
-//        summary.setSSN(person.getSsn());
-//        summary.setStartDate(employee.getStartDate());
-//        summary.setVisaStatus(setw);
-//        System.out.println(summary.toString());
-//        return summary;
-//    }
-
 
     private List<EmergencyContact> setEmergencyContactList(Person person) {
         List<EmergencyContact> emergencyContactList = new ArrayList<>();
@@ -125,8 +119,8 @@ public class ProfileServiceImpl implements IProfileService {
         for (int i = 0; i < 2; i++) {
             if (addressList.size() > i) {
                 Map<String, String> addrMap = new HashMap<>();
-                addrMap.put("Address Line 1", addressList.get(i).getAddressLine1());
-                addrMap.put("Address Line 2", addressList.get(i).getAddressLine2());
+                addrMap.put("AddressLine1", addressList.get(i).getAddressLine1());
+                addrMap.put("AddressLine2", addressList.get(i).getAddressLine2());
                 addrMap.put("City", addressList.get(i).getCity());
                 addrMap.put("State", addressList.get(i).getStateName());
                 addrMap.put("Zip", addressList.get(i).getZipCode());

@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { HTTPReq } from 'src/app/service/HTTPReq/HTTPReq.service';
-import { JsonpClientBackend } from '@angular/common/http';
 
 @Component({
   selector: 'app-login-page',
@@ -63,9 +62,6 @@ export class LoginPageComponent implements OnInit {
 
 
   onSubmit() {
-    console.log("ese");
-    console.log(this.f.username.value);
-    console.log(this.f.password.value);  
 
     this.submitted = true;
 
@@ -73,7 +69,6 @@ export class LoginPageComponent implements OnInit {
       return;
     }
     
-    console.log("eee")
 
     this.loading = true;
 
@@ -96,6 +91,7 @@ export class LoginPageComponent implements OnInit {
         localStorage.setItem("isLogged", "true");
         localStorage.setItem("token", data.JWT_TOKEN);
         localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("userId", data.user.id)
         console.log(localStorage.getItem("user"));
         if (data.user.roleName == 'HR') {
           this.router.navigate(['/human-resource'])

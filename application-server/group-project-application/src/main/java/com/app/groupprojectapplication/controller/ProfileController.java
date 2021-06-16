@@ -15,14 +15,14 @@ public class ProfileController {
     @Autowired
     private IProfileService iProfileService;
 
-    @GetMapping("/{employee_id}")
-    public Map<String, Object> getProfile(@PathVariable Integer employee_id) {
+    @GetMapping("/{user_id}")
+    public Map<String, Object> getProfile(@PathVariable Integer user_id) {
         Map<String, Object> profile = new HashMap<>();
-        profile.put("profile" + employee_id, iProfileService.getProfileByEmployeeId(employee_id));
+        profile.put("profile", iProfileService.getProfileByEmployeeId(user_id));
         return profile;
     }
 
-    @GetMapping("/admin")
+    @GetMapping("/all")
     public Map<String, Object> getProfileList() {
         Map<String, Object>  profileList = new HashMap<>();
         profileList.put("AllProfile", iProfileService.getProfile());
