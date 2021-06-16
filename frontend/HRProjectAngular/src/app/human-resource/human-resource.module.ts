@@ -22,6 +22,7 @@ import { HousingComponent } from './components/housing/housing.component';
 import { PersonalInfoComponent } from './components/personal-info/personal-info.component';
 import { HrPageComponent } from './components/hr-page/hr-page.component';
 import { MatMenuModule } from '@angular/material/menu';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import { HttpClientModule } from '@angular/common/http';
 import { HTTPReq } from '../service/HTTPReq/HTTPReq.service';
@@ -54,6 +55,7 @@ import { HTTPReq } from '../service/HTTPReq/HTTPReq.service';
     MatMenuModule,
     MatCardModule,
     HttpClientModule,
+    MatSnackBarModule
   ],
   providers: [HTTPReq],
   exports: [NavComponent],
