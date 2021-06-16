@@ -84,23 +84,23 @@
             <p style="display: inline; font-size: larger"><strong>Emergency Contact Info</strong></p>
           </div>
       
-          <div *ngFor="let person of emergencyContactList; let i = index">
-            <p>{{emergencyContactList[i].fullName}}</p>
-            <p><strong>Phone#</strong>{{emergencyContactList[i].phone}}</p>
+          <div>
+            <p>{{emergencyContactList.emergencyPerson1.fullName}}</p>
+            <p><strong>Phone#</strong>{{emergencyContactList.emergencyPerson1.phone}}</p>
             <mat-card-subtitle>Primary Address</mat-card-subtitle>
             <div class="card-content">
-              <p><strong>Address Line 1:</strong> {{emergencyContactList[i].address.primaryAddr.AddressLine1}} ,</p>
-              <p *ngIf="emergencyContactList[i].address.primaryAddr.AddressLine2 != null"><strong>Address Line 2:</strong> {{emergencyContactList[i].address.primaryAddr.AddressLine2}} ,</p>
-              <p><strong>City: </strong> {{emergencyContactList[i].address.primaryAddr.City}}</p>
-              <p><strong>State:</strong> {{emergencyContactList[i].address.primaryAddr.State}}, {{emergencyContactList[i].address.primaryAddr.Zip}}</p>
+              <p><strong>Address Line 1:</strong> {{emergencyContactList.emergencyPerson1.address.primaryAddr.AddressLine1}} ,</p>
+              <p *ngIf="emergencyContactList.emergencyPerson1.address.primaryAddr.AddressLine2 != null"><strong>Address Line 2:</strong> {{emergencyContactList.emergencyPerson1.address.primaryAddr.AddressLine2}} ,</p>
+              <p><strong>City: </strong> {{emergencyContactList.emergencyPerson1.address.primaryAddr.City}}</p>
+              <p><strong>State:</strong> {{emergencyContactList.emergencyPerson1.address.primaryAddr.State}}, {{emergencyContactList.emergencyPerson1.address.primaryAddr.Zip}}</p>
             </div>
 
-            <mat-card-subtitle *ngIf="emergencyContactList[i].address.secondaryAddr != null">Secondary Address</mat-card-subtitle>
-            <div class="card-content" *ngIf="emergencyContactList[i].address.secondaryAddr != null">
-              <p><strong>Address Line 1:</strong> {{emergencyContactList[i].address.secondaryAddr.AddressLine1}} ,</p>
-              <p *ngIf="emergencyContactList[i].address.secondaryAddr.AddressLine2 != null"><strong>Address Line 2:</strong> {{emergencyContactList[i].address.primaryAddr.AddressLine2}} ,</p>
-              <p><strong>City:</strong> {{emergencyContactList[i].address.secondaryAddr.City}}, </p><br>
-              <p><strong>State: </strong>{{emergencyContactList[i].address.secondaryAddr.State}}, {{emergencyContactList[i].address.secondaryAddr.Zip}}</p>
+            <mat-card-subtitle *ngIf="emergencyContactList.emergencyPerson1.address.secondaryAddr != null">Secondary Address</mat-card-subtitle>
+            <div class="card-content" *ngIf="emergencyContactList.emergencyPerson1.address.secondaryAddr != null">
+              <p><strong>Address Line 1:</strong> {{emergencyContactList.emergencyPerson1.address.secondaryAddr.AddressLine1}} ,</p>
+              <p *ngIf="emergencyContactList.emergencyPerson1.address.secondaryAddr.AddressLine2 != null"><strong>Address Line 2:</strong> {{emergencyContactList.emergencyPerson1.address.primaryAddr.AddressLine2}} ,</p>
+              <p><strong>City:</strong> {{emergencyContactList.emergencyPerson1.address.secondaryAddr.City}}, </p><br>
+              <p><strong>State: </strong>{{emergencyContactList.emergencyPerson1.address.secondaryAddr.State}}, {{emergencyContactList.emergencyPerson1.address.secondaryAddr.Zip}}</p>
             </div>
 
           </div>
