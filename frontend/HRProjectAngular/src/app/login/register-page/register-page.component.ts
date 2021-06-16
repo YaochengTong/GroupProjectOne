@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HTTPReq } from 'src/app/service/HTTPReq/HTTPReq.service';
 
@@ -13,6 +13,8 @@ export class RegisterPageComponent implements OnInit {
   registerForm! : FormGroup;
   loading = false;
   submitted = false;
+
+
   email: string = "email";
   registerToken: string = "token";
 
@@ -20,7 +22,8 @@ export class RegisterPageComponent implements OnInit {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private httpRequestService: HTTPReq
+    private httpRequestService: HTTPReq,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -31,6 +34,11 @@ export class RegisterPageComponent implements OnInit {
       //   this.router.navigate(['/employee']);
       // } 
     }
+
+    this.route.queryParams.subscribe(params => {
+      this.email = params.email;
+      this.registerToken = params.token;
+    });
 
     this.registerForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -62,14 +70,20 @@ export class RegisterPageComponent implements OnInit {
     params,
     'http://localhost:9999').subscribe(
       (data: any) => {
-        localStorage.setItem("isLogged", "true");
-        localStorage.setItem("registerToken", this.registerToken);
-        localStorage.setItem("token", data.JWT_TOKEN);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        this.router.navigate(['/on-boarding'])
+        if (data.success == "true") {
+          localStorage.setItem("isLogged", "true");
+          localStorage.setItem("registerToken", this.registerToken);
+          localStorage.setItem("token", data.JWT_TOKEN);
+          localStorage.setItem("user", JSON.stringify(data.user));
+          this.router.navigate(['/on-boarding'])
+        } else {
+          console.log(data.reason);
+        }
+        
       }
     );
   }
   
 
 }
+
