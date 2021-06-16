@@ -7,12 +7,14 @@ import com.app.groupprojectauth.domain.UserRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,25 +89,50 @@ public class UserDaoImpl implements IUserDao {
             return resultMap;
         }
 
-//        sql = "select id from person where id=?";
-//        rows = jdbcTemplate.queryForList(sql,
-//                new Object[]{param.get("person_id").toString()});
-//        if(rows.size() == 0){
-//            resultMap.put("success", false);
-//            resultMap.put("reason", "person does not exist");
-//            return resultMap;
-//        }
+//        sql = "insert into user (username, email, password, person_id, create_date, modification_date)"
+//                + " values (?, ?, ?, NULL, ?, ?)";
+//        jdbcTemplate.update(sql, new Object[]{
+//                param.get("username"),
+//                param.get("email"),
+//                param.get("password"),
+//                //param.get("person_id"),
+//                new java.util.Date(),
+//                new java.util.Date()
+//        });
+
+        int autoIncId = 0;
+        KeyHolder keyHolder = new GeneratedKeyHolder();
 
         sql = "insert into user (username, email, password, person_id, create_date, modification_date)"
                 + " values (?, ?, ?, NULL, ?, ?)";
+        String finalSql = sql;
+        java.sql.Date date = new Date(new java.util.Date().getTime());
+        this.jdbcTemplate.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                PreparedStatement ps = con.prepareStatement(finalSql, Statement.RETURN_GENERATED_KEYS);
+                ps.setString(1, param.get("username").toString());
+                ps.setString(2, param.get("email").toString());
+                ps.setString(3,  param.get("password").toString());
+                ps.setDate(4, date);
+                ps.setDate(5, date);
+                return ps;
+            }
+        }, keyHolder);
+
+        autoIncId = keyHolder.getKey().intValue();
+        resultMap.put("success", true);
+        resultMap.put("userId", autoIncId);
+
+        sql = "insert into user_role (user_id, role_id, activate_flag, create_date, " +
+                "modification_date, last_modification_user_id)"
+                + " values (?, 1, 0, ?, ?, 556)";
         jdbcTemplate.update(sql, new Object[]{
-                param.get("username"),
-                param.get("email"),
-                param.get("password"),
-                //param.get("person_id"),
-                new java.util.Date(),
-                new java.util.Date()
+                autoIncId,
+                date,
+                date
         });
+
         resultMap.put("success", true);
         return resultMap;
     }
@@ -126,7 +153,7 @@ public class UserDaoImpl implements IUserDao {
         token.setEmail(rows.get(0).get("email").toString());
         token.setContent(rows.get(0).get("token").toString());
         Timestamp timestamp = (Timestamp) rows.get(0).get("valid_until");
-        token.setValidUntil(Date.valueOf(timestamp.toLocalDateTime().toLocalDate()));
+        token.setValidUntil(timestamp);
         token.setCreationEmployeeId((Integer) rows.get(0).get("creation_employee_id"));
         resultMap.put("success", true);
         resultMap.put("token", token);

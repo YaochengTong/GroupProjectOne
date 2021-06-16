@@ -79,7 +79,6 @@ export class RegisterPageComponent implements OnInit {
         } else {
           console.log(data.reason);
         }
-        
       }
     );
   }

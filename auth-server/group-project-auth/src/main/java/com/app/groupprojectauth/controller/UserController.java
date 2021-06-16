@@ -39,7 +39,7 @@ public class UserController {
         return map;
     }
 
-    @PostMapping("/login/register")
+    @PostMapping("/register")
     public Map<String, Object> register(@RequestParam Map<String, Object> params){
         if(params.get("username") == null && params.get("email") == null){
             Map<String, Object> resultMap = new HashMap<>();

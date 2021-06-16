@@ -50,7 +50,7 @@ public class HireServiceImpl implements IHireService {
         iRegistrationTokenDao.insertRegistrationToke(registrationToken);
 
         //send the token through email
-        String text = "http://localhost:4200/register?email=" + email + "&" +
+        String text = "http://localhost:4200/login/register?email=" + email + "&" +
             "token=" + token.toString();
 
         emailService.sendMail(email, "Registration Token", text);

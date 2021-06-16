@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -14,7 +15,7 @@ import java.sql.Date;
 public class Token {
     Integer id;
     String content;
-    Date validUntil;
+    Timestamp validUntil;
     String email;
     Integer creationEmployeeId;
 }
