@@ -1,3 +1,4 @@
+<script src="on-boarding.component.ts"></script>
 <form [formGroup]="OnBoardingForm" novalidate (ngSubmit)="onSubmit()">
   <mat-card class="shipping-card">
     <mat-card-header>
@@ -226,8 +227,15 @@
 
         <div class="col" *ngIf="isCitizen === false">
           <mat-card-content>Upload your work authorization</mat-card-content>
-          <!--          TODO: Downgrade angular in order to install file upload modules-->
-          <button mat-stroked-button>upload module, not done</button>
+          <mat-form-field class="full-width">
+            <ngx-mat-file-input
+              [formControl]="fileWorkAuth"
+              [multiple]="multiple"
+              [color]="color"
+            >
+              <mat-icon ngxMatFileInputIcon>folder</mat-icon>
+            </ngx-mat-file-input>
+          </mat-form-field>
         </div>
       </div>
 
@@ -277,8 +285,15 @@
 
         <div class="col" *ngIf="hasDriverLicense === true">
           <mat-card-content>Upload your driver license</mat-card-content>
-          <!--          TODO: Downgrade angular in order to install file upload modules-->
-          <button mat-stroked-button>upload module, not done</button>
+          <mat-form-field class="full-width">
+            <ngx-mat-file-input
+              [formControl]="fileDriverLicense"
+              [multiple]="multiple"
+              [color]="color"
+            >
+              <mat-icon ngxMatFileInputIcon>folder</mat-icon>
+            </ngx-mat-file-input>
+          </mat-form-field>
         </div>
       </div>
 

@@ -7,7 +7,6 @@ import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.co
 import { AuthGuardForEmployee } from './core/auth.guardForEmployee';
 import { AuthGuardForHR } from './core/auth.guardForHR';
 import { OnBoardingComponent } from './on-boarding/on-boarding.component';
-import { RegisterModule } from './register/register.module';
 
 const routes: Routes = [
   {
@@ -22,10 +21,6 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => LoginModule,
-  },
-  {
-    path: 'register',
-    loadChildren: () => RegisterModule,
   },
   {
     path: 'employee',

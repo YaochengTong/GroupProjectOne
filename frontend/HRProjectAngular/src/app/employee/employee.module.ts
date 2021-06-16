@@ -35,6 +35,8 @@ import { HTTPReq } from '../service/HTTPReq/HTTPReq.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+
 @NgModule({
   declarations: [
     HomeComponent,
@@ -70,6 +72,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     MatDialogModule,
     FlexLayoutModule,
+    NgxMatFileInputModule,
   ],
   exports: [
     CommonModule,
