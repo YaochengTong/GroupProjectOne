@@ -1,6 +1,6 @@
 <div class="grid-container">
   <div fxLayout="row" fxLayoutAlign="space-between">
-    <h1 class="mat-h1" fxLayout="col">Hello {{ userName }}</h1>
+    <h1 class="mat-h1" fxLayout="col">Hello {{ userName }}, Welcome To BeaconFire Solution!</h1>
     <button
       mat-stroked-button
       onClick="window.open('on-boarding')"
@@ -10,7 +10,7 @@
     </button>
   </div>
 
-  <mat-grid-list cols="2" rowHeight="350px">
+  <!-- <mat-grid-list cols="2" rowHeight="350px">
     <mat-grid-tile
       *ngFor="let card of cards | async"
       [colspan]="card.cols"
@@ -39,5 +39,6 @@
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
-  </mat-grid-list>
+  </mat-grid-list> -->
+
 </div>

@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Edit Contact Infomatino</h1>
+<div mat-dialog-content>
+    <mat-label>Personal Email</mat-label>
+    <input matInput [(ngModel)]="data.contactSection.personalEmail" placeholder="data.contactSection.personalEmail"><br>
+    <mat-label>Work Email</mat-label>
+    <input matInput [(ngModel)]="data.contactSection.workEmail" placeholder="data.contactSection.workEmail"><br>
+    <mat-label>Ceil Phone</mat-label>
+    <input matInput [(ngModel)]="data.contactSection.ceilphone" placeholder="data.contactSection.ceilphone"><br>
+    <mat-label>Work Phone</mat-label>
+    <input matInput [(ngModel)]="data.contactSection.workPhone" placeholder="data.contactSection.workPhone"><br>
+    <br>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onCancelClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="data.contactSection" cdkFocusInitial>Save</button>
+</div>

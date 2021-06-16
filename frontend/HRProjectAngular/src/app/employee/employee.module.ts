@@ -18,6 +18,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
+import {MatDialogModule} from '@angular/material/dialog';
 
 import { EmployeeRoutingModule } from './employee-routing.module';
 import { EmployeePageComponent } from './components/employee-page/employee-page.component';
@@ -28,14 +29,19 @@ import { OnBoardingComponent } from '../on-boarding/on-boarding.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatDialogModule } from '@angular/material/dialog';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { HTTPReq } from '../service/HTTPReq/HTTPReq.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { NameSectionDialogComponent } from './components/personalInfo/name-section-dialog/name-section-dialog.component';
+import { AddressSectionDialogComponent } from './components/personalInfo/address-section-dialog/address-section-dialog.component';
+import { ContactSectionDialogComponent } from './components/personalInfo/contact-section-dialog/contact-section-dialog.component';
+import { EmergencyContactSectionDialogComponent } from './components/personalInfo/emergency-contact-section-dialog/emergency-contact-section-dialog.component';
+import { EmploymentSectionDialogComponent } from './components/personalInfo/employment-section-dialog/employment-section-dialog.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +52,11 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
     VisaComponent,
     EmployeePageComponent,
     OnBoardingComponent,
+    NameSectionDialogComponent,
+    AddressSectionDialogComponent,
+    ContactSectionDialogComponent,
+    EmergencyContactSectionDialogComponent,
+    EmploymentSectionDialogComponent
   ],
   imports: [
     CommonModule,
@@ -73,6 +84,7 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
     MatDialogModule,
     FlexLayoutModule,
     NgxMatFileInputModule,
+    FormsModule
   ],
   exports: [
     CommonModule,
@@ -81,6 +93,11 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
     EmployeeNavComponent,
     PersonalInfoComponent,
     VisaComponent,
+    NameSectionDialogComponent,
+    AddressSectionDialogComponent,
+    ContactSectionDialogComponent,
+    EmergencyContactSectionDialogComponent,
+    EmploymentSectionDialogComponent
   ],
 
   providers: [HTTPReq],
