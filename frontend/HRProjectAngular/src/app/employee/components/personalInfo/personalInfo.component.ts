@@ -38,6 +38,7 @@ export class PersonalInfoComponent implements OnInit {
         this.contactSection = data.profile.contactInfoSection;
         this.employmentSection = data.profile.employmentSection;
         this.emergencyContactList = data.profile.emergencyContactList;
+        console.log(this.emergencyContactList);
       }
     )
   }
@@ -70,6 +71,13 @@ export class PersonalInfoComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         console.log(result);
+        this.httpRequestService.postData('/profile/' + this.userId +"/update",
+          result,
+          'http://localhost:8999').subscribe(
+            (data: any) => {
+              console.log(data);
+            }
+          )
       })
   }
 
@@ -82,6 +90,13 @@ export class PersonalInfoComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         console.log(result);
+        this.httpRequestService.postData('/profile/' + this.userId +"/update",
+          result,
+          'http://localhost:8999').subscribe(
+            (data: any) => {
+              console.log(data);
+            }
+          )
       })
   }
   
@@ -95,6 +110,13 @@ export class PersonalInfoComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         console.log(result);
+        this.httpRequestService.postData('/profile/' + this.userId +"/update",
+          result,
+          'http://localhost:8999').subscribe(
+            (data: any) => {
+              console.log(data);
+            }
+          )
       })
   }
 
@@ -107,6 +129,13 @@ export class PersonalInfoComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         console.log(result);
+        this.httpRequestService.postData('/profile/' + this.userId +"/update",
+          result,
+          'http://localhost:8999').subscribe(
+            (data: any) => {
+              console.log(data);
+            }
+          )
       })
   }
 

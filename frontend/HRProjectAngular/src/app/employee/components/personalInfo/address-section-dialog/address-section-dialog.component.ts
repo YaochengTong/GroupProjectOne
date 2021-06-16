@@ -27,15 +27,20 @@ export interface AddressSectionData {
 })
 export class AddressSectionDialogComponent implements OnInit {
 
+  private origindata;
+
   constructor(
     public dialogRef: MatDialogRef<AddressSectionDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data:AddressSectionData
   ) { }
 
   ngOnInit(): void {
+    this.origindata = this.data;
+    console.log(this.origindata);
   }
 
   onCancelClick(): void {
+    this.data = this.origindata;
     this.dialogRef.close();
   }
 

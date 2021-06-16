@@ -4,7 +4,27 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 export interface EmergencyContacSectionData{
   emergencyContactList: {
-    person: {
+    emergencyPerson1: {
+      fullName:string;
+      phone: string;
+      address: {
+        secondaryAddr: {
+          Zip: string;
+          AddressLine2: string;
+          AddressLine1: string;
+          State: string;
+          City: string;
+        };
+        primaryAddr: {
+          Zip: string;
+          AddressLine2: string;
+          AddressLine1: string;
+          State: string;
+          City: string;
+        }
+      }
+    };
+    emergencyPerson2: {
       fullName:string;
       phone: string;
       address: {
