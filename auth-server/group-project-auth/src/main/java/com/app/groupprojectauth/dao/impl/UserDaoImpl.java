@@ -7,14 +7,12 @@ import com.app.groupprojectauth.domain.UserRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.*;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,39 +87,26 @@ public class UserDaoImpl implements IUserDao {
             return resultMap;
         }
 
+//        sql = "select id from person where id=?";
+//        rows = jdbcTemplate.queryForList(sql,
+//                new Object[]{param.get("person_id").toString()});
+//        if(rows.size() == 0){
+//            resultMap.put("success", false);
+//            resultMap.put("reason", "person does not exist");
+//            return resultMap;
+//        }
+
         sql = "insert into user (username, email, password, person_id, create_date, modification_date)"
                 + " values (?, ?, ?, NULL, ?, ?)";
-
-        int autoIncId = 0;
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-
-//        jdbcTemplate.update(sql, new Object[]{
-//                param.get("username"),
-//                param.get("email"),
-//                param.get("password"),
-//                //param.get("person_id"),
-//                new java.util.Date(),
-//                new java.util.Date()
-//        }, keyHolder);
-
-        String finalSql = sql;
-        java.sql.Date date = new Date(new java.util.Date().getTime());
-        this.jdbcTemplate.update(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-                PreparedStatement ps = con.prepareStatement(finalSql, Statement.RETURN_GENERATED_KEYS);
-                ps.setString(1, param.get("username").toString());
-                ps.setString(2, param.get("email").toString());
-                ps.setString(3,  param.get("password").toString());
-                ps.setDate(4, date);
-                ps.setDate(5, date);
-                return ps;
-            }
-        }, keyHolder);
-
-        autoIncId = keyHolder.getKey().intValue();
+        jdbcTemplate.update(sql, new Object[]{
+                param.get("username"),
+                param.get("email"),
+                param.get("password"),
+                //param.get("person_id"),
+                new java.util.Date(),
+                new java.util.Date()
+        });
         resultMap.put("success", true);
-        resultMap.put("userId", autoIncId);
         return resultMap;
     }
 

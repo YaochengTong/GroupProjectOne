@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
+import { ThemePalette } from '@angular/material/core';
+import { MaxSizeValidator } from '@angular-material-components/file-input';
+
+// const presetFiles = [new File([], 'file 1'), new File([], 'file 2')];
+// const presetFile = new File([], 'file 1');
 
 @Component({
   selector: 'app-on-boarding',
@@ -12,6 +17,15 @@ export class OnBoardingComponent {
   isCitizen: boolean | undefined;
   hasDriverLicense: boolean | undefined;
   authorizationSelection: boolean | undefined;
+
+  //File upload variables
+  color: ThemePalette = 'primary';
+  accept: string | undefined;
+  multiple: boolean = false;
+  fileWorkAuth: FormControl;
+  fileDriverLicense: FormControl;
+  files: File | undefined;
+  hasUnitNumber = false;
 
   OnBoardingForm = this.fb.group({
     // Personal Info
@@ -70,11 +84,7 @@ export class OnBoardingComponent {
     emergencyAddress: null,
     emergencyEmail: null,
     emergencyRelationship: null,
-
-    shipping: ['free', Validators.required],
   });
-
-  hasUnitNumber = false;
 
   states = [
     { name: 'Alabama', abbreviation: 'AL' },
@@ -140,7 +150,17 @@ export class OnBoardingComponent {
 
   // }
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) {
+    this.fileWorkAuth = new FormControl(this.files, [
+      Validators.required,
+      MaxSizeValidator(16 * 1024),
+    ]);
+
+    this.fileDriverLicense = new FormControl(this.files, [
+      Validators.required,
+      MaxSizeValidator(16 * 1024),
+    ]);
+  }
 
   //
   // selectCitizenshipOnChange(){

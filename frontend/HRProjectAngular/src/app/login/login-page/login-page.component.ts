@@ -45,7 +45,7 @@ export class LoginPageComponent implements OnInit {
     return this.loginForm.controls;
   }
 
-  switchLoginType() {
+  onToggle() {
     this.isUsername = !this.isUsername;
     this.isEmail = !this.isEmail;
     if (this.isUsername) {
@@ -63,6 +63,9 @@ export class LoginPageComponent implements OnInit {
 
 
   onSubmit() {
+    console.log("ese");
+    console.log(this.f.username.value);
+    console.log(this.f.password.value);  
 
     this.submitted = true;
 
@@ -70,22 +73,16 @@ export class LoginPageComponent implements OnInit {
       return;
     }
     
+    console.log("eee")
 
     this.loading = true;
 
-    let params
-    if (this.isUsername) {
-      params = {
-        "username": this.f.username.value,
-        "password": this.f.password.value,
-       }
-    } else {
-      params = {
-        "password": this.f.password.value,
-        "email": this.f.email.value
-       }
-    }
-   
+    
+   let params = {
+    "username": this.f.username.value,
+    "password": this.f.password.value,
+    // "email": this.f.email.value
+   }
 
     this.httpRequestService.postData('/user/login', 
     params, 
