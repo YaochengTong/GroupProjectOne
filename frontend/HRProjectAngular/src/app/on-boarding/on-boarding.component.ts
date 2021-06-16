@@ -24,6 +24,7 @@ export class OnBoardingComponent {
   multiple: boolean = false;
   fileWorkAuth: FormControl;
   fileDriverLicense: FormControl;
+  fileI983: FormControl;
   files: File | undefined;
   hasUnitNumber = false;
 
@@ -157,6 +158,11 @@ export class OnBoardingComponent {
     ]);
 
     this.fileDriverLicense = new FormControl(this.files, [
+      Validators.required,
+      MaxSizeValidator(16 * 1024),
+    ]);
+
+    this.fileI983 = new FormControl(this.files, [
       Validators.required,
       MaxSizeValidator(16 * 1024),
     ]);
