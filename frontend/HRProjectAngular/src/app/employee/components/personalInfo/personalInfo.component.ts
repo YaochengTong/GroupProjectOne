@@ -51,6 +51,13 @@ export class PersonalInfoComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
           console.log(result);
+          this.httpRequestService.postData('/profile/' + this.userId +"/update",
+          result,
+          'http://localhost:8999').subscribe(
+            (data: any) => {
+              console.log(data);
+            }
+          )
         })
   }
 

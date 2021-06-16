@@ -28,4 +28,14 @@ public class ProfileController {
         profileList.put("AllProfile", iProfileService.getProfile());
         return profileList;
     }
+
+    @PostMapping("/{user_id}/update")
+    public Map<String, Object> updateProfile(@RequestParam Map<String, Object> params) {
+        System.out.println(params);
+        Map<String, Object> resultMap = new HashMap<>();
+        // to do: get data from frontend
+        // to do: update database
+        // to do: return success or failed reason
+        return resultMap;
+    }
 }
