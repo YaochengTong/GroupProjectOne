@@ -12,6 +12,9 @@ export class RegisterPageComponent implements OnInit {
 
   registerForm! : FormGroup;
   loading = false;
+  submitted = false;
+  email: string = "email";
+  registerToken: string = "token";
 
 
   constructor(
@@ -22,10 +25,56 @@ export class RegisterPageComponent implements OnInit {
 
   ngOnInit(): void {
     if (localStorage.getItem("isLogged") == "true") {
-      this.router.navigate(['/employee']);
+      // if (localStorage.getItem("user").roleName == 'HR') {
+      //   this.router.navigate(['/human-resource'])
+      // } else {
+      //   this.router.navigate(['/employee']);
+      // } 
     }
+
+    this.registerForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+    })
   }
 
-  this
+  get f() {
+    return this.registerForm.controls;
+  }
+
+  onSubmit() {
+    this.submitted = true;
+
+    if (this.registerForm.invalid) {
+      return;
+    }
+
+    this.loading = true;
+
+    let params = {
+      "username": this.f.username.value,
+      "password": this.f.password.value,
+      "email": this.email,
+      "token": this.registerToken
+    }
+
+    this.httpRequestService.postData('/user/register',
+    params,
+    'http://localhost:9999').subscribe(
+      (data: any) => {
+        if (data.success == "true") {
+          localStorage.setItem("isLogged", "true");
+          localStorage.setItem("registerToken", this.registerToken);
+          localStorage.setItem("token", data.JWT_TOKEN);
+          localStorage.setItem("user", JSON.stringify(data.user));
+          this.router.navigate(['/on-boarding'])
+        } else {
+          console.log(data.reason);
+        }
+        
+      }
+    );
+  }
+  
 
 }
