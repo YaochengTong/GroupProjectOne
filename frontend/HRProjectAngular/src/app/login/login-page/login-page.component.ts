@@ -101,8 +101,6 @@ export class LoginPageComponent implements OnInit {
         } else {
           this.router.navigate(['/employee']);
         }
-      },(error) => {
-        console.log(error);
       });
       
     }
