@@ -9,7 +9,6 @@
             <label for="username"><strong>Username</strong> &nbsp;  |  &nbsp; 
                 <button (click)="switchLoginType()" style="display: inline; border: none; outline: none; background-color:transparent; color: gray; font-size: medium;">Email</button>
             </label>
-            <label for="username">Username</label>
             <br><br>
             <input id="username" type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
             <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
@@ -22,7 +21,6 @@
             <label for="email"><strong>Email</strong> &nbsp;  |  &nbsp; 
                 <button (click)="switchLoginType()" style="display: inline; border: none; outline: none; background-color:transparent; color: gray; font-size: medium;">Username</button>
             </label>
-            <label for="email">Email</label>
             <br><br>
             <input type="email" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
             <div *ngIf="submitted && f.email.errors" class="invalid-feedback"><br>
@@ -46,7 +44,7 @@
                 Login
             </button>
 
-            <a routerLink="../register" class="link">Register</a>
+            <a routerLink="../login/register" class="link">Register</a>
         </div>
       </form>
   </div>

@@ -15,17 +15,27 @@ public class ProfileController {
     @Autowired
     private IProfileService iProfileService;
 
-    @GetMapping("/{employee_id}")
-    public Map<String, Object> getProfile(@PathVariable Integer employee_id) {
+    @GetMapping("/{user_id}")
+    public Map<String, Object> getProfile(@PathVariable Integer user_id) {
         Map<String, Object> profile = new HashMap<>();
-        profile.put("profile" + employee_id, iProfileService.getProfileByEmployeeId(employee_id));
+        profile.put("profile", iProfileService.getProfileByEmployeeId(user_id));
         return profile;
     }
 
-    @GetMapping("/admin")
+    @GetMapping("/all")
     public Map<String, Object> getProfileList() {
         Map<String, Object>  profileList = new HashMap<>();
         profileList.put("AllProfile", iProfileService.getProfile());
         return profileList;
+    }
+
+    @PostMapping("/{user_id}/update")
+    public Map<String, Object> updateProfile(@RequestParam Map<String, Object> params) {
+        System.out.println(params);
+        Map<String, Object> resultMap = new HashMap<>();
+        // to do: get data from frontend
+        // to do: update database
+        // to do: return success or failed reason
+        return resultMap;
     }
 }
