@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { HTTPReq } from 'src/app/service/HTTPReq/HTTPReq.service';
-
-export interface Tile {
-  color: string;
-  cols: number;
-  rows: number;
-  text: string;
-}
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { NameSectionDialogComponent } from './name-section-dialog/name-section-dialog.component';
+import { AddressSectionDialogComponent } from './address-section-dialog/address-section-dialog.component';
+import { ContactSectionDialogComponent } from './contact-section-dialog/contact-section-dialog.component';
+import { EmergencyContactSectionDialogComponent } from './emergency-contact-section-dialog/emergency-contact-section-dialog.component';
+import { EmploymentSectionDialogComponent } from './employment-section-dialog/employment-section-dialog.component';
 
 @Component({
   selector: 'app-personalInfo',
@@ -14,14 +13,7 @@ export interface Tile {
   styleUrls: ['./personalInfo.component.scss'],
 })
 export class PersonalInfoComponent implements OnInit {
-  tiles: Tile[] = [
-    { text: 'Name', cols: 2, rows: 2, color: 'lightblue' },
-    { text: 'Address', cols: 2, rows: 2, color: 'lightgreen' },
-    { text: 'Contact Info', cols: 2, rows: 2, color: 'lightpink' },
-    { text: 'Employment', cols: 2, rows: 2, color: '#DDBDF1' },
-    { text: 'Emergency Contact', cols: 2, rows: 2, color: '#DDBDF1' },
-    { text: 'Document Section', cols: 2, rows: 2, color: '#DDBDF1' },
-  ];
+  
   public userId!: string;
   public empolyeeId!: number;
   public nameSection;
@@ -32,7 +24,8 @@ export class PersonalInfoComponent implements OnInit {
   
 
   constructor(
-    private httpRequestService: HTTPReq
+    private httpRequestService: HTTPReq,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -45,11 +38,72 @@ export class PersonalInfoComponent implements OnInit {
         this.contactSection = data.profile.contactInfoSection;
         this.employmentSection = data.profile.employmentSection;
         this.emergencyContactList = data.profile.emergencyContactList;
-        console.log(this.addressSection);
-        console.log(this.nameSection.fullName);
-        console.log(this.emergencyContactList[0]);
       }
     )
   }
+
+  editNameSection() :void {
+      const dialogRef = this.dialog.open(NameSectionDialogComponent,
+        {
+          width: '500px',
+          data: {"nameSection": this.nameSection}
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(result);
+        })
+  }
+
+  editAddressSection() : void {
+    const dialogRef = this.dialog.open(AddressSectionDialogComponent,
+      {
+        width: '500px',
+        data: {"addressSection": this.addressSection}
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result);
+      })
+  }
+
+  editContactSection() : void {
+    const dialogRef = this.dialog.open(ContactSectionDialogComponent,
+      {
+        width: '500px',
+        data: {"contactSection": this.contactSection}
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result);
+      })
+  }
+  
+
+  editEmploymentSection() : void {
+    const dialogRef = this.dialog.open(EmploymentSectionDialogComponent,
+      {
+        width: '500px',
+        data: {"employmentSection": this.employmentSection}
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result);
+      })
+  }
+
+  editEmergencyContactList() : void {
+    const dialogRef = this.dialog.open(EmergencyContactSectionDialogComponent,
+      {
+        width: '500px',
+        data: {"emergencyContactList": this.emergencyContactList}
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result);
+      })
+  }
+
+
+
 
 }

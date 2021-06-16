@@ -18,7 +18,7 @@
             <p><strong>Date of Birth: </strong>{{nameSection.dob.substring(0,10)}}</p>
           </div>
           <div>
-            <button mat-raised-button color="primary")>Edit</button>
+            <button mat-raised-button color="primary" (click)="editNameSection()">Edit</button>
           </div>
         </div>
       </div>
@@ -49,7 +49,7 @@
           </div>
 
           <div>
-            <button mat-raised-button color="primary">Edit</button>
+            <button mat-raised-button color="primary" (click)="editAddressSection()">Edit</button>
           </div>
         </div>
       </div>
@@ -70,7 +70,7 @@
             <p><strong>Work Phone:</strong> {{contactSection.workPhone}}</p>
           </div>
           <div>
-            <button mat-raised-button color="primary">Edit</button>
+            <button mat-raised-button color="primary" (click)="editContactSection()">Edit</button>
           </div>
         </div>
       </div>
@@ -86,6 +86,7 @@
       
           <div *ngFor="let person of emergencyContactList; let i = index">
             <p>{{emergencyContactList[i].fullName}}</p>
+            <p><strong>Phone#</strong>{{emergencyContactList[i].phone}}</p>
             <mat-card-subtitle>Primary Address</mat-card-subtitle>
             <div class="card-content">
               <p><strong>Address Line 1:</strong> {{emergencyContactList[i].address.primaryAddr.AddressLine1}} ,</p>
@@ -105,7 +106,7 @@
           </div>
 
           <div>
-            <button mat-raised-button color="primary">Edit</button>
+            <button mat-raised-button color="primary" (click)="editEmergencyContactList()">Edit</button>
           </div>
         </div>
       </div>
@@ -125,9 +126,10 @@
             <p><strong>Authorization End Date:</strong> {{employmentSection.authorizationEndDate.substring(0,10)}}</p>
             <p><strong>Employment Start Date:</strong> {{employmentSection.employmentStartDate.substring(0,10)}}</p>
             <p><strong>Employment End Date:</strong> {{employmentSection.employmentEndDate.substring(0,10)}}</p>
+            <p><strong>Title: </strong>{{employmentSection.title}}</p>
           </div>
           <div>
-            <button mat-raised-button color="primary">Edit</button>
+            <button mat-raised-button color="primary" (click)="editEmploymentSection()">Edit</button>
           </div>
         </div>
       </div>
@@ -137,123 +139,3 @@
   </mat-grid-list>
 </div>
 
-
-<!-- <br/>
-<div style="width: 90%; margin: auto; background: pink;">
-  <mat-card class="example-card" style="background: lightblue">
-    <div class="card-header">
-      <div mat-card-avatar class="example-header-image">{{nameSection.avatar}}</div>
-      <p style="font-size: larger">{{nameSection.preferredName}}<p><strong><br>
-      
-    </div>
-  </mat-card>
-  <div style="display: inline;">
-    <mat-card-subtitle>Full Name: {{nameSection.preferredName}}</mat-card-subtitle>
-    <mat-card-subtitle>Age: {{nameSection.age}}</mat-card-subtitle>
-    <mat-card-subtitle>SS#: {{nameSection.ssn}}</mat-card-subtitle>
-    <mat-card-subtitle>Date of Birth: {{nameSection.dob}}</mat-card-subtitle>
-    <div>
-      <button mat-raised-button color="primary">Edit</button>
-    </div>
-  </div>
-  </mat_card>
-</div>
-
-<br/>
-<div style="width: 90%; margin: auto">
-  <mat-card class="example-card">
-    <div class="card-header">
-      <mat-icon>home</mat-icon>
-      <p style="font-size: larger">Address<p><strong>
-      <mat-card-subtitle>Any Change should be Update</mat-card-subtitle>
-    </div>
-    <div class="card-content">
-      <p><strong>
-        The Shiba Inu .
-      </p>
-    </div>
-    <div>
-      <button mat-raised-button color="primary">Edit</button>
-    </div>
-  </mat-card>
-</div>
-
-<br/>
-<div style="width: 90%; margin: auto">
-  <mat-card class="example-card">
-    <div class="card-header">
-      <mat-icon>info</mat-icon>
-      <p style="font-size: larger">Contact Info<p><strong>
-    </div>
-
-    <div class="card-content">
-      <p><strong>
-        The Shiba Inu.
-      </p>
-    </div>
-    <div>
-      <button mat-raised-button color="primary">Edit</button>
-    </div>
-  </mat-card>
-</div>
-
-
-<br/>
-<div style="width: 90%; margin: auto">
-  <mat-card class="example-card">
-    <div class="card-header">
-      <mat-icon>person</mat-icon>
-      <p style="font-size: larger">Employment<p><strong>
-      <mat-card-subtitle>Visa Status</mat-card-subtitle>
-    </div>
-    <div class="card-content">
-      <p><strong>
-        The Shiba Inu.
-      </p>
-    </div>
-    <div>
-      <button mat-raised-button color="primary">Edit</button>
-    </div>
-  </mat-card>
-</div>
-
-
-
-<br/>
-<div style="width: 90%; margin: auto">
-  <mat-card class="example-card">
-    <div class="card-header">
-      <mat-icon>group</mat-icon>
-      <p style="font-size: larger">Emergency Contact<p><strong>
-      <mat-card-subtitle>Update anytime</mat-card-subtitle>
-    </div>
-    <div class="card-content">
-      <p><strong>
-        The Shiba Inu.
-      </p>
-    </div>
-    <div>
-      <button mat-raised-button color="primary">Edit</button>
-    </div>
-  </mat-card>
-</div>
-
-
-<br/>
-<div style="width: 90%; margin: auto">
-  <mat-card class="example-card">
-    <div class="card-header">
-      <mat-icon>badge</mat-icon>
-      <p style="font-size: larger">Document<p><strong>
-      <mat-card-subtitle>Status Tracking</mat-card-subtitle>
-    </div>
-    <div class="card-content">
-      <p><strong>
-        The Shiba Inu.
-      </p>
-    </div>
-    <div>
-      <button mat-raised-button color="primary">Edit</button>
-    </div>
-  </mat-card>
-</div> -->
