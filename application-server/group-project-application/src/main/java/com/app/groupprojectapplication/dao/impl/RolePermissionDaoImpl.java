@@ -1,7 +1,6 @@
 package com.app.groupprojectapplication.dao.impl;
 
-import com.app.groupprojectapplication.dao.IRolePermissonDao;
-import com.app.groupprojectapplication.domain.PersonalDocument;
+import com.app.groupprojectapplication.dao.IRolePermissionDao;
 import com.app.groupprojectapplication.domain.RolePermission;
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
@@ -13,7 +12,7 @@ import java.util.List;
 
 
 @Repository
-public class RolePermissionDaoImpl implements IRolePermissonDao {
+public class RolePermissionDaoImpl implements IRolePermissionDao {
 
     RolePermission rolePermission;
 
