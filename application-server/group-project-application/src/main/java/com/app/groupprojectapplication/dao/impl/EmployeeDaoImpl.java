@@ -21,8 +21,9 @@ public class EmployeeDaoImpl implements IEmployeeDao {
 
     @Override
     public List<Employee> getEmployee() {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         List<Employee> employeeList = session.createQuery("FROM Employee").getResultList();
+        session.close();
         return employeeList;
     }
 
@@ -30,6 +31,7 @@ public class EmployeeDaoImpl implements IEmployeeDao {
     public Employee getEmployeeById(Integer id) {
         Session session = sessionFactory.openSession();
         employee = session.get(Employee.class, id);
+        session.close();
         return employee;
     }
 
