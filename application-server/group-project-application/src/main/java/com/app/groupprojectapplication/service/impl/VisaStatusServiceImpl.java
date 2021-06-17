@@ -61,7 +61,6 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
         visaStatusInfo.setAuthorizationDayLeft(iVisaStatusDao.getVisaAuthorizationLeftDay(employee.getId()));
         visaStatusInfo.setDocumentReceived(amazonS3FileService.printFilesInOneFolder(String.valueOf(user.getId())));
         visaStatusInfo.setNextStep(determineNextStep(iApplicationWorkFlowDao.getApplicationWorkFlowByUserIdAndApplicationType(userId, applicationType).getStatus()));
-        System.out.println(visaStatusInfo.toString());
         return visaStatusInfo;
     }
 
