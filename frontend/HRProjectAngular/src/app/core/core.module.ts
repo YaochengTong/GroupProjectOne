@@ -5,6 +5,7 @@ import { SharedModule } from '../shared/shared.module';
   imports: [SharedModule],
   declarations: [],
 })
+
 export class CoreModule {
   constructor(
     @Optional()

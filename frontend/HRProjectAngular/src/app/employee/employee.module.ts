@@ -42,6 +42,7 @@ import { AddressSectionDialogComponent } from './components/personalInfo/address
 import { ContactSectionDialogComponent } from './components/personalInfo/contact-section-dialog/contact-section-dialog.component';
 import { EmergencyContactSectionDialogComponent } from './components/personalInfo/emergency-contact-section-dialog/emergency-contact-section-dialog.component';
 import { EmploymentSectionDialogComponent } from './components/personalInfo/employment-section-dialog/employment-section-dialog.component';
+import { ContactTemplateComponent } from '../on-boarding/contact-template/contact-template.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { EmploymentSectionDialogComponent } from './components/personalInfo/empl
     VisaComponent,
     EmployeePageComponent,
     OnBoardingComponent,
+    ContactTemplateComponent,
     NameSectionDialogComponent,
     AddressSectionDialogComponent,
     ContactSectionDialogComponent,
@@ -100,7 +102,9 @@ import { EmploymentSectionDialogComponent } from './components/personalInfo/empl
     EmploymentSectionDialogComponent
   ],
 
-  providers: [HTTPReq],
+  providers: [
+    HTTPReq
+  ],
 
   bootstrap: [EmployeeNavComponent],
 })
