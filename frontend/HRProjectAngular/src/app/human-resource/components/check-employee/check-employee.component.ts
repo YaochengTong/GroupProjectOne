@@ -14,12 +14,14 @@ import { MatTableDataSource } from '@angular/material/table';
 export class CheckEmployeeComponent implements OnInit, AfterViewInit {
 
   public dataSource;
+  public len!: number;
   displayedColumns: string[] = [
     'name',
     'ssn',
     'startingDate',
     'visaStatus',
     // 'order',
+    // 'len'
   ];
 
   constructor(
@@ -36,6 +38,7 @@ export class CheckEmployeeComponent implements OnInit, AfterViewInit {
     this.httpRequestService.getData('/profile/all', null, 'http://localhost:8999').subscribe(
       (data:any) => {
         this.dataSource = new MatTableDataSource<PeriodicElement>(data.AllProfile);
+        this.len = Object.keys(data.AllProfile).length;
       }
     )
   }
