@@ -1,0 +1,179 @@
+<form [formGroup]="ContactForm" novalidate>
+<mat-card-subtitle>{{title}}</mat-card-subtitle>
+    <div class="row">
+        <div class="col">
+            <mat-form-field class="full-width">
+            <input
+                matInput
+                placeholder="First Name"
+                formControlName="FirstName"
+                required
+            />
+            <mat-error
+                *ngIf="
+                ContactForm.controls['FirstName'].hasError(
+                    'required'
+                )
+                "
+            >
+                First Name is <strong>required</strong>
+            </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="col">
+            <mat-form-field class="full-width">
+            <input
+                matInput
+                placeholder="Last Name"
+                formControlName="LastName"
+                required
+            />
+            <mat-error
+                *ngIf="
+                ContactForm.controls['LastName'].hasError(
+                    'required'
+                )
+                "
+            >
+                Last Name is <strong>required</strong>
+            </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="col">
+            <mat-form-field class="full-width">
+            <input
+                matInput
+                placeholder="Middle Name"
+                formControlName="MiddleName"
+            />
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <mat-form-field class="full-width">
+            <input
+                matInput
+                placeholder="Phone"
+                formControlName="Phone"
+                required
+            />
+            <mat-error
+                *ngIf="
+                ContactForm.controls['Phone'].hasError('required')
+                "
+            >
+                Phone is <strong>required</strong>
+            </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="col">
+            <mat-form-field class="full-width">
+            <input
+                matInput
+                placeholder="Address"
+                formControlName="Address"
+                required
+            />
+            <mat-error
+                *ngIf="ContactForm.controls['Address'].hasError('required')"
+            >
+                Address is <strong>required</strong>
+            </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <mat-form-field class="full-width">
+            <input
+                matInput
+                placeholder="Address 2"
+                formControlName="Address2"
+            >
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+        <mat-form-field class="full-width">
+            <input
+            matInput
+            placeholder="City"
+            formControlName="City"
+            required
+            />
+            <mat-error
+            *ngIf="ContactForm.controls['City'].hasError('required')"
+            >
+            City is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+        </div>
+        <div class="col">
+        <mat-form-field class="full-width">
+            <mat-select placeholder="State" formControlName="State" required>
+            <mat-option
+                *ngFor="let state of states"
+                [value]="state.abbreviation"
+            >
+                {{ state.name }}
+            </mat-option>
+            </mat-select>
+            <mat-error
+            *ngIf="ContactForm.controls['State'].hasError('required')"
+            >
+            State is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+        </div>
+
+        <div class="col">
+        <mat-form-field class="full-width">
+            <input
+            matInput
+            #PostalCode
+            maxlength="5"
+            placeholder="Postal Code"
+            type="number"
+            formControlName="PostalCode"
+            required
+            />
+            <mat-error
+            *ngIf="ContactForm.controls['PostalCode'].hasError('required')"
+            >
+            City is <strong>required</strong>
+            </mat-error>
+            <mat-hint align="end">{{ PostalCode.value.length }} / 5</mat-hint>
+        </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+        <mat-form-field class="full-width">
+            <input
+            matInput
+            placeholder="Email"
+            formControlName="Email"
+            />
+        </mat-form-field>
+        </div>
+
+        <div class="col">
+            <mat-form-field class="full-width">
+                <input
+                matInput
+                placeholder="Relationship"
+                formControlName="Relationship"
+                />
+            </mat-form-field>
+        </div>
+    </div>
+</form>
