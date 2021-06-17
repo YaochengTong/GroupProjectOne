@@ -30,6 +30,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import {MatStepperModule} from '@angular/material/stepper';
 
 import { HTTPReq } from '../service/HTTPReq/HTTPReq.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -43,6 +44,7 @@ import { ContactSectionDialogComponent } from './components/personalInfo/contact
 import { EmergencyContactSectionDialogComponent } from './components/personalInfo/emergency-contact-section-dialog/emergency-contact-section-dialog.component';
 import { EmploymentSectionDialogComponent } from './components/personalInfo/employment-section-dialog/employment-section-dialog.component';
 import { ContactTemplateComponent } from '../on-boarding/contact-template/contact-template.component';
+import { PersonalInfoTemplateComponent } from '../on-boarding/personal-info-template/personal-info-template.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,7 @@ import { ContactTemplateComponent } from '../on-boarding/contact-template/contac
     EmployeePageComponent,
     OnBoardingComponent,
     ContactTemplateComponent,
+    PersonalInfoTemplateComponent,
     NameSectionDialogComponent,
     AddressSectionDialogComponent,
     ContactSectionDialogComponent,
@@ -86,7 +89,8 @@ import { ContactTemplateComponent } from '../on-boarding/contact-template/contac
     MatDialogModule,
     FlexLayoutModule,
     NgxMatFileInputModule,
-    FormsModule
+    FormsModule,
+    MatStepperModule
   ],
   exports: [
     CommonModule,
