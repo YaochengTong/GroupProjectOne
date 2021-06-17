@@ -1,0 +1,11 @@
+<h1>Housing Details</h1>
+
+<div *ngIf="house">
+  <h2>{{house.address | uppercase}} Details</h2>
+  <div><span>id: </span>{{house.id}}</div>
+  <div>
+    <label for="hero-name">House name: </label>
+    <input id="hero-name" [(ngModel)]="house.address" placeholder="House address"/>
+  </div>
+  <button mat-raised-button color="primary" (click)="goBack()">go back</button>
+</div>

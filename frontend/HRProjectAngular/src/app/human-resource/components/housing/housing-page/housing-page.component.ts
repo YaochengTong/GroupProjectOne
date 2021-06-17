@@ -21,5 +21,6 @@ export class HousingPageComponent implements OnInit {
 
   public onCardClick(h: House) {
      this.selectedHouse = h;
+
   }
 }
