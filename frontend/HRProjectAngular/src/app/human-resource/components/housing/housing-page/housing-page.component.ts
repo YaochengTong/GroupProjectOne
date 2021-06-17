@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HOUSES } from '../domain/mock-houses';
 import { House } from '../domain/house';
+import {HousingService} from "../housing.service";
 
 @Component({
   selector: 'app-housing-page',
@@ -8,12 +8,14 @@ import { House } from '../domain/house';
   styleUrls: ['./housing-page.component.scss'],
 })
 export class HousingPageComponent implements OnInit {
-  houses = HOUSES;
+  houses: House[] = [];
   selectedHouse?: House;
 
-  constructor() {}
+  constructor(private housingService: HousingService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.housingService.getHouses().subscribe(h => this.houses = h);
+  }
 
   onSelect(h: House): void {
     this.selectedHouse = h;

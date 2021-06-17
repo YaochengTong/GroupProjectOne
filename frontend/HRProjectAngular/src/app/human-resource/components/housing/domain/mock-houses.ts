@@ -29,17 +29,17 @@ export const HOUSES: House[] = [
   },
   {
     id: 9,
-    address: '20 Lake View St.',
+    address: '92 East Cemetery Road, Appleton, WI 54911',
     landlord: 'Jason',
     phone: '472-412-123',
     numberOfPerson: 2,
     employee: [
       {
         id: 2,
-        name: 'Zack',
+        name: 'asedr',
         phone: '123-234-1111',
-        email: 'zack@beaconﬁre.com',
-        car: 'Honda_Accord_Grey',
+        email: 'figapor810@beydent.com',
+        car: 'Mada_asd',
       },
     ],
     facility: [
@@ -62,10 +62,10 @@ export const HOUSES: House[] = [
     employee: [
       {
         id: 1,
-        name: 'Zack',
-        phone: '123-234-1111',
-        email: 'zack@beaconﬁre.com',
-        car: 'Honda_Accord_Grey',
+        name: 'Gana',
+        phone: '121-234-5555',
+        email: 'mnajim.triand@azel.xyz',
+        car: 'Benz_G63',
       },
     ],
     facility: [

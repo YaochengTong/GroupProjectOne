@@ -1,11 +1,54 @@
 <h1>Housing Details</h1>
+<button mat-raised-button color="primary" (click)="goBack()">go back</button>
 
-<div *ngIf="house">
-  <h2>{{house.address | uppercase}} Details</h2>
-  <div><span>id: </span>{{house.id}}</div>
-  <div>
-    <label for="hero-name">House name: </label>
-    <input id="hero-name" [(ngModel)]="house.address" placeholder="House address"/>
+<mat-grid-list cols="1" rowHeight="2:1">
+  <div *ngIf="house">
+    <mat-grid-tile>
+      <mat-card class="clickable">
+        <mat-card-title>Facility Info</mat-card-title>
+        <mat-card-content>
+          <mat-list *ngFor="let f of facility">
+            <mat-list-item>
+              <strong>Number of Beds:</strong> &nbsp; {{ f.numberOfBeds }}
+            </mat-list-item>
+            <mat-list-item>
+              <strong>Number of Mattresses:</strong> &nbsp;
+              {{ f.numberOfMattresses }}
+            </mat-list-item>
+            <mat-list-item>
+              <strong>Number of Tables:</strong> &nbsp; {{ f.numberOfTables }}
+            </mat-list-item>
+            <mat-list-item>
+              <strong>Number of Chairs:</strong> &nbsp; {{ f.numberOfChairs }}
+            </mat-list-item>
+          </mat-list>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="openDialog()">
+              Facility Reports
+            </button>
+          </mat-card-actions>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="clickable">
+        <mat-card-title>Employee Info</mat-card-title>
+        <mat-card-content>
+          <mat-list *ngFor="let e of employee">
+            <mat-list-item>
+              <strong>Name:</strong> &nbsp; {{ e.name }}
+            </mat-list-item>
+            <mat-list-item>
+              <strong>Phone:</strong> &nbsp; {{ e.phone }}
+            </mat-list-item>
+            <mat-list-item>
+              <strong>Email:</strong> &nbsp; {{ e.email }}
+            </mat-list-item>
+            <mat-list-item>
+              <strong>Car:</strong> &nbsp; {{ e.car }}
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+
+      </mat-card>
+    </mat-grid-tile>
   </div>
-  <button mat-raised-button color="primary" (click)="goBack()">go back</button>
-</div>
+</mat-grid-list>

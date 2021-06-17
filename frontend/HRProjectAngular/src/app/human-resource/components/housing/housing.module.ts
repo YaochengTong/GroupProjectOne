@@ -10,10 +10,11 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatRippleModule} from "@angular/material/core";
 import {MatListModule} from "@angular/material/list";
 import { HousingDetailComponent } from './housing-detail/housing-detail.component';
+import { ReportDialogComponent } from './report-dialog/report-dialog.component';
 
 
 @NgModule({
-  declarations: [HousingPageComponent, HousingDetailComponent],
+  declarations: [HousingPageComponent, HousingDetailComponent, ReportDialogComponent],
   imports: [
     CommonModule,
     HousingRoutingModule,
