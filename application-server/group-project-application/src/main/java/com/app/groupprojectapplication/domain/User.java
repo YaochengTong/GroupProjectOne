@@ -1,5 +1,7 @@
 package com.app.groupprojectapplication.domain;
 
+import com.amazonaws.services.opsworks.model.App;
+
 import javax.persistence.*;
 import javax.persistence.criteria.Fetch;
 import java.io.Serializable;
@@ -22,6 +24,7 @@ public class User implements Serializable {
     private Set<UserRole> userRoleSet;
     private Person person;
     private Set<PersonalDocument> personalDocumentSet;
+    private Set<ApplicationWorkflow> applicationWorkflowSet;
 
     public User() {
     }
@@ -145,6 +148,15 @@ public class User implements Serializable {
 
     public void setPersonalDocumentSet(Set<PersonalDocument> personalDocumentSet) {
         this.personalDocumentSet = personalDocumentSet;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    public Set<ApplicationWorkflow> getApplicationWorkflowSet() {
+        return applicationWorkflowSet;
+    }
+
+    public void setApplicationWorkflowSet(Set<ApplicationWorkflow> applicationWorkflowSet) {
+        this.applicationWorkflowSet = applicationWorkflowSet;
     }
 
     @Override

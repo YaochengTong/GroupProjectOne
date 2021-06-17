@@ -46,4 +46,12 @@ public class ApplicationWorkflowDaoImpl implements IApplicationWorkFlowDao {
         ts.commit();
         session.close();
     }
+
+    @Override
+    public ApplicationWorkflow getApplicationWorkFlowByUserIdAndApplicationType(Integer userId, String applicationType) {
+        Session session = sessionFactory.getCurrentSession();
+        String query = "FROM ApplicationWorkflow WHERE user.id = :userId AND type = :type";
+        ApplicationWorkflow applicationWorkflow = (ApplicationWorkflow) session.createQuery(query).setParameter("userId", userId).setParameter("type", applicationType).getResultList().get(0);
+        return applicationWorkflow;
+    }
 }

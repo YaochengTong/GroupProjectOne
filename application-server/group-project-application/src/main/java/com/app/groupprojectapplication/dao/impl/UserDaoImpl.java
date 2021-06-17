@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.Query;
 import javax.persistence.criteria.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Shida Sheng
@@ -27,9 +28,8 @@ public class UserDaoImpl implements IUserDao {
 
     @Override
     public User getUserById(Integer id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         user = session.get(User.class, id);
-        session.close();
         return user;
     }
 
@@ -65,6 +65,13 @@ public class UserDaoImpl implements IUserDao {
         Transaction ts = session.beginTransaction();
         ts.commit();
         session.close();
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        Session session = sessionFactory.getCurrentSession();
+        List<User> users = session.createQuery("FROM User").getResultList();
+        return users;
     }
 
     @Override

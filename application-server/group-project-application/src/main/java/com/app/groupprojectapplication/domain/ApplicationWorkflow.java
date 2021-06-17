@@ -14,7 +14,7 @@ public class ApplicationWorkflow implements Serializable {
     private String status;
     private String comments;
     private String type;
-    private Employee employee;
+    private User user;
 
     @Id
     @Column(name = "id")
@@ -77,14 +77,15 @@ public class ApplicationWorkflow implements Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id", referencedColumnName = "id")
-    public Employee getEmployee() {
-        return employee;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    public User getUser() {
+        return user;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setUser(User user) {
+        this.user = user;
     }
+
 
     @Override
     public boolean equals(Object o) {

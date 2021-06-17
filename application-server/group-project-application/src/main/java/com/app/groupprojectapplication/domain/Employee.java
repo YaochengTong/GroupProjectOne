@@ -24,7 +24,6 @@ public class Employee implements Serializable {
     private Person person;
     private VisaStatus visaStatus;
     private Set<PersonalDocument> personalDocumentSet;
-    private Set<ApplicationWorkflow> applicationWorkflowSet;
     private Set<FacilityReport> facilityReportSet;
     private Set<FacilityReportDetail> facilityReportDetailSet;
     private Set<RegistrationToken> registrationTokenSet;
@@ -176,15 +175,6 @@ public class Employee implements Serializable {
 
     public void setVisaStatus(VisaStatus visaStatus) {
         this.visaStatus = visaStatus;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
-    public Set<ApplicationWorkflow> getApplicationWorkflowSet() {
-        return applicationWorkflowSet;
-    }
-
-    public void setApplicationWorkflowSet(Set<ApplicationWorkflow> applicationWorkflowSet) {
-        this.applicationWorkflowSet = applicationWorkflowSet;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
