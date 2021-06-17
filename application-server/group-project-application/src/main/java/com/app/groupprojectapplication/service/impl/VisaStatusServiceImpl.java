@@ -4,10 +4,7 @@ import com.app.groupprojectapplication.dao.IApplicationWorkFlowDao;
 import com.app.groupprojectapplication.dao.IEmployeeDao;
 import com.app.groupprojectapplication.dao.IUserDao;
 import com.app.groupprojectapplication.dao.IVisaStatusDao;
-import com.app.groupprojectapplication.domain.Employee;
-import com.app.groupprojectapplication.domain.Person;
-import com.app.groupprojectapplication.domain.User;
-import com.app.groupprojectapplication.domain.VisaStatus;
+import com.app.groupprojectapplication.domain.*;
 import com.app.groupprojectapplication.domain.homeElement.VisaInfo;
 import com.app.groupprojectapplication.domain.visaStatusManagement.VisaStatusInfo;
 import com.app.groupprojectapplication.file.AmazonS3FileService;
@@ -54,8 +51,8 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
     public VisaStatusInfo getVisaInfoByUserId(Integer userId) {
         User user = iUserDao.getUserById(userId);
         VisaStatusInfo visaStatusInfo = new VisaStatusInfo();
-        Person person = user.getPerson();
         Employee employee = iEmployeeDao.getEmployeeById(iUserDao.getEmployeeIdByUserId(user.getId()));
+        Person person = user.getPerson();
 
         visaStatusInfo.setFullName(setFullName(person));
         visaStatusInfo.setWorkAuthorization(employee.getVisaStatus().getVisaType());
@@ -64,7 +61,7 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
         visaStatusInfo.setAuthorizationDayLeft(iVisaStatusDao.getVisaAuthorizationLeftDay(employee.getId()));
         visaStatusInfo.setDocumentReceived(amazonS3FileService.printFilesInOneFolder(String.valueOf(user.getId())));
         visaStatusInfo.setNextStep(determineNextStep(iApplicationWorkFlowDao.getApplicationWorkFlowByUserIdAndApplicationType(userId, applicationType).getStatus()));
-
+        System.out.println(visaStatusInfo.toString());
         return visaStatusInfo;
     }
 

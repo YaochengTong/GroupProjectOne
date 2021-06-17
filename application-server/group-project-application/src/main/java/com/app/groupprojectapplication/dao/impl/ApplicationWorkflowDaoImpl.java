@@ -3,6 +3,7 @@ package com.app.groupprojectapplication.dao.impl;
 import com.app.groupprojectapplication.dao.IApplicationWorkFlowDao;
 import com.app.groupprojectapplication.domain.ApplicationWorkflow;
 import com.app.groupprojectapplication.domain.RegistrationToken;
+import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -52,6 +53,7 @@ public class ApplicationWorkflowDaoImpl implements IApplicationWorkFlowDao {
         Session session = sessionFactory.getCurrentSession();
         String query = "FROM ApplicationWorkflow WHERE user.id = :userId AND type = :type";
         ApplicationWorkflow applicationWorkflow = (ApplicationWorkflow) session.createQuery(query).setParameter("userId", userId).setParameter("type", applicationType).getResultList().get(0);
+        session.setFlushMode(FlushMode.MANUAL);
         return applicationWorkflow;
     }
 }

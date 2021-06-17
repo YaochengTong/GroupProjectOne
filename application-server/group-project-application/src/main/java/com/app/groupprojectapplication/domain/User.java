@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity
+@Entity()
 @Table(name="user")
 public class User implements Serializable {
     private int id;

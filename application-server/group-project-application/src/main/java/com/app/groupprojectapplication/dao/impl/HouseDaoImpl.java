@@ -3,6 +3,7 @@ package com.app.groupprojectapplication.dao.impl;
 import com.app.groupprojectapplication.dao.IHouseDao;
 import com.app.groupprojectapplication.domain.House;
 import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,8 @@ public class HouseDaoImpl implements IHouseDao {
     @Override
     public List<House> getAllHouse() {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM House", House.class).getResultList();
+        List<House> houseList = session.createQuery("FROM House").getResultList();
+        return houseList;
     }
 
 }

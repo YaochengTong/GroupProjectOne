@@ -57,17 +57,17 @@ public class UserDaoImpl implements IUserDao {
     }
 
     @Override
-    public void updateUser(Integer id) {
+    public void updateUser(User user) {
         Session session = sessionFactory.openSession();
-        User newUser = session.get(User.class, id);
-        newUser.setUsername("updated");
-
         Transaction ts = session.beginTransaction();
+        User currentUser = session.get(User.class, user.getId());
+        currentUser.setRoles(user.getRoles());
+        currentUser.setModificationDate(new Timestamp(System.currentTimeMillis()));
+        currentUser.setPerson(user.getPerson());
         ts.commit();
         session.close();
     }
 
-    @Override
     public List<User> getAllUsers() {
         Session session = sessionFactory.getCurrentSession();
         List<User> users = session.createQuery("FROM User").getResultList();

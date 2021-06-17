@@ -1,0 +1,46 @@
+@import '~@angular/material/theming';
+
+.clickable {
+  //cursor: pointer;
+
+  &:hover {
+    @include mat-elevation(8);
+  }
+}
+
+.mat-card {
+  width: calc(100% - 70px);
+  height: calc(100% - 70px);
+  margin: 20px;
+}
+
+img {
+  padding: 5px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.mat-card-title {
+  text-align: center;
+}
+
+.mat-card-actions {
+  text-align: center;
+  margin: 20px;
+}
+
+.mat-raised-button {
+  margin-right: 5px;
+}
+
+#employeeInfo {
+  border: 1px solid black;
+}
+
+#employeeButton {
+  text-align: center;
+  margin: 10px;
+}
+

@@ -1,32 +1,44 @@
-import { Component } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { HTTPReq } from 'src/app/service/HTTPReq/HTTPReq.service';
+import { Component, ViewChild, AfterViewInit, OnInit} from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent {
-  /** Based on the screen size, switch from standard to one column per row */
-  // cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-  //   map(({ matches }) => {
-  //     if (matches) {
-  //       return [
-  //         { title: 'Info', cols: 1, rows: 1 },
-  //         { title: 'Visa', cols: 1, rows: 1 },
-  //         { title: 'Housing', cols: 1, rows: 1 },
-  //       ];
-  //     }
 
-  //     return [
-  //       { title: 'Info', cols: 1, rows: 1 },
-  //       { title: 'Visa', cols: 1, rows: 1 },
-  //       { title: 'Housing', cols: 1, rows: 1 },
-  //     ];
-  //   })
-  // );
-  // userName: string = 'User Name';
 
-  // constructor(private breakpointObserver: BreakpointObserver) {}
+export class HomeComponent implements OnInit{
+  public dataSource;
+  displayedColumns: string[] = [
+    'id',
+    'name',
+    'visaType',
+    'expirationDate',
+    'action'
+  ]
+
+  constructor(
+    private httpRequestService: HTTPReq
+  ) {}
+
+  ngOnInit(): void {
+    this.httpRequestService.getData('/statusTable/all', null, 'http://localhost:8999').subscribe(
+      (data:any) => {
+        this.dataSource = new MatTableDataSource<PeriodicElement>(data.AllStatus);
+      }
+    )
+  }
+}
+
+
+export interface PeriodicElement {
+  id: number;
+  name: string;
+  visaType: string;
+  expirationDate: string;
 }

@@ -1,0 +1,24 @@
+<p>Waiting for backend</p>
+<mat-accordion class="example-headers-align" multi>
+  <mat-expansion-panel *ngFor="let r of reports" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <strong>Title:</strong> &nbsp;{{ r.title }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-list>
+      <mat-list-item>
+        <strong>Report Date:</strong> &nbsp; {{ r.reportDate }}
+      </mat-list-item>
+      <mat-list-item>
+        <strong>Description:</strong> &nbsp;{{ r.description }}
+      </mat-list-item>
+      <mat-list-item>
+        <strong>Status:</strong>&nbsp; {{ r.status }}
+      </mat-list-item>
+      <mat-list-item> <strong>Details:</strong> details </mat-list-item>
+    </mat-list>
+  </mat-expansion-panel>
+
+  <button (click)="onCloseClick()" mat-button>Close</button>
+</mat-accordion>

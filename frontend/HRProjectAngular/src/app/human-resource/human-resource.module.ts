@@ -18,18 +18,28 @@ import { HireComponent } from './components/hire/hire.component';
 import { CheckEmployeeComponent } from './components/check-employee/check-employee.component';
 import { VisaComponent } from './components/visa/visa.component';
 import { NavComponent } from './components/human-resource-nav/nav.component';
-import { HousingComponent } from './components/housing/housing.component';
 import { PersonalInfoComponent } from './components/personal-info/personal-info.component';
 import { HrPageComponent } from './components/hr-page/hr-page.component';
 import { MatMenuModule } from '@angular/material/menu';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatDialogModule} from '@angular/material/dialog';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { HttpClientModule } from '@angular/common/http';
 import { HTTPReq } from '../service/HTTPReq/HTTPReq.service';
 
+
+
+import { NameSectionDialogComponent } from './components/personal-info/name-section-dialog/name-section-dialog.component';
+import { AddressSectionDialogComponent } from './components/personal-info/address-section-dialog/address-section-dialog.component';
+import { ContactSectionDialogComponent } from './components/personal-info/contact-section-dialog/contact-section-dialog.component';
+import { EmergencyContactSectionDialogComponent } from './components/personal-info/emergency-contact-section-dialog/emergency-contact-section-dialog.component';
+import { EmploymentSectionDialogComponent } from './components/personal-info/employment-section-dialog/employment-section-dialog.component';
+
+
 @NgModule({
   declarations: [
-    HousingComponent,
     HomeComponent,
     NavComponent,
     PersonalInfoComponent,
@@ -37,6 +47,11 @@ import { HTTPReq } from '../service/HTTPReq/HTTPReq.service';
     CheckEmployeeComponent,
     HireComponent,
     HrPageComponent,
+    NameSectionDialogComponent,
+    AddressSectionDialogComponent,
+    ContactSectionDialogComponent,
+    EmergencyContactSectionDialogComponent,
+    EmploymentSectionDialogComponent
   ],
   imports: [
     CommonModule,
@@ -55,9 +70,21 @@ import { HTTPReq } from '../service/HTTPReq/HTTPReq.service';
     MatMenuModule,
     MatCardModule,
     HttpClientModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
   ],
   providers: [HTTPReq],
-  exports: [NavComponent],
+  exports: [
+    NavComponent,
+    HomeComponent,
+    PersonalInfoComponent,
+    VisaComponent,
+    NameSectionDialogComponent,
+    AddressSectionDialogComponent,
+    ContactSectionDialogComponent,
+    EmergencyContactSectionDialogComponent,
+    EmploymentSectionDialogComponent],
 })
 export class HumanResourceModule {}

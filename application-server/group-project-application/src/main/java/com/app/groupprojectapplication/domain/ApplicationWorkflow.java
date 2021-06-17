@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-@Entity
+@Entity()
 @Table(name = "application_workflow", schema = "hr_db")
 public class ApplicationWorkflow implements Serializable {
     private int id;
@@ -82,7 +82,7 @@ public class ApplicationWorkflow implements Serializable {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(User User) {
         this.user = user;
     }
 

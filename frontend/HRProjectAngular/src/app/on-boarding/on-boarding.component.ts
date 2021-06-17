@@ -3,9 +3,8 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { ThemePalette } from '@angular/material/core';
 import { MaxSizeValidator } from '@angular-material-components/file-input';
+import { HTTPReq } from 'src/app/service/HTTPReq/HTTPReq.service';
 
-// const presetFiles = [new File([], 'file 1'), new File([], 'file 2')];
-// const presetFile = new File([], 'file 1');
 
 @Component({
   selector: 'app-on-boarding',
@@ -14,8 +13,8 @@ import { MaxSizeValidator } from '@angular-material-components/file-input';
 })
 export class OnBoardingComponent {
   date = new FormControl(this.getMonthYearString(new Date()));
-  isCitizen: boolean | undefined;
-  hasDriverLicense: boolean | undefined;
+  isCitizen: boolean | undefined = true;
+  hasDriverLicense: boolean | undefined = false;
   authorizationSelection: boolean | undefined;
 
   //File upload variables
@@ -27,6 +26,9 @@ export class OnBoardingComponent {
   fileI983: FormControl;
   files: File | undefined;
   hasUnitNumber = false;
+
+  //user email
+  email:string = 'test@gmail.com';
 
   OnBoardingForm = this.fb.group({
     // Personal Info
@@ -45,7 +47,7 @@ export class OnBoardingComponent {
     authorizationStartDate: null,
     authorizationEndDate: null,
 
-    hasDriverLicense: [null, Validators.required],
+    hasDriverLicense: [false, Validators.required],
     driverLicense: null,
     driverLicenseExp: null,
     // Contact Info
@@ -65,10 +67,8 @@ export class OnBoardingComponent {
     // Contact Info 2
     cellPhone: [null, Validators.required],
     workPhone: null,
-    email: new FormControl(
-      { value: null, disabled: true },
-      Validators.required
-    ),
+    //email: ['test@gmail.com', Validators.required],
+
     // Reference Info
     reference: null,
 
@@ -76,6 +76,15 @@ export class OnBoardingComponent {
     carMaker: null,
     carModel: null,
     carColor: null,
+
+    // Reference Contact
+    referenceFirstName: [null, Validators.required],
+    referenceLastName: [null, Validators.required],
+    referenceMiddleName: null,
+    referencePhone: [null, Validators.required],
+    referenceAddress: null,
+    referenceEmail: null,
+    referenceRelationship: null,
 
     // Emergency Contact
     emergencyFirstName: [null, Validators.required],
@@ -151,20 +160,20 @@ export class OnBoardingComponent {
 
   // }
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private httpRequestService: HTTPReq) {
     this.fileWorkAuth = new FormControl(this.files, [
       Validators.required,
-      MaxSizeValidator(16 * 1024),
+      MaxSizeValidator(1024 * 1024),
     ]);
 
     this.fileDriverLicense = new FormControl(this.files, [
       Validators.required,
-      MaxSizeValidator(16 * 1024),
+      MaxSizeValidator(1024 * 1024),
     ]);
 
     this.fileI983 = new FormControl(this.files, [
       Validators.required,
-      MaxSizeValidator(16 * 1024),
+      MaxSizeValidator(1024 * 1024),
     ]);
   }
 
@@ -173,7 +182,44 @@ export class OnBoardingComponent {
   //
 
   onSubmit(): void {
-    alert('Thanks!');
+    console.log(this.OnBoardingForm.value)
+
+    //create a new formData
+    let formData: FormData = new FormData();
+
+    //put the files you want to upload into an array
+    let arr: File[] = [
+      this.fileI983.value, 
+      this.fileDriverLicense.value,
+      this.fileWorkAuth.value
+    ]
+
+    //append these files into the formData
+    for(let i=0; i<arr.length; i++)
+      formData.append('file', arr[i]);
+
+    let paramObj = this.OnBoardingForm.value;
+    paramObj['email'] = this.email;
+    paramObj['user_id'] = 571;
+    paramObj['stateFullName'] = this.states.find((item) => item.abbreviation 
+          == this.OnBoardingForm.value.state)?.name
+
+    let toTimestamp = this.OnBoardingForm.value.dateOfBirth.getTime();
+    paramObj['dateOfBirth'] = toTimestamp;
+
+    //first argument: path
+    //second argument formData: the form that contains your files
+    //third argument obj: the object that contains the information you want to send to the backend
+    //a.k.a the OnBoardingForm
+    // this.httpRequestService.fileUploadWithParams('/test/fileUploadWithForm', formData, paramObj).subscribe(
+    //     (data: any) => {
+    //         console.log(data);
+    //     },
+    //     err => {
+    //         console.log(err);
+    // });
+    //console.log(this.OnBoardingForm.value)
+
   }
 
   chosenYearHandler(normalizedYear: Date) {

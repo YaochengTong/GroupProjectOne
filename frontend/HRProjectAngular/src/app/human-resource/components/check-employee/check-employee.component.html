@@ -1,54 +1,36 @@
-<br/>
-<div style=" width: 90%; margin:auto;">
-    <!-- <mat-form-field>
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Element" #input>
-    </mat-form-field> -->
-  <table
-    mat-table
-    [dataSource]="dataSource"
-    class="mat-elevation-z8"
-    style="width: 100%"
-  >
-    <!-- 'name', 'ssn', 'startingDate', 'visaStatus', 'order', 'total' -->
-    <!--- Note that these columns can be defined in any order.
-            The actual rendered columns are set as a property on the row definition" -->
+<div id="AllProfiles">
+    <mat-form-field>
+        <mat-label>Search</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
+      </mat-form-field>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-    <!-- Position Column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Name</th>
-      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.nameSection.fullName }}</td>
     </ng-container>
 
-    <!-- Name Column -->
     <ng-container matColumnDef="ssn">
       <th mat-header-cell *matHeaderCellDef>SSN</th>
-      <td mat-cell *matCellDef="let element">{{ element.ssn }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.nameSection.ssn }}</td>
     </ng-container>
 
-    <!-- Weight Column -->
     <ng-container matColumnDef="startingDate">
       <th mat-header-cell *matHeaderCellDef>Starting Date</th>
-      <td mat-cell *matCellDef="let element">{{ element.startingDate }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.employmentSection.employmentStartDate }}</td>
     </ng-container>
 
-    <!-- Symbol Column -->
     <ng-container matColumnDef="visaStatus">
       <th mat-header-cell *matHeaderCellDef>Visa Status</th>
-      <td mat-cell *matCellDef="let element">{{ element.visaStatus }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="order">
-      <th mat-header-cell *matHeaderCellDef>Order</th>
-      <td mat-cell *matCellDef="let element">{{ element.order }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="total">
-      <th mat-header-cell *matHeaderCellDef>Total</th>
-      <td mat-cell *matCellDef="let element">{{ element.total }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.employmentSection.workAuthorization }}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
   </table>
+  <mat-paginator [pageSizeOptions]="[2, 5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
+      
