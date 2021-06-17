@@ -29,12 +29,13 @@ public class HousingController {
     public Map<String, Object> postAllHouse() {
         Map<String, Object> resultMap = new HashMap<>();
         List<House> houses = iHouseService.getAllHouse();
-        resultMap.put("AllHouse", houses);
+        System.out.println("houses: "+houses.toString());
+        resultMap.put("AllHouse", iHouseService.getAllHouse().get(0).getId());
         // TODO: unable to get house list from POJO
         System.out.println(houses);
         return resultMap;
-
     }
+
     @GetMapping("/get-house/{houseId}")
     public Map<String, Object> getHouseById(@PathVariable Integer houseId) {
         Map<String, Object> resultMap = new HashMap<>();

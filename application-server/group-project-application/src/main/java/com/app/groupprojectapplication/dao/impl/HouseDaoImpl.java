@@ -16,7 +16,6 @@ public class HouseDaoImpl implements IHouseDao {
     protected SessionFactory sessionFactory;
 
     @Override
-    @Transactional
     public House getHouseById(Integer id) {
         Session session = sessionFactory.getCurrentSession();
         House h = session.get(House.class, id);
