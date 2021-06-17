@@ -3,6 +3,7 @@ import { HTTPReq } from 'src/app/service/HTTPReq/HTTPReq.service';
 import { Component, ViewChild, AfterViewInit, OnInit} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-check-employee',
@@ -10,7 +11,7 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./check-employee.component.scss'],
 })
 
-export class CheckEmployeeComponent implements OnInit {
+export class CheckEmployeeComponent implements OnInit, AfterViewInit {
 
   public dataSource;
   displayedColumns: string[] = [
@@ -31,13 +32,24 @@ export class CheckEmployeeComponent implements OnInit {
     }
 
 
-ngOnInit(): void {
-  this.httpRequestService.getData('/profile/all', null, 'http://localhost:8999').subscribe(
-    (data:any) => {
-      this.dataSource = data.AllProfile;
-    }
-  )
+  ngOnInit(): void {
+    this.httpRequestService.getData('/profile/all', null, 'http://localhost:8999').subscribe(
+      (data:any) => {
+        this.dataSource = new MatTableDataSource<PeriodicElement>(data.AllProfile);
+      }
+    )
+  }
+
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
+  ngAfterViewInit() {
+  this.dataSource.paginator = this.paginator;
+  }
 }
 
-
+export interface PeriodicElement {
+    name: string;
+    ssn: number;
+    startingDate: string;
+    visaStatus: string;
 }
