@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -86,6 +87,16 @@ public class TestController {
         }
         //call this method to print out all files on server
         amazonS3FileService.printOutName();
+        return resultMap;
+    }
+
+    @PostMapping("/fileUploadWithForm")
+    public Map<String, Object> testFileUploadWithForm(@RequestParam Map<String, Object> paramMap,
+                                                      HttpServletRequest request){
+        MultipartHttpServletRequest params = ((MultipartHttpServletRequest) request);
+        List<MultipartFile> files = ((MultipartHttpServletRequest) request)
+                .getFiles("file");
+        Map<String, Object> resultMap = new HashMap<>();
         return resultMap;
     }
 }
