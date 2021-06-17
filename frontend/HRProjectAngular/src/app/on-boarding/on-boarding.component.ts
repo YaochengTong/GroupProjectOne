@@ -5,10 +5,6 @@ import { ThemePalette } from '@angular/material/core';
 import { MaxSizeValidator } from '@angular-material-components/file-input';
 import { HTTPReq } from 'src/app/service/HTTPReq/HTTPReq.service';
 
-import { HttpEventType, HttpResponse } from '@angular/common/http';
-
-// const presetFiles = [new File([], 'file 1'), new File([], 'file 2')];
-// const presetFile = new File([], 'file 1');
 
 @Component({
   selector: 'app-on-boarding',
@@ -30,6 +26,9 @@ export class OnBoardingComponent {
   fileI983: FormControl;
   files: File | undefined;
   hasUnitNumber = false;
+
+  //user email
+  email:string = 'test@gmail.com';
 
   OnBoardingForm = this.fb.group({
     // Personal Info
@@ -68,10 +67,8 @@ export class OnBoardingComponent {
     // Contact Info 2
     cellPhone: [null, Validators.required],
     workPhone: null,
-    email: new FormControl(
-      { value: null, disabled: true },
-      Validators.required
-    ),
+    //email: ['test@gmail.com', Validators.required],
+
     // Reference Info
     reference: null,
 
@@ -79,6 +76,15 @@ export class OnBoardingComponent {
     carMaker: null,
     carModel: null,
     carColor: null,
+
+    // Reference Contact
+    referenceFirstName: [null, Validators.required],
+    referenceLastName: [null, Validators.required],
+    referenceMiddleName: null,
+    referencePhone: [null, Validators.required],
+    referenceAddress: null,
+    referenceEmail: null,
+    referenceRelationship: null,
 
     // Emergency Contact
     emergencyFirstName: [null, Validators.required],
@@ -192,18 +198,27 @@ export class OnBoardingComponent {
     for(let i=0; i<arr.length; i++)
       formData.append('file', arr[i]);
 
+    let paramObj = this.OnBoardingForm.value;
+    paramObj['email'] = this.email;
+    paramObj['user_id'] = 571;
+    paramObj['stateFullName'] = this.states.find((item) => item.abbreviation 
+          == this.OnBoardingForm.value.state)?.name
+
+    let toTimestamp = this.OnBoardingForm.value.dateOfBirth.getTime();
+    paramObj['dateOfBirth'] = toTimestamp;
+
     //first argument: path
     //second argument formData: the form that contains your files
     //third argument obj: the object that contains the information you want to send to the backend
     //a.k.a the OnBoardingForm
-    this.httpRequestService.fileUploadWithParams('/test/fileUploadWithForm', formData, 
-      this.OnBoardingForm.value).subscribe(
-        (data: any) => {
-            console.log(data);
-        },
-        err => {
-            console.log(err);
-    });
+    // this.httpRequestService.fileUploadWithParams('/test/fileUploadWithForm', formData, paramObj).subscribe(
+    //     (data: any) => {
+    //         console.log(data);
+    //     },
+    //     err => {
+    //         console.log(err);
+    // });
+    //console.log(this.OnBoardingForm.value)
 
   }
 
