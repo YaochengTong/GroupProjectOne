@@ -28,11 +28,7 @@ public class HousingController {
     @GetMapping("/get-houses")
     public Map<String, Object> postAllHouse() {
         Map<String, Object> resultMap = new HashMap<>();
-        List<House> houses = iHouseService.getAllHouse();
-        System.out.println("houses: "+houses.toString());
-        resultMap.put("AllHouse", iHouseService.getAllHouse().get(0));
-        // TODO: unable to get house list from POJO
-        System.out.println(houses);
+        resultMap.put("AllHouse",resultMap);
         return resultMap;
     }
 

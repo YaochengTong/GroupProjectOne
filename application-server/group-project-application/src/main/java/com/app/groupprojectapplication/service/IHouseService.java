@@ -1,10 +1,12 @@
 package com.app.groupprojectapplication.service;
 
 import com.app.groupprojectapplication.domain.House;
+import com.app.groupprojectapplication.domain.HouseElement.HousePageInfo;
 import java.util.List;
 
 public interface IHouseService {
 
-    List<House> getAllHouse();
+    HousePageInfo getHouseById(Integer id);
+    List<HousePageInfo> getAllHouse();
 
 }
