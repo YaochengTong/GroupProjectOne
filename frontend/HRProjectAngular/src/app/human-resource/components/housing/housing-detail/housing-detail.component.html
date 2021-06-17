@@ -1,29 +1,78 @@
-<h1>Housing Details</h1>
-<button mat-raised-button color="primary" (click)="goBack()">go back</button>
+<div style="text-align: center">
+  <h1>Housing Details</h1>
+  <button (click)="goBack()" color="primary" mat-raised-button>go back</button>
+  <button (click)="onSubmitData()" color="primary" mat-raised-button>
+    Submit To Database
+  </button>
+</div>
 
 <mat-grid-list cols="1" rowHeight="2:1">
   <div *ngIf="house">
     <mat-grid-tile>
       <mat-card class="clickable">
+        <mat-card-title>House Info</mat-card-title>
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item>
+              <strong>Landlord:</strong> &nbsp;
+              <input
+                [(ngModel)]="house.landlord"
+                placeholder="{{ house.landlord }}"
+              />
+            </mat-list-item>
+            <mat-list-item>
+              <strong>Phone:</strong> &nbsp;
+              <input
+                [(ngModel)]="house.phone"
+                placeholder="{{ house.phone }}"
+              />
+            </mat-list-item>
+            <mat-list-item>
+              <strong>Number of Person:</strong> &nbsp;
+              <input
+                [(ngModel)]="house.numberOfPerson"
+                placeholder="{{ house.numberOfPerson }}"
+              />
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="clickable">
         <mat-card-title>Facility Info</mat-card-title>
         <mat-card-content>
           <mat-list *ngFor="let f of facility">
             <mat-list-item>
-              <strong>Number of Beds:</strong> &nbsp; {{ f.numberOfBeds }}
+              <strong>Number of Beds:</strong> &nbsp;
+              <input
+                [(ngModel)]="f.numberOfBeds"
+                placeholder="{{ f.numberOfBeds }}"
+              />
             </mat-list-item>
             <mat-list-item>
               <strong>Number of Mattresses:</strong> &nbsp;
-              {{ f.numberOfMattresses }}
+              <input
+                [(ngModel)]="f.numberOfMattresses"
+                placeholder="{{ f.numberOfMattresses }}"
+              />
             </mat-list-item>
             <mat-list-item>
-              <strong>Number of Tables:</strong> &nbsp; {{ f.numberOfTables }}
+              <strong>Number of Tables:</strong> &nbsp;
+              <input
+                [(ngModel)]="f.numberOfTables"
+                placeholder="{{ f.numberOfTables }}"
+              />
             </mat-list-item>
             <mat-list-item>
-              <strong>Number of Chairs:</strong> &nbsp; {{ f.numberOfChairs }}
+              <strong>Number of Chairs:</strong> &nbsp;
+              <input
+                [(ngModel)]="f.numberOfChairs"
+                placeholder="{{ f.numberOfChairs }}"
+              />
             </mat-list-item>
           </mat-list>
           <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="openDialog()">
+            <button (click)="openDialog()" color="primary" mat-raised-button>
               Facility Reports
             </button>
           </mat-card-actions>
@@ -33,21 +82,33 @@
         <mat-card-title>Employee Info</mat-card-title>
         <mat-card-content>
           <mat-list *ngFor="let e of employee">
-            <mat-list-item>
-              <strong>Name:</strong> &nbsp; {{ e.name }}
-            </mat-list-item>
-            <mat-list-item>
-              <strong>Phone:</strong> &nbsp; {{ e.phone }}
-            </mat-list-item>
-            <mat-list-item>
-              <strong>Email:</strong> &nbsp; {{ e.email }}
-            </mat-list-item>
-            <mat-list-item>
-              <strong>Car:</strong> &nbsp; {{ e.car }}
-            </mat-list-item>
+            <div id="employeeInfo">
+              <mat-list-item>
+                <strong>Name:</strong> &nbsp; {{ e.name }}
+              </mat-list-item>
+              <mat-list-item>
+                <strong>Phone:</strong> &nbsp; {{ e.phone }}
+              </mat-list-item>
+              <mat-list-item>
+                <strong>Email:</strong> &nbsp; {{ e.email }}
+              </mat-list-item>
+              <mat-list-item>
+                <strong>Car:</strong> &nbsp; {{ e.car }}
+              </mat-list-item>
+              <div id="employeeButton">
+                <button
+                  color="primary"
+                  mat-raised-button
+                  onClick="window.location='human-resource/check-employee'"
+                >
+                  Check Employee
+                </button>
+              </div>
+            </div>
+
+            <mat-divider></mat-divider>
           </mat-list>
         </mat-card-content>
-
       </mat-card>
     </mat-grid-tile>
   </div>

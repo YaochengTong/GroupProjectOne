@@ -52,4 +52,8 @@ export class HousingDetailComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
+
+  onSubmitData() {
+    alert('You have updated housing info successfully');
+  }
 }
