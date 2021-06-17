@@ -16,11 +16,11 @@ export class PersonalInfoComponent implements OnInit {
   
   public userId!: string;
   public empolyeeId!: number;
-  public nameSection;
-  public addressSection;
-  public contactSection;
-  public employmentSection;
-  public emergencyContactList;
+  public nameSection: any = {};
+  public addressSection: any = {};
+  public contactSection: any = {};
+  public employmentSection: any = {};
+  public emergencyContactList: any = {};
   
 
   constructor(
