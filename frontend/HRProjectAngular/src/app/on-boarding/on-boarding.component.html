@@ -1,489 +1,281 @@
-<script src="on-boarding.component.ts"></script>
-<form [formGroup]="OnBoardingForm" novalidate (ngSubmit)="onSubmit()">
+<!-- <script src="on-boarding.component.ts"></script> -->
+<div>
   <mat-card class="shipping-card">
-    <mat-card-header>
-      <mat-card-title>On Boarding Information</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <br/><br/>
-      <mat-card-subtitle>Personal Information</mat-card-subtitle>
-      <!--      Company      -->
-      <div class="row">
-        <div class="col">
+      <mat-card-header>
+        <mat-card-title>On Boarding Information</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+          <mat-horizontal-stepper #stepper>
+            <mat-step [stepControl]="personalInfoTemplate.personalInfoForm" errorMessage="Personal Information is required">
+              <ng-template matStepLabel>Personal Information</ng-template>
+              <app-personal-info-template 
+                  [email]="email" 
+                  #personalInfoTemplate 
+                  [formGroup]="personalInfoTemplate.personalInfoForm"
+                  (updateForm)="dataRefreshForPersonalInfo($event)"
+                  (updateDriverLicense)="dataRefreshDriverLicense($event)"
+                  (updateWorkAuth)="dataRefreshWorkAuth($event)">
+              </app-personal-info-template>
+            </mat-step>
 
-          <mat-card-content>Your registration email: &nbsp;
-            <mat-form-field>
-              <input
-                [value]="email"
-                matInput
-                disabled
-                required
-              />
-            </mat-form-field>
-          </mat-card-content>
-        </div>
-        <div class="col">
-        </div>
-      </div>
-      <!--      Name      -->
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input
-              matInput
-              placeholder="First name"
-              formControlName="firstName"
-              required
-            />
-            <mat-error
-              *ngIf="OnBoardingForm.controls['firstName'].hasError('required')"
-            >
-              First name is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input
-              matInput
-              placeholder="Last name"
-              formControlName="lastName"
-              required
-            />
-            <mat-error
-              *ngIf="OnBoardingForm.controls['lastName'].hasError('required')"
-            >
-              Last name is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
+            <mat-step [stepControl]="phoneAddressCarForm" errorMessage="Phone, Address and Car is required.">
+              <form [formGroup]="phoneAddressCarForm">
+                <ng-template matStepLabel>Phone, Address and Car</ng-template>
+                <div class="row">
+                  <div class="col">
+                    <mat-form-field class="full-width">
+                      <input
+                        matInput
+                        placeholder="Cell Phone"
+                        formControlName="cellPhone"
+                        required
+                      />
+                      <mat-error
+                        *ngIf="phoneAddressCarForm.controls['cellPhone'].hasError('required')"
+                      >
+                        Cell Phone is <strong>required</strong>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+          
+                  <div class="col">
+                    <mat-form-field class="full-width">
+                      <input
+                        matInput
+                        placeholder="Work Phone"
+                        formControlName="workPhone"
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+          
+                <div class="row">
+                  <div class="col">
+                    <mat-form-field class="full-width">
+                      <input
+                        matInput
+                        placeholder="Current Address"
+                        formControlName="address"
+                        required
+                      />
+                      <mat-error
+                        *ngIf="phoneAddressCarForm.controls['address'].hasError('required')"
+                      >
+                        Address is <strong>required</strong>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row" *ngIf="!hasUnitNumber">
+                  <div class="col">
+                    <button
+                      mat-stroked-button
+                      type="button"
+                      color="primary"
+                      (click)="hasUnitNumber = !hasUnitNumber"
+                    >
+                      + Add C/O, Apt, Suite, Unit
+                    </button>
+                  </div>
+                </div>
+                <div class="row" *ngIf="hasUnitNumber">
+                  <div class="col">
+                    <mat-form-field class="full-width">
+                      <textarea
+                        matInput
+                        placeholder="Address 2"
+                        formControlName="address2"
+                        required
+                      ></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <mat-form-field class="full-width">
+                      <input
+                        matInput
+                        placeholder="City"
+                        formControlName="city"
+                        required
+                      />
+                      <mat-error
+                        *ngIf="phoneAddressCarForm.controls['city'].hasError('required')"
+                      >
+                        City is <strong>required</strong>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col">
+                    <mat-form-field class="full-width">
+                      <mat-select placeholder="State" formControlName="state" required>
+                        <mat-option
+                          *ngFor="let state of states"
+                          [value]="state.abbreviation"
+                        >
+                          {{ state.name }}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error
+                        *ngIf="phoneAddressCarForm.controls['state'].hasError('required')"
+                      >
+                        State is <strong>required</strong>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+          
+                  <div class="col">
+                    <mat-form-field class="full-width">
+                      <input
+                        matInput
+                        #postalCode
+                        maxlength="5"
+                        placeholder="Postal Code"
+                        type="text"
+                        formControlName="postalCode"
+                        required
+                      />
+                      <mat-error
+                        *ngIf="phoneAddressCarForm.controls['postalCode'].hasError('required')"
+                      >
+                        Postal code is <strong>required</strong>
+                      </mat-error>
+                      <mat-error
+                        *ngIf="phoneAddressCarForm.controls['postalCode'].hasError('minlength')"
+                      >
+                      Postal is <strong>too short</strong>
+                      </mat-error>
+                      <mat-hint align="end">{{ postalCode.value.length }} / 5</mat-hint>
+                    </mat-form-field>
+                  </div>
+                </div>
+          
+                <br/><br/>
+                <mat-card-subtitle>Car Information</mat-card-subtitle>
+                <!--      Car      -->
+                <div class="row">
+                  <div class="col">
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="Maker" formControlName="carMaker"/>
+                      <mat-hint align="end">Car Make</mat-hint>
+                    </mat-form-field>
+                  </div>
+                  <div class="col">
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="Model" formControlName="carModel"/>
+                      <mat-hint align="end">Car Model</mat-hint>
+                    </mat-form-field>
+                  </div>
+                  <div class="col">
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="Color" formControlName="carColor"/>
+                      <mat-hint align="end">Car Color</mat-hint>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
 
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input
-              matInput
-              placeholder="Middle name"
-              formControlName="middleName"
-            />
-          </mat-form-field>
-        </div>
-      </div>
-      <!--      Personal Details      -->
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="SSN" formControlName="ssn" required/>
-            <mat-error
-              *ngIf="OnBoardingForm.controls['ssn'].hasError('required')"
-            >
-              SSN is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
+            <mat-step [stepControl]="ReferenceContact.ContactForm" errorMessage="Reference contact is required.">
+              <ng-template matStepLabel>Reference Contact</ng-template>
+              <app-contact-template 
+                [componentTitle]="referenceContact"
+                #ReferenceContact
+                (updateForm)="dataRefreshForReference($event)">
+              </app-contact-template>
+            </mat-step>
 
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>Gender</mat-label>
-            <mat-select formControlName="gender" required>
-              <mat-option value="male">Male</mat-option>
-              <mat-option value="female">Female</mat-option>
-              <mat-option value="unknown">No Answer</mat-option>
-            </mat-select>
-            <mat-error
-              *ngIf="OnBoardingForm.controls['gender'].hasError('required')"
-            >
-              Gender is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
+            <mat-step [stepControl]="EmergencyContact.ContactForm" errorMessage="Emergency contact is required.">
+              <ng-template matStepLabel>Emergency Contact</ng-template>
+              <app-contact-template 
+                [componentTitle]="emergencyContact"
+                #EmergencyContact
+                (updateForm)="dataRefreshForEmergency1($event)"
+                >
+              </app-contact-template>
 
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>Date of Birth</mat-label>
-            <input
-              matInput
-              [matDatepicker]="picker"
-              formControlName="dateOfBirth"
-              required
-            />
-            <mat-datepicker-toggle matSuffix [for]="picker">
-            </mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-            <mat-error
-              *ngIf="
-                OnBoardingForm.controls['dateOfBirth'].hasError('required')
-              "
-            >
-              Date of Birth is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
+              <div class="row">
+                <div class="col">
+                  <button
+                    mat-stroked-button
+                    type="button"
+                    color="primary"
+                    (click)="showSecondEmergencyContact = !showSecondEmergencyContact"
+                  >
+                    {{!showSecondEmergencyContact?"+ Add an emergency contact" : "Remove the second emergency contact"}}
+                  </button>
+                </div>
+              </div>
 
-      <br/>
-      <!--      Nested Questions      -->
-      <div class="row">
-        <div class="col">
-          <mat-card-content>
-            Are you a citizen or permanent resident of the U.S?
-          </mat-card-content>
-          <mat-form-field class="full-width">
-            <mat-select
-              formControlName="isCitizen"
-              placeholder="Citizenship"
-              required
-              [(ngModel)]="isCitizen"
-            >
-              <mat-option [value]="true">Yes</mat-option>
-              <mat-option [value]="false">No</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="col" *ngIf="isCitizen === true">
-          <mat-card-content>Green Card or Citizen</mat-card-content>
-          <mat-form-field class="full-width">
-            <mat-label>Citizen Type</mat-label>
-            <mat-select formControlName="citizenType" required>
-              <mat-option value="green card">Green Card</mat-option>
-              <mat-option value="citizen">Citizen</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-
-        <div class="col" *ngIf="isCitizen === false">
-          <mat-card-content>What is your work authorization?</mat-card-content>
-          <mat-form-field class="full-width">
-            <mat-label>Authorization Type</mat-label>
-            <mat-select
-              formControlName="authorizationType"
-              (selectionChange)="selectionOnOther()"
-              [(ngModel)]="authorizationSelection"
-            >
-              <mat-option value="h1b">H1-B</mat-option>
-              <mat-option value="l2">L2</mat-option>
-              <mat-option value="f1-cpt">F1-CPT</mat-option>
-              <mat-option value="f1-opt">F1-OPT</mat-option>
-              <mat-option value="h4">H4</mat-option>
-              <mat-option value="other" [value]="true">OTHER</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col" *ngIf="isCitizen === false">
-          <mat-card-content
-          >Enter Your Authentication Date Range
-          </mat-card-content>
-          <mat-form-field class="full-width">
-            <mat-label>Enter a date range</mat-label>
-            <mat-date-range-input [rangePicker]="picker">
-              <input
-                matStartDate
-                formControlName="authorizationStartDate"
-                placeholder="Start date"
-              />
-              <input
-                matEndDate
-                formControlName="authorizationEndDate"
-                placeholder="End date"
-              />
-            </mat-date-range-input>
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="picker"
-            ></mat-datepicker-toggle>
-            <mat-date-range-picker #picker></mat-date-range-picker>
-
-            <mat-error
-              *ngIf="
-                OnBoardingForm.controls.authorizationStartDate.hasError(
-                  'matStartDateInvalid'
-                )
-              "
-            >
-              Invalid start date
-            </mat-error>
-            <mat-error
-              *ngIf="
-                OnBoardingForm.controls.authorizationEndDate.hasError(
-                  'matEndDateInvalid'
-                )
-              "
-            >
-              Invalid end date
-            </mat-error>
-          </mat-form-field>
-        </div>
-
-        <div class="col" *ngIf="authorizationSelection === true">
-          <mat-card-content>Specify your work authorization</mat-card-content>
-          <mat-form-field class="full-width">
-            <input
-              matInput
-              formControlName="otherAuthorizationType"
-              placeholder="Other Work Auth Type"
-            />
-          </mat-form-field>
-        </div>
-
-        <div class="col" *ngIf="isCitizen === false">
-          <mat-card-content>Upload your work authorization</mat-card-content>
-          <mat-form-field class="full-width">
-            <ngx-mat-file-input
-              [formControl]="fileWorkAuth"
-              [multiple]="multiple"
-              [color]="color"
-            >
-              <mat-icon ngxMatFileInputIcon>folder</mat-icon>
-            </ngx-mat-file-input>
-          </mat-form-field>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
-          <mat-card-content> Do you have a driver license?</mat-card-content>
-          <mat-form-field class="full-width">
-            <mat-select
-              formControlName="hasDriverLicense"
-              placeholder="Driver License"
-              required
-              [(ngModel)]="hasDriverLicense"
-            >
-              <mat-option [value]="true">Yes</mat-option>
-              <mat-option [value]="false">No</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-
-        <div class="col" *ngIf="hasDriverLicense === true">
-          <mat-card-content>Enter Driver License</mat-card-content>
-
-          <mat-form-field class="full-width">
-            <input
-              matInput
-              placeholder="Drive License"
-              formControlName="driverLicense"
-            />
-          </mat-form-field>
-        </div>
-
-        <div class="col" *ngIf="hasDriverLicense === true">
-          <mat-card-content>Enter Expiration Date</mat-card-content>
-
-          <mat-form-field class="full-width">
-            <mat-label>Expiration Date</mat-label>
-            <input
-              matInput
-              [matDatepicker]="picker"
-              formControlName="driverLicenseExp"
-            />
-            <mat-datepicker-toggle matSuffix [for]="picker">
-            </mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-        </div>
-
-        <div class="col" *ngIf="hasDriverLicense === true">
-          <mat-card-content>Upload your driver license</mat-card-content>
-          <mat-form-field class="full-width">
-            <ngx-mat-file-input
-              [formControl]="fileDriverLicense"
-              [multiple]="multiple"
-              [color]="color"
-            >
-              <mat-icon ngxMatFileInputIcon>folder</mat-icon>
-            </ngx-mat-file-input>
-          </mat-form-field>
-        </div>
-      </div>
-
-      <br/><br/>
-      <mat-card-subtitle>Phone and Address</mat-card-subtitle>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input
-              matInput
-              placeholder="Cell Phone"
-              formControlName="cellPhone"
-              required
-            />
-            <mat-error
-              *ngIf="OnBoardingForm.controls['cellPhone'].hasError('required')"
-            >
-              Cell Phone is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input
-              matInput
-              placeholder="Work Phone"
-              formControlName="workPhone"
-            />
-          </mat-form-field>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input
-              matInput
-              placeholder="Current Address"
-              formControlName="address"
-              required
-            />
-            <mat-error
-              *ngIf="OnBoardingForm.controls['address'].hasError('required')"
-            >
-              Address is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row" *ngIf="!hasUnitNumber">
-        <div class="col">
-          <button
-            mat-stroked-button
-            type="button"
-            color="primary"
-            (click)="hasUnitNumber = !hasUnitNumber"
-          >
-            + Add C/O, Apt, Suite, Unit
-          </button>
-        </div>
-      </div>
-      <div class="row" *ngIf="hasUnitNumber">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <textarea
-              matInput
-              placeholder="Address 2"
-              formControlName="address2"
-              required
-            ></textarea>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input
-              matInput
-              placeholder="City"
-              formControlName="city"
-              required
-            />
-            <mat-error
-              *ngIf="OnBoardingForm.controls['city'].hasError('required')"
-            >
-              City is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-select placeholder="State" formControlName="state" required>
-              <mat-option
-                *ngFor="let state of states"
-                [value]="state.abbreviation"
-              >
-                {{ state.name }}
-              </mat-option>
-            </mat-select>
-            <mat-error
-              *ngIf="OnBoardingForm.controls['state'].hasError('required')"
-            >
-              State is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input
-              matInput
-              #postalCode
-              maxlength="5"
-              placeholder="Postal Code"
-              type="number"
-              formControlName="postalCode"
-              required
-            />
-            <mat-error
-              *ngIf="OnBoardingForm.controls['postalCode'].hasError('required')"
-            >
-              City is <strong>required</strong>
-            </mat-error>
-            <mat-hint align="end">{{ postalCode.value.length }} / 5</mat-hint>
-          </mat-form-field>
-        </div>
-      </div>
-
-      <br/><br/>
-      <mat-card-subtitle>Car Information</mat-card-subtitle>
-      <!--      Car      -->
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Maker" formControlName="carMaker"/>
-            <mat-hint align="end">Car Make</mat-hint>
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Model" formControlName="carModel"/>
-            <mat-hint align="end">Car Model</mat-hint>
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Color" formControlName="carColor"/>
-            <mat-hint align="end">Car Color</mat-hint>
-          </mat-form-field>
-        </div>
-      </div>
-
-      <br/><br/>
-      <!-- Reference contact -->
-      <app-contact-template [componentTitle]="referenceContact"></app-contact-template>
+              <div *ngIf="showSecondEmergencyContact">
+                <br/>
+                <app-contact-template 
+                  [componentTitle]="emergencyContact"
+                  #EmergencyContact2
+                  (updateForm)="dataRefreshForEmergency2($event)">
+                </app-contact-template>
+              </div>
 
 
-      <br/><br/>
-      <!-- Emergency contact -->
-      <app-contact-template [componentTitle]="emergencyContact"></app-contact-template>
+            </mat-step>
 
-      <br/><br/>
-      <mat-card-subtitle>I983</mat-card-subtitle>
+            <mat-step>
+              <ng-template matStepLabel>Personal Documents</ng-template>
+              <div class="row">
+                <div class="col">
+                  <mat-card-content>Please upload I983 with this template</mat-card-content>
+                  <a
+                    href="https://gp1storage.s3.us-east-2.amazonaws.com/template/i983.pdf"
+                  >I983 Template</a>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <ngx-mat-file-input
+                      [formControl]="fileI983"
+                      [multiple]="multiple"
+                      [color]="color"
+                    >
+                      <mat-icon ngxMatFileInputIcon>folder</mat-icon>
+                    </ngx-mat-file-input>
+                  </mat-form-field>
+                </div>
+              </div>
+              <br/>
+              <br/>
+              <div class="row">
+                <div class="col">
+                  <mat-card-content>Please upload OPT receipt</mat-card-content>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <ngx-mat-file-input
+                      [formControl]="fileOPTReceipt"
+                      [multiple]="multiple"
+                      [color]="color"
+                    >
+                      <mat-icon ngxMatFileInputIcon>folder</mat-icon>
+                    </ngx-mat-file-input>
+                  </mat-form-field>
+                </div>
+              </div>
 
-      <div class="row">
-        <div class="col">
-          <mat-card-content>Please upload I983 with this form</mat-card-content>
-          <a
-            href="https://gp1storage.s3.us-east-2.amazonaws.com/template/i983.pdf"
-          >I983 Template</a
-          >
-        </div>
-        <div class="col">
-          <mat-form-field class="full-width">
-            <ngx-mat-file-input
-              [formControl]="fileI983"
-              [multiple]="multiple"
-              [color]="color"
-            >
-              <mat-icon ngxMatFileInputIcon>folder</mat-icon>
-            </ngx-mat-file-input>
-          </mat-form-field>
-        </div>
-      </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit">Submit</button>
-    </mat-card-actions>
+            </mat-step>
+
+            <mat-step>
+              <ng-template matStepLabel>Done</ng-template>
+              <h3>You are now done.</h3>
+              <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button (click)="stepper.reset()">Reset</button>
+              </div>
+            </mat-step>
+          </mat-horizontal-stepper>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+      </mat-card-actions>
+
   </mat-card>
-</form>
+
+</div>

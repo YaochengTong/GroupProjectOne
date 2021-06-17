@@ -28,16 +28,19 @@ public class EmployeeDaoImpl implements IEmployeeDao {
 
     @Override
     public Employee getEmployeeById(Integer id) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         employee = session.get(Employee.class, id);
+        session.close();
         return employee;
     }
 
     @Override
     public void insertEmployee(Employee employee) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         Transaction ts = session.beginTransaction();
         session.save(employee);
+        ts.commit();
+        session.close();
     }
 
     @Override

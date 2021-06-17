@@ -38,6 +38,7 @@ public class HireController {
         Map<String, Object> resultMap = new HashMap<>();
         List<MultipartFile> files = ((MultipartHttpServletRequest) request)
                 .getFiles("file");
+        iHireService.onboardSubmission(files, paramMap);
         //Integer userId = Integer.parseInt(paramMap.get("user_id").toString());
 
 //        for (int i = 0; i < files.size(); ++i) {
