@@ -89,24 +89,140 @@ export class OnBoardingComponent implements OnInit{
 
   states: any[] = states;
 
-  personalInfoFormValue: any = {};
+  personalInfoFormValue: any = {
+    company: '',
+    firstName: '',
+    lastName: '',
+    middleName: '',
+    ssn: '',
+    gender: '',
+    dateOfBirth: '',
+    isCitizen: '',
+    citizenType: '',
+    authorizationType: '',
+    otherAuthorizationType: '',
+    authorizationStartDate: '',
+    authorizationEndDate: '',
+    hasDriverLicense: '',
+    driverLicense: '',
+    driverLicenseExp: '',
+  };
+
   dataRefreshForPersonalInfo(data: any): void{
-    this.personalInfoFormValue = data;
+    this.personalInfoFormValue = {
+      company: data.company,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      middleName: data.middleName,
+      ssn: data.ssn,
+      gender: data.gender,
+      dateOfBirth: data.dateOfBirth,
+      isCitizen: data.isCitizen,
+      citizenType: data.citizenType,
+      authorizationType: data.authorizationType,
+      otherAuthorizationType: data.otherAuthorizationType,
+      authorizationStartDate: data.authorizationStartDate,
+      authorizationEndDate: data.authorizationEndDate,
+      hasDriverLicense: data.hasDriverLicense,
+      driverLicense: data.driverLicense,
+      driverLicenseExp: data.driverLicenseExp
+    };
   };
 
-  referenceFormValue: any = {};
+  referenceFormValue: any = {
+    referenceContactFirstName: '',
+    referenceContactLastName: '',
+    referenceContactMiddleName: '',
+    referenceContactPhone: '',
+    referenceContactAddress: '',
+    referenceContactAddress2: '',
+    referenceContactEmail: '',
+    referenceContactRelationship: '',
+    referenceContactCity: '',
+    referenceContactState: '',
+    referenceContactPostalCode: '',
+    referenceContactStateFullName: '',
+  };
   dataRefreshForReference(data: any): void{
-    this.referenceFormValue = data;
+    this.referenceFormValue = {
+        referenceContactFirstName: data.value.FirstName,
+        referenceContactLastName: data.value.LastName,
+        referenceContactMiddleName: data.value.MiddleName,
+        referenceContactPhone: data.value.Phone,
+        referenceContactAddress: data.value.Address,
+        referenceContactAddress2: data.value.Address2,
+        referenceContactEmail: data.value.Email,
+        referenceContactRelationship: data.value.Relationship,
+        referenceContactCity: data.value.City,
+        referenceContactState: data.value.State,
+        referenceContactPostalCode: data.value.PostalCode,
+        referenceContactStateFullName: this.states.find((item) => item.abbreviation 
+           == this.referenceFormValue.referenceContactState)?.name
+    }
   };
 
-  emergency1FormValue: any = {};
+  emergency1FormValue: any = {
+      emergency1FirstName: '',
+      emergency1LastName: '',
+      emergency1MiddleName: '',
+      emergency1Phone: '',
+      emergency1Address: '',
+      emergency1Address2: '',
+      emergency1Email: '',
+      emergency1Relationship: '',
+      emergency1City: '',
+      emergency1State: '',
+      emergency1PostalCode: '',
+      emergency1StateFullName: ''
+  };
   dataRefreshForEmergency1(data: any): void{
-    this.emergency1FormValue = data;
+    this.emergency1FormValue = {
+      emergency1FirstName: data.value.FirstName,
+      emergency1LastName: data.value.LastName,
+      emergency1MiddleName: data.value.MiddleName,
+      emergency1Phone: data.value.Phone,
+      emergency1Address: data.value.Address,
+      emergency1Address2: data.value.Address2,
+      emergency1Email: data.value.Email,
+      emergency1Relationship: data.value.Relationship,
+      emergency1City: data.value.City,
+      emergency1State: data.value.State,
+      emergency1PostalCode: data.value.PostalCode,
+      emergency1StateFullName: this.states.find((item) => item.abbreviation 
+           == this.emergency1FormValue.emergency1State)?.name
+    }
   }
 
-  emergency2FormValue: any = {};
+  emergency2FormValue: any = {
+      emergency2FirstName: '',
+      emergency2LastName: '',
+      emergency2MiddleName: '',
+      emergency2Phone: '',
+      emergency2Address: '',
+      emergency2Address2: '',
+      emergency2Email: '',
+      emergency2Relationship: '',
+      emergency2City: '',
+      emergency2State: '',
+      emergency2PostalCode: '',
+      emergency2StateFullName: ''
+  };
   dataRefreshForEmergency2(data: any): void{
-    this.emergency2FormValue = data;
+    this.emergency2FormValue = {
+      emergency2FirstName: data.value.FirstName,
+      emergency2LastName: data.value.LastName,
+      emergency2MiddleName: data.value.MiddleName,
+      emergency2Phone: data.value.Phone,
+      emergency2Address: data.value.Address,
+      emergency2Address2: data.value.Address2,
+      emergency2Email: data.value.Email,
+      emergency2Relationship: data.value.Relationship,
+      emergency2City: data.value.City,
+      emergency2State: data.value.State,
+      emergency2PostalCode: data.value.PostalCode,
+      emergency2StateFullName: this.states.find((item) => item.abbreviation 
+           == this.emergency2FormValue.emergency2State)?.name
+    }
   }
 
   dataRefreshDriverLicense(data: any): void{
@@ -114,14 +230,11 @@ export class OnBoardingComponent implements OnInit{
   }
 
   dataRefreshWorkAuth(data: any): void{
-    //console.log(data)
     this.fileWorkAuth = data;
     console.log(this.fileWorkAuth)
   }
 
   onSubmit(): void {
-    //console.log(this.OnBoardingForm.value)
-
     //create a new formData
     let formData: FormData = new FormData();
 
@@ -137,22 +250,26 @@ export class OnBoardingComponent implements OnInit{
     for(let i=0; i<arr.length; i++)
       formData.append('file', arr[i]);
 
-    //console.log(arr)
-
+    //combine the forms together
     let paramObj = {};
     Object.assign(paramObj, this.phoneAddressCarForm.value, this.personalInfoFormValue, 
           this.referenceFormValue, this.emergency1FormValue, this.emergency2FormValue);
-
-    // let paramObj = this.OnBoardingForm.value;
     paramObj['email'] = this.email;
     paramObj['user_id'] = 571;
     paramObj['stateFullName'] = this.states.find((item) => item.abbreviation 
           == this.phoneAddressCarForm.value.state)?.name
 
-    //console.log(paramObj);
-
     let toTimestamp = this.personalInfoFormValue.dateOfBirth.getTime();
     paramObj['dateOfBirth'] = toTimestamp;
+
+    let toTimestamp2 = this.personalInfoFormValue.driverLicenseExp.getTime();
+    paramObj['driverLicenseExp'] = toTimestamp2;
+
+    let toTimestamp3 = this.personalInfoFormValue.authorizationStartDate.getTime();
+    paramObj['authorizationStartDate'] = toTimestamp3;
+
+    let toTimestamp4 = this.personalInfoFormValue.authorizationEndDate.getTime();
+    paramObj['authorizationEndDate'] = toTimestamp4;
 
     //first argument: path
     //second argument formData: the form that contains your files
@@ -165,7 +282,6 @@ export class OnBoardingComponent implements OnInit{
         err => {
             console.log(err);
     });
-    //console.log(this.OnBoardingForm.value)
 
   }
 

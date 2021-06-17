@@ -60,24 +60,24 @@ export class PersonalInfoTemplateComponent implements OnInit {
   authorizationSelection: boolean | undefined;
 
   personalInfoForm = this.fb.group({
-    company: null,
-    firstName: [null, Validators.required],
-    lastName: [null, Validators.required],
-    middleName: null,
-    ssn: [null, Validators.required],
-    gender: [null, Validators.required],
-    dateOfBirth: [null, Validators.required],
+    company: '',
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
+    middleName: '',
+    ssn: ['', Validators.required],
+    gender: ['', Validators.required],
+    dateOfBirth: ['', Validators.required],
 
-    isCitizen: [null, Validators.required],
-    citizenType: null,
-    authorizationType: null,
-    otherAuthorizationType: null,
-    authorizationStartDate: null,
-    authorizationEndDate: null,
+    isCitizen: ['', Validators.required],
+    citizenType: '',
+    authorizationType: '',
+    otherAuthorizationType: '',
+    authorizationStartDate: '',
+    authorizationEndDate: '',
 
     hasDriverLicense: [false, Validators.required],
-    driverLicense: null,
-    driverLicenseExp: null,
+    driverLicense: '',
+    driverLicenseExp: '',
   })
 
   chosenYearHandler(normalizedYear: Date) {

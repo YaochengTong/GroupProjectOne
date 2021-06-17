@@ -116,40 +116,65 @@ public class HireServiceImpl implements IHireService {
 
         //Step 1.3 emergency contact
         Person emergencyContactPerson = new Person();
-        emergencyContactPerson.setFirstName(paramMap.get("emergencyFirstName").toString());
-        emergencyContactPerson.setLastName(paramMap.get("emergencyLastName").toString());
-        emergencyContactPerson.setMiddleName(paramMap.get("emergencyMiddleName").toString());
-        emergencyContactPerson.setEmail(paramMap.get("emergencyEmail").toString());
-        emergencyContactPerson.setPrimaryPhone(paramMap.get("emergencyPhone").toString());
+        emergencyContactPerson.setFirstName(paramMap.get("emergency1FirstName").toString());
+        emergencyContactPerson.setLastName(paramMap.get("emergency1LastName").toString());
+        emergencyContactPerson.setMiddleName(paramMap.get("emergency1MiddleName").toString());
+        emergencyContactPerson.setEmail(paramMap.get("emergency1Email").toString());
+        emergencyContactPerson.setPrimaryPhone(paramMap.get("emergency1Phone").toString());
         emergencyContactPerson.setDob(new Timestamp(1));
         emergencyContactPerson.setGender("m");
-        //todo set address
-        //emergencyContactPerson.set
+        //set address
+        Address emergencyContactAddress = new Address();
+        emergencyContactAddress.setAddressLine1(paramMap.get("emergency1Address").toString());
+        emergencyContactAddress.setAddressLine2(paramMap.get("emergency1Address2").toString());
+        emergencyContactAddress.setCity(paramMap.get("emergency1City").toString());
+        emergencyContactAddress.setStateAbbr(paramMap.get("emergency1State").toString());
+        emergencyContactAddress.setStateName(paramMap.get("emergency1StateFullName").toString());
+        emergencyContactAddress.setZipCode(paramMap.get("emergency1PostalCode").toString());
+        emergencyContactAddress.setPerson(person);
+        Set<Address> addressSet2 = new HashSet<>();
+        addressSet2.add(emergencyContactAddress);
+        emergencyContactPerson.setAddresses(addressSet2);
+
+        //insert emergency contact
+        iPersonDao.insertPerson(emergencyContactPerson);
 
         //Step 1.4 reference contact
         if(paramMap.get("referenceFirstName") != null) {
             Person referencePerson = new Person();
-            referencePerson.setFirstName(paramMap.get("emergencyFirstName").toString());
-            referencePerson.setLastName(paramMap.get("emergencyLastName").toString());
-            referencePerson.setMiddleName(paramMap.get("emergencyMiddleName").toString());
-            referencePerson.setEmail(paramMap.get("emergencyEmail").toString());
-            referencePerson.setPrimaryPhone(paramMap.get("emergencyPhone").toString());
+            referencePerson.setFirstName(paramMap.get("referenceContactFirstName").toString());
+            referencePerson.setLastName(paramMap.get("referenceContactLastName").toString());
+            referencePerson.setMiddleName(paramMap.get("referenceContactMiddleName").toString());
+            referencePerson.setEmail(paramMap.get("referenceContactEmail").toString());
+            referencePerson.setPrimaryPhone(paramMap.get("referenceContactPhone").toString());
             referencePerson.setDob(new Timestamp(1));
             referencePerson.setGender("m");
-            //todo set address
-            //emergencyContactPerson.set
+
+            //set address
+            Address referenceContactAddress = new Address();
+            referenceContactAddress.setAddressLine1(paramMap.get("referenceContactAddress").toString());
+            referenceContactAddress.setAddressLine2(paramMap.get("referenceContactAddress2").toString());
+            referenceContactAddress.setCity(paramMap.get("referenceContactCity").toString());
+            referenceContactAddress.setStateAbbr(paramMap.get("referenceContactState").toString());
+            referenceContactAddress.setStateName(paramMap.get("referenceContactStateFullName").toString());
+            referenceContactAddress.setZipCode(paramMap.get("referenceContactPostalCode").toString());
+            referenceContactAddress.setPerson(person);
+            Set<Address> addressSet3 = new HashSet<>();
+            addressSet3.add(emergencyContactAddress);
+            emergencyContactPerson.setAddresses(addressSet3);
         }
+        //insert emergency contact
+        iPersonDao.insertPerson(emergencyContactPerson);
 
         //step 1.5 insert into application workflow
         ApplicationWorkflow applicationWorkflow = new ApplicationWorkflow();
         applicationWorkflow.setUser(user);
         applicationWorkflow.setCreateDate(timestamp);
         applicationWorkflow.setModificationDate(timestamp);
-        applicationWorkflow.setType("Onboard");
+        applicationWorkflow.setType("Onboarding");
         applicationWorkflow.setStatus("Pending");
         applicationWorkflow.setUser(user);
         iApplicationWorkFlowDao.insertApplicationWorkFlow(applicationWorkflow);
-
 
         /**
          * Step 2: File uploads
