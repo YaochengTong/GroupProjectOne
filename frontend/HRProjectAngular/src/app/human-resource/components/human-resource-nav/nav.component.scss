@@ -1,5 +1,5 @@
 .avatar {
-  margin-top: 16px;
+  margin: 16px 16px 16px 60px;
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -20,7 +20,6 @@
 
 .sidenav .mat-toolbar {
   background: inherit;
-  align-items: center;
 }
 
 .mat-toolbar.mat-primary {
