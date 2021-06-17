@@ -64,17 +64,26 @@ public class ProfileServiceImpl implements IProfileService {
         return profile;
     }
 
-    private List<EmergencyContact> setEmergencyContactList(Person person) {
-        List<EmergencyContact> emergencyContactList = new ArrayList<>();
+    private EmergencyContactList setEmergencyContactList(Person person) {
+        EmergencyContactList emergencyContactList = new EmergencyContactList();
         List<Contact> contactList = iContactDao.getEmergencyByPersonId(person.getId());
-        for (Contact contact : contactList) {
+
+        if (contactList.size() == 2) {
             EmergencyContact emergencyContact = new EmergencyContact();
-            Person emergencyPerson = iPersonDao.getPersonById(contact.getRelated_person_id());
+            Person emergencyPerson = iPersonDao.getPersonById(contactList.get(1).getRelated_person_id());
             emergencyContact.setFullName(getFullName(emergencyPerson));
             emergencyContact.setPhone(emergencyPerson.getPrimaryPhone());
             emergencyContact.setAddress(setAddressSection(emergencyPerson));
-            emergencyContactList.add(emergencyContact);
+            emergencyContactList.setEmergencyPerson1(emergencyContact);
         }
+
+        EmergencyContact emergencyContact = new EmergencyContact();
+        Person emergencyPerson = iPersonDao.getPersonById(contactList.get(0).getRelated_person_id());
+        emergencyContact.setFullName(getFullName(emergencyPerson));
+        emergencyContact.setPhone(emergencyPerson.getPrimaryPhone());
+        emergencyContact.setAddress(setAddressSection(emergencyPerson));
+        emergencyContactList.setEmergencyPerson1(emergencyContact);
+
         return emergencyContactList;
      }
 

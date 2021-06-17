@@ -1,17 +1,37 @@
 <h1 mat-dialog-title>Edit Personal Infomatino</h1>
 <div mat-dialog-content>
     <mat-label>Full Name</mat-label>
-    <input matInput [(ngModel)]="data.emergencyContactList.person.fullName" placeholder="data.emergencyContactList.person.fullName"><br>
+    <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson1.fullName" placeholder="data.emergencyContactList.emergencyPerson1.fullName"><br>
     <mat-label>Phone #</mat-label>
-    <input matInput [(ngModel)]="data.emergencyContactList.person.phone" placeholder="data.emergencyContactList.person.phone"><br>
-    <!-- <mat-label>Age</mat-label>
-    <input matInput [(ngModel)]="data.nameSection.age" placeholder="data.nameSection.age"><br>
-    <mat-label>SS#</mat-label>
-    <input matInput [(ngModel)]="data.nameSection.ssn" placeholder="data.nameSection.ssn"><br>
-    <mat-label>Date of Birth</mat-label>
-    <input matInput [(ngModel)]="data.nameSection.dob" placeholder="data.nameSection.dob"><br>
-    <mat-label>Avatar</mat-label>
-    <input matInput [(ngModel)]="data.nameSection.avatar" placeholder="data.nameSection.avatar"><br> -->
+    <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson1.phone" placeholder="data.emergencyContactList.emergencyPerson1.phone"><br>
+    <h3>Primary Address</h3>
+    <mat-label>Address Line 1</mat-label>
+    <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson1.address.primaryAddr.AddressLine1" placeholder="data.emergencyContactList.emergencyPerson1.address.primaryAddr.AddressLine1"><br>
+    <mat-label>Address Line 2</mat-label>
+    <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson1.address.primaryAddr.AddressLine2" placeholder="data.emergencyContactList.emergencyPerson1.address.primaryAddr.AddressLine2"><br>
+    <mat-label>City</mat-label>
+    <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson1.address.primaryAddr.City" placeholder="data.emergencyContactList.emergencyPerson1.address.primaryAddr.City"><br>
+    <mat-label>State</mat-label>
+    <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson1.address.primaryAddr.State" placeholder="data.emergencyContactList.emergencyPerson1.address.primaryAddr.State"><br>
+    <mat-label>Zip Code</mat-label>
+    <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson1.address.primaryAddr.Zip" placeholder="data.emergencyContactList.emergencyPerson1.address.primaryAddr.Zip"><br>
+    <br>
+    <!-- <mat-label>Full Name</mat-label>
+    <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson2.fullName" placeholder="data.emergencyContactList.emergencyPerson2.fullName"><br>
+    <mat-label>Phone #</mat-label>
+    <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson2.phone" placeholder="data.emergencyContactList.emergencyPerson2.phone"><br>
+    <h3>Primary Address</h3>
+    <mat-label>Address Line 1</mat-label>
+    <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson2.primaryAddr.AddressLine1" placeholder="data.emergencyContactList.emergencyPerson2.primaryAddr.AddressLine1"><br>
+    <mat-label>Address Line 2</mat-label>
+    <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson2.primaryAddr.AddressLine2" placeholder="data.emergencyContactList.emergencyPerson2.primaryAddr.AddressLine2"><br>
+    <mat-label>City</mat-label>
+    <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson2.primaryAddr.City" placeholder="data.emergencyContactList.emergencyPerson2.primaryAddr.City"><br>
+    <mat-label>State</mat-label>
+    <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson2.primaryAddr.State" placeholder="data.emergencyContactList.emergencyPerson2.primaryAddr.State"><br>
+    <mat-label>Zip Code</mat-label>
+    <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson2.primaryAddr.Zip" placeholder="data.emergencyContactList.emergencyPerson2.primaryAddr.Zip"><br>
+    <br> -->
 </div>
 <div mat-dialog-actions>
     <button mat-button (click)="onCancelClick()">Cancel</button>
