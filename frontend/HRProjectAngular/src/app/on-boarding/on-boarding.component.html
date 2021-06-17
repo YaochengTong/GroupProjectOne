@@ -14,9 +14,9 @@
           <mat-card-content>Your registration email: &nbsp;
             <mat-form-field>
               <input
+                [value]="email"
                 matInput
-                placeholder="UserEmail@gmail.com"
-                formControlName="email"
+                disabled
                 required
               />
             </mat-form-field>
@@ -300,7 +300,7 @@
       </div>
 
       <br/><br/>
-      <mat-card-subtitle>Contact Information</mat-card-subtitle>
+      <mat-card-subtitle>Phone and Address</mat-card-subtitle>
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
@@ -464,16 +464,102 @@
           <mat-form-field class="full-width">
             <input
               matInput
-              placeholder="Reference"
-              formControlName="reference"
+              placeholder="First Name"
+              formControlName="referenceFirstName"
+              required
             />
-            <mat-hint align="end"
-            >Please Enter First name, Last name, Middle name, Phone, Address,
-              Email, Relationship
-            </mat-hint>
+            <mat-error
+              *ngIf="
+                OnBoardingForm.controls['referenceFirstName'].hasError(
+                  'required'
+                )
+              "
+            >
+              First Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              placeholder="Last Name"
+              formControlName="referenceLastName"
+              required
+            />
+            <mat-error
+              *ngIf="
+                OnBoardingForm.controls['referenceLastName'].hasError(
+                  'required'
+                )
+              "
+            >
+              Last Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              placeholder="Middle Name"
+              formControlName="referenceMiddleName"
+            />
           </mat-form-field>
         </div>
       </div>
+      <!--      contact info      -->
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              placeholder="Phone"
+              formControlName="referencePhone"
+              required
+            />
+            <mat-error
+              *ngIf="
+                OnBoardingForm.controls['referencePhone'].hasError('required')
+              "
+            >
+              Phone is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              placeholder="Address"
+              formControlName="referenceAddress"
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              placeholder="Email"
+              formControlName="referenceEmail"
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              placeholder="Relationship"
+              formControlName="referenceRelationship"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+
 
       <br/><br/>
       <mat-card-subtitle>Emergency Contact</mat-card-subtitle>
