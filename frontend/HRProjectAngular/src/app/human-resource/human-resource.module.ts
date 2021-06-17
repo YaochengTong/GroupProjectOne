@@ -22,9 +22,14 @@ import { PersonalInfoComponent } from './components/personal-info/personal-info.
 import { HrPageComponent } from './components/hr-page/hr-page.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatDialogModule} from '@angular/material/dialog';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { HttpClientModule } from '@angular/common/http';
 import { HTTPReq } from '../service/HTTPReq/HTTPReq.service';
+
+
 
 import { NameSectionDialogComponent } from './components/personal-info/name-section-dialog/name-section-dialog.component';
 import { AddressSectionDialogComponent } from './components/personal-info/address-section-dialog/address-section-dialog.component';
@@ -66,6 +71,9 @@ import { EmploymentSectionDialogComponent } from './components/personal-info/emp
     MatCardModule,
     HttpClientModule,
     MatSnackBarModule,
+    MatDialogModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
   ],
   providers: [HTTPReq],
   exports: [
