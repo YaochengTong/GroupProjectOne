@@ -9,5 +9,6 @@ public interface IApplicationWorkFlowDao {
     ApplicationWorkflow getApplicationWorkFlowById(Integer id);
     List<ApplicationWorkflow> getApplicationWorkFlowByStatus(String status);
     void insertApplicationWorkFlow(ApplicationWorkflow applicationWorkflow);
+    ApplicationWorkflow getApplicationWorkFlowByUserIdAndApplicationType(Integer employeeId, String applicationType);
 
 }

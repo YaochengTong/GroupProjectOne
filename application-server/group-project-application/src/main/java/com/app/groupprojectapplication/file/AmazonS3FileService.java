@@ -18,7 +18,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -67,5 +69,17 @@ public class AmazonS3FileService implements InitializingBean {
         GeneratePresignedUrlRequest urlRequest = new GeneratePresignedUrlRequest(bucket, key);
         URL url = client.generatePresignedUrl(urlRequest);
         return url.toString();
+    }
+
+    public List<String> printFilesInOneFolder(String prefix) {
+        List<String> documents = new ArrayList<>();
+
+        ListObjectsRequest listObjectsRequest = new ListObjectsRequest().withBucketName(bucket).withPrefix(prefix + "/");
+        ObjectListing objectListing = client.listObjects(listObjectsRequest);
+        for(S3ObjectSummary os : objectListing.getObjectSummaries()) {
+            documents.add(os.getKey().replace(prefix + "/",""));
+            System.out.println(os.getKey().replace(prefix + "/",""));
+        }
+        return documents;
     }
 }

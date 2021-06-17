@@ -1,4 +1,4 @@
-import {House} from './house';
+import { House } from './house';
 
 export const HOUSES: House[] = [
   {
@@ -23,7 +23,29 @@ export const HOUSES: House[] = [
         numberOfMattresses: 2,
         numberOfTables: 1,
         numberOfChairs: 1,
-        reports: 'report',
+        reports: [
+          {
+            id: 1,
+            title: 'FacilityReport',
+            reportDate: '2021-02-01',
+            description: 'Good facility',
+            status: 'Open',
+            details: [
+              {
+                id: 1,
+                employeeId: 2,
+                comments: 'comments',
+                createDate: '2021-02-01',
+              },
+              {
+                id: 2,
+                employeeId: 2,
+                comments: 'comments',
+                createDate: '2021-02-01',
+              },
+            ],
+          },
+        ],
       },
     ],
   },
@@ -49,7 +71,29 @@ export const HOUSES: House[] = [
         numberOfMattresses: 2,
         numberOfTables: 1,
         numberOfChairs: 1,
-        reports: 'report',
+        reports: [
+          {
+            id: 1,
+            title: 'FacilityReport',
+            reportDate: '2021-02-01',
+            description: 'Good facility',
+            status: 'Open',
+            details: [
+              {
+                id: 1,
+                employeeId: 2,
+                comments: 'comments',
+                createDate: '2021-02-01',
+              },
+              {
+                id: 2,
+                employeeId: 2,
+                comments: 'comments',
+                createDate: '2021-02-01',
+              },
+            ],
+          },
+        ],
       },
     ],
   },
@@ -62,7 +106,7 @@ export const HOUSES: House[] = [
     employee: [
       {
         id: 1,
-        name: 'Gana',
+        name: 'Ghana',
         phone: '121-234-5555',
         email: 'mnajim.triand@azel.xyz',
         car: 'Benz_G63',
@@ -82,7 +126,29 @@ export const HOUSES: House[] = [
         numberOfMattresses: 2,
         numberOfTables: 1,
         numberOfChairs: 1,
-        reports: 'report',
+        reports: [
+          {
+            id: 1,
+            title: 'FacilityReport',
+            reportDate: '2021-02-01',
+            description: 'Good facility',
+            status: 'Open',
+            details: [
+              {
+                id: 1,
+                employeeId: 2,
+                comments: 'comments',
+                createDate: '2021-02-01',
+              },
+              {
+                id: 2,
+                employeeId: 2,
+                comments: 'comments',
+                createDate: '2021-02-01',
+              },
+            ],
+          },
+        ],
       },
     ],
   },

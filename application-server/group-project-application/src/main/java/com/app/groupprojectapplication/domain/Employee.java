@@ -177,7 +177,6 @@ public class Employee implements Serializable {
         this.visaStatus = visaStatus;
     }
 
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
     public Set<FacilityReport> getFacilityReportSet() {
         return facilityReportSet;

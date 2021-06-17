@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @Repository
@@ -26,5 +27,13 @@ public class VisaStatusDaoImpl implements IVisaStatusDao {
         Session session = sessionFactory.getCurrentSession();
         List<VisaStatus> visaStatusList = session.createQuery("FROM VisaStatus v WHERE v.visaType = '" + visaType + "'").getResultList();
         return visaStatusList;
+    }
+
+    @Override
+    public Integer getVisaAuthorizationLeftDay(Integer employeeId) {
+        Session session = sessionFactory.getCurrentSession();
+        String query = "SELECT datediff(date(visa_end_date), current_date()) AS DateDiff FROM hr_db.employee WHERE id = " + String.valueOf(employeeId);
+        Integer leftDay = ((BigInteger) session.createNativeQuery(query).list().get(0)).intValue();
+        return leftDay;
     }
 }

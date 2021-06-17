@@ -29,7 +29,7 @@ public class EmployeeDaoImpl implements IEmployeeDao {
 
     @Override
     public Employee getEmployeeById(Integer id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         employee = session.get(Employee.class, id);
         session.close();
         return employee;
@@ -37,11 +37,9 @@ public class EmployeeDaoImpl implements IEmployeeDao {
 
     @Override
     public void insertEmployee(Employee employee) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         Transaction ts = session.beginTransaction();
         session.save(employee);
-        ts.commit();
-        session.close();
     }
 
     @Override

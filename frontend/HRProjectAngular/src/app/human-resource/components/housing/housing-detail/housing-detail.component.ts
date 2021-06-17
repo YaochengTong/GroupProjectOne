@@ -7,6 +7,7 @@ import { Facility } from '../domain/facility';
 import { Employee } from '../domain/employee';
 import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { FacilityReport } from '../domain/facility-report';
 
 @Component({
   selector: 'app-housing-detail',
@@ -17,6 +18,9 @@ export class HousingDetailComponent implements OnInit {
   house: House | undefined;
   facility: Facility[] | undefined;
   employee: Employee[] | undefined;
+  reports: FacilityReport[] | undefined;
+
+  // reports: FacilityReport[] | undefined;
 
   constructor(
     private route: ActivatedRoute,
