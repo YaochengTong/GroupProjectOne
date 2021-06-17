@@ -11,10 +11,15 @@ import {MatRippleModule} from "@angular/material/core";
 import {MatListModule} from "@angular/material/list";
 import { HousingDetailComponent } from './housing-detail/housing-detail.component';
 import { ReportDialogComponent } from './report-dialog/report-dialog.component';
+import {MatExpansionModule} from "@angular/material/expansion";
 
 
 @NgModule({
-  declarations: [HousingPageComponent, HousingDetailComponent, ReportDialogComponent],
+  declarations: [
+    HousingPageComponent,
+    HousingDetailComponent,
+    ReportDialogComponent,
+  ],
   imports: [
     CommonModule,
     HousingRoutingModule,
@@ -24,6 +29,7 @@ import { ReportDialogComponent } from './report-dialog/report-dialog.component';
     MatButtonModule,
     MatRippleModule,
     MatListModule,
+    MatExpansionModule,
   ],
 })
 export class HousingModule {}
