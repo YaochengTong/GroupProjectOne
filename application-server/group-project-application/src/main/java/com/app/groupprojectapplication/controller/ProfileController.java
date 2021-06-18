@@ -1,9 +1,6 @@
 package com.app.groupprojectapplication.controller;
 
-import com.app.groupprojectapplication.service.IProfileService;
-import com.app.groupprojectapplication.service.IUpdateAddressSectionService;
-import com.app.groupprojectapplication.service.IUpdateContactSectionService;
-import com.app.groupprojectapplication.service.IUpdateNameSectionService;
+import com.app.groupprojectapplication.service.*;
 //import org.graalvm.compiler.debug.TimeSource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +26,9 @@ public class ProfileController {
 
     @Autowired
     private IUpdateContactSectionService iUpdateContactSectionService;
+
+    @Autowired
+    private IUpdateEmploymentSectionService iUpdateEmploymentSectionService;
 
     @GetMapping("/{user_id}")
     public Map<String, Object> getProfile(@PathVariable Integer user_id) {
@@ -72,17 +72,21 @@ public class ProfileController {
     @PostMapping("/{user_id}/updateAddressSection")
     public Map<String, Object> updateProfileAddressSection(@RequestParam Map<String, Object> params,
                                              @PathVariable Integer user_id) {
-//        Map<String,Object> paramsResult =
-//                new ObjectMapper().readValue(params, HashMap.class);
         Map<String, Object> resultMap = new HashMap<>();
+//        String priAdd = params.get("primaryAddr").toString();
+//        System.out.println(priAdd);
+
+
+//        Map<String,Object> result = new ObjectMapper().readValue(params.get("primaryAddr"), HashMap.class);
+
+
+
+//        Map<String, Object> priAddress = new HashMap<>(params.get("priAddress"));
 //        String priAdd1 = params.get("primaryAddr").get("AddressLine1").toString();
 //        String priAdd2 = params.get("primaryAddr").get("AddressLine2").toString();
 //        String priCity = params.get("primaryAddr").get("City").toString();
 //        String priState = params.get("primaryAddr").get("State").toString();
 //        String priZip = params.get("primaryAddr").get("Zip").toString();
-        String priAdd = params.get("primaryAddr").toString();
-        System.out.println(priAdd);
-
 //        System.out.println(priAdd1);
 //        System.out.println(priAdd2);
 //        System.out.println(priZip);
@@ -106,7 +110,6 @@ public class ProfileController {
         String personalEmail = params.get("personalEmail").toString();
         String workEmail = params.get("workEmail").toString();
         String workPhone = params.get("workPhone").toString();
-        System.out.println(ceilphone);
         iUpdateContactSectionService.updateContactInfo(ceilphone, personalEmail, workEmail, workPhone, user_id);
         resultMap.put("ContactResult", "success");
         return resultMap;
@@ -128,15 +131,16 @@ public class ProfileController {
     public Map<String, Object> updateProfileEmploymentSection(@RequestParam Map<String, Object> params,
                                                         @PathVariable Integer user_id) {
         Map<String, Object> resultMap = new HashMap<>();
+        String title = params.get("title").toString();
+        String workAuthorization = params.get("workAuthorization").toString();
 
-//        authorizationEndDate: "2021-12-23T20:50:31.000+00:00"
-//        authorizationStartDate: "2021-06-14T19:50:29.000+00:00"
-//        employmentEndDate: "2021-12-01T20:49:36.000+00:00"
-//        employmentStartDate: "2020-02-14T20:49:27.000+00:00"
-//        title: "manager"
-//        workAuthorization:
-//        String priAdd = params.get("primaryAddr").toString();
-//        System.out.println(priAdd);
+        String authorizationEndDate = params.get("authorizationEndDate").toString();
+        String authorizationStartDate = params.get("authorizationStartDate").toString();
+        String employmentEndDate = params.get("employmentEndDate").toString();
+        String employmentStartDate = params.get("employmentStartDate").toString();
+
+        iUpdateEmploymentSectionService.updateEmployment(title, workAuthorization, authorizationStartDate, authorizationEndDate,
+                employmentStartDate, employmentEndDate, user_id);
         resultMap.put("EmploymentResult", "success");
         return resultMap;
     }

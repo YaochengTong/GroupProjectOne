@@ -29,7 +29,7 @@ public class UpdateContactSectionImpl implements IUpdateContactSectionService {
         person.setEmail(personalEmail);
         person.setPrimaryPhone(cellPhone);
         person.setAlternatePhone(workPhone);
-        System.out.println("Work Email is :" + workEmail);
+        System.out.println("Updated Work Email is :" + workEmail);
         iPersonDao.updatePerson(person);
         return true;
     }

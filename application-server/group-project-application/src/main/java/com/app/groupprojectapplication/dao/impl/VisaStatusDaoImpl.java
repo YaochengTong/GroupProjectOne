@@ -24,6 +24,13 @@ public class VisaStatusDaoImpl implements IVisaStatusDao {
     }
 
     @Override
+    public VisaStatus getVisaById(Integer id) {
+        Session session = sessionFactory.getCurrentSession();
+        VisaStatus visaStatus = session.get(VisaStatus.class, id);
+        return visaStatus;
+    }
+
+    @Override
     public List<VisaStatus> getVisaByType(String visaType) {
         Session session = sessionFactory.getCurrentSession();
         List<VisaStatus> visaStatusList = session.createQuery("FROM VisaStatus v WHERE v.visaType = '" + visaType + "'").getResultList();
@@ -44,5 +51,11 @@ public class VisaStatusDaoImpl implements IVisaStatusDao {
         String query = "SELECT v.visa_type FROM hr_db.visa_status v LEFT JOIN hr_db.employee e ON v.id = e.visa_status_id WHERE e.id = " + employeeId;
         String visaType = (String)session.createNativeQuery(query).list().get(0);
         return visaType;
+    }
+
+    @Override
+    public void updateVisaStatus(VisaStatus visaStatus) {
+        Session session = sessionFactory.getCurrentSession();
+        session.saveOrUpdate(visaStatus);
     }
 }

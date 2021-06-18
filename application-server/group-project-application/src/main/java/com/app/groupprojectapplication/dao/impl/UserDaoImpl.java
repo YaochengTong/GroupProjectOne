@@ -23,7 +23,6 @@ import java.util.List;
 @Transactional
 public class  UserDaoImpl implements IUserDao {
 
-    User user;
 
     @Autowired
     protected SessionFactory sessionFactory;
@@ -32,7 +31,7 @@ public class  UserDaoImpl implements IUserDao {
     @Override
     public User getUserById(Integer id) {
         Session session = sessionFactory.getCurrentSession();
-        user = session.get(User.class, id);
+        User user = session.get(User.class, id);
         return user;
     }
 
@@ -55,11 +54,7 @@ public class  UserDaoImpl implements IUserDao {
     @Override
     public void updateUser(User user) {
         Session session = sessionFactory.getCurrentSession();
-        User currentUser = session.get(User.class, user.getId());
-        currentUser.setRoles(user.getRoles());
-        currentUser.setModificationDate(new Timestamp(System.currentTimeMillis()));
-        Person person = session.get(Person.class, user.getPerson().getId());
-        currentUser.setPerson(person);
+        session.saveOrUpdate(user);
     }
 
     @Override
