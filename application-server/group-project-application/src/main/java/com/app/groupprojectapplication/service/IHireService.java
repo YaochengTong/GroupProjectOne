@@ -9,4 +9,5 @@ import java.util.Map;
 public interface IHireService {
     boolean generateAToken(String email, Integer userId);
     Map<String, Object> onboardSubmission(List<MultipartFile> files, Map<String, Object> paramMap);
+    Map<String, Object> getOnboardApplications(Map<String, Object> paramMap);
 }

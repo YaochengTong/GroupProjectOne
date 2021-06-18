@@ -8,11 +8,13 @@ import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Repository
@@ -53,5 +55,19 @@ public class ApplicationWorkflowDaoImpl implements IApplicationWorkFlowDao {
         ApplicationWorkflow applicationWorkflow = (ApplicationWorkflow) session.createQuery(query).setParameter("userId", userId).setParameter("type", applicationType).getResultList().get(0);
         session.setFlushMode(FlushMode.MANUAL);
         return applicationWorkflow;
+    }
+
+    @Override
+    public List<ApplicationWorkflow> getApplicationWorkFlowByApplicationType(String applicationType) {
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "FROM " +
+                "ApplicationWorkflow awf join fetch awf.user as user " +
+                " join fetch user.person as person" +
+                " join fetch person.contacts " +
+                "WHERE awf.type = :type";
+        Query<ApplicationWorkflow> query = session.createQuery(hql);
+        query.setParameter("type", applicationType);
+        List<ApplicationWorkflow> resultList = query.getResultList();
+        return resultList;
     }
 }

@@ -19,9 +19,10 @@ public class VisaStatusDaoImpl implements IVisaStatusDao {
     protected SessionFactory sessionFactory;
 
     @Override
-    public void insertVisa(VisaStatus visaStatus) {
+    public Integer insertVisa(VisaStatus visaStatus) {
         Session session = sessionFactory.getCurrentSession();
-        session.save(visaStatus);
+        Integer id = (Integer) session.save(visaStatus);
+        return id;
     }
 
     @Override

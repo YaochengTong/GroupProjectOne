@@ -37,9 +37,10 @@ public class EmployeeDaoImpl implements IEmployeeDao {
     }
 
     @Override
-    public void insertEmployee(Employee employee) {
+    public Integer insertEmployee(Employee employee) {
         Session session = sessionFactory.getCurrentSession();
-        session.save(employee);
+        Integer id = (Integer) session.save(employee);
+        return id;
     }
 
     @Override

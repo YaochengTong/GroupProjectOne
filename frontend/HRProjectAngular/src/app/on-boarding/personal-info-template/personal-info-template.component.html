@@ -149,12 +149,12 @@
             (selectionChange)="selectionOnOther()"
             [(ngModel)]="authorizationSelection"
           >
-            <mat-option value="h1b">H1-B</mat-option>
-            <mat-option value="l2">L2</mat-option>
-            <mat-option value="f1-cpt">F1-CPT</mat-option>
-            <mat-option value="f1-opt">F1-OPT</mat-option>
-            <mat-option value="h4">H4</mat-option>
-            <mat-option value="other" [value]="true">OTHER</mat-option>
+            <mat-option value="H1B">H1B</mat-option>
+            <mat-option value="L2">L2</mat-option>
+            <mat-option value="F1(OPT)">F1(OPT)</mat-option>
+            <mat-option value="F1(OPT) STEM">F1(OPT) STEM</mat-option>
+            <mat-option value="H4">H4</mat-option>
+            <mat-option [value]="true">OTHER</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
