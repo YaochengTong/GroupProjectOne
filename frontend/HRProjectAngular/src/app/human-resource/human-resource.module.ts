@@ -26,6 +26,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+
 import { HttpClientModule } from '@angular/common/http';
 import { HTTPReq } from '../service/HTTPReq/HTTPReq.service';
 

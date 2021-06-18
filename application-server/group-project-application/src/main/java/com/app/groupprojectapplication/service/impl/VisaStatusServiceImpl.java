@@ -37,11 +37,13 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
     IApplicationWorkFlowDao iApplicationWorkFlowDao;
 
     @Override
+    @Transactional
     public List<VisaStatusInfo> getVisaInfo() {
         List<VisaStatusInfo> visaStatusInfoList = new ArrayList<>();
         List<User> users = iUserDao.getAllUsers();
         for (User user : users) {
-            visaStatusInfoList.add(getVisaInfoByUserId(user.getId()));
+            VisaStatusInfo visaStatusInfo = getVisaInfoByUserId(user.getId());
+            if (visaStatusInfo != null) visaStatusInfoList.add(visaStatusInfo);
         }
         return visaStatusInfoList;
     }
@@ -50,17 +52,23 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
     @Transactional
     public VisaStatusInfo getVisaInfoByUserId(Integer userId) {
         User user = iUserDao.getUserById(userId);
-        VisaStatusInfo visaStatusInfo = new VisaStatusInfo();
-        Employee employee = iEmployeeDao.getEmployeeById(iUserDao.getEmployeeIdByUserId(user.getId()));
-        Person person = user.getPerson();
+        VisaStatusInfo visaStatusInfo = null;
+        try {
+            Employee employee = iEmployeeDao.getEmployeeById(iUserDao.getEmployeeIdByUserId(user.getId()));
+            Person person = user.getPerson();
+            visaStatusInfo = new VisaStatusInfo();
+            visaStatusInfo.setFullName(setFullName(person));
+            visaStatusInfo.setWorkAuthorization(employee.getVisaStatus().getVisaType());
+            visaStatusInfo.setAuthorizationStartDate(employee.getVisaStartDate());
+            visaStatusInfo.setAuthorizationEndDate(employee.getVisaEndDate());
+            visaStatusInfo.setAuthorizationDayLeft(iVisaStatusDao.getVisaAuthorizationLeftDay(employee.getId()));
+            visaStatusInfo.setDocumentReceived(amazonS3FileService.printFilesInOneFolder(String.valueOf(user.getId())));
+            visaStatusInfo.setNextStep(determineNextStep(iApplicationWorkFlowDao.getApplicationWorkFlowByUserIdAndApplicationType(userId, applicationType).getStatus()));
 
-        visaStatusInfo.setFullName(setFullName(person));
-        visaStatusInfo.setWorkAuthorization(employee.getVisaStatus().getVisaType());
-        visaStatusInfo.setAuthorizationStartDate(employee.getVisaStartDate());
-        visaStatusInfo.setAuthorizationEndDate(employee.getVisaEndDate());
-        visaStatusInfo.setAuthorizationDayLeft(iVisaStatusDao.getVisaAuthorizationLeftDay(employee.getId()));
-        visaStatusInfo.setDocumentReceived(amazonS3FileService.printFilesInOneFolder(String.valueOf(user.getId())));
-        visaStatusInfo.setNextStep(determineNextStep(iApplicationWorkFlowDao.getApplicationWorkFlowByUserIdAndApplicationType(userId, applicationType).getStatus()));
+        } catch (Exception e) {
+            System.err.println("No such employee with user id "+ userId);;
+        }
+
         return visaStatusInfo;
     }
 
@@ -78,10 +86,11 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
         String nextStep;
         switch (currentStep) {
             case "OPT Receipt": nextStep = "OPT EAD"; break;
-            case "OPT EAD": nextStep = "I-983 for OPT STEP"; break;
-            case "I-983 Submitted": nextStep = "I-20 after I-983 Submitted"; break;
+            case "OPT EAD": nextStep = "I-983 for OPT STEM"; break;
+            case "I-983": nextStep = "I-20 after I-983 Submitted"; break;
+            case "I-20": nextStep = "OPT STEM Receipt"; break;
             case "OPT STEM Receipt": nextStep = "OPT STEP EAD"; break;
-            case "OPT STEM EAD": nextStep="No Action"; break;
+            case "OPT STEM EAD": nextStep="No Further Action Needed"; break;
             default:
                 throw new IllegalStateException("Unexpected value: " + currentStep);
         }

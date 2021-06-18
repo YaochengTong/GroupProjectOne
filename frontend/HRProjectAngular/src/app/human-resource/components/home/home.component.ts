@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit{
     'name',
     'visaType',
     'expirationDate',
+    'status',
     'action'
   ]
 
@@ -32,6 +33,10 @@ export class HomeComponent implements OnInit{
         this.dataSource = new MatTableDataSource<PeriodicElement>(data.AllStatus);
       }
     )
+  }
+
+  sendEmail(): void {
+    
   }
 }
 
