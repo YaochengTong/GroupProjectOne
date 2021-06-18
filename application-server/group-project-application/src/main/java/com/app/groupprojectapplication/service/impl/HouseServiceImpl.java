@@ -1,7 +1,9 @@
 package com.app.groupprojectapplication.service.impl;
 
+import com.app.groupprojectapplication.dao.IContactDao;
 import com.app.groupprojectapplication.dao.IFacilityDao;
 import com.app.groupprojectapplication.dao.IHouseDao;
+import com.app.groupprojectapplication.dao.IPersonDao;
 import com.app.groupprojectapplication.domain.Employee;
 import com.app.groupprojectapplication.domain.Facility;
 import com.app.groupprojectapplication.domain.FacilityReport;
@@ -29,15 +31,26 @@ public class HouseServiceImpl implements IHouseService {
     IHouseDao iHouseDao;
     @Autowired
     IFacilityDao iFacilityDao;
+    @Autowired
+    IContactDao iContactDao;
+    @Autowired
+    IPersonDao iPersonDao;
 
     @Override
     @Transactional
     public HousePageInfo getHouseById(Integer id) {
         House h = iHouseDao.getHouseById(id);
+
+        int contactId = iHouseDao.getContactIdByHouseId(id);
+        int contactPersonId = iContactDao.getPersonIdByContactId(contactId);
+        String contactPhone = iPersonDao.getPhoneByPersonId(contactPersonId);
+
         HousePageInfo hpi = new HousePageInfo();
         hpi.setHouseId(h.getId());
         hpi.setAddress(h.getAddress());
         hpi.setLandlord(generateRandomLandlord());
+        hpi.setPhone(contactPhone);
+        hpi.setNumberOfPerson(h.getNumberOfPerson());
         Set<Employee> eList = h.getEmployeeSet();
         Set<Facility> fList = h.getFacilitySet();
         List<HouseEmployeeInfo> houseEmployeeInfoList = getEmployeeList(eList);
@@ -120,6 +133,7 @@ public class HouseServiceImpl implements IHouseService {
         HouseFacilityReportInfo hri = new HouseFacilityReportInfo();
         hri.setHouseFacilityReportId(fr.getId());
         hri.setHouseFacilityReportTitle(fr.getTitle());
+        hri.setHouseFacilityReportDate(fr.getReportDate().toString());
         hri.setHouseFacilityReportDescription(fr.getDescription());
         hri.setHouseFacilityReportStatus(fr.getStatus());
         List<HouseFacilityReportDetail> HouseFacilityReportDetailList = transferFacilityReportDetail(

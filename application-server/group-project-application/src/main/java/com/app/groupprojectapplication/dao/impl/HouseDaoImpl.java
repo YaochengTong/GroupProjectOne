@@ -1,8 +1,6 @@
 package com.app.groupprojectapplication.dao.impl;
 
 import com.app.groupprojectapplication.dao.IHouseDao;
-import com.app.groupprojectapplication.domain.Employee;
-import com.app.groupprojectapplication.domain.FacilityReport;
 import com.app.groupprojectapplication.domain.House;
 import java.util.List;
 
@@ -37,6 +35,13 @@ public class HouseDaoImpl implements IHouseDao {
         Session session = sessionFactory.getCurrentSession();
         List<House> houseList = session.createQuery("FROM House").getResultList();
         return houseList;
+    }
+
+    @Override
+    public int getContactIdByHouseId(Integer house_id) {
+        Session session = sessionFactory.getCurrentSession();
+        List<Integer> resultList = session.createQuery("SELECT contact.id FROM House").getResultList();
+        return resultList.get(0);
     }
 
 }

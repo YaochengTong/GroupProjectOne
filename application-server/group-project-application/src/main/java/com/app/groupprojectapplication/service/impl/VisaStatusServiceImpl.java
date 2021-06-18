@@ -41,26 +41,29 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
     public List<VisaStatusInfo> getVisaInfo() {
         List<VisaStatusInfo> visaStatusInfoList = new ArrayList<>();
         List<User> users = iUserDao.getAllUsers();
+        int index = 0;
         for (User user : users) {
-            VisaStatusInfo visaStatusInfo = getVisaInfoByUserId(user.getId());
-            if (visaStatusInfo != null) visaStatusInfoList.add(visaStatusInfo);
+            VisaStatusInfo visaStatusInfo = getVisaInfoByUserId(user.getId(), index);
+            if (visaStatusInfo != null) {visaStatusInfoList.add(visaStatusInfo); index++;}
         }
         return visaStatusInfoList;
     }
 
     @Override
     @Transactional
-    public VisaStatusInfo getVisaInfoByUserId(Integer userId) {
+    public VisaStatusInfo getVisaInfoByUserId(Integer userId, Integer index) {
         User user = iUserDao.getUserById(userId);
         VisaStatusInfo visaStatusInfo = null;
         try {
             Employee employee = iEmployeeDao.getEmployeeById(iUserDao.getEmployeeIdByUserId(user.getId()));
             Person person = iUserDao.getPersonByUserId(userId);
             visaStatusInfo = new VisaStatusInfo();
+            visaStatusInfo.setUserId(userId);
+            visaStatusInfo.setIdx(index);
             visaStatusInfo.setFullName(setFullName(person));
             visaStatusInfo.setWorkAuthorization(iVisaStatusDao.getVisaTypeByEmployeeId(employee.getId()));
-            visaStatusInfo.setAuthorizationStartDate(employee.getVisaStartDate());
-            visaStatusInfo.setAuthorizationEndDate(employee.getVisaEndDate());
+            visaStatusInfo.setAuthorizationStartDate(employee.getVisaStartDate().toString().substring(0, 10));
+            visaStatusInfo.setAuthorizationEndDate(employee.getVisaEndDate().toString().substring(0, 10));
             visaStatusInfo.setAuthorizationDayLeft(iVisaStatusDao.getVisaAuthorizationLeftDay(employee.getId()));
             visaStatusInfo.setDocumentReceived(amazonS3FileService.printFilesInOneFolder(String.valueOf(user.getId())));
             visaStatusInfo.setNextStep(determineNextStep(iApplicationWorkFlowDao.getApplicationWorkFlowByUserIdAndApplicationType(userId, applicationType).getStatus()));

@@ -33,12 +33,12 @@ export class HTTPReq {
       },
       responseType: 'json',
       params: paramObj,
-      
+
     });
   }
 
-  fileUploadWithParams(path: string, formData: FormData, paramObj: any, 
-        endPoint: string = 'http://localhost:8999') : Observable<any> 
+  fileUploadWithParams(path: string, formData: FormData, paramObj: any,
+        endPoint: string = 'http://localhost:8999') : Observable<any>
   {
       return this.http.post(endPoint + path, formData, {
         headers: {

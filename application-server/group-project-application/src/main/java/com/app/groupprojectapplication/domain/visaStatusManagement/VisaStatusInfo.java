@@ -13,9 +13,11 @@ import java.util.List;
 public class VisaStatusInfo {
     private String fullName;
     private String workAuthorization;
-    private Timestamp authorizationStartDate;
-    private Timestamp authorizationEndDate;
+    private String authorizationStartDate;
+    private String authorizationEndDate;
     private Integer authorizationDayLeft;
     private List<String> documentReceived;
     private String nextStep;
+    private Integer idx;
+    private Integer userId;
 }

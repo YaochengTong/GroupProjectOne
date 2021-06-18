@@ -1,4 +1,4 @@
-<div style="position: relative; top: 50%; left: 50%;" *ngIf="!isDataAvailable">
+<div style="position: relative; top: 40%; left: 50%;" *ngIf="!isDataAvailable">
     <mat-spinner></mat-spinner>
     <strong>Loading...</strong>
 </div>
@@ -15,24 +15,26 @@
 
   <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
   <ng-container matColumnDef="expandedDetail">
-    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+    <td mat-cell *matCellDef="let element;" [attr.colspan]="columnsToDisplay.length">
       <div class="example-element-detail"
            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-        <div class="detail-element"> 
-            <div class="detail-element-content"><strong>Legal Name:</strong> {{element.fullName}} </div>
-            <div class="detail-element-content" ><strong>Type:</strong>  {{element.workAuthorization}}</div>
-            <div class="detail-element-content"><strong>Start Date:</strong>  {{element.authorizationStartDate.substring(0,10)}} </div>
-            <div class="detail-element-content"><strong>End Date:</strong> {{element.authorizationEndDate.substring(0,10)}} </div>
-        </div>
-        <div>
-            <div></div>
-        </div>
+        <form class="detail-element">
+            <mat-form-field><mat-label>Legal Name:</mat-label><input #fullName matInput [id]="element.idx" style="color: black;" [disabled]="!isEdit" [value]="element.fullName"> </mat-form-field>
+            <mat-form-field><mat-label>Type:</mat-label><input #type matInput [id]="element.idx" matInput style="color: black;" [disabled]="!isEdit" [value]="element.workAuthorization"> </mat-form-field>
+            <mat-form-field><mat-label>Start Date::</mat-label><input matInput #startDate matInput [id]="element.idx" style="color: black;" [disabled]="!isEdit" [value]="element.authorizationStartDate"> </mat-form-field>
+            <mat-form-field><mat-label>End Date:</mat-label><input matInput #endDate matInput [id]="element.idx" style="color: black;" [disabled]="!isEdit" [value]="element.authorizationEndDate"> </mat-form-field><br>
+            <button *ngIf="!isEdit" style="background-color: transparent; border: none; outline: none;" (click)="isEdit = true"><mat-icon style="font-size: medium;"> border_color</mat-icon></button><br>
+            <button *ngIf="isEdit" mat-button color="primary" (click)="onSubmit()">Save</button>
+            <button *ngIf="isEdit" mat-button color="gray" (click)="isEdit=false">Cancel</button>
+        </form>
+        
         <div class="example-element-diagram">
             <strong>Document Received: </strong>
             <div *ngFor="let item of element.documentReceived">
-                <mat-icon>file_copy</mat-icon>{{item}}
+                <mat-icon style="font-size: medium;">file_copy</mat-icon>{{item}}
             </div>
-            <div class="notification"><strong>Next Step: {{element.nextStep}}</strong> | Send Notification</div>
+            <div class="notification"><strong>Next Step: {{element.nextStep}}</strong> | <a style="color: blue" href="">Send Notification</a> 
+            </div>
         </div>
         <br>
       </div>

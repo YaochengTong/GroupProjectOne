@@ -1,4 +1,4 @@
-import { House } from './house';
+import {House} from './house';
 
 export const HOUSES: House[] = [
   {
@@ -14,6 +14,13 @@ export const HOUSES: House[] = [
         phone: '123-234-1111',
         email: 'zack@beaconﬁre.com',
         car: 'Honda_Accord_Grey',
+      },
+      {
+        id: 2,
+        name: 'asedr',
+        phone: '123-234-1111',
+        email: 'figapor810@beydent.com',
+        car: 'Mada_asd',
       },
     ],
     facility: [
