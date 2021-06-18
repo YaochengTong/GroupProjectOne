@@ -30,6 +30,9 @@ public class HireServiceImpl implements IHireService {
     private IPersonDao iPersonDao;
 
     @Autowired
+    private IContactDao iContactDao;
+
+    @Autowired
     private IRegistrationTokenDao iRegistrationTokenDao;
 
     @Autowired
@@ -74,8 +77,7 @@ public class HireServiceImpl implements IHireService {
     @Override
     public Map<String, Object> onboardSubmission(List<MultipartFile> files, Map<String, Object> paramMap) {
         Map<String, Object> resultMap = new HashMap<>();
-        //Integer userId = Integer.parseInt(paramMap.get("user_id").toString());
-        Integer userId = 573;
+        Integer userId = Integer.parseInt(paramMap.get("user_id").toString());
         User user = iUserDao.getUserById(userId);
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
@@ -86,7 +88,7 @@ public class HireServiceImpl implements IHireService {
         Person person = new Person();
         person.setFirstName(paramMap.get("firstName").toString());
         person.setLastName(paramMap.get("lastName").toString());
-        person.setMiddleName(paramMap.get("lastName").toString());
+        person.setMiddleName(paramMap.get("middleName").toString());
         person.setEmail(paramMap.get("email").toString());
         person.setPrimaryPhone(paramMap.get("cellPhone").toString());
         person.setAlternatePhone(paramMap.get("workPhone").toString());
@@ -110,7 +112,8 @@ public class HireServiceImpl implements IHireService {
         user.setPerson(person);
 
         //insert person
-        iPersonDao.insertPerson(person);
+        Integer person_id = iPersonDao.insertPerson(person);
+        person.setId(person_id);
 
         //update user
         iUserDao.updateUser(user);
@@ -136,11 +139,59 @@ public class HireServiceImpl implements IHireService {
         addressSet2.add(emergencyContactAddress);
         emergencyContactPerson.setAddresses(addressSet2);
 
-        //insert emergency contact
-        iPersonDao.insertPerson(emergencyContactPerson);
+        //insert emergency contact person
+        Integer emergencyPerson1ID = iPersonDao.insertPerson(emergencyContactPerson);
+        emergencyContactPerson.setId(emergencyPerson1ID);
+        //insert into contact
+        Contact contact = new Contact();
+        contact.setPerson(person);
+        contact.setRelated_person_id(emergencyPerson1ID);
+        contact.setTitle("employee");
+        contact.setIsEmergency((byte) 1);
+        contact.setIsReferrence((byte) 0);
+        contact.setIsLandlord((byte) 0);
+        contact.setRelationship(paramMap.get("emergency1Relationship").toString());
+        iContactDao.insertContact(contact);
+
+        //emergency contact 2
+        if(paramMap.get("emergency2FirstName") != null && !paramMap.get("emergency2FirstName").equals("")) {
+            Person emergencyPerson2 = new Person();
+            emergencyPerson2.setFirstName(paramMap.get("emergency2FirstName").toString());
+            emergencyPerson2.setLastName(paramMap.get("emergency2LastName").toString());
+            emergencyPerson2.setMiddleName(paramMap.get("emergency2MiddleName").toString());
+            emergencyPerson2.setEmail(paramMap.get("emergency2Email").toString());
+            emergencyPerson2.setPrimaryPhone(paramMap.get("emergency2Phone").toString());
+            emergencyPerson2.setDob(timestamp);
+
+            //set address
+            Address referenceContactAddress = new Address();
+            referenceContactAddress.setAddressLine1(paramMap.get("emergency2Address").toString());
+            referenceContactAddress.setAddressLine2(paramMap.get("emergency2Address2").toString());
+            referenceContactAddress.setCity(paramMap.get("emergency2City").toString());
+            referenceContactAddress.setStateAbbr(paramMap.get("emergency2State").toString());
+            referenceContactAddress.setStateName(paramMap.get("emergency2StateFullName").toString());
+            referenceContactAddress.setZipCode(paramMap.get("emergency2PostalCode").toString());
+            referenceContactAddress.setPerson(person);
+            Set<Address> addressSet3 = new HashSet<>();
+            addressSet3.add(referenceContactAddress);
+            emergencyPerson2.setAddresses(addressSet3);
+
+            //insert emergency contact 2
+            Integer emergencyPerson2Id = iPersonDao.insertPerson(emergencyPerson2);
+            //insert into contact
+            Contact emergencyContact2 = new Contact();
+            emergencyContact2.setPerson(person);
+            emergencyContact2.setRelated_person_id(emergencyPerson2Id);
+            emergencyContact2.setTitle("employee");
+            emergencyContact2.setIsEmergency((byte) 1);
+            emergencyContact2.setIsReferrence((byte) 0);
+            emergencyContact2.setIsLandlord((byte) 0);
+            emergencyContact2.setRelationship(paramMap.get("emergency2Relationship").toString());
+            iContactDao.insertContact(emergencyContact2);
+        }
 
         //Step 1.4 reference contact
-        if(paramMap.get("referenceFirstName") != null) {
+        if(paramMap.get("referenceContactFirstName") != null && !paramMap.get("referenceContactFirstName").equals("")) {
             Person referencePerson = new Person();
             referencePerson.setFirstName(paramMap.get("referenceContactFirstName").toString());
             referencePerson.setLastName(paramMap.get("referenceContactLastName").toString());
@@ -159,11 +210,23 @@ public class HireServiceImpl implements IHireService {
             referenceContactAddress.setZipCode(paramMap.get("referenceContactPostalCode").toString());
             referenceContactAddress.setPerson(person);
             Set<Address> addressSet3 = new HashSet<>();
-            addressSet3.add(emergencyContactAddress);
-            emergencyContactPerson.setAddresses(addressSet3);
+            addressSet3.add(referenceContactAddress);
+            referencePerson.setAddresses(addressSet3);
+
+            //insert reference contact
+            Integer referencePersonId = iPersonDao.insertPerson(referencePerson);
+            //insert into contact
+            Contact referenceContact = new Contact();
+            referenceContact.setPerson(person);
+            referenceContact.setRelated_person_id(referencePersonId);
+            referenceContact.setTitle("employee");
+            referenceContact.setIsEmergency((byte) 0);
+            referenceContact.setIsReferrence((byte) 1);
+            referenceContact.setIsLandlord((byte) 0);
+            referenceContact.setRelationship(paramMap.get("referenceContactRelationship").toString());
+            iContactDao.insertContact(referenceContact);
         }
-        //insert emergency contact
-        iPersonDao.insertPerson(emergencyContactPerson);
+
 
         //step 1.5 insert into application workflow
         ApplicationWorkflow applicationWorkflow = new ApplicationWorkflow();
@@ -202,4 +265,5 @@ public class HireServiceImpl implements IHireService {
 
         return resultMap;
     }
+
 }

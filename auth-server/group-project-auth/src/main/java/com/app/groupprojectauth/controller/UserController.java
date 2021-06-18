@@ -41,13 +41,17 @@ public class UserController {
 
     @PostMapping("/register")
     public Map<String, Object> register(@RequestParam Map<String, Object> params){
-        if(params.get("username") == null && params.get("email") == null){
+        if(params.get("username") == null || params.get("email") == null){
             Map<String, Object> resultMap = new HashMap<>();
             resultMap.put("success", false);
             resultMap.put("reason", "Invalid username or email for register");
             return resultMap;
         }
-        return iUserService.userRegister(params);
+        Map<String, Object> result = iUserService.userRegister(params);
+        result.put("email", params.get("email"));
+        String token = JwtUtil.generateToken(signingKey, params.get("username").toString());
+        result.put(jwtTokenCookieName, token);
+        return result;
     }
 
 

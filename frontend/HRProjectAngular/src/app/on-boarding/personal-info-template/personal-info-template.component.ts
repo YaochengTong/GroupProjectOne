@@ -46,6 +46,7 @@ export class PersonalInfoTemplateComponent implements OnInit {
 
   dataRefresh(): void{
     this.updateForm.emit(this.personalInfoForm.value);
+    //console.log(this.personalInfoForm)
     this.updateFormValid.emit(this.personalInfoForm.valid);
   }
 
@@ -60,6 +61,7 @@ export class PersonalInfoTemplateComponent implements OnInit {
   isCitizen: boolean | undefined = true;
   hasDriverLicense: boolean | undefined = false;
   authorizationSelection: boolean | undefined;
+  citizenType: string | undefined = 'Green Card';
 
   personalInfoForm = this.fb.group({
     company: '',
@@ -71,7 +73,7 @@ export class PersonalInfoTemplateComponent implements OnInit {
     dateOfBirth: ['', Validators.required],
 
     isCitizen: ['', Validators.required],
-    citizenType: '',
+    citizenType: 'green card',
     authorizationType: '',
     otherAuthorizationType: '',
     authorizationStartDate: '',

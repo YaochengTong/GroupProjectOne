@@ -1,4 +1,13 @@
 <!-- <script src="on-boarding.component.ts"></script> -->
+<div class="overlay" *ngIf="submitting">
+  <div class="center">
+    <mat-progress-spinner diameter=50 
+	                      mode="indeterminate" 
+						  color="primary">
+	  </mat-progress-spinner> 
+  </div>
+</div>
+
 <div>
   <mat-card class="shipping-card">
       <mat-card-header>
@@ -275,11 +284,7 @@
 
       <mat-card-actions>
         <button mat-raised-button color="primary" (click)="onSubmit()" 
-          [disabled]="!personalInfoFormValid 
-                   && !phoneAddressCarForm.valid
-                   && !ReferenceContact.ContactForm.valid
-                   && !EmergencyContact.ContactForm.valid
-                   && !fileForm.valid"
+
         >
           Submit
         </button>
