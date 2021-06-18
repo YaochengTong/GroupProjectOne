@@ -1,6 +1,8 @@
 package com.app.groupprojectapplication.dao.impl;
 
 import com.app.groupprojectapplication.dao.IHouseDao;
+import com.app.groupprojectapplication.domain.Employee;
+import com.app.groupprojectapplication.domain.FacilityReport;
 import com.app.groupprojectapplication.domain.House;
 import java.util.List;
 import javax.transaction.Transactional;

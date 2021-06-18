@@ -11,7 +11,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ReportDetail {
+public class HouseFacilityReportDetail {
 
     private Integer reportDetailId;
     private Integer employeeId;
