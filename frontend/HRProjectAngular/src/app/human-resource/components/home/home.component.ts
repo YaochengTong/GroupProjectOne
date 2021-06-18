@@ -35,8 +35,9 @@ export class HomeComponent implements OnInit{
     )
   }
 
-  sendEmail(): void {
-    
+  sendEmail(email, nextStep, employeeId): void {
+    alert("Sent")
+    // this.httpRequestService.postData('/')
   }
 }
 

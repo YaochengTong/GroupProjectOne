@@ -19,7 +19,6 @@ public class HouseDaoImpl implements IHouseDao {
     public House getHouseById(Integer id) {
         Session session = sessionFactory.getCurrentSession();
         House h = session.get(House.class, id);
-        //session.close();
         return h;
     }
 
@@ -33,7 +32,6 @@ public class HouseDaoImpl implements IHouseDao {
     public List<House> getAllHouse() {
         Session session = sessionFactory.getCurrentSession();
         List<House> houseList = session.createQuery("FROM House").getResultList();
-        //session.close();
         return houseList;
     }
 

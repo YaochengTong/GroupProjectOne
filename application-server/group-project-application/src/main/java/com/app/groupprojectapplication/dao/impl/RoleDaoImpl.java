@@ -23,26 +23,23 @@ public class RoleDaoImpl implements IRoleDao {
 
     @Override
     public Role getRoleById(Integer id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         role = session.get(Role.class, id);
-        session.close();
+
         return role;
     }
 
     @Override
     public List<Role> getRolesByLastModifiedUserId(Integer user_id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         List<Role> RoleList = session.createQuery("From Role r WHERE r.user.id = " + user_id).getResultList();
-        session.close();
+
         return RoleList;
     }
 
     @Override
     public void insertRole(Role role) {
-        Session session = sessionFactory.openSession();
-        Transaction ts = session.beginTransaction();
+        Session session = sessionFactory.getCurrentSession();
         session.save(role);
-        ts.commit();
-        session.close();
     }
 }

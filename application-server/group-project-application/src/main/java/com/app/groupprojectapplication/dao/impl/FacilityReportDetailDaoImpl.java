@@ -14,10 +14,7 @@ public class FacilityReportDetailDaoImpl implements IFacilityReportDetailDao {
 
     @Override
     public void insertFailicyReportDetail(FacilityReportDetail facilityReportDetail) {
-        Session session = sessionFactory.openSession();
-        Transaction ts = session.beginTransaction();
+        Session session = sessionFactory.getCurrentSession();
         session.save(facilityReportDetail);
-        ts.commit();
-        session.close();
     }
 }

@@ -43,6 +43,7 @@ public class StatusTableElementImpl implements IStatusTableElementService {
          List<Employee> employeeList = iEmployeeDao.getEmployee();
          for (Employee employee : employeeList) {
              StatusTableElement ste = getStatusByEmployee(employee);
+             // filter out the status that doesnt need further action
              if (!ste.getVisaInfo().getNextStep().equals("No Info") &&
                      !ste.getVisaInfo().getNextStep().equals("No Action") )
              statusList.add(getStatusByEmployee(employee));
@@ -99,7 +100,7 @@ public class StatusTableElementImpl implements IStatusTableElementService {
         String nextStep;
         switch (currentStep) {
             case "OPT Receipt": nextStep = "OPT EAD"; break;
-            case "OPT EAD": nextStep = "I-983 for OPT STEP"; break;
+            case "OPT EAD": nextStep = "I-983 for OPT STEM"; break;
             case "I-983 Submitted": nextStep = "I-20 after I-983 Submitted"; break;
             case "OPT STEM Receipt": nextStep = "OPT STEP EAD"; break;
             case "OPT STEM EAD": nextStep="No Action"; break;

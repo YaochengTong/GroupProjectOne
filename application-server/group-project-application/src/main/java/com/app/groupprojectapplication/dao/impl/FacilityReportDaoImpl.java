@@ -19,26 +19,21 @@ public class FacilityReportDaoImpl implements IFacilityReport {
 
     @Override
     public List<FacilityReport> getFacilityReportsByEmployeeId(Integer employee_id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         List<FacilityReport> facilityReportsSet = session.createQuery("From FacilityReport fr WHERE fr.employee.id = " + employee_id).getResultList();
-        session.close();
         return facilityReportsSet;
     }
 
     @Override
     public List<FacilityReport> getFacilityReportsByStatus(String status) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         List<FacilityReport> facilityReportsSet = session.createQuery("From FacilityReport fr WHERE fr.status = " + status).getResultList();
-        session.close();
         return facilityReportsSet;
     }
 
     @Override
     public void insertFacilityReport(FacilityReport facilityReport) {
-        Session session = sessionFactory.openSession();
-        Transaction ts = session.beginTransaction();
+        Session session = sessionFactory.getCurrentSession();
         session.save(facilityReport);
-        ts.commit();
-        session.close();
     }
 }
