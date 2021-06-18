@@ -8,6 +8,7 @@ import com.app.groupprojectapplication.file.AmazonS3FileService;
 import com.app.groupprojectapplication.service.IHireService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.sql.Timestamp;
 import java.util.*;
 
 @Service
+@Transactional
 public class HireServiceImpl implements IHireService {
 
     @Autowired
@@ -356,9 +358,86 @@ public class HireServiceImpl implements IHireService {
             map.put("SSN", person.getSsn());
             map.put("Gender", person.getGender());
             map.put("DateOfBirth", person.getDob());
+            map.put("Primary phone", person.getPrimaryPhone());
+            map.put("Work phone", person.getAlternatePhone());
+            //address
+            Optional<Address> person_address = person.getAddresses().stream().findFirst();
+            person_address.ifPresent(value -> {
+                map.put("Address", value.getAddressLine1());
+                map.put("Address2", value.getAddressLine2());
+                map.put("City", value.getCity());
+                map.put("StateAbbr", value.getStateAbbr());
+                map.put("StateFullName", value.getStateName());
+                map.put("PostalCode", value.getZipCode());
+            });
+
+            //employee
+            Employee employee = iEmployeeDao.getEmployeeById(
+                    iUserDao.getEmployeeIdByUserId(user.getId()));
+            map.put("DriverLicense", employee.getDriverLicense());
+            map.put("DriverLicenseExpireDate", employee.getDriverLicenseExpirationDate());
+            map.put("car", employee.getCar());
+            map.put("visaStartDate", employee.getVisaStartDate());
+            map.put("visaEndDate", employee.getVisaEndDate());
+
+            //visa status
+            String visaType = iVisaStatusDao.getVisaTypeByEmployeeId(employee.getId());
+            map.put("visaType", visaType);
+
+            //contacts
+            List<Contact> emergencyContactList = new ArrayList<>();
+            for(Contact contact : person.getContacts()){
+                if(contact.getIsEmergency() == (byte)1){
+                    emergencyContactList.add(contact);
+                }
+                else if(contact.getIsReferrence() == (byte)1){
+                    Map<String, Object> referenceMap = new HashMap<>();
+                    Person contactPerson = contact.getPerson();
+                    referenceMap.put("ReferenceContactFirstName", contactPerson.getFirstName());
+                    referenceMap.put("ReferenceContactLastName", contactPerson.getLastName());
+                    referenceMap.put("ReferenceContactMiddleName", contactPerson.getMiddleName());
+                    Optional<Address> address = contactPerson.getAddresses().stream().findFirst();
+                    address.ifPresent(value -> {
+                        referenceMap.put("ReferenceContactAddress", value.getAddressLine1());
+                        referenceMap.put("ReferenceContactAddress2", value.getAddressLine2());
+                        referenceMap.put("ReferenceContactCity", value.getCity());
+                        referenceMap.put("ReferenceContactStateAbbr", value.getStateAbbr());
+                        referenceMap.put("ReferenceContactStateFullName", value.getStateName());
+                        referenceMap.put("ReferenceContactStatePostalCode", value.getZipCode());
+                    });
+                    referenceMap.put("ReferenceContactEmail", contactPerson.getEmail());
+                    referenceMap.put("ReferenceContactRelationShip", contact.getRelationship());
+                    map.put("referenceContact", referenceMap);
+                }
+            }
+
+            List<Map<String, Object>> emergencyContactMapList = new ArrayList<>();
+            for(int i=0; i<emergencyContactList.size(); i++){
+                int finalI = i + 1;
+                Map<String, Object> emergencyMap = new HashMap<>();
+                Person emergencyPerson = emergencyContactList.get(i).getPerson();
+                emergencyMap.put("EmergencyContact" + finalI + "FirstName", emergencyPerson.getFirstName());
+                emergencyMap.put("EmergencyContact" + finalI + "LastName", emergencyPerson.getLastName());
+                emergencyMap.put("EmergencyContact" + finalI + "MiddleName", emergencyPerson.getMiddleName());
+                Optional<Address> address = emergencyPerson.getAddresses().stream().findFirst();
+                address.ifPresent(value -> {
+                    emergencyMap.put("EmergencyContact" + finalI + "Address", value.getAddressLine1());
+                    emergencyMap.put("EmergencyContact" + finalI + "Address2", value.getAddressLine2());
+                    emergencyMap.put("EmergencyContact" + finalI + "City", value.getCity());
+                    emergencyMap.put("EmergencyContact" + finalI + "StateAbbr", value.getStateAbbr());
+                    emergencyMap.put("EmergencyContact" + finalI + "StateFullName", value.getStateName());
+                    emergencyMap.put("EmergencyContact" + finalI + "StatePostalCode", value.getZipCode());
+                });
+                emergencyMap.put("EmergencyContact" + finalI + "Email", emergencyPerson.getEmail());
+                emergencyMap.put("EmergencyContact" + finalI + "RelationShip",
+                        emergencyContactList.get(i).getRelationship());
+                emergencyContactMapList.add(emergencyMap);
+            }
+            map.put("emergencyContactList", emergencyContactMapList);
+            list.add(map);
         }
 
-        resultMap.put("Applications", resultList);
+        resultMap.put("OngoingApplications", list);
         return resultMap;
     }
 
