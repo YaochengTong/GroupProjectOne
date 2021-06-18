@@ -6,7 +6,7 @@ public interface IPersonDao {
 
     Person getPersonById(Integer id);
 
-    void insertPerson(Person person);
+    Integer insertPerson(Person person);
 
     void updatePerson(Person person);
 

@@ -25,9 +25,10 @@ public class PersonDaoImpl implements IPersonDao {
     }
 
     @Override
-    public void insertPerson(Person person) {
+    public Integer insertPerson(Person person) {
         Session session = sessionFactory.getCurrentSession();
-        session.save(person);
+        Integer id = (Integer) session.save(person);
+        return id;
     }
 
     @Override

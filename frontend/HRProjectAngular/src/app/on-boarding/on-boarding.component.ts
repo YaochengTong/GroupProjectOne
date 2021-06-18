@@ -345,4 +345,10 @@ export class OnBoardingComponent implements OnInit{
 
   selectionOnOther() {}
 
+  // [disabled]="!personalInfoFormValid 
+  // || !phoneAddressCarForm.valid
+  // || !ReferenceContact.ContactForm.valid
+  // || !EmergencyContact.ContactForm.valid
+  // || !fileForm.valid"
+
 }
