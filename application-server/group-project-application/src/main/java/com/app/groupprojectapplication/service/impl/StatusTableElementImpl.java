@@ -1,5 +1,6 @@
 package com.app.groupprojectapplication.service.impl;
 
+import com.app.groupprojectapplication.dao.IApplicationWorkFlowDao;
 import com.app.groupprojectapplication.dao.IEmployeeDao;
 import com.app.groupprojectapplication.dao.IUserDao;
 import com.app.groupprojectapplication.dao.IVisaStatusDao;
@@ -21,6 +22,7 @@ import java.util.List;
 public class StatusTableElementImpl implements IStatusTableElementService {
 
     private StatusTableElement statusTableElement;
+    private final String applicationType = "visa status application";
 
     @Autowired
     IEmployeeDao iEmployeeDao;
@@ -30,6 +32,9 @@ public class StatusTableElementImpl implements IStatusTableElementService {
 
     @Autowired
     IVisaStatusDao iVisaStatusDao;
+
+    @Autowired
+    IApplicationWorkFlowDao iApplicationWorkFlowDao;
 
     @Override
     @Transactional
@@ -53,11 +58,13 @@ public class StatusTableElementImpl implements IStatusTableElementService {
 
 
     private StatusTableElement getStatusByEmployee(Employee employee) {
+        Integer employeeId = employee.getId();
+        Integer userId = iEmployeeDao.getUserIdByEmployeeId(employeeId);
         statusTableElement = new StatusTableElement();
         Person person = employee.getPerson();
         statusTableElement.setEmployeeId(employee.getId());
         statusTableElement.setNameInfo(setNameInfo(employee, person));
-        statusTableElement.setVisaInfo(setVisaInfo(employee));
+        statusTableElement.setVisaInfo(setVisaInfo(userId, employee));
 
         return statusTableElement;
     }
@@ -83,11 +90,26 @@ public class StatusTableElementImpl implements IStatusTableElementService {
         return  fullName;
     }
 
-    public VisaInfo setVisaInfo(Employee employee) {
+
+    public String determineNextStep(String currentStep) {
+        String nextStep;
+        switch (currentStep) {
+            case "OPT Receipt": nextStep = "OPT EAD"; break;
+            case "OPT EAD": nextStep = "I-983 for OPT STEP"; break;
+            case "I-983 Submitted": nextStep = "I-20 after I-983 Submitted"; break;
+            case "OPT STEM Receipt": nextStep = "OPT STEP EAD"; break;
+            case "OPT STEM EAD": nextStep="No Action"; break;
+            default:
+//                throw new IllegalStateException("Unexpected value: " + currentStep);
+                nextStep = "No Info";
+        }
+        return nextStep;
+    }
+    public VisaInfo setVisaInfo(Integer userId, Employee employee) {
         VisaInfo visaInfo = new VisaInfo();
         visaInfo.setVisaType(employee.getVisaStatus().getVisaType());
         visaInfo.setExpirationDate(employee.getVisaEndDate());
-
+        visaInfo.setNextStep(determineNextStep(iApplicationWorkFlowDao.getApplicationWorkFlowByUserIdAndApplicationType(userId, applicationType).getStatus()));
         return visaInfo;
     }
 }

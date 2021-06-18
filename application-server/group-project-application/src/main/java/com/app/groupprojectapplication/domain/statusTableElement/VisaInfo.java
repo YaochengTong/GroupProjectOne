@@ -12,5 +12,5 @@ import java.sql.Timestamp;
 public class VisaInfo {
     private String visaType;
     private Timestamp expirationDate;
-
+    private String nextStep;
 }

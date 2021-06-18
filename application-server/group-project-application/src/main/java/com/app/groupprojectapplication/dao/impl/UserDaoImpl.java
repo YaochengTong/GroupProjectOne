@@ -18,7 +18,7 @@ import java.util.List;
  * Shida Sheng
  */
 @Repository
-public class UserDaoImpl implements IUserDao {
+public class  UserDaoImpl implements IUserDao {
 
     User user;
 

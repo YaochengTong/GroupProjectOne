@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit{
     'name',
     'visaType',
     'expirationDate',
+    'status',
     'action'
   ]
 
