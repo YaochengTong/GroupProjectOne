@@ -38,7 +38,6 @@ export class PersonalInfoComponent implements OnInit {
         this.contactSection = data.profile.contactInfoSection;
         this.employmentSection = data.profile.employmentSection;
         this.emergencyContactList = data.profile.emergencyContactList;
-        console.log(this.emergencyContactList);
       }
     )
   }

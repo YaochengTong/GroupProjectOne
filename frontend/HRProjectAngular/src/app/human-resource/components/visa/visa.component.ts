@@ -17,7 +17,8 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 
 export class VisaComponent implements OnInit {
 
-  // visaStatusInfo:any = {};
+  isDataAvailable: boolean = false;
+  // visaStatusInfo: any = {};
   columnsToDisplay = ['Full Name', 'Work Authorization', 'Expiration Date', 'Day Left'];
   expandedElement!: VisaStatusElement | null;
   map = {
@@ -90,20 +91,22 @@ export class VisaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.httpRequestService.getData('/visaStatusManagement/all', null, 'http://localhost:8999').subscribe(
-    //   (data: any) => {
-    //     console.log(data);
-    //     this.visaStatusInfo = data.visaStatusInfoList;
-    //     console.log(data.visaStatusInfoList.length);
-    //   }
-    // )
+    this.httpRequestService.getData('/visaStatusManagement/all', null, 'http://localhost:8999').subscribe(
+      (data: any) => {
+        this.isDataAvailable = true;
+        this.visaStatusInfo = data.visaStatusInfoList;
+        console.log(this.visaStatusInfo.length);
+      }
+    )
+    if (this.isDataAvailable) console.log(this.visaStatusInfo);
+    console.log(1);
   }
 
 
 }
 
 export interface VisaStatusElement {
-  fullname: string;
+  fullName: string;
   workAuthorization: string;
   authorizationStartDate: string;
   authorizationEndDate: string;

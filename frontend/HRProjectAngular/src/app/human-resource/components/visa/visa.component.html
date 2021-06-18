@@ -1,4 +1,5 @@
-<table mat-table
+<div *ngIf="isDataAvailable">
+<table mat-table 
        [dataSource]="visaStatusInfo" multiTemplateDataRows
        class="mat-elevation-z8">
   <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
@@ -41,3 +42,4 @@
   </tr>
   <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
 </table>
+</div>
