@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 //don't forget to add @Repository here.
 @Repository
-@Transactional
 public class TestDaoImpl implements ITestDao {
 
     @Autowired

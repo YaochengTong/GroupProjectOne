@@ -8,10 +8,12 @@ import com.app.groupprojectapplication.domain.Person;
 import com.app.groupprojectapplication.service.IUpdateNameSectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 
 @Service
+@Transactional
 public class UpdateNameSectionServiceImpl implements IUpdateNameSectionService {
 
     @Autowired

@@ -51,12 +51,6 @@ export class PersonalInfoComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
           console.log(result);
-          // let resultWithId = {
-          //   nameInfo: result,
-          //   id: {"id":this.userId},
-          // }
-
-          // console.log(resultWithId);
           this.httpRequestService.postData('/profile/' + this.userId +"/updateNameSection",
           result,
           'http://localhost:8999').subscribe(
@@ -76,7 +70,14 @@ export class PersonalInfoComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         console.log(result);
-      })
+        this.httpRequestService.postData('/profile/' + this.userId +"/updateAddressSection",
+          result,
+          'http://localhost:8999').subscribe(
+            (data: any) => {
+              console.log(data);
+            }
+          )
+        })
   }
 
   editContactSection() : void {
@@ -88,6 +89,13 @@ export class PersonalInfoComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         console.log(result);
+        this.httpRequestService.postData('/profile/' + this.userId +"/updateContactSection",
+        result,
+        'http://localhost:8999').subscribe(
+          (data: any) => {
+            console.log(data);
+          }
+        )
       })
   }
   
@@ -101,6 +109,13 @@ export class PersonalInfoComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         console.log(result);
+        this.httpRequestService.postData('/profile/' + this.userId +"/updateEmploymentSection",
+        result,
+        'http://localhost:8999').subscribe(
+          (data: any) => {
+            console.log(data);
+          }
+        )
       })
   }
 
@@ -113,6 +128,13 @@ export class PersonalInfoComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         console.log(result);
+        this.httpRequestService.postData('/profile/' + this.userId +"/updateEmergencySection",
+        result,
+        'http://localhost:8999').subscribe(
+          (data: any) => {
+            console.log(data);
+          }
+        )
       })
   }
 

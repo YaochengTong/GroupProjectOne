@@ -13,7 +13,6 @@ import java.util.List;
 
 
 @Repository
-@Transactional
 public class RolePermissionDaoImpl implements IRolePermissionDao {
 
     RolePermission rolePermission;

@@ -7,8 +7,10 @@ import com.app.groupprojectapplication.domain.Address;
 import com.app.groupprojectapplication.service.IUpdateAddressSectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class UpdateAddressSectionServiceImpl implements IUpdateAddressSectionService {
 
     @Autowired

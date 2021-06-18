@@ -12,7 +12,6 @@ import java.math.BigInteger;
 import java.util.List;
 
 @Repository
-@Transactional
 public class VisaStatusDaoImpl implements IVisaStatusDao {
 
     @Autowired

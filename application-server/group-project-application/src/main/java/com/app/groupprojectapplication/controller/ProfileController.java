@@ -4,6 +4,7 @@ import com.app.groupprojectapplication.service.IProfileService;
 import com.app.groupprojectapplication.service.IUpdateAddressSectionService;
 import com.app.groupprojectapplication.service.IUpdateNameSectionService;
 //import org.graalvm.compiler.debug.TimeSource;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -67,16 +68,17 @@ public class ProfileController {
     @PostMapping("/{user_id}/updateAddressSection")
     public Map<String, Object> updateProfileAddressSection(@RequestParam Map<String, Object> params,
                                              @PathVariable Integer user_id) {
+//        Map<String,Object> paramsResult =
+//                new ObjectMapper().readValue(params, HashMap.class);
         Map<String, Object> resultMap = new HashMap<>();
 //        String priAdd1 = params.get("primaryAddr").get("AddressLine1").toString();
 //        String priAdd2 = params.get("primaryAddr").get("AddressLine2").toString();
 //        String priCity = params.get("primaryAddr").get("City").toString();
 //        String priState = params.get("primaryAddr").get("State").toString();
 //        String priZip = params.get("primaryAddr").get("Zip").toString();
-//        Object priAdd = params.get("primaryAddr").toString();
-//        System.out.println(priAdd);
-        System.out.println(user_id);
-        System.out.println("---------");
+        String priAdd = params.get("primaryAddr").toString();
+        System.out.println(priAdd);
+
 //        System.out.println(priAdd1);
 //        System.out.println(priAdd2);
 //        System.out.println(priZip);

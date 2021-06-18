@@ -14,7 +14,6 @@ import java.util.List;
 
 
 @Repository
-@Transactional
 public class EmployeeDaoImpl implements IEmployeeDao {
 
     Employee employee;
