@@ -7,7 +7,7 @@ import java.util.Objects;
 @Entity
 @Table(name="address")
 public class Address implements Serializable {
-    private int id;
+    private Integer id;
     private String addressLine1;
     private String addressLine2;
     private String city;
@@ -31,11 +31,12 @@ public class Address implements Serializable {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

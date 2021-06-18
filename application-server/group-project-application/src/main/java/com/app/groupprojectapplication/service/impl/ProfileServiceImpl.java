@@ -118,6 +118,7 @@ public class ProfileServiceImpl implements IProfileService {
         nameSection.setAvatar(employee.getAvartar());
         nameSection.setDOB(person.getDob());
         nameSection.setSSN(person.getSsn());
+        nameSection.setAge(iPersonDao.getAge(person.getId()));
         return nameSection;
     }
 

@@ -8,9 +8,9 @@ import java.util.Set;
 @Entity
 @Table(name = "house")
 public class House implements Serializable {
-    private int id;
+    private Integer id;
     private String address;
-    private int numberOfPerson;
+    private Integer numberOfPerson;
     private Contact contact;
     private Set<Facility> facilitySet;
     private Set<Employee> employeeSet;
@@ -25,11 +25,12 @@ public class House implements Serializable {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -45,11 +46,11 @@ public class House implements Serializable {
 
     @Basic
     @Column(name = "number_of_person")
-    public int getNumberOfPerson() {
+    public Integer getNumberOfPerson() {
         return numberOfPerson;
     }
 
-    public void setNumberOfPerson(int numberOfPerson) {
+    public void setNumberOfPerson(Integer numberOfPerson) {
         this.numberOfPerson = numberOfPerson;
     }
 

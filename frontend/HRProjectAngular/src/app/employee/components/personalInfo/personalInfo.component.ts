@@ -16,11 +16,11 @@ export class PersonalInfoComponent implements OnInit {
   
   public userId!: string;
   public empolyeeId!: number;
-  public nameSection;
-  public addressSection;
-  public contactSection;
-  public employmentSection;
-  public emergencyContactList;
+  public nameSection: any = {};
+  public addressSection: any = {};
+  public contactSection: any = {};
+  public employmentSection: any = {};
+  public emergencyContactList: any = {};
   
 
   constructor(
@@ -38,7 +38,6 @@ export class PersonalInfoComponent implements OnInit {
         this.contactSection = data.profile.contactInfoSection;
         this.employmentSection = data.profile.employmentSection;
         this.emergencyContactList = data.profile.emergencyContactList;
-        console.log(this.emergencyContactList);
       }
     )
   }

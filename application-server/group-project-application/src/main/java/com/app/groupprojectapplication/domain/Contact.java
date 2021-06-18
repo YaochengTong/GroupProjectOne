@@ -8,9 +8,9 @@ import java.util.Set;
 @Entity
 @Table(name = "contact")
 public class Contact implements Serializable {
-    private int id;
+    private Integer id;
     private String relationship;
-    private int related_person_id;
+    private Integer related_person_id;
     private String title;
     private byte isReferrence;
     private byte isEmergency;
@@ -32,11 +32,12 @@ public class Contact implements Serializable {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -92,11 +93,11 @@ public class Contact implements Serializable {
 
     @Basic
     @Column(name = "related_person_id")
-    public int getRelated_person_id() {
+    public Integer getRelated_person_id() {
         return related_person_id;
     }
 
-    public void setRelated_person_id(int related_person_id) {
+    public void setRelated_person_id(Integer related_person_id) {
         this.related_person_id = related_person_id;
     }
 

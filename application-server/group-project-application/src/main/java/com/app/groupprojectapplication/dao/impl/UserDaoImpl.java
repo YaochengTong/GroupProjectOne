@@ -18,7 +18,7 @@ import java.util.List;
  * Shida Sheng
  */
 @Repository
-public class UserDaoImpl implements IUserDao {
+public class  UserDaoImpl implements IUserDao {
 
     User user;
 
@@ -36,36 +36,27 @@ public class UserDaoImpl implements IUserDao {
 
     @Override
     public void insertUser(User user) {
-        Session session = sessionFactory.openSession();
-        Transaction ts = session.beginTransaction();
+        Session session = sessionFactory.getCurrentSession();
         session.save(user);
-        ts.commit();
-        session.close();
 
     }
 
     @Override
     public void deleteUserById(Integer id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         User newUser = new User();
         newUser.setId(id);
-
-        Transaction ts = session.beginTransaction();
         session.delete(newUser);
-        ts.commit();
-        session.close();
     }
 
     @Override
     public void updateUser(User user) {
-        Session session = sessionFactory.openSession();
-        Transaction ts = session.beginTransaction();
+        Session session = sessionFactory.getCurrentSession();
         User currentUser = session.get(User.class, user.getId());
         currentUser.setRoles(user.getRoles());
         currentUser.setModificationDate(new Timestamp(System.currentTimeMillis()));
-        currentUser.setPerson(user.getPerson());
-        ts.commit();
-        session.close();
+        Person person = session.get(Person.class, user.getPerson().getId());
+        currentUser.setPerson(person);
     }
 
     public List<User> getAllUsers() {
@@ -76,7 +67,7 @@ public class UserDaoImpl implements IUserDao {
 
     @Override
     public Integer getEmployeeIdByUserId(Integer userId){
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         String hql = "select u.person.id FROM User u where u.id=:user_id";
         Query query = session.createQuery(hql);
         query.setParameter("user_id", userId);
@@ -90,4 +81,13 @@ public class UserDaoImpl implements IUserDao {
             return null;
         return (Integer) query.getResultList().get(0);
     }
+
+    @Override
+    public Person getPersonByUserId(Integer userId) {
+        Session session = sessionFactory.getCurrentSession();
+        String query = "SELECT u.person FROM User u WHERE u.id = " + userId;
+        Person person = (Person) session.createQuery(query).getResultList().get(0);
+        return person;
+    }
 }
+

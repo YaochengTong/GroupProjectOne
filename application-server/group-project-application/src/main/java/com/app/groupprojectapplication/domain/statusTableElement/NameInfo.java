@@ -12,5 +12,6 @@ public class NameInfo {
     private String firstName;
     private String lastName;
     private Integer SSN;
+    private String email;
     private String title;
 }

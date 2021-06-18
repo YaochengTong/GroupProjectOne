@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,35 +22,30 @@ public class UserRoleDaoImpl implements IUserRoleDao {
 
     @Override
     public UserRole getUserRoleById(Integer id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         userRole = session.get(UserRole.class, id);
-        session.close();
         return userRole;
     }
 
     @Override
     public List<UserRole> getUserRoleByUserId(Integer user_id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         List<UserRole> userRoleList = session.createQuery("From UserRole ur WHERE ur.user.id = " + user_id).getResultList();
-        session.close();
         return userRoleList;
     }
 
     @Override
     public List<UserRole> getUserRoleByRoleId(Integer roleId) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         List<UserRole> userRoleList = session.createQuery("From UserRole ur WHERE ur.role.id = " + roleId).getResultList();
-        session.close();
         return userRoleList;
     }
 
 
     @Override
+    @Transactional
     public void insertUserRole(UserRole userRole) {
-        Session session = sessionFactory.openSession();
-        Transaction ts = session.beginTransaction();
+        Session session = sessionFactory.getCurrentSession();
         session.save(userRole);
-        ts.commit();
-        session.close();
     }
 }

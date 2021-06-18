@@ -9,7 +9,7 @@ import java.util.Set;
 @Entity
 @Table(name = "facility_report", schema = "hr_db")
 public class FacilityReport implements Serializable {
-    private int id;
+    private Integer id;
     private String title;
     private Timestamp reportDate;
     private String description;
@@ -19,11 +19,12 @@ public class FacilityReport implements Serializable {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

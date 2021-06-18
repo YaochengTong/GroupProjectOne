@@ -1,5 +1,6 @@
 package com.app.groupprojectapplication.dao;
 
+import com.app.groupprojectapplication.domain.Person;
 import com.app.groupprojectapplication.domain.User;
 
 import java.util.List;
@@ -14,4 +15,5 @@ public interface IUserDao {
     void updateUser(User user);
     List<User> getAllUsers();
     Integer getEmployeeIdByUserId(Integer userId);
+    Person getPersonByUserId(Integer userId);
 }

@@ -16,6 +16,7 @@ export class PersonalInfoTemplateComponent implements OnInit {
   @Output() updateForm: EventEmitter<any> = new EventEmitter<any>();
   @Output() updateDriverLicense: EventEmitter<any> = new EventEmitter<any>();
   @Output() updateWorkAuth: EventEmitter<any> = new EventEmitter<any>();
+  @Output() updateFormValid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   date = new FormControl(this.getMonthYearString(new Date()));
 
@@ -45,6 +46,7 @@ export class PersonalInfoTemplateComponent implements OnInit {
 
   dataRefresh(): void{
     this.updateForm.emit(this.personalInfoForm.value);
+    this.updateFormValid.emit(this.personalInfoForm.valid);
   }
 
   //File upload variables

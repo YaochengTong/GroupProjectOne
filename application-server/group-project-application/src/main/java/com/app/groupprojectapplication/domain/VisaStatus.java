@@ -9,7 +9,7 @@ import java.util.Set;
 @Entity
 @Table(name = "visa_status", schema = "hr_db")
 public class VisaStatus {
-    private int id;
+    private Integer id;
     private String visaType;
     private byte isActive;
     private Timestamp modificationDate;
@@ -27,11 +27,12 @@ public class VisaStatus {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

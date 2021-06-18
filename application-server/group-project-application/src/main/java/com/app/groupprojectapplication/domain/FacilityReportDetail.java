@@ -8,7 +8,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "facility_report_detail", schema = "hr_db")
 public class FacilityReportDetail implements Serializable {
-    private int id;
+    private Integer id;
     private String comments;
     private Timestamp createDate;
     private Timestamp lastModificationDate;
@@ -17,11 +17,12 @@ public class FacilityReportDetail implements Serializable {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

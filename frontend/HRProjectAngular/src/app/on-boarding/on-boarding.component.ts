@@ -38,7 +38,16 @@ export class OnBoardingComponent implements OnInit{
       Validators.required,
       MaxSizeValidator(1024 * 1024),
     ]);
+
+
+    this.fileForm = new FormGroup({
+      fileI983 :this.fileI983,
+      fileOPTReceipt: this.fileOPTReceipt
+    });
+
   }
+
+  fileForm: FormGroup;
 
   ngOnInit(): void {
     
@@ -55,6 +64,12 @@ export class OnBoardingComponent implements OnInit{
   showSecondEmergencyContact: boolean = false;
   email:string = 'test@gmail.com';
 
+  personalInfoFormValid: boolean = false;
+  personalInfoFormStatus(valid: boolean): void{
+      this.personalInfoFormValid = valid;
+  }
+
+
   //File upload variables
   color: ThemePalette = 'primary';
   accept: string | undefined;
@@ -65,7 +80,6 @@ export class OnBoardingComponent implements OnInit{
   fileDriverLicense: FormControl;
   files: File | undefined;
   hasUnitNumber = false;
-
 
   phoneAddressCarForm = this.fb.group({
     address: ['', Validators.required],
@@ -145,17 +159,17 @@ export class OnBoardingComponent implements OnInit{
   };
   dataRefreshForReference(data: any): void{
     this.referenceFormValue = {
-        referenceContactFirstName: data.value.FirstName,
-        referenceContactLastName: data.value.LastName,
-        referenceContactMiddleName: data.value.MiddleName,
-        referenceContactPhone: data.value.Phone,
-        referenceContactAddress: data.value.Address,
-        referenceContactAddress2: data.value.Address2,
-        referenceContactEmail: data.value.Email,
-        referenceContactRelationship: data.value.Relationship,
-        referenceContactCity: data.value.City,
-        referenceContactState: data.value.State,
-        referenceContactPostalCode: data.value.PostalCode,
+        referenceContactFirstName: data.FirstName,
+        referenceContactLastName: data.LastName,
+        referenceContactMiddleName: data.MiddleName,
+        referenceContactPhone: data.Phone,
+        referenceContactAddress: data.Address,
+        referenceContactAddress2: data.Address2,
+        referenceContactEmail: data.Email,
+        referenceContactRelationship: data.Relationship,
+        referenceContactCity: data.City,
+        referenceContactState: data.State,
+        referenceContactPostalCode: data.PostalCode,
         referenceContactStateFullName: this.states.find((item) => item.abbreviation 
            == this.referenceFormValue.referenceContactState)?.name
     }
@@ -177,17 +191,17 @@ export class OnBoardingComponent implements OnInit{
   };
   dataRefreshForEmergency1(data: any): void{
     this.emergency1FormValue = {
-      emergency1FirstName: data.value.FirstName,
-      emergency1LastName: data.value.LastName,
-      emergency1MiddleName: data.value.MiddleName,
-      emergency1Phone: data.value.Phone,
-      emergency1Address: data.value.Address,
-      emergency1Address2: data.value.Address2,
-      emergency1Email: data.value.Email,
-      emergency1Relationship: data.value.Relationship,
-      emergency1City: data.value.City,
-      emergency1State: data.value.State,
-      emergency1PostalCode: data.value.PostalCode,
+      emergency1FirstName: data.FirstName,
+      emergency1LastName: data.LastName,
+      emergency1MiddleName: data.MiddleName,
+      emergency1Phone: data.Phone,
+      emergency1Address: data.Address,
+      emergency1Address2: data.Address2,
+      emergency1Email: data.Email,
+      emergency1Relationship: data.Relationship,
+      emergency1City: data.City,
+      emergency1State: data.State,
+      emergency1PostalCode: data.PostalCode,
       emergency1StateFullName: this.states.find((item) => item.abbreviation 
            == this.emergency1FormValue.emergency1State)?.name
     }
@@ -209,17 +223,17 @@ export class OnBoardingComponent implements OnInit{
   };
   dataRefreshForEmergency2(data: any): void{
     this.emergency2FormValue = {
-      emergency2FirstName: data.value.FirstName,
-      emergency2LastName: data.value.LastName,
-      emergency2MiddleName: data.value.MiddleName,
-      emergency2Phone: data.value.Phone,
-      emergency2Address: data.value.Address,
-      emergency2Address2: data.value.Address2,
-      emergency2Email: data.value.Email,
-      emergency2Relationship: data.value.Relationship,
-      emergency2City: data.value.City,
-      emergency2State: data.value.State,
-      emergency2PostalCode: data.value.PostalCode,
+      emergency2FirstName: data.FirstName,
+      emergency2LastName: data.LastName,
+      emergency2MiddleName: data.MiddleName,
+      emergency2Phone: data.Phone,
+      emergency2Address: data.Address,
+      emergency2Address2: data.Address2,
+      emergency2Email: data.Email,
+      emergency2Relationship: data.Relationship,
+      emergency2City: data.City,
+      emergency2State: data.State,
+      emergency2PostalCode: data.PostalCode,
       emergency2StateFullName: this.states.find((item) => item.abbreviation 
            == this.emergency2FormValue.emergency2State)?.name
     }
@@ -231,7 +245,6 @@ export class OnBoardingComponent implements OnInit{
 
   dataRefreshWorkAuth(data: any): void{
     this.fileWorkAuth = data;
-    console.log(this.fileWorkAuth)
   }
 
   onSubmit(): void {
@@ -246,10 +259,15 @@ export class OnBoardingComponent implements OnInit{
       this.fileWorkAuth
     ]
 
-    //append these files into the formData
-    for(let i=0; i<arr.length; i++)
-      formData.append('file', arr[i]);
+    console.log(arr)
 
+    let fileTitles: any[] = [
+      'I983',
+      'OPTReceipt',
+      'DriverLicense',
+      'WorkAuth'
+    ]
+      
     //combine the forms together
     let paramObj = {};
     Object.assign(paramObj, this.phoneAddressCarForm.value, this.personalInfoFormValue, 
@@ -262,14 +280,26 @@ export class OnBoardingComponent implements OnInit{
     let toTimestamp = this.personalInfoFormValue.dateOfBirth.getTime();
     paramObj['dateOfBirth'] = toTimestamp;
 
-    let toTimestamp2 = this.personalInfoFormValue.driverLicenseExp.getTime();
-    paramObj['driverLicenseExp'] = toTimestamp2;
+    if(this.personalInfoFormValue.driverLicenseExp){
+      let toTimestamp2 = this.personalInfoFormValue.driverLicenseExp.getTime();
+      paramObj['driverLicenseExp'] = toTimestamp2;
+    }
 
     let toTimestamp3 = this.personalInfoFormValue.authorizationStartDate.getTime();
     paramObj['authorizationStartDate'] = toTimestamp3;
 
     let toTimestamp4 = this.personalInfoFormValue.authorizationEndDate.getTime();
     paramObj['authorizationEndDate'] = toTimestamp4;
+
+    //append these files into the formData
+    let index = 0;
+    for(let i=0; i<arr.length; i++){
+      if(arr[i] != null && arr[i] instanceof File){
+        formData.append('file', arr[i]);
+        paramObj["title" + index] = fileTitles[i];
+        index++;
+      }
+    }
 
     //first argument: path
     //second argument formData: the form that contains your files

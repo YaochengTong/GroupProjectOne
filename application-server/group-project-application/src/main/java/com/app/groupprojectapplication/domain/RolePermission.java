@@ -8,7 +8,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "role_permission", schema = "hr_db")
 public class RolePermission implements Serializable {
-    private int id;
+    private Integer id;
     private byte activeFlag;
     private Timestamp createDate;
     private Timestamp modificationDate;
@@ -18,16 +18,17 @@ public class RolePermission implements Serializable {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
     @Basic
     @Column(name = "active_flag")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public byte getActiveFlag() {
         return activeFlag;
     }

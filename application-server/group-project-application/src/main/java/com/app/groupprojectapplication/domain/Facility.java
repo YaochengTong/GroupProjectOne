@@ -1,24 +1,16 @@
 package com.app.groupprojectapplication.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "facility")
+@Table(name="facility")
 public class Facility implements Serializable {
-
-    private int id;
+    private Integer id;
     private String type;
     private String description;
-    private int quantity;
+    private Integer quantity;
     private House house;
 
     public Facility() {
@@ -26,11 +18,12 @@ public class Facility implements Serializable {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -56,11 +49,11 @@ public class Facility implements Serializable {
 
     @Basic
     @Column(name = "quantity")
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
@@ -76,22 +69,14 @@ public class Facility implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) { return true; }
-        if (o == null || getClass() != o.getClass()) { return false; }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Facility facility = (Facility) o;
-        return id == facility.id && quantity == facility.quantity && Objects.equals(type, facility.type) && Objects
-            .equals(description, facility.description) && Objects.equals(house, facility.house);
+        return id == facility.id && quantity == facility.quantity && Objects.equals(type, facility.type) && Objects.equals(description, facility.description) && Objects.equals(house, facility.house);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, type, description, quantity, house);
     }
-
-    @Override
-    public String toString() {
-        return "Facility{" + "id=" + id + ", type='" + type + '\'' + ", description='" + description + '\''
-            + ", quantity=" + quantity + ", house=" + house + '}';
-    }
-
 }

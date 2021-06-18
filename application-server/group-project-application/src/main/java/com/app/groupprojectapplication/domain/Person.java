@@ -9,7 +9,7 @@ import java.util.Set;
 @Entity
 @Table(name="person")
 public class Person implements Serializable {
-    private int id;
+    private Integer id;
     private String firstName;
     private String lastName;
     private String middleName;
@@ -23,7 +23,7 @@ public class Person implements Serializable {
     private Set<Address> addressSet;
     private Set<Contact> contactSet;
 
-    public Person(int id, String firstName, String lastName, String middleName, String email, String primaryPhone, String alternatePhone, String gender, String ssn, Timestamp dob) {
+    public Person(Integer id, String firstName, String lastName, String middleName, String email, String primaryPhone, String alternatePhone, String gender, String ssn, Timestamp dob) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -42,11 +42,12 @@ public class Person implements Serializable {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
