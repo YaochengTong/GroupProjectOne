@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/visaStatusManagement")
+@RequestMapping("/visa-status-management")
 @CrossOrigin
 public class VisaStatusController {
 
@@ -27,5 +27,18 @@ public class VisaStatusController {
         Map<String, Object> visaStatusInfoList = new HashMap<>();
         visaStatusInfoList.put("visaStatusInfoList", iVisaStatusService.getVisaInfo());
         return visaStatusInfoList;
+    }
+
+    @PostMapping("/update")
+    public Map<String, Object> updateVisaStatusInfo(@RequestParam Map<String, Object> params) {
+        Map<String, Object> resultMap = new HashMap<>();
+        try {
+            System.out.println(params);
+            resultMap.put("success", true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("reason", "Did not get data");
+        }
+        return resultMap;
     }
 }
