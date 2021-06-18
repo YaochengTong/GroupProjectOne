@@ -1,23 +1,22 @@
 .example-card {
-    // display: inline-block;
-    max-width: 300px;
-  }
-  
-  .example-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-    background-size: cover;
-  }
+  // display: inline-block;
+}
 
-  .card-group {
-    // display: inline-block
-  }
+.example-header-image {
+  background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
+  background-size: cover;
+}
 
-  .inline-block {
-    display: inline;
-  }
+.card-group {
+  // display: inline-block
+}
 
-  .card-button {
-    position: relative;
-    bottom: 10px;
-    right: -100px;
-  }
+.inline-block {
+  display: inline;
+}
+
+.card-button {
+  position: relative;
+  bottom: 10px;
+  right: -100px;
+}

@@ -42,11 +42,11 @@ export class HomeComponent implements OnInit{
       employeeId: employeeId,
     }
     alert("Sent Email")
-    // this.httpRequestService.postData('/notification/nextStep', params).subscribe(
-    //   (data: any) => {
-    //     console.log(data);
-    //   }
-    // )
+    this.httpRequestService.postData('/notification/nextStep', params).subscribe(
+      (data: any) => {
+        console.log(data);
+      }
+    )
   }
 }
 

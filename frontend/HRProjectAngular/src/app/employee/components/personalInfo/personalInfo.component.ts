@@ -49,8 +49,12 @@ export class PersonalInfoComponent implements OnInit {
           data: {"nameSection": this.nameSection}
         });
 
+        let result = {
+          test: "test"
+        }
         dialogRef.afterClosed().subscribe(result => {
           console.log(result);
+          // console.log("hello");
           this.httpRequestService.postData('/profile/' + this.userId +"/update",
           result,
           'http://localhost:8999').subscribe(

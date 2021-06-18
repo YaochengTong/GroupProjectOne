@@ -8,5 +8,4 @@ import java.util.List;
 public interface IProfileService {
     List<Profile> getProfile();
     Profile getProfileByEmployeeId(Integer user_id);
-
 }

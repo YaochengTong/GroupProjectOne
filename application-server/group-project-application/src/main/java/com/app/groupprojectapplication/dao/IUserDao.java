@@ -15,5 +15,6 @@ public interface IUserDao {
     void updateUser(User user);
     List<User> getAllUsers();
     Integer getEmployeeIdByUserId(Integer userId);
+    Integer getPersonIdByUserId(Integer userId);
     Person getPersonByUserId(Integer userId);
 }

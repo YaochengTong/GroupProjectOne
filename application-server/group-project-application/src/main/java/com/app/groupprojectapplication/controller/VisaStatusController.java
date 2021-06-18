@@ -18,7 +18,7 @@ public class VisaStatusController {
     @GetMapping("/{user_id}")
     public Map<String, Object> getVisaStatusInfo(@PathVariable Integer user_id) {
         Map<String, Object> visaStatusInfo = new HashMap<>();
-        visaStatusInfo.put("visaStatusInfo", iVisaStatusService.getVisaInfoByUserId(user_id));
+        visaStatusInfo.put("visaStatusInfo", iVisaStatusService.getVisaInfoByUserId(user_id, 0));
         return visaStatusInfo;
     }
 
