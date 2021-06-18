@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
+@Transactional
 public class PersonalDocumentDaoImpl implements IPersonalDocumentDao {
 
     PersonalDocument pd;

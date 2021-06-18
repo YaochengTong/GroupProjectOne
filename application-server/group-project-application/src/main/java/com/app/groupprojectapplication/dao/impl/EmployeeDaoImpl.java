@@ -7,12 +7,14 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
 import java.util.List;
 
 
 @Repository
+@Transactional
 public class EmployeeDaoImpl implements IEmployeeDao {
 
     Employee employee;
@@ -67,6 +69,12 @@ public class EmployeeDaoImpl implements IEmployeeDao {
 
 
         return (Integer)  query.getResultList().get(0);
+    }
+
+    @Override
+    public void updateEmployee(Employee employee) {
+        Session session = sessionFactory.getCurrentSession();
+        session.saveOrUpdate(employee);
     }
 
 

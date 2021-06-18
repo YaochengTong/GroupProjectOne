@@ -1,5 +1,6 @@
 package com.app.groupprojectapplication.dao;
 
+import com.app.groupprojectapplication.domain.Employee;
 import com.app.groupprojectapplication.domain.Person;
 import com.app.groupprojectapplication.domain.User;
 

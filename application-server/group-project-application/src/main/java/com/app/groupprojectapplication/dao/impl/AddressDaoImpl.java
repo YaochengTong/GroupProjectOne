@@ -6,10 +6,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Repository()
+@Transactional
 public class AddressDaoImpl implements IAddressDao {
 
     @Autowired
@@ -26,5 +28,12 @@ public class AddressDaoImpl implements IAddressDao {
     public void insertAddress(Address address) {
         Session session = sessionFactory.getCurrentSession();
         session.save(address);
+    }
+
+    @Override
+    public boolean updateAddress(Address address) {
+        Session session = sessionFactory.getCurrentSession();
+        session.saveOrUpdate(address);
+        return true;
     }
 }

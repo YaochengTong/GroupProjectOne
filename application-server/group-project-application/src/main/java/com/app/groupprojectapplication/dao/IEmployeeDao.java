@@ -10,4 +10,5 @@ public interface IEmployeeDao {
     void insertEmployee(Employee employee);
     void deleteUserById(Integer id);
     Integer getUserIdByEmployeeId(Integer employeeId);
+    void updateEmployee(Employee employee);
 }

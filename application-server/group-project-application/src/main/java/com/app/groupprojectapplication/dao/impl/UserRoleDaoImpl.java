@@ -13,6 +13,7 @@ import java.util.List;
 
 
 @Repository
+@Transactional
 public class UserRoleDaoImpl implements IUserRoleDao {
 
     UserRole userRole;

@@ -1,6 +1,7 @@
 package com.app.groupprojectapplication.dao.impl;
 
 import com.app.groupprojectapplication.dao.IUserDao;
+import com.app.groupprojectapplication.domain.Employee;
 import com.app.groupprojectapplication.domain.Person;
 import com.app.groupprojectapplication.domain.User;
 import org.hibernate.Session;
@@ -61,11 +62,14 @@ public class  UserDaoImpl implements IUserDao {
         currentUser.setPerson(person);
     }
 
+    @Override
     public List<User> getAllUsers() {
         Session session = sessionFactory.getCurrentSession();
         List<User> users = session.createQuery("FROM User").getResultList();
         return users;
     }
+
+
 
     @Override
     public Integer getEmployeeIdByUserId(Integer userId){
@@ -105,6 +109,9 @@ public class  UserDaoImpl implements IUserDao {
         Person person = (Person) session.createQuery(query).getResultList().get(0);
         return person;
     }
+
+
+
 }
 
 

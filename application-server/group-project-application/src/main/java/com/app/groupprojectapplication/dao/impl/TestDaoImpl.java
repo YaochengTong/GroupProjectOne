@@ -6,9 +6,11 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 //don't forget to add @Repository here.
 @Repository
+@Transactional
 public class TestDaoImpl implements ITestDao {
 
     @Autowired
