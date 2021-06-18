@@ -21,42 +21,38 @@ public class RolePermissionDaoImpl implements IRolePermissionDao {
 
     @Override
     public RolePermission getRolePermissionById(Integer id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         rolePermission = session.get(RolePermission.class, id);
-        session.close();
         return rolePermission;
     }
 
     @Override
     public List<RolePermission> getRolePermissionByPermissionId(Integer permission_id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         List<RolePermission> rolePermissionList = session.createQuery("From RolePermission rp WHERE rp.permission.id = " + permission_id).getResultList();
-        session.close();
+
         return rolePermissionList;
     }
 
     @Override
     public List<RolePermission> getRolePermissionByLastModifiedUserId(Integer user_id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         List<RolePermission> rolePermissionList = session.createQuery("From RolePermission rp WHERE rp.user.id = " + user_id).getResultList();
-        session.close();
+
         return rolePermissionList;
     }
 
     @Override
     public List<RolePermission> getRolePermissionByRoleId(Integer role_id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         List<RolePermission> rolePermissionList = session.createQuery("From RolePermission rp WHERE rp.role.id = " + role_id).getResultList();
-        session.close();
+
         return rolePermissionList;
     }
 
     @Override
     public void insertRolePermission(RolePermission rolePermission) {
-        Session session = sessionFactory.openSession();
-        Transaction ts = session.beginTransaction();
+        Session session = sessionFactory.getCurrentSession();
         session.save(rolePermission);
-        ts.commit();
-        session.close();
     }
 }

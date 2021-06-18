@@ -26,27 +26,22 @@ public class ApplicationWorkflowDaoImpl implements IApplicationWorkFlowDao {
 
     @Override
     public ApplicationWorkflow getApplicationWorkFlowById(Integer id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         applicationWorkflow = session.get(ApplicationWorkflow.class, id);
-        session.close();
         return applicationWorkflow;
     }
 
     @Override
     public List<ApplicationWorkflow> getApplicationWorkFlowByStatus(String status) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         List<ApplicationWorkflow> applicationWorkflowList = session.createQuery("From ApplicationWorkflow aw WHERE aw.status = " + status).getResultList();
-        session.close();
         return applicationWorkflowList;
     }
 
     @Override
     public void insertApplicationWorkFlow(ApplicationWorkflow applicationWorkflow) {
-        Session session = sessionFactory.openSession();
-        Transaction ts = session.beginTransaction();
+        Session session = sessionFactory.getCurrentSession();
         session.save(applicationWorkflow);
-        ts.commit();
-        session.close();
     }
 
     @Override

@@ -29,36 +29,28 @@ public class EmployeeDaoImpl implements IEmployeeDao {
 
     @Override
     public Employee getEmployeeById(Integer id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         employee = session.get(Employee.class, id);
-        session.close();
         return employee;
     }
 
     @Override
     public void insertEmployee(Employee employee) {
-        Session session = sessionFactory.openSession();
-        Transaction ts = session.beginTransaction();
+        Session session = sessionFactory.getCurrentSession();
         session.save(employee);
-        ts.commit();
-        session.close();
     }
 
     @Override
     public void deleteUserById(Integer id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         Employee newEmployee = new Employee();
         newEmployee.setId(id);
-
-        Transaction ts = session.beginTransaction();
         session.delete(newEmployee);
-        ts.commit();
-        session.close();
     }
 
     @Override
     public Integer getUserIdByEmployeeId(Integer employeeId) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         String hql = "select e.person.id FROM Employee e WHERE e.id=:employee_Id";
         Query query = session.createQuery(hql);
         query.setParameter("employee_Id", employeeId);
@@ -73,8 +65,8 @@ public class EmployeeDaoImpl implements IEmployeeDao {
             return null;
         }
 
-        return (Integer)  query.getResultList().get(0);
 
+        return (Integer)  query.getResultList().get(0);
     }
 
 
