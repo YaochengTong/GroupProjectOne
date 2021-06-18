@@ -8,7 +8,7 @@ import java.util.Objects;
 @Entity()
 @Table(name = "application_workflow", schema = "hr_db")
 public class ApplicationWorkflow implements Serializable {
-    private int id;
+    private Integer id;
     private Timestamp createDate;
     private Timestamp modificationDate;
     private String status;
@@ -18,11 +18,12 @@ public class ApplicationWorkflow implements Serializable {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -82,7 +83,7 @@ public class ApplicationWorkflow implements Serializable {
         return user;
     }
 
-    public void setUser(User User) {
+    public void setUser(User user) {
         this.user = user;
     }
 

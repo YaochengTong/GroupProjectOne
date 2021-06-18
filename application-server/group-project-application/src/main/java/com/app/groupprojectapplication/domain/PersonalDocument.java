@@ -8,7 +8,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "personal_document", schema = "hr_db")
 public class PersonalDocument implements Serializable {
-    private int id;
+    private Integer id;
     private String path;
     private String title;
     private String comment;
@@ -18,11 +18,12 @@ public class PersonalDocument implements Serializable {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -8,7 +8,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "user_role", schema = "hr_db")
 public class UserRole implements Serializable {
-    private int id;
+    private Integer id;
     private byte activateFlag;
     private Timestamp createDate;
     private Timestamp modificationDate;
@@ -17,11 +17,12 @@ public class UserRole implements Serializable {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
