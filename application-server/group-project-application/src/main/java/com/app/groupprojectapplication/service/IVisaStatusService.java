@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface IVisaStatusService {
     List<VisaStatusInfo> getVisaInfo();
-    VisaStatusInfo getVisaInfoByUserId(Integer userId);
+    VisaStatusInfo getVisaInfoByUserId(Integer userId, Integer index);
 }
