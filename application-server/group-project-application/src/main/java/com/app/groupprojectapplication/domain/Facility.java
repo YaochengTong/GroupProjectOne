@@ -7,10 +7,10 @@ import java.util.Objects;
 @Entity
 @Table(name="facility")
 public class Facility implements Serializable {
-    private int id;
+    private Integer id;
     private String type;
     private String description;
-    private int quantity;
+    private Integer quantity;
     private House house;
 
     public Facility() {
@@ -18,11 +18,12 @@ public class Facility implements Serializable {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -48,11 +49,11 @@ public class Facility implements Serializable {
 
     @Basic
     @Column(name = "quantity")
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 

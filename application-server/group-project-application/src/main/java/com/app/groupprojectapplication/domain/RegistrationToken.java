@@ -8,7 +8,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "registration_token", schema = "hr_db")
 public class RegistrationToken implements Serializable {
-    private int id;
+    private Integer id;
     private String token;
     private Timestamp validUntil;
     private String email;
@@ -16,11 +16,12 @@ public class RegistrationToken implements Serializable {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

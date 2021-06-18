@@ -8,7 +8,7 @@ import java.util.Set;
 @Entity
 @Table(name = "role")
 public class Role {
-    private int id;
+    private Integer id;
     private String roleName;
     private String description;
     private Timestamp createDate;
@@ -20,11 +20,12 @@ public class Role {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
