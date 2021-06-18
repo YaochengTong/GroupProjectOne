@@ -28,8 +28,9 @@ public class UserDaoImpl implements IUserDao {
 
     @Override
     public User getUserById(Integer id) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         user = session.get(User.class, id);
+        session.close();
         return user;
     }
 
@@ -63,7 +64,8 @@ public class UserDaoImpl implements IUserDao {
         User currentUser = session.get(User.class, user.getId());
         currentUser.setRoles(user.getRoles());
         currentUser.setModificationDate(new Timestamp(System.currentTimeMillis()));
-        currentUser.setPerson(user.getPerson());
+        Person person = session.get(Person.class, user.getPerson().getId());
+        currentUser.setPerson(person);
         ts.commit();
         session.close();
     }

@@ -3,6 +3,7 @@ package com.app.groupprojectapplication.dao.impl;
 import com.app.groupprojectapplication.dao.IApplicationWorkFlowDao;
 import com.app.groupprojectapplication.domain.ApplicationWorkflow;
 import com.app.groupprojectapplication.domain.RegistrationToken;
+import com.app.groupprojectapplication.domain.User;
 import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

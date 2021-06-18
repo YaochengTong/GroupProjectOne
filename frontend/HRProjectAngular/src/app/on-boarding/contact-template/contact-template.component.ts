@@ -15,19 +15,19 @@ export class ContactTemplateComponent implements OnInit {
 
   constructor(private fb: FormBuilder) { 
     this.ContactForm = this.fb.group({
-      FirstName: [null, Validators.required],
-      LastName: [null, Validators.required],
-      MiddleName: null,
-      Phone: [null, Validators.required],
-      Address: [null, Validators.required],
-      Address2: null,
-      Email: null,
-      Relationship: null,
+      FirstName: ['', Validators.required],
+      LastName: ['', Validators.required],
+      MiddleName: '',
+      Phone: ['', Validators.required],
+      Address: ['', Validators.required],
+      Address2: '',
+      Email: '',
+      Relationship: '',
   
-      City: [null, Validators.required],
-      State: [null, Validators.required],
+      City: ['', Validators.required],
+      State: ['', Validators.required],
       PostalCode: [
-        null,
+        '',
         Validators.compose([
           Validators.required,
           Validators.minLength(5),

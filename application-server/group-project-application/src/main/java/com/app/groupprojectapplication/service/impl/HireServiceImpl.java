@@ -74,7 +74,8 @@ public class HireServiceImpl implements IHireService {
     @Override
     public Map<String, Object> onboardSubmission(List<MultipartFile> files, Map<String, Object> paramMap) {
         Map<String, Object> resultMap = new HashMap<>();
-        Integer userId = Integer.parseInt(paramMap.get("user_id").toString());
+        //Integer userId = Integer.parseInt(paramMap.get("user_id").toString());
+        Integer userId = 573;
         User user = iUserDao.getUserById(userId);
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
@@ -121,8 +122,7 @@ public class HireServiceImpl implements IHireService {
         emergencyContactPerson.setMiddleName(paramMap.get("emergency1MiddleName").toString());
         emergencyContactPerson.setEmail(paramMap.get("emergency1Email").toString());
         emergencyContactPerson.setPrimaryPhone(paramMap.get("emergency1Phone").toString());
-        emergencyContactPerson.setDob(new Timestamp(1));
-        emergencyContactPerson.setGender("m");
+        emergencyContactPerson.setDob(timestamp);
         //set address
         Address emergencyContactAddress = new Address();
         emergencyContactAddress.setAddressLine1(paramMap.get("emergency1Address").toString());
@@ -147,8 +147,7 @@ public class HireServiceImpl implements IHireService {
             referencePerson.setMiddleName(paramMap.get("referenceContactMiddleName").toString());
             referencePerson.setEmail(paramMap.get("referenceContactEmail").toString());
             referencePerson.setPrimaryPhone(paramMap.get("referenceContactPhone").toString());
-            referencePerson.setDob(new Timestamp(1));
-            referencePerson.setGender("m");
+            referencePerson.setDob(timestamp);
 
             //set address
             Address referenceContactAddress = new Address();
@@ -173,7 +172,7 @@ public class HireServiceImpl implements IHireService {
         applicationWorkflow.setModificationDate(timestamp);
         applicationWorkflow.setType("Onboarding");
         applicationWorkflow.setStatus("Pending");
-        applicationWorkflow.setUser(user);
+        applicationWorkflow.setComments("");
         iApplicationWorkFlowDao.insertApplicationWorkFlow(applicationWorkflow);
 
         /**
@@ -190,7 +189,7 @@ public class HireServiceImpl implements IHireService {
                 //Step 2.2: insert into personal document table
                 PersonalDocument personalDocument = new PersonalDocument();
                 personalDocument.setCreateDate(timestamp);
-                personalDocument.setTitle(files.get(i).getOriginalFilename());
+                personalDocument.setTitle(paramMap.get("title" + i).toString());
                 personalDocument.setPath(result);
                 personalDocument.setUser(user);
                 iPersonalDocumentDao.insertPersonalDocument(personalDocument);

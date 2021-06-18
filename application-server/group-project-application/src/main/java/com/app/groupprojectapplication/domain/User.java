@@ -12,7 +12,7 @@ import java.util.Set;
 @Entity()
 @Table(name="user")
 public class User implements Serializable {
-    private int id;
+    private Integer id;
     private String username;
     private String email;
     private String password;
@@ -37,11 +37,12 @@ public class User implements Serializable {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
