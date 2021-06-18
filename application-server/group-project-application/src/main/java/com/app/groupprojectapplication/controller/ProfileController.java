@@ -1,9 +1,8 @@
 package com.app.groupprojectapplication.controller;
 
-import com.app.groupprojectapplication.service.IProfileService;
-import com.app.groupprojectapplication.service.IUpdateAddressSectionService;
-import com.app.groupprojectapplication.service.IUpdateNameSectionService;
+import com.app.groupprojectapplication.service.*;
 //import org.graalvm.compiler.debug.TimeSource;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +23,12 @@ public class ProfileController {
 
     @Autowired
     private IUpdateAddressSectionService iUpdateAddressSectionService;
+
+    @Autowired
+    private IUpdateContactSectionService iUpdateContactSectionService;
+
+    @Autowired
+    private IUpdateEmploymentSectionService iUpdateEmploymentSectionService;
 
     @GetMapping("/{user_id}")
     public Map<String, Object> getProfile(@PathVariable Integer user_id) {
@@ -68,15 +73,20 @@ public class ProfileController {
     public Map<String, Object> updateProfileAddressSection(@RequestParam Map<String, Object> params,
                                              @PathVariable Integer user_id) {
         Map<String, Object> resultMap = new HashMap<>();
+//        String priAdd = params.get("primaryAddr").toString();
+//        System.out.println(priAdd);
+
+
+//        Map<String,Object> result = new ObjectMapper().readValue(params.get("primaryAddr"), HashMap.class);
+
+
+
+//        Map<String, Object> priAddress = new HashMap<>(params.get("priAddress"));
 //        String priAdd1 = params.get("primaryAddr").get("AddressLine1").toString();
 //        String priAdd2 = params.get("primaryAddr").get("AddressLine2").toString();
 //        String priCity = params.get("primaryAddr").get("City").toString();
 //        String priState = params.get("primaryAddr").get("State").toString();
 //        String priZip = params.get("primaryAddr").get("Zip").toString();
-//        Object priAdd = params.get("primaryAddr").toString();
-//        System.out.println(priAdd);
-        System.out.println(user_id);
-        System.out.println("---------");
 //        System.out.println(priAdd1);
 //        System.out.println(priAdd2);
 //        System.out.println(priZip);
@@ -89,6 +99,49 @@ public class ProfileController {
 //        iUpdateAddressSectionService.updateSecAdd(secAdd1, secAdd2, secCity, secState, secZip, user_id);
 
         resultMap.put("AddressUpdateResult", "success");
+        return resultMap;
+    }
+
+    @PostMapping("/{user_id}/updateContactSection")
+    public Map<String, Object> updateProfileContactSection(@RequestParam Map<String, Object> params,
+                                                        @PathVariable Integer user_id) {
+        Map<String, Object> resultMap = new HashMap<>();
+        String ceilphone = params.get("ceilphone").toString();
+        String personalEmail = params.get("personalEmail").toString();
+        String workEmail = params.get("workEmail").toString();
+        String workPhone = params.get("workPhone").toString();
+        iUpdateContactSectionService.updateContactInfo(ceilphone, personalEmail, workEmail, workPhone, user_id);
+        resultMap.put("ContactResult", "success");
+        return resultMap;
+    }
+
+
+    @PostMapping("/{user_id}/updateEmergencySection")
+    public Map<String, Object> updateProfileEmergencySection(@RequestParam Map<String, Object> params,
+                                                        @PathVariable Integer user_id) {
+        Map<String, Object> resultMap = new HashMap<>();
+
+//        String priAdd = params.get("primaryAddr").toString();
+//        System.out.println(priAdd);
+        resultMap.put("EmergencyResult", "success");
+        return resultMap;
+    }
+
+    @PostMapping("/{user_id}/updateEmploymentSection")
+    public Map<String, Object> updateProfileEmploymentSection(@RequestParam Map<String, Object> params,
+                                                        @PathVariable Integer user_id) {
+        Map<String, Object> resultMap = new HashMap<>();
+        String title = params.get("title").toString();
+        String workAuthorization = params.get("workAuthorization").toString();
+
+        String authorizationEndDate = params.get("authorizationEndDate").toString();
+        String authorizationStartDate = params.get("authorizationStartDate").toString();
+        String employmentEndDate = params.get("employmentEndDate").toString();
+        String employmentStartDate = params.get("employmentStartDate").toString();
+
+        iUpdateEmploymentSectionService.updateEmployment(title, workAuthorization, authorizationStartDate, authorizationEndDate,
+                employmentStartDate, employmentEndDate, user_id);
+        resultMap.put("EmploymentResult", "success");
         return resultMap;
     }
 }

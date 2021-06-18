@@ -3,7 +3,7 @@
     <mat-label>Full Name</mat-label>
     <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson1.fullName" placeholder="data.emergencyContactList.emergencyPerson1.fullName"><br>
     <mat-label>Phone #</mat-label>
-    <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson1.phone" placeholder="data.emergencyContactList.emergencyPerson1.phone"><br>
+    <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson1.phone" placeholder="data.emergencyContactList.emergencyPerson1.emergencyPerson1.phone"><br>
     <h3>Primary Address</h3>
     <mat-label>Address Line 1</mat-label>
     <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson1.address.primaryAddr.AddressLine1" placeholder="data.emergencyContactList.emergencyPerson1.address.primaryAddr.AddressLine1"><br>
@@ -16,22 +16,18 @@
     <mat-label>Zip Code</mat-label>
     <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson1.address.primaryAddr.Zip" placeholder="data.emergencyContactList.emergencyPerson1.address.primaryAddr.Zip"><br>
     <br>
-    <!-- <mat-label>Full Name</mat-label>
-    <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson2.fullName" placeholder="data.emergencyContactList.emergencyPerson2.fullName"><br>
-    <mat-label>Phone #</mat-label>
-    <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson2.phone" placeholder="data.emergencyContactList.emergencyPerson2.phone"><br>
-    <h3>Primary Address</h3>
-    <mat-label>Address Line 1</mat-label>
-    <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson2.primaryAddr.AddressLine1" placeholder="data.emergencyContactList.emergencyPerson2.primaryAddr.AddressLine1"><br>
-    <mat-label>Address Line 2</mat-label>
-    <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson2.primaryAddr.AddressLine2" placeholder="data.emergencyContactList.emergencyPerson2.primaryAddr.AddressLine2"><br>
-    <mat-label>City</mat-label>
-    <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson2.primaryAddr.City" placeholder="data.emergencyContactList.emergencyPerson2.primaryAddr.City"><br>
-    <mat-label>State</mat-label>
-    <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson2.primaryAddr.State" placeholder="data.emergencyContactList.emergencyPerson2.primaryAddr.State"><br>
-    <mat-label>Zip Code</mat-label>
-    <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson2.primaryAddr.Zip" placeholder="data.emergencyContactList.emergencyPerson2.primaryAddr.Zip"><br>
-    <br> -->
+    <h3>Secondary Address</h3>
+        <mat-label>Address Line 1</mat-label>
+        <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson1.address.secondaryAddr.AddressLine1" placeholder="data.emergencyContactList.emergencyPerson1.address.secondaryAddr.AddressLine1"><br>
+        <mat-label>Address Line 2</mat-label>
+        <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson1.address.secondaryAddr.AddressLine2" placeholder="data.emergencyContactList.emergencyPerson1.address.secondaryAddr.AddressLine2"><br>
+        <mat-label>City</mat-label>
+        <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson1.address.secondaryAddr.City" placeholder="data.emergencyContactList.emergencyPerson1.address.secondaryAddr.City"><br>
+        <mat-label>State</mat-label>
+        <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson1.address.secondaryAddr.State" placeholder="data.emergencyContactList.emergencyPerson1.address.secondaryAddr.State"><br>
+        <mat-label>Zip Code</mat-label>
+        <input matInput [(ngModel)]="data.emergencyContactList.emergencyPerson1.address.secondaryAddr.Zip" placeholder="data.emergencyContactList.emergencyPerson1.address.secondaryAddr.Zip"><br>
+        
 </div>
 <div mat-dialog-actions>
     <button mat-button (click)="onCancelClick()">Cancel</button>

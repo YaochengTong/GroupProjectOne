@@ -13,7 +13,6 @@ import java.util.List;
 
 
 @Repository
-@Transactional
 public class PermissonDaoImpl implements IPermissionDao {
 
     Permission permission;

@@ -18,7 +18,6 @@ import java.util.Map;
 
 
 @Repository
-@Transactional
 public class ApplicationWorkflowDaoImpl implements IApplicationWorkFlowDao {
 
 

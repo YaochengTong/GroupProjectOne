@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HTTPReq } from 'src/app/service/HTTPReq/HTTPReq.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
@@ -17,7 +17,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 
 export class VisaComponent implements OnInit {
 
-  isDataAvailable: boolean = true;
+  isDataAvailable: boolean = false;
   isEdit: boolean = false;
   visaStatusInfo: any = {};
   columnsToDisplay = ['Full Name', 'Work Authorization', 'Expiration Date', 'Day Left'];
@@ -100,7 +100,7 @@ export class VisaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.httpRequestService.getData('/visaStatusManagement/all', null, 'http://localhost:8999').subscribe(
+    this.httpRequestService.getData('/visa-status-management/all', null, 'http://localhost:8999').subscribe(
       (data: any) => {
         this.isDataAvailable = true;
         console.log(data.visaStatusInfoList);
@@ -109,13 +109,24 @@ export class VisaComponent implements OnInit {
     )
   }
 
-  @ViewChild('fullName') fullName!: ElementRef;
-  @ViewChild('type') type!: ElementRef;
-  @ViewChild('endDate') endDate!: ElementRef;
-  @ViewChild('startDate') startDate!: ElementRef;
-
-  onSubmit() {
+  onSubmit(event: any) {
     this.isEdit = false;
+    let index = event.currentTarget.id;
+    this.visaStatusInfo[index].authorizationDayLeft = 0;
+    let params = {
+      userId: this.visaStatusInfo[index].userId,
+      fullName: this.visaStatusInfo[index].fullName,
+      workAuthorization: this.visaStatusInfo[index].workAuthorization,
+      authorizationStartDate: this.visaStatusInfo[index].authorizationStartDate,
+      authorizationEndDate: this.visaStatusInfo[index].authorizationEndDate
+    }
+    this.httpRequestService.postData('/visa-status-management/update', 
+    params,
+    'http://localhost:8999').subscribe(
+      (data: any) => {
+        console.log(data);
+      }
+    )
   }
 
 
