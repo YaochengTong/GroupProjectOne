@@ -34,6 +34,10 @@ export class HomeComponent implements OnInit{
       }
     )
   }
+
+  sendEmail(): void {
+    
+  }
 }
 
 

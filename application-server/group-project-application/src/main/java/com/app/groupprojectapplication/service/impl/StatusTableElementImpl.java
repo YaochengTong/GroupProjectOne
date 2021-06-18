@@ -42,6 +42,9 @@ public class StatusTableElementImpl implements IStatusTableElementService {
          List<StatusTableElement> statusList = new ArrayList<>();
          List<Employee> employeeList = iEmployeeDao.getEmployee();
          for (Employee employee : employeeList) {
+             StatusTableElement ste = getStatusByEmployee(employee);
+             if (!ste.getVisaInfo().getNextStep().equals("No Info") &&
+                     !ste.getVisaInfo().getNextStep().equals("No Action") )
              statusList.add(getStatusByEmployee(employee));
          }
 
@@ -75,6 +78,7 @@ public class StatusTableElementImpl implements IStatusTableElementService {
         nameInfo.setLastName(person.getLastName());
         nameInfo.setFullName(getFullName(person));
         nameInfo.setSSN(Integer.parseInt(person.getSsn()));
+        nameInfo.setEmail(person.getEmail());
         nameInfo.setTitle(employee.getTitle());
 
         return nameInfo;
