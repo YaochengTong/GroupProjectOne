@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -42,10 +43,19 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
         List<VisaStatusInfo> visaStatusInfoList = new ArrayList<>();
         List<User> users = iUserDao.getAllUsers();
         int index = 0;
-        for (User user : users) {
-            VisaStatusInfo visaStatusInfo = getVisaInfoByUserId(user.getId(), index);
+
+//        // official code:
+//        for (User user : users) {
+//            VisaStatusInfo visaStatusInfo = getVisaInfoByUserId(user.getId(), index);
+//            if (visaStatusInfo != null) {visaStatusInfoList.add(visaStatusInfo); index++;}
+//        }
+
+        // for test usage: because incomplete database
+        for (Integer userId: Arrays.asList(556, 557,558, 89)) {
+            VisaStatusInfo visaStatusInfo = getVisaInfoByUserId(userId, index);
             if (visaStatusInfo != null) {visaStatusInfoList.add(visaStatusInfo); index++;}
         }
+
         return visaStatusInfoList;
     }
 

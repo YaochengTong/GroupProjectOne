@@ -19,12 +19,12 @@
       <div class="example-element-detail"
            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
         <form class="detail-element">
-            <mat-form-field><mat-label>Legal Name:</mat-label><input #fullName matInput [id]="element.idx" style="color: black;" [disabled]="!isEdit" [value]="element.fullName"> </mat-form-field>
-            <mat-form-field><mat-label>Type:</mat-label><input #type matInput [id]="element.idx" matInput style="color: black;" [disabled]="!isEdit" [value]="element.workAuthorization"> </mat-form-field>
-            <mat-form-field><mat-label>Start Date::</mat-label><input matInput #startDate matInput [id]="element.idx" style="color: black;" [disabled]="!isEdit" [value]="element.authorizationStartDate"> </mat-form-field>
-            <mat-form-field><mat-label>End Date:</mat-label><input matInput #endDate matInput [id]="element.idx" style="color: black;" [disabled]="!isEdit" [value]="element.authorizationEndDate"> </mat-form-field><br>
+            <mat-form-field><mat-label>Legal Name:</mat-label><input name="fullName" matInput  style="color: black;" [disabled]="!isEdit" [(ngModel)]="element.fullName"> </mat-form-field>
+            <mat-form-field><mat-label>Type:</mat-label><input name="type" matInput  matInput style="color: black;" [disabled]="!isEdit" [value]="element.workAuthorization"> </mat-form-field>
+            <mat-form-field><mat-label>Start Date::</mat-label><input matInput name="startDate" matInput  style="color: black;" [disabled]="!isEdit" [value]="element.authorizationStartDate"> </mat-form-field>
+            <mat-form-field><mat-label>End Date:</mat-label><input matInput name="endDate" matInput  style="color: black;" [disabled]="!isEdit" [value]="element.authorizationEndDate"> </mat-form-field><br>
             <button *ngIf="!isEdit" style="background-color: transparent; border: none; outline: none;" (click)="isEdit = true"><mat-icon style="font-size: medium;"> border_color</mat-icon></button><br>
-            <button *ngIf="isEdit" mat-button color="primary" (click)="onSubmit()">Save</button>
+            <button *ngIf="isEdit" [id]="element.idx" mat-button color="primary" (click)="onSubmit($event)">Save</button>
             <button *ngIf="isEdit" mat-button color="gray" (click)="isEdit=false">Cancel</button>
         </form>
         
