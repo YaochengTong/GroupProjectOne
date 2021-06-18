@@ -15,5 +15,4 @@ public interface IFacilityDao {
 
     List<FacilityReport> getAllFacilityReportByHouseId(Employee e);
 
-
 }

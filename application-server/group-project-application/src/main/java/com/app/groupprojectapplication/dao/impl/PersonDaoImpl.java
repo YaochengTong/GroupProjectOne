@@ -2,20 +2,18 @@ package com.app.groupprojectapplication.dao.impl;
 
 import com.app.groupprojectapplication.dao.IPersonDao;
 import com.app.groupprojectapplication.domain.Person;
+import java.math.BigInteger;
+import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import java.math.BigInteger;
-
 
 @Repository
 public class PersonDaoImpl implements IPersonDao {
 
     @Autowired
     protected SessionFactory sessionFactory;
-
 
     @Override
     public Person getPersonById(Integer id) {
@@ -39,11 +37,20 @@ public class PersonDaoImpl implements IPersonDao {
     @Override
     public Integer getAge(Integer id) {
         Session session = sessionFactory.getCurrentSession();
-        String query = "SELECT FLOOR(datediff(current_date(), date(p.dob))/365) AS DateDiff FROM hr_db.person p WHERE p.id = " + id;
-        Integer age = ((BigInteger)session.createNativeQuery(query).list().get(0)).intValue();
+        String query =
+            "SELECT FLOOR(datediff(current_date(), date(p.dob))/365) AS DateDiff FROM hr_db.person p WHERE p.id = "
+                + id;
+        Integer age = ((BigInteger) session.createNativeQuery(query).list().get(0)).intValue();
         return age;
     }
 
+    @Override
+    public String getPhoneByPersonId(Integer id) {
+        Session session = sessionFactory.getCurrentSession();
+        List<String> resultList = session.createQuery("SELECT primaryPhone FROM Person WHERE id =" + id)
+            .getResultList();
+        return resultList.get(0);
+    }
 
 }
 

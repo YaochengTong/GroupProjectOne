@@ -47,4 +47,5 @@ public class FacilityDaoImpl implements IFacilityDao {
         return resultList;
     }
 
+
 }

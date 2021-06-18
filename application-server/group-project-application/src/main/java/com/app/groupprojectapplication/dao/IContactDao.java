@@ -9,4 +9,5 @@ public interface IContactDao {
     List<Contact> getContactByPersonId(Integer person_id);
     List<Contact> getEmergencyByPersonId(Integer person_id);
 
+    int getPersonIdByContactId(Integer contactId);
 }

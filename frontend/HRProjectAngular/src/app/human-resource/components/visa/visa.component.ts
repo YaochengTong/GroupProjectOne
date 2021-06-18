@@ -94,6 +94,7 @@ export class VisaComponent implements OnInit {
     this.httpRequestService.getData('/visaStatusManagement/all', null, 'http://localhost:8999').subscribe(
       (data: any) => {
         this.isDataAvailable = true;
+        console.log(data.visaStatusInfoList);
         this.visaStatusInfo = data.visaStatusInfoList;
       }
     )
