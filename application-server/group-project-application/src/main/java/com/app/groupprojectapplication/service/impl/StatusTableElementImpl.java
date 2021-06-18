@@ -106,7 +106,7 @@ public class StatusTableElementImpl implements IStatusTableElementService {
             case "OPT STEM EAD": nextStep="No Action"; break;
             default:
 //                throw new IllegalStateException("Unexpected value: " + currentStep);
-                nextStep = "No Info";
+                nextStep = "OPT Receipt";
         }
         return nextStep;
     }

@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
 import javax.persistence.criteria.*;
@@ -18,6 +19,7 @@ import java.util.List;
  * Shida Sheng
  */
 @Repository
+@Transactional
 public class  UserDaoImpl implements IUserDao {
 
     User user;
@@ -80,5 +82,19 @@ public class  UserDaoImpl implements IUserDao {
         if(query.getResultList().size() != 1)
             return null;
         return (Integer) query.getResultList().get(0);
+    }
+
+    @Override
+    public Integer getPersonIdByUserId(Integer userId) {
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "SELECT u.person.id FROM User u WHERE u.id=:user_id";
+        Query query = session.createQuery(hql);
+        query.setParameter("user_id", userId);
+        if(query.getResultList().size() != 1) {
+            return null;
+        }
+        Integer person_id = (Integer) query.getResultList().get(0);
+
+        return person_id;
     }
 }
