@@ -25,6 +25,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatDialogModule} from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {MatSelectModule} from '@angular/material/select';
 
 
 import { HttpClientModule } from '@angular/common/http';
@@ -75,6 +76,7 @@ import { EmploymentSectionDialogComponent } from './components/personal-info/emp
     MatDialogModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    MatSelectModule
   ],
   providers: [HTTPReq],
   exports: [

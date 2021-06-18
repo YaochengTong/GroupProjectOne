@@ -2,11 +2,18 @@ package com.app.groupprojectapplication.controller;
 
 import com.app.groupprojectapplication.service.*;
 //import org.graalvm.compiler.debug.TimeSource;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.KeyDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,11 +78,12 @@ public class ProfileController {
 
     @PostMapping("/{user_id}/updateAddressSection")
     public Map<String, Object> updateProfileAddressSection(@RequestParam Map<String, Object> params,
-                                             @PathVariable Integer user_id) {
+                                             @PathVariable Integer user_id) throws IOException {
         Map<String, Object> resultMap = new HashMap<>();
+
+
 //        String priAdd = params.get("primaryAddr").toString();
 //        System.out.println(priAdd);
-
 
 //        Map<String,Object> result = new ObjectMapper().readValue(params.get("primaryAddr"), HashMap.class);
 
@@ -145,3 +153,6 @@ public class ProfileController {
         return resultMap;
     }
 }
+
+
+
