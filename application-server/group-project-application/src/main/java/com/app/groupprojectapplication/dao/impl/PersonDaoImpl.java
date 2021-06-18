@@ -19,24 +19,21 @@ public class PersonDaoImpl implements IPersonDao {
 
     @Override
     public Person getPersonById(Integer id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         Person person = session.get(Person.class, id);
-        session.close();
         return person;
     }
 
     @Override
     public void insertPerson(Person person) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         session.save(person);
-        session.close();
     }
 
     @Override
     public void updatePerson(Person person) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(person);
-        session.close();
     }
 
     @Override

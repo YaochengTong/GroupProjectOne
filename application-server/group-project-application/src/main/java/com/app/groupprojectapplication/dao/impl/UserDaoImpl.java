@@ -28,46 +28,35 @@ public class  UserDaoImpl implements IUserDao {
 
     @Override
     public User getUserById(Integer id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         user = session.get(User.class, id);
-        session.close();
         return user;
     }
 
 
     @Override
     public void insertUser(User user) {
-        Session session = sessionFactory.openSession();
-        Transaction ts = session.beginTransaction();
+        Session session = sessionFactory.getCurrentSession();
         session.save(user);
-        ts.commit();
-        session.close();
 
     }
 
     @Override
     public void deleteUserById(Integer id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         User newUser = new User();
         newUser.setId(id);
-
-        Transaction ts = session.beginTransaction();
         session.delete(newUser);
-        ts.commit();
-        session.close();
     }
 
     @Override
     public void updateUser(User user) {
-        Session session = sessionFactory.openSession();
-        Transaction ts = session.beginTransaction();
+        Session session = sessionFactory.getCurrentSession();
         User currentUser = session.get(User.class, user.getId());
         currentUser.setRoles(user.getRoles());
         currentUser.setModificationDate(new Timestamp(System.currentTimeMillis()));
         Person person = session.get(Person.class, user.getPerson().getId());
         currentUser.setPerson(person);
-        ts.commit();
-        session.close();
     }
 
     public List<User> getAllUsers() {
@@ -78,7 +67,7 @@ public class  UserDaoImpl implements IUserDao {
 
     @Override
     public Integer getEmployeeIdByUserId(Integer userId){
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         String hql = "select u.person.id FROM User u where u.id=:user_id";
         Query query = session.createQuery(hql);
         query.setParameter("user_id", userId);

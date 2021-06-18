@@ -36,7 +36,7 @@ public class EmployeeDaoImpl implements IEmployeeDao {
 
     @Override
     public void insertEmployee(Employee employee) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         session.save(employee);
     }
 
@@ -50,7 +50,7 @@ public class EmployeeDaoImpl implements IEmployeeDao {
 
     @Override
     public Integer getUserIdByEmployeeId(Integer employeeId) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         String hql = "select e.person.id FROM Employee e WHERE e.id=:employee_Id";
         Query query = session.createQuery(hql);
         query.setParameter("employee_Id", employeeId);
@@ -67,7 +67,6 @@ public class EmployeeDaoImpl implements IEmployeeDao {
 
 
         return (Integer)  query.getResultList().get(0);
-
     }
 
 

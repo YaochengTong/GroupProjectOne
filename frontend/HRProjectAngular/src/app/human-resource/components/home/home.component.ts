@@ -36,8 +36,17 @@ export class HomeComponent implements OnInit{
   }
 
   sendEmail(email, nextStep, employeeId): void {
-    alert("Sent")
-    // this.httpRequestService.postData('/')
+    let params = {
+      email: email,
+      nextStep: nextStep,
+      employeeId: employeeId,
+    }
+    alert("Sent Email")
+    // this.httpRequestService.postData('/notification/nextStep', params).subscribe(
+    //   (data: any) => {
+    //     console.log(data);
+    //   }
+    // )
   }
 }
 
