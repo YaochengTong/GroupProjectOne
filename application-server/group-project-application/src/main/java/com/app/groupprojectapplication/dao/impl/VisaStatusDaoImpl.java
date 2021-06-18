@@ -36,4 +36,12 @@ public class VisaStatusDaoImpl implements IVisaStatusDao {
         Integer leftDay = ((BigInteger) session.createNativeQuery(query).list().get(0)).intValue();
         return leftDay;
     }
+
+    @Override
+    public String getVisaTypeByEmployeeId(Integer employeeId) {
+        Session session = sessionFactory.getCurrentSession();
+        String query = "SELECT v.visa_type FROM hr_db.visa_status v LEFT JOIN hr_db.employee e ON v.id = e.visa_status_id WHERE e.id = " + employeeId;
+        String visaType = (String)session.createNativeQuery(query).list().get(0);
+        return visaType;
+    }
 }
