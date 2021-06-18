@@ -33,8 +33,8 @@ public class FacilityDaoImpl implements IFacilityDao {
     @Override
     public int getNumOfTypeByHouseId(Integer house_id, Integer type_number) {
         Session session = sessionFactory.getCurrentSession();
-        List<Integer> result = session.createQuery(
-            "SELECT quantity FROM Facility f WHERE f.house.id = " + house_id + "AND " + "type = " + type_number)
+        List<Integer> result = session
+            .createQuery("SELECT quantity FROM Facility f WHERE f.house.id = " + house_id + "AND f.id = " + type_number)
             .getResultList();
         return result.get(0);
     }
@@ -42,7 +42,7 @@ public class FacilityDaoImpl implements IFacilityDao {
     @Override
     public List<FacilityReport> getAllFacilityReportByHouseId(Employee e) {
         Session session = sessionFactory.getCurrentSession();
-        List<FacilityReport> resultList = session.createQuery("FROM FacilityReport WHERE employee = " + e)
+        List<FacilityReport> resultList = session.createQuery("FROM FacilityReport WHERE employee.id = " + e.getId())
             .getResultList();
         return resultList;
     }
