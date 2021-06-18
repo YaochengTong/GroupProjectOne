@@ -44,8 +44,6 @@ export class CheckEmployeeComponent implements OnInit, AfterViewInit {
     )
   }
 
-    @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
   ngOnInit(): void {
     // this.httpRequestService.getData('/profile/all', null, 'http://localhost:8999').subscribe(
     //   (data:any) => {
@@ -57,7 +55,8 @@ export class CheckEmployeeComponent implements OnInit, AfterViewInit {
   }
 
 
-
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
   ngAfterViewInit() {
   this.dataSource.paginator = this.paginator;
   }
@@ -66,9 +65,9 @@ export class CheckEmployeeComponent implements OnInit, AfterViewInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    // if (this.dataSource.paginator) {
-    //   this.dataSource.paginator.firstPage();
-    //   }
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+      }
   }
 }
 
