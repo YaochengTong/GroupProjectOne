@@ -70,14 +70,17 @@ export class RegisterPageComponent implements OnInit {
     params,
     'http://localhost:9999').subscribe(
       (data: any) => {
-        if (data.success == "true") {
+        console.log(data)
+        if (data.success === true) {
           localStorage.setItem("isLogged", "true");
-          localStorage.setItem("registerToken", this.registerToken);
+          //localStorage.setItem("registerToken", this.registerToken);
           localStorage.setItem("token", data.JWT_TOKEN);
-          localStorage.setItem("user", JSON.stringify(data.user));
+          //localStorage.setItem("user", JSON.stringify(data.user));
+          localStorage.setItem("email", data.email);
+          localStorage.setItem("userId", data.userId);
           this.router.navigate(['/on-boarding'])
         } else {
-          console.log(data.reason);
+          console.log(data);
         }
       }
     );

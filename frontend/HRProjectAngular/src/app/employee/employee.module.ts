@@ -31,6 +31,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatStepperModule} from '@angular/material/stepper';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import { HTTPReq } from '../service/HTTPReq/HTTPReq.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -90,7 +91,8 @@ import { PersonalInfoTemplateComponent } from '../on-boarding/personal-info-temp
     FlexLayoutModule,
     NgxMatFileInputModule,
     FormsModule,
-    MatStepperModule
+    MatStepperModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     CommonModule,

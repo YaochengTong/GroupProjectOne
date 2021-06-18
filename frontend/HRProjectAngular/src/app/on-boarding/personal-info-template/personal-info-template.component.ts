@@ -46,7 +46,7 @@ export class PersonalInfoTemplateComponent implements OnInit {
 
   dataRefresh(): void{
     this.updateForm.emit(this.personalInfoForm.value);
-    console.log(this.personalInfoForm)
+    //console.log(this.personalInfoForm)
     this.updateFormValid.emit(this.personalInfoForm.valid);
   }
 

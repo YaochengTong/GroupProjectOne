@@ -49,8 +49,11 @@ export class OnBoardingComponent implements OnInit{
 
   fileForm: FormGroup;
 
+  submitting: boolean = false;
+
   ngOnInit(): void {
-    
+    this.email = localStorage.getItem('email');
+    this.userId = localStorage.getItem('userId');
   }
 
   date = new FormControl(this.getMonthYearString(new Date()));
@@ -62,7 +65,8 @@ export class OnBoardingComponent implements OnInit{
   emergencyContact: string = "Emergency Contact";
   referenceContact: string = "Reference Contact";
   showSecondEmergencyContact: boolean = false;
-  email:string = 'test@gmail.com';
+  email:any;
+  userId: any;
 
   personalInfoFormValid: boolean = false;
   personalInfoFormStatus(valid: boolean): void{
@@ -248,6 +252,7 @@ export class OnBoardingComponent implements OnInit{
   }
 
   onSubmit(): void {
+    
     //create a new formData
     let formData: FormData = new FormData();
 
@@ -273,7 +278,7 @@ export class OnBoardingComponent implements OnInit{
     Object.assign(paramObj, this.phoneAddressCarForm.value, this.personalInfoFormValue, 
           this.referenceFormValue, this.emergency1FormValue, this.emergency2FormValue);
     paramObj['email'] = this.email;
-    paramObj['user_id'] = 571;
+    paramObj['user_id'] = this.userId; //localStorage.getItem('userId');
     paramObj['stateFullName'] = this.states.find((item) => item.abbreviation 
           == this.phoneAddressCarForm.value.state)?.name
 
@@ -301,6 +306,8 @@ export class OnBoardingComponent implements OnInit{
       }
     }
 
+    this.submitting = true;
+
     //first argument: path
     //second argument formData: the form that contains your files
     //third argument obj: the object that contains the information you want to send to the backend
@@ -308,10 +315,12 @@ export class OnBoardingComponent implements OnInit{
     this.httpRequestService.fileUploadWithParams('/hire/submitOnboard', formData, paramObj).subscribe(
         (data: any) => {
             console.log(data);
+            this.submitting = false;
         },
         err => {
             console.log(err);
-    });
+            this.submitting = false;
+        });
 
   }
 

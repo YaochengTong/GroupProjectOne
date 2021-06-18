@@ -77,8 +77,7 @@ public class HireServiceImpl implements IHireService {
     @Override
     public Map<String, Object> onboardSubmission(List<MultipartFile> files, Map<String, Object> paramMap) {
         Map<String, Object> resultMap = new HashMap<>();
-        //Integer userId = Integer.parseInt(paramMap.get("user_id").toString());
-        Integer userId = 574;
+        Integer userId = Integer.parseInt(paramMap.get("user_id").toString());
         User user = iUserDao.getUserById(userId);
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
@@ -89,7 +88,7 @@ public class HireServiceImpl implements IHireService {
         Person person = new Person();
         person.setFirstName(paramMap.get("firstName").toString());
         person.setLastName(paramMap.get("lastName").toString());
-        person.setMiddleName(paramMap.get("lastName").toString());
+        person.setMiddleName(paramMap.get("middleName").toString());
         person.setEmail(paramMap.get("email").toString());
         person.setPrimaryPhone(paramMap.get("cellPhone").toString());
         person.setAlternatePhone(paramMap.get("workPhone").toString());
@@ -192,7 +191,7 @@ public class HireServiceImpl implements IHireService {
         }
 
         //Step 1.4 reference contact
-        if(paramMap.get("referenceFirstName") != null && !paramMap.get("referenceFirstName").equals("")) {
+        if(paramMap.get("referenceContactFirstName") != null && !paramMap.get("referenceContactFirstName").equals("")) {
             Person referencePerson = new Person();
             referencePerson.setFirstName(paramMap.get("referenceContactFirstName").toString());
             referencePerson.setLastName(paramMap.get("referenceContactLastName").toString());
