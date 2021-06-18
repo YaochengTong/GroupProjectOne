@@ -14,7 +14,8 @@
                   [formGroup]="personalInfoTemplate.personalInfoForm"
                   (updateForm)="dataRefreshForPersonalInfo($event)"
                   (updateDriverLicense)="dataRefreshDriverLicense($event)"
-                  (updateWorkAuth)="dataRefreshWorkAuth($event)">
+                  (updateWorkAuth)="dataRefreshWorkAuth($event)"
+                  (updateFormValid)="personalInfoFormStatus($event)">
               </app-personal-info-template>
             </mat-step>
 
@@ -219,7 +220,7 @@
 
             </mat-step>
 
-            <mat-step>
+            <mat-step [stepControl]="fileForm">
               <ng-template matStepLabel>Personal Documents</ng-template>
               <div class="row">
                 <div class="col">
@@ -229,7 +230,7 @@
                   >I983 Template</a>
                 </div>
                 <div class="col">
-                  <mat-form-field class="full-width">
+                  <mat-form-field class="full-width" required>
                     <ngx-mat-file-input
                       [formControl]="fileI983"
                       [multiple]="multiple"
@@ -247,7 +248,7 @@
                   <mat-card-content>Please upload OPT receipt</mat-card-content>
                 </div>
                 <div class="col">
-                  <mat-form-field class="full-width">
+                  <mat-form-field class="full-width" required>
                     <ngx-mat-file-input
                       [formControl]="fileOPTReceipt"
                       [multiple]="multiple"
@@ -273,7 +274,15 @@
       </mat-card-content>
 
       <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+        <button mat-raised-button color="primary" (click)="onSubmit()" 
+          [disabled]="!personalInfoFormValid 
+                   && !phoneAddressCarForm.valid
+                   && !ReferenceContact.ContactForm.valid
+                   && !EmergencyContact.ContactForm.valid
+                   && !fileForm.valid"
+        >
+          Submit
+        </button>
       </mat-card-actions>
 
   </mat-card>

@@ -38,7 +38,16 @@ export class OnBoardingComponent implements OnInit{
       Validators.required,
       MaxSizeValidator(1024 * 1024),
     ]);
+
+
+    this.fileForm = new FormGroup({
+      fileI983 :this.fileI983,
+      fileOPTReceipt: this.fileOPTReceipt
+    });
+
   }
+
+  fileForm: FormGroup;
 
   ngOnInit(): void {
     
@@ -55,6 +64,12 @@ export class OnBoardingComponent implements OnInit{
   showSecondEmergencyContact: boolean = false;
   email:string = 'test@gmail.com';
 
+  personalInfoFormValid: boolean = false;
+  personalInfoFormStatus(valid: boolean): void{
+      this.personalInfoFormValid = valid;
+  }
+
+
   //File upload variables
   color: ThemePalette = 'primary';
   accept: string | undefined;
@@ -65,7 +80,6 @@ export class OnBoardingComponent implements OnInit{
   fileDriverLicense: FormControl;
   files: File | undefined;
   hasUnitNumber = false;
-
 
   phoneAddressCarForm = this.fb.group({
     address: ['', Validators.required],

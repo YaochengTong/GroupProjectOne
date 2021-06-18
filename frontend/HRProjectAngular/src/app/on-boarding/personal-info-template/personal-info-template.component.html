@@ -8,7 +8,6 @@
               [value]="email"
               matInput
               disabled
-              required
             />
           </mat-form-field>
         </mat-card-content>
@@ -134,7 +133,7 @@
         <mat-card-content>Green Card or Citizen</mat-card-content>
         <mat-form-field class="full-width">
           <mat-label>Citizen Type</mat-label>
-          <mat-select formControlName="citizenType" required>
+          <mat-select formControlName="citizenType" [required]="isCitizen === true">
             <mat-option value="green card">Green Card</mat-option>
             <mat-option value="citizen">Citizen</mat-option>
           </mat-select>
@@ -256,6 +255,7 @@
             matInput
             placeholder="Drive License"
             formControlName="driverLicense"
+            [required]="hasDriverLicense === true"
           />
         </mat-form-field>
       </div>
@@ -269,6 +269,7 @@
             matInput
             [matDatepicker]="picker"
             formControlName="driverLicenseExp"
+            [required]="hasDriverLicense === true"
           />
           <mat-datepicker-toggle matSuffix [for]="picker">
           </mat-datepicker-toggle>
@@ -283,6 +284,7 @@
             [formControl]="fileDriverLicense"
             [multiple]="multiple"
             [color]="color"
+            [required]="hasDriverLicense === true"
           >
             <mat-icon ngxMatFileInputIcon>folder</mat-icon>
           </ngx-mat-file-input>
