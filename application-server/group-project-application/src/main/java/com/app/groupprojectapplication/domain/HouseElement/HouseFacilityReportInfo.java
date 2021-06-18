@@ -19,5 +19,5 @@ public class HouseFacilityReportInfo {
     private String houseFacilityReportDate;
     private String houseFacilityReportDescription;
     private String  houseFacilityReportStatus;
-    private List<ReportDetail> houseFacilityReportDetails;
+    private List<HouseFacilityReportDetail> houseFacilityReportDetails;
 }

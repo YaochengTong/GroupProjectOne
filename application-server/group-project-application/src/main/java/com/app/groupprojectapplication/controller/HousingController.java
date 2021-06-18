@@ -1,7 +1,7 @@
 package com.app.groupprojectapplication.controller;
 
 import com.app.groupprojectapplication.dao.IHouseDao;
-import com.app.groupprojectapplication.domain.House;
+import com.app.groupprojectapplication.domain.HouseElement.HousePageInfo;
 import com.app.groupprojectapplication.service.IHouseService;
 import java.util.HashMap;
 import java.util.List;
@@ -20,24 +20,23 @@ public class HousingController {
 
     @Autowired
     private IHouseService iHouseService;
-
-
     @Autowired
     private IHouseDao iHouseDao;
 
     @GetMapping("/get-houses")
     public Map<String, Object> postAllHouse() {
         Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("AllHouse",resultMap);
+        List<HousePageInfo> houses = iHouseService.getAllHouse();
+        resultMap.put("allHouse", houses);
         return resultMap;
     }
 
     @GetMapping("/get-house/{houseId}")
     public Map<String, Object> getHouseById(@PathVariable Integer houseId) {
         Map<String, Object> resultMap = new HashMap<>();
-        House h = iHouseDao.getHouseById(houseId);
+        HousePageInfo h = iHouseService.getHouseById(houseId);
         System.out.println(h.toString());
-        resultMap.put("house",h);
+        resultMap.put("house", h);
         return resultMap;
     }
 

@@ -35,8 +35,7 @@ public class UpdateNameSectionServiceImpl implements IUpdateNameSectionService {
     @Override
     public boolean updateSSN(Integer ssn, Integer userId) {
         // get PersonId by userId
-        Integer personId = iUserDao.getPersonIdByUserId(userId);
-        Person person  = iPersonDao.getPersonById(personId);
+        Person person = iUserDao.getPersonByUserId(userId);
         person.setSsn(String.valueOf(ssn));
         iPersonDao.updatePerson(person);
         return true;

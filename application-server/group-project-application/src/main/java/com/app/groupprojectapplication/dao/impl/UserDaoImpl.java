@@ -97,4 +97,14 @@ public class  UserDaoImpl implements IUserDao {
 
         return person_id;
     }
+
+    @Override
+    public Person getPersonByUserId(Integer userId) {
+        Session session = sessionFactory.getCurrentSession();
+        String query = "SELECT u.person FROM User u WHERE u.id = " + userId;
+        Person person = (Person) session.createQuery(query).getResultList().get(0);
+        return person;
+    }
 }
+
+

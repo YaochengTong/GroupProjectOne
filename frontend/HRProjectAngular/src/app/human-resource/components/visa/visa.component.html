@@ -1,3 +1,8 @@
+<div style="position: relative; top: 50%; left: 50%;" *ngIf="!isDataAvailable">
+    <mat-spinner></mat-spinner>
+    <strong>Loading...</strong>
+</div>
+
 <div *ngIf="isDataAvailable">
 <table mat-table 
        [dataSource]="visaStatusInfo" multiTemplateDataRows
@@ -27,7 +32,7 @@
             <div *ngFor="let item of element.documentReceived">
                 <mat-icon>file_copy</mat-icon>{{item}}
             </div>
-            <div><strong>Next Step: {{element.nextStep}}</strong> | Send Notification</div>
+            <div class="notification"><strong>Next Step: {{element.nextStep}}</strong> | Send Notification</div>
         </div>
         <br>
       </div>

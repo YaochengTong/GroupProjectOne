@@ -55,10 +55,10 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
         VisaStatusInfo visaStatusInfo = null;
         try {
             Employee employee = iEmployeeDao.getEmployeeById(iUserDao.getEmployeeIdByUserId(user.getId()));
-            Person person = user.getPerson();
+            Person person = iUserDao.getPersonByUserId(userId);
             visaStatusInfo = new VisaStatusInfo();
             visaStatusInfo.setFullName(setFullName(person));
-            visaStatusInfo.setWorkAuthorization(employee.getVisaStatus().getVisaType());
+            visaStatusInfo.setWorkAuthorization(iVisaStatusDao.getVisaTypeByEmployeeId(employee.getId()));
             visaStatusInfo.setAuthorizationStartDate(employee.getVisaStartDate());
             visaStatusInfo.setAuthorizationEndDate(employee.getVisaEndDate());
             visaStatusInfo.setAuthorizationDayLeft(iVisaStatusDao.getVisaAuthorizationLeftDay(employee.getId()));
@@ -66,7 +66,7 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
             visaStatusInfo.setNextStep(determineNextStep(iApplicationWorkFlowDao.getApplicationWorkFlowByUserIdAndApplicationType(userId, applicationType).getStatus()));
 
         } catch (Exception e) {
-            System.err.println("No such employee with user id "+ userId);;
+            System.err.println("No such employee with user id "+ userId);
         }
 
         return visaStatusInfo;
