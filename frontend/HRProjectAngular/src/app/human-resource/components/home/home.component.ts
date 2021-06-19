@@ -13,12 +13,15 @@ import { MatTableDataSource } from '@angular/material/table';
 
 
 export class HomeComponent implements OnInit{
+
+  isDataAvailable: boolean = false;
   public dataSource;
   displayedColumns: string[] = [
     'id',
     'name',
     'visaType',
     'expirationDate',
+    'dayLeft',
     'status',
     'action'
   ]
@@ -30,6 +33,7 @@ export class HomeComponent implements OnInit{
   ngOnInit(): void {
     this.httpRequestService.getData('/statusTable/all', null, 'http://localhost:8999').subscribe(
       (data:any) => {
+        this.isDataAvailable = true;
         this.dataSource = new MatTableDataSource<PeriodicElement>(data.AllStatus);
       }
     )

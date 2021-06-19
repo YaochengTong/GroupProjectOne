@@ -117,6 +117,7 @@ public class StatusTableElementImpl implements IStatusTableElementService {
         VisaInfo visaInfo = new VisaInfo();
         visaInfo.setVisaType(employee.getVisaStatus().getVisaType());
         visaInfo.setExpirationDate(employee.getVisaEndDate());
+        visaInfo.setDayLeft(iVisaStatusDao.getVisaAuthorizationLeftDay(employee.getId()));
         visaInfo.setNextStep(determineNextStep(iApplicationWorkFlowDao.getApplicationWorkFlowByUserIdAndApplicationType(userId, applicationType).getStatus()));
         return visaInfo;
     }

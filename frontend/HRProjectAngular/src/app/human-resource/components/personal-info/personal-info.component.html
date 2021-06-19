@@ -1,5 +1,9 @@
+<div style="position: relative; top: 40%; left: 50%;" *ngIf="!isDataAvailable">
+    <mat-spinner></mat-spinner>
+    <strong>Loading...</strong>
+  </div>
 
-<div style="width: 90%; margin: auto">
+<div style="width: 90%; margin: auto" *ngIf="isDataAvailable">
   <mat-grid-list cols="4">
     
     <mat-grid-tile [rowspan]=2>

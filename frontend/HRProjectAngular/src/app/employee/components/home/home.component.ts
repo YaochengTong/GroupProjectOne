@@ -1,31 +1,32 @@
-import { Component } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { Component, OnInit } from '@angular/core';
+import { HTTPReq } from 'src/app/service/HTTPReq/HTTPReq.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit{
   /** Based on the screen size, switch from standard to one column per row */
-  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-    map(({ matches }) => {
-      if (matches) {
-        return [
-          { title: 'Info', cols: 1, rows: 1 },
-          { title: 'Visa', cols: 1, rows: 1 },
-          { title: 'Housing', cols: 1, rows: 1 },
-        ];
-      }
-      return [
-        { title: 'Info', cols: 1, rows: 1 },
-        { title: 'Visa', cols: 1, rows: 1 },
-        { title: 'Housing', cols: 1, rows: 1 },
-      ];
-    })
-  );
-  userName: string = 'User Name';
+  
+  userName!: string;
+  userId!: string;
+  isDataAvailable : boolean = false;
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(
+    private httpRequestService: HTTPReq,
+  ) {}
+
+
+  ngOnInit(): void {
+    this.userId = localStorage.getItem("userId")!;
+    this.httpRequestService.getData('/profile/' + this.userId, null, 'http://localhost:8999').subscribe(
+      (data: any) => {
+        this.userName = data.profile.nameSection.fullName;
+        console.log(data);
+        this.isDataAvailable = true;
+      }
+    )
+  }
+
 }
