@@ -1,3 +1,4 @@
+
 <div style="position: relative; top: 40%; left: 50%;" *ngIf="!isDataAvailable">
     <mat-spinner></mat-spinner>
     <strong>Loading...</strong>
@@ -19,13 +20,44 @@
       <div class="example-element-detail"
            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
         <form class="detail-element">
-            <mat-form-field><mat-label>Legal Name:</mat-label><input name="fullName" matInput  style="color: black;" [disabled]="!isEdit" [(ngModel)]="element.fullName"> </mat-form-field>
-            <mat-form-field><mat-label>Type:</mat-label><input name="type" matInput  matInput style="color: black;" [disabled]="!isEdit" [value]="element.workAuthorization"> </mat-form-field>
-            <mat-form-field><mat-label>Start Date::</mat-label><input matInput name="startDate" matInput  style="color: black;" [disabled]="!isEdit" [value]="element.authorizationStartDate"> </mat-form-field>
-            <mat-form-field><mat-label>End Date:</mat-label><input matInput name="endDate" matInput  style="color: black;" [disabled]="!isEdit" [value]="element.authorizationEndDate"> </mat-form-field><br>
-            <button *ngIf="!isEdit" style="background-color: transparent; border: none; outline: none;" (click)="isEdit = true"><mat-icon style="font-size: medium;"> border_color</mat-icon></button><br>
+            <mat-form-field style="width:17em">
+              <mat-label>Legal Name:</mat-label>
+              <input matInput id="{{ 'name-' + element.idx }}" name="type" matInput  matInput style="color: black;" [disabled]="!isEdit" [value]="element.fullName"> 
+              <div style="color:red; font-size:small" *ngIf="!isNameValid && isSubmitted">Legal name is required</div>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="!isEdit">
+              <mat-label>Type:</mat-label>
+              <input name="type" matInput  matInput style="color: black;" [disabled]="!isEdit" [value]="element.workAuthorization">
+            </mat-form-field>
+
+            <mat-form-field style="width:17em" appearance="fill" *ngIf="isEdit">
+              <mat-label>Type:</mat-label>
+              <mat-select style="color: black;" (selectionChange)="select($event)" name="type" [disabled]="!isEdit" >
+              <mat-option [value]="'H1-B'">H1-B</mat-option>
+              <mat-option  [value]="'L2'">L2</mat-option>
+              <mat-option  [value]="'F1(CPT/OPT)'">F1(CPT/OPT)</mat-option>
+              <mat-option  [value]="'H4'">H4</mat-option>
+              <mat-option  [value]="'Other'">Other</mat-option>
+            </mat-select>
+              <div style="color:red; font-size:small" *ngIf="!isTypeValid && isSubmitted">Please choose a Visa Type</div>
+            </mat-form-field>
+
+            <mat-form-field style="width:17em">
+              <mat-label>Start Date:</mat-label>
+              <input matInput id="{{ 'startDate-' + element.idx }}" name="startDate" matInput  style="color: black;" [disabled]="!isEdit" [value]="element.authorizationStartDate" placeholder="yyyy-mm-dd"> 
+              <div style="color:red; font-size:small" *ngIf="!isStartDateValid && isSubmitted">Pease enter valid date "yyyy-mm-dd"</div>
+            </mat-form-field>
+
+            <mat-form-field style="width:17em">
+              <mat-label>End Date:</mat-label>
+              <input matInput id="{{ 'endDate-' + element.idx }}" name="endDate" matInput  style="color: black;" [disabled]="!isEdit" [value]="element.authorizationEndDate" placeholder="yyyy-mm-dd"> 
+              <div style="color:red; font-size:small" *ngIf="!isEndDateValid && isSubmitted">Please enter valid date "yyyy-mm-dd"</div>
+            </mat-form-field><br>
+
+            <button *ngIf="!isEdit" [id]="element.idx" style="background-color: transparent; border: none; outline: none;" (click)="onEdit($event)"><mat-icon style="font-size: medium;"> border_color</mat-icon></button><br>
             <button *ngIf="isEdit" [id]="element.idx" mat-button color="primary" (click)="onSubmit($event)">Save</button>
-            <button *ngIf="isEdit" mat-button color="gray" (click)="isEdit=false">Cancel</button>
+            <button *ngIf="isEdit" [id]="element.idx" mat-button color="gray" (click)="onCancel($event)">Cancel</button>
         </form>
         
         <div class="example-element-diagram">
@@ -33,7 +65,7 @@
             <div *ngFor="let item of element.documentReceived">
                 <mat-icon style="font-size: medium;">file_copy</mat-icon>{{item}}
             </div>
-            <div class="notification"><strong>Next Step: {{element.nextStep}}</strong> | <a style="color: blue" href="">Send Notification</a> 
+            <div class="notification"><strong>Next Step: {{element.nextStep}}</strong> | <button [id]="element.idx" style="background-color: transparent; outline: none; border: none; text-decoration: underline; color: blue" (click)="sendNotification($event)">Send Notification</button> 
             </div>
         </div>
         <br>

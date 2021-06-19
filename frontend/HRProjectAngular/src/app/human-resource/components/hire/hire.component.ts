@@ -2,18 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { HTTPReq } from 'src/app/service/HTTPReq/HTTPReq.service';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
-import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatDialog} from '@angular/material/dialog';
+import { DetailsDialogComponent } from './details-dialog/details-dialog.component';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
+import { DatePipe } from '@angular/common';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -24,20 +17,6 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   }
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
-
-
 @Component({
   selector: 'app-hire',
   templateUrl: './hire.component.html',
@@ -46,10 +25,13 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 export class HireComponent implements OnInit{
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
+  displayedColumns: string[] = [
+    'itemIndex', 'firstName', 'lastName', 'visaType', 'visaStartDate', 'visaEndDate', 'getdetails'
+  ];
+  
+  dataSource: any = [];
 
-  constructor(private httpRequestService: HTTPReq, private _snackBar: MatSnackBar) {}
+  constructor(private httpRequestService: HTTPReq, private _snackBar: MatSnackBar, public dialog: MatDialog) {}
 
   currentHRUserId: number = -1;
 
@@ -66,6 +48,45 @@ export class HireComponent implements OnInit{
     //console.log(user)
     this.currentHRUserId = user.id;
     //this.username = user.username;
+
+    this.httpRequestService.getData('/hire/getOnboardApplications', {}).subscribe(
+      (data: any) => {
+        console.log(data)
+        let datePipe: DatePipe = new DatePipe('en-US');
+        this.dataSource = data.OngoingApplications;
+        this.dataSource.forEach( item => {
+          if(item.DateOfBirth){
+            item.DateOfBirth = datePipe.transform(item.DateOfBirth, 'MM/dd/yyyy');
+          }
+
+          if(item.DriverLicenseExpireDate){
+            item.DriverLicenseExpireDate = datePipe.transform(item.DriverLicenseExpireDate, 'MM/dd/yyyy');
+          }
+
+          if(item.visaEndDate){
+            item.visaEndDate = datePipe.transform(item.visaEndDate, 'MM/dd/yyyy');
+          }
+
+          if(item.visaStartDate){
+            item.visaStartDate = datePipe.transform(item.visaStartDate, 'MM/dd/yyyy');
+          }
+        });
+      }
+    );
+
+  }
+
+  getRecord(id: any): void {
+    let obj = this.dataSource.find(item => item.applicationId == id);
+    const dialogRef = this.dialog.open(DetailsDialogComponent, {
+      data: { application: obj },
+      minHeight: '700px',
+      minWidth: '1200px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   generateToken(): void {

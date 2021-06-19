@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class VisaStatusServiceImpl implements IVisaStatusService {
@@ -83,6 +84,18 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
         }
 
         return visaStatusInfo;
+    }
+
+    @Override
+    @Transactional
+    public String findEmailByUserId(Integer userId) {
+        Person person = iUserDao.getPersonByUserId(userId);
+        return person.getEmail();
+    }
+
+    @Override
+    public String updateInfo(Map<String, Object> result) {
+        return null;
     }
 
     public String setFullName(Person person) {

@@ -6,7 +6,7 @@ public interface IUpdateNameSectionService {
     boolean updateFullName(String fullName, Integer userId);
     boolean updateAge(Integer age, Integer userId);
     boolean updateSSN(Integer ssn, Integer userId);
-    boolean updateDOB(Timestamp DOB, Integer userId);
+    boolean updateDOB(String DOB, Integer userId);
     boolean updateAvatar(String avatar, Integer userId);
     boolean updatePreferredName(String preferredName, Integer userId);
 }
