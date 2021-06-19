@@ -1,5 +1,11 @@
+<div style="position: relative; top: 40%; left: 50%;" *ngIf="!isDataAvailable">
+    <mat-spinner></mat-spinner>
+    <strong>Loading...</strong>
+  </div>
+
+
 <script src="../../../app-routing.module.ts"></script>
-<div class="grid-container">
+<div class="grid-container" *ngIf="isDataAvailable">
   <div fxLayout="row" fxLayoutAlign="space-between">
     <h1 class="mat-h1" fxLayout="col">Hello {{ userName }}, Welcome To BeaconFire Solution!</h1>
     <button

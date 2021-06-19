@@ -1,5 +1,10 @@
+<div style="position: relative; top: 40%; left: 50%;" *ngIf="!isDataAvailable">
+    <mat-spinner></mat-spinner>
+    <strong>Loading...</strong>
+  </div>
+
 <br/>
-<div id="AllProfiles">
+<div id="AllProfiles" *ngIf="isDataAvailable">
     <mat-form-field>
         <mat-label id="searchBar">Search</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>

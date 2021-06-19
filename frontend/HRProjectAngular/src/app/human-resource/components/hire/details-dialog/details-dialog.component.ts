@@ -24,6 +24,7 @@ export class DetailsDialogComponent implements OnInit {
     });
   }
 
+
   ngOnInit(): void {
   }
 

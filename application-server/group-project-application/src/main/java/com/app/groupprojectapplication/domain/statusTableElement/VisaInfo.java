@@ -13,4 +13,5 @@ public class VisaInfo {
     private String visaType;
     private Timestamp expirationDate;
     private String nextStep;
+    private Integer dayLeft;
 }

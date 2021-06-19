@@ -21,6 +21,7 @@ export class PersonalInfoComponent implements OnInit {
   public contactSection: any = {};
   public employmentSection: any = {};
   public emergencyContactList: any = {};
+  isDataAvailable: boolean = false;
   
 
   constructor(
@@ -32,6 +33,7 @@ export class PersonalInfoComponent implements OnInit {
     this.userId = localStorage.getItem("userId")!;
     this.httpRequestService.getData('/profile/'+this.userId, null, 'http://localhost:8999').subscribe(
       (data: any) => {
+        this.isDataAvailable = true;
         this.empolyeeId = data.profile.employee_id;
         this.nameSection = data.profile.nameSection;
         this.addressSection = data.profile.addressSection;
@@ -49,13 +51,10 @@ export class PersonalInfoComponent implements OnInit {
           data: {"nameSection": this.nameSection}
         });
 
-        let result = {
-          test: "test"
-        }
         dialogRef.afterClosed().subscribe(result => {
           console.log(result);
           // console.log("hello");
-          this.httpRequestService.postData('/profile/' + this.userId +"/update",
+          this.httpRequestService.postData('/profile/' + this.userId +"/updateNameSection",
           result,
           'http://localhost:8999').subscribe(
             (data: any) => {
@@ -66,6 +65,19 @@ export class PersonalInfoComponent implements OnInit {
   }
 
   editAddressSection() : void {
+    let addVar = {
+      priAdd1: this.addressSection.primaryAddr.AddressLine1,
+      priAdd2: this.addressSection.primaryAddr.AddressLine2,
+      priCity: this.addressSection.primaryAddr.City,
+      priState: this.addressSection.primaryAddr.State,
+      priZip: this.addressSection.primaryAddr.Zip,
+      secAdd1: this.addressSection.secondaryAddr.AddressLine1,
+      secAdd2: this.addressSection.secondaryAddr.AddressLine2,
+      secCity: this.addressSection.secondaryAddr.City,
+      secState: this.addressSection.secondaryAddr.State,
+      secZip: this.addressSection.secondaryAddr.Zip,
+    }
+
     const dialogRef = this.dialog.open(AddressSectionDialogComponent,
       {
         width: '500px',
@@ -73,9 +85,9 @@ export class PersonalInfoComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
-        this.httpRequestService.postData('/profile/' + this.userId +"/update",
-          result,
+        console.log(addVar);
+        this.httpRequestService.postData('/profile/' + this.userId +"/updateAddressSection",
+          addVar,
           'http://localhost:8999').subscribe(
             (data: any) => {
               console.log(data);
@@ -93,7 +105,7 @@ export class PersonalInfoComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         console.log(result);
-        this.httpRequestService.postData('/profile/' + this.userId +"/update",
+        this.httpRequestService.postData('/profile/' + this.userId +"/updateContactSection",
           result,
           'http://localhost:8999').subscribe(
             (data: any) => {
@@ -113,7 +125,7 @@ export class PersonalInfoComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         console.log(result);
-        this.httpRequestService.postData('/profile/' + this.userId +"/update",
+        this.httpRequestService.postData('/profile/' + this.userId +"/updateEmploymentSection",
           result,
           'http://localhost:8999').subscribe(
             (data: any) => {
@@ -124,6 +136,33 @@ export class PersonalInfoComponent implements OnInit {
   }
 
   editEmergencyContactList() : void {
+    let addVar = {
+      EP1fullName: this.emergencyContactList.emergencyPerson1.fullName,
+      EP1phone: this.emergencyContactList.emergencyPerson1.phone,
+      EP1priAdd1: this.emergencyContactList.emergencyPerson1.address.primaryAddr.AddressLine1,
+      EP1priAdd2: this.emergencyContactList.emergencyPerson1.address.primaryAddr.AddressLine2,
+      EP1priCity: this.emergencyContactList.emergencyPerson1.address.primaryAddr.City,
+      EP1priState: this.emergencyContactList.emergencyPerson1.address.primaryAddr.State,
+      EP1priZip: this.emergencyContactList.emergencyPerson1.address.primaryAddr.Zip,
+      EP1secAdd1: this.emergencyContactList.emergencyPerson1.address.secondaryAddr.AddressLine1,
+      EP1secAdd2: this.emergencyContactList.emergencyPerson1.address.secondaryAddr.AddressLine2,
+      EP1secCity: this.emergencyContactList.emergencyPerson1.address.secondaryAddr.City,
+      EP1secState: this.emergencyContactList.emergencyPerson1.address.secondaryAddr.State,
+      EP1secZip: this.emergencyContactList.emergencyPerson1.address.secondaryAddr.Zip,
+      EP2fullName: this.emergencyContactList.emergencyPerson1.fullName,
+      EP2phone: this.emergencyContactList.emergencyPerson1.phone,
+      EP2priAdd1: this.emergencyContactList.emergencyPerson1.address.primaryAddr.AddressLine1,
+      EP2priAdd2: this.emergencyContactList.emergencyPerson1.address.primaryAddr.AddressLine2,
+      EP2priCity: this.emergencyContactList.emergencyPerson1.address.primaryAddr.City,
+      EP2priState: this.emergencyContactList.emergencyPerson1.address.primaryAddr.State,
+      EP2priZip: this.emergencyContactList.emergencyPerson1.address.primaryAddr.Zip,
+      EP2secAdd1: this.emergencyContactList.emergencyPerson1.address.secondaryAddr.AddressLine1,
+      EP2secAdd2: this.emergencyContactList.emergencyPerson1.address.secondaryAddr.AddressLine2,
+      EP2secCity: this.emergencyContactList.emergencyPerson1.address.secondaryAddr.City,
+      EP2secState: this.emergencyContactList.emergencyPerson1.address.secondaryAddr.State,
+      EP2secZip: this.emergencyContactList.emergencyPerson1.address.secondaryAddr.Zip,
+    }
+    
     const dialogRef = this.dialog.open(EmergencyContactSectionDialogComponent,
       {
         width: '500px',
@@ -131,9 +170,9 @@ export class PersonalInfoComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
-        this.httpRequestService.postData('/profile/' + this.userId +"/update",
-          result,
+        console.log(addVar);
+        this.httpRequestService.postData('/profile/' + this.userId +"/updateEmergencySection",
+          addVar,
           'http://localhost:8999').subscribe(
             (data: any) => {
               console.log(data);
