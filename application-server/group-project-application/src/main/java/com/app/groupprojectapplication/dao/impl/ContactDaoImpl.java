@@ -7,13 +7,18 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Repository()
 public class ContactDaoImpl implements IContactDao {
 
     @Autowired
     protected SessionFactory sessionFactory;
+
+    @Override
+    public Contact getContactById(Integer id) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(Contact.class, id);
+    }
 
     @Override
     public void insertContact(Contact contact) {

@@ -1,6 +1,7 @@
 package com.app.groupprojectapplication.controller;
 
 import com.app.groupprojectapplication.dao.IHouseDao;
+import com.app.groupprojectapplication.domain.House;
 import com.app.groupprojectapplication.domain.HouseElement.HousePageInfo;
 import com.app.groupprojectapplication.service.IHouseService;
 import java.util.HashMap;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,6 +40,15 @@ public class HousingController {
         HousePageInfo h = iHouseService.getHouseById(houseId);
         System.out.println(h.toString());
         resultMap.put("house", h);
+        return resultMap;
+    }
+
+    @PostMapping("/update-house")
+    public Map<String, Object> updateHouseById(@RequestBody HousePageInfo HousePageInfo) {
+        Map<String, Object> resultMap = new HashMap<>();
+
+
+        resultMap.put("update-house", "success");
         return resultMap;
     }
 

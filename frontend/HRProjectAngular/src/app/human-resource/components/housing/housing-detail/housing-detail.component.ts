@@ -54,6 +54,12 @@ export class HousingDetailComponent implements OnInit {
   }
 
   onSubmitData() {
+    console.log(this.house);
+    if (this.house) {
+      this.housingService
+        .updateHouse(this.house)
+        .subscribe(() => this.goBack());
+    }
     alert('You have updated housing info successfully');
   }
 }

@@ -13,4 +13,5 @@ public interface IHouseDao {
 
     int getContactIdByHouseId(Integer house_id);
 
+
 }
