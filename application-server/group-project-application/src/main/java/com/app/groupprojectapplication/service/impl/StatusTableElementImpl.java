@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -40,13 +41,15 @@ public class StatusTableElementImpl implements IStatusTableElementService {
     @Transactional
     public List<StatusTableElement> getStatus() {
          List<StatusTableElement> statusList = new ArrayList<>();
-         List<Employee> employeeList = iEmployeeDao.getEmployee();
-         for (Employee employee : employeeList) {
-             StatusTableElement ste = getStatusByEmployee(employee);
+
+//         List<Employee> employeeList = new ArrayList<>();
+        List<Integer> testIds = Arrays.asList(89, 556, 557, 558);
+         for (Integer i : testIds) {
+             StatusTableElement ste = getStatusByEmployeeId(i);
              // filter out the status that doesnt need further action
              if (!ste.getVisaInfo().getNextStep().equals("No Info") &&
                      !ste.getVisaInfo().getNextStep().equals("No Action") )
-             statusList.add(getStatusByEmployee(employee));
+             statusList.add(ste);
          }
 
          return statusList;
