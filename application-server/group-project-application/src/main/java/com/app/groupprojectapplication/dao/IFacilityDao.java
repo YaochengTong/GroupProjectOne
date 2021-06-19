@@ -3,6 +3,7 @@ package com.app.groupprojectapplication.dao;
 import com.app.groupprojectapplication.domain.Employee;
 import com.app.groupprojectapplication.domain.Facility;
 import com.app.groupprojectapplication.domain.FacilityReport;
+import com.app.groupprojectapplication.domain.House;
 import java.util.List;
 
 public interface IFacilityDao {
@@ -15,4 +16,9 @@ public interface IFacilityDao {
 
     List<FacilityReport> getAllFacilityReportByHouseId(Employee e);
 
+    String getFacilityTypeById(Integer id);
+
+    String getFacilityDescriptionById(Integer id);
+
+    House getHouseById(Integer id);
 }

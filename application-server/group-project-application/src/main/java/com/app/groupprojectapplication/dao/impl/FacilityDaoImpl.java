@@ -4,6 +4,7 @@ import com.app.groupprojectapplication.dao.IFacilityDao;
 import com.app.groupprojectapplication.domain.Employee;
 import com.app.groupprojectapplication.domain.Facility;
 import com.app.groupprojectapplication.domain.FacilityReport;
+import com.app.groupprojectapplication.domain.House;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -45,6 +46,28 @@ public class FacilityDaoImpl implements IFacilityDao {
         List<FacilityReport> resultList = session.createQuery("FROM FacilityReport WHERE employee.id = " + e.getId())
             .getResultList();
         return resultList;
+    }
+
+    @Override
+    public String getFacilityTypeById(Integer id) {
+        Session session = sessionFactory.getCurrentSession();
+        List<String> resultList = session.createQuery("SELECT type FROM Facility WHERE id =" + id).getResultList();
+        return resultList.get(0);
+    }
+
+    @Override
+    public String getFacilityDescriptionById(Integer id) {
+        Session session = sessionFactory.getCurrentSession();
+        List<String> resultList = session.createQuery("SELECT description FROM Facility WHERE id =" + id)
+            .getResultList();
+        return resultList.get(0);
+    }
+
+    @Override
+    public House getHouseById(Integer id) {
+        Session session = sessionFactory.getCurrentSession();
+        List<House> resultList = session.createQuery("SELECT House FROM Facility WHERE id =" + id).getResultList();
+        return resultList.get(0);
     }
 
 }

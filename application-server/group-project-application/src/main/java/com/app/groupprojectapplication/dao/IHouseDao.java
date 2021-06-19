@@ -13,5 +13,8 @@ public interface IHouseDao {
 
     int getContactIdByHouseId(Integer house_id);
 
+    void updateHouseAddressByHouseId(String address, Integer id);
+
+    void updateHouseNumberOfPersonByHouseId(Integer n, Integer id);
 
 }

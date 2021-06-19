@@ -11,4 +11,10 @@ public interface IEmployeeDao {
     void deleteUserById(Integer id);
     Integer getUserIdByEmployeeId(Integer employeeId);
     void updateEmployee(Employee employee);
+    //String getTitleById(Integer id);
+    //String getManagerId(Integer id);
+    //String getStartDate(Integer id);
+    //String getEndDate(Integer id);
+    //String getAvartar(Integer id);
+    //String getCar(Integer id);
 }

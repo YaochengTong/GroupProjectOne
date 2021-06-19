@@ -1,7 +1,6 @@
 package com.app.groupprojectapplication.controller;
 
 import com.app.groupprojectapplication.dao.IHouseDao;
-import com.app.groupprojectapplication.domain.House;
 import com.app.groupprojectapplication.domain.HouseElement.HousePageInfo;
 import com.app.groupprojectapplication.service.IHouseService;
 import java.util.HashMap;
@@ -44,11 +43,14 @@ public class HousingController {
     }
 
     @PostMapping("/update-house")
-    public Map<String, Object> updateHouseById(@RequestBody HousePageInfo HousePageInfo) {
+    public Map<String, Object> updateHouseById(@RequestBody HousePageInfo housePageInfo) {
         Map<String, Object> resultMap = new HashMap<>();
 
 
+        iHouseService.updateHouse(housePageInfo);
+
         resultMap.put("update-house", "success");
+
         return resultMap;
     }
 
