@@ -81,7 +81,10 @@
             <div *ngFor="let item of element.documentReceived">
                 <mat-icon style="font-size: medium;">file_copy</mat-icon>{{item}}
             </div>
-            <div class="notification" ><strong>Next Step: {{element.nextStep}}</strong> | <button *ngIf="element.idx.nextStep !== 'No Further Action Needed'" [id]="element.idx" style="background-color: transparent; outline: none; border: none; text-decoration: underline; color: blue; cursor: pointer" (click)="sendNotification($event)">Send Notification</button> 
+            <div class="notification"><strong>Next Step: {{element.nextStep}}</strong> | 
+              <button  [id]="element.idx" *ngIf="element.idx.nextStep != 'No Further Action Needed' && element.idx.nextStep != 'I-983 Waiting for HR' "
+              style="background-color: transparent; outline: none; border: none; text-decoration: underline; color: blue; cursor: pointer" (click)="sendNotification($event)">
+                Send Notification</button> 
             </div>
         </div>
         <br>

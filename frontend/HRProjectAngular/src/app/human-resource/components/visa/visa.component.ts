@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { VisaNotificationComponent } from './visa-notification/visa-notification.component';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+import { DateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-visa',
@@ -50,7 +51,7 @@ export class VisaComponent implements OnInit {
     this.httpRequestService.getData('/visa-status-management/all', null, 'http://localhost:8999').subscribe(
       (data: any) => {
         this.isDataAvailable = true;
-        console.log(data.visaStatusInfoList);
+        // console.log(data.visaStatusInfoList);
         this.visaStatusInfo = data.visaStatusInfoList;
       }
     )
@@ -108,21 +109,71 @@ export class VisaComponent implements OnInit {
 
   }
 
-  // events: string[] = [];
-  // addEvent( type:string, event: MatDatepickerInputEvent<Date>) {
-  //   this.events.push(`${type}: ${event.value}`);
-  //   console.log(this.events);
-  //   // this.visaStatusInfo[index].authorizationStartDate = ${event.value}
-  // }
 
 
-  addEndDateEvent(index: number,event: MatDatepickerInputEvent<Date>) {
-    this.visaStatusInfo[index].authorizationEndDate = event.value;
+
+  formatHandler(oriDate:any): string {
+    if (oriDate == null) {
+      return "";
+    }
+
+    console.log("Substring");
+    console.log(oriDate.toString().substring(4, 15));
+    var formattedDate;
+    var month = oriDate.toString().substring(4, 15).split(" ")[0];
+    switch(month) {
+      case "JAN":
+        month = "01";
+        break;
+      case "FEB":
+        month = "02";
+        break;
+      case "MAR":
+        month = "03";
+        break;
+      case "APR":
+        month = "04";
+        break;
+      case "MAY":
+        month = "05";
+        break;
+      case "JUN":
+        month = "06";
+        break;
+      case "JUL":
+        month = "07";
+        break;
+      case "AUG":
+        month = "08";
+        break;
+      case "SEP":
+        month = "09";
+        break;
+      case "OCT":
+        month = "10";
+        break;
+      case "NOV":
+        month = "11";
+        break;
+      default:
+        month = "12";
+        break;
+    }
+
+    formattedDate = oriDate.toString().substring(4, 15).split(" ")[2] + "-" + month + "-" + oriDate.toString().substring(4, 15).split(" ")[1];
+    return formattedDate;
+  }
+
+
+  addEndDateEvent(index: number, event: MatDatepickerInputEvent<Date>) {
+    this.visaStatusInfo[index].authorizationEndDate = this.formatHandler(event.value);
+    // console.log("after formate")
+    console.log(this.visaStatusInfo[index].authorizationEndDate);
     // console.log(this.visaStatusInfo[index].authorizationEndDate);
   }
 
   addStartDateEvent(index: number,event: MatDatepickerInputEvent<Date>) {
-    this.visaStatusInfo[index].authorizationStartDate = event.value;
+    this.visaStatusInfo[index].authorizationStartDate = this.formatHandler(event.value);
   }
 
   
@@ -172,7 +223,7 @@ export class VisaComponent implements OnInit {
       authorizationEndDate: endDateModifid,
     }
 
-    // console.log("hello");
+    console.log("hello");
     console.log(params);
 
 
