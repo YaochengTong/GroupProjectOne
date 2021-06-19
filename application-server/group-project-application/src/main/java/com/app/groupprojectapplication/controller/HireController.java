@@ -1,6 +1,5 @@
 package com.app.groupprojectapplication.controller;
 
-import com.app.groupprojectapplication.file.AmazonS3FileService;
 import com.app.groupprojectapplication.service.IHireService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -8,8 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
 
 @CrossOrigin
@@ -42,8 +39,14 @@ public class HireController {
 
     @GetMapping("/getOnboardApplications")
     public Map<String, Object> getOnboardApplication(@RequestParam Map<String, Object> paramMap){
-        //Map<String, Object> resultMap = new HashMap<>();
         Map<String, Object> resultMap = iHireService.getOnboardApplications(paramMap);
+        return resultMap;
+    }
+
+    @PostMapping("/auditOnboard")
+    public Map<String, Object> auditOnboardApplication(@RequestParam Map<String, Object> paramMap){
+        Map<String, Object> resultMap = new HashMap<>();
+        iHireService.auditApplications(paramMap);
         return resultMap;
     }
 }

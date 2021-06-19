@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -69,5 +70,15 @@ public class ApplicationWorkflowDaoImpl implements IApplicationWorkFlowDao {
         query.setParameter("type", applicationType);
         List<ApplicationWorkflow> resultList = query.getResultList();
         return resultList;
+    }
+
+    @Override
+    public boolean updateApplicationWorkFlowById(Integer id, ApplicationWorkflow workflow) {
+        Session session = sessionFactory.getCurrentSession();
+        ApplicationWorkflow currentWorkflow = session.get(ApplicationWorkflow.class, id);
+        currentWorkflow.setStatus(workflow.getStatus());
+        currentWorkflow.setComments(workflow.getComments());
+        currentWorkflow.setModificationDate(new Timestamp(System.currentTimeMillis()));
+        return true;
     }
 }

@@ -491,4 +491,36 @@ public class HireServiceImpl implements IHireService {
         return resultMap;
     }
 
+    @Override
+    public Map<String, Object> auditApplications(Map<String, Object> paramMap) {
+        String approve = paramMap.get("approve").toString();
+        String comments = paramMap.get("comments").toString();
+        ApplicationWorkflow workflow = new ApplicationWorkflow();
+        if(approve.equals("yes")){
+            workflow.setStatus("Approved");
+        }
+        else{
+            workflow.setStatus("Rejected");
+        }
+        workflow.setComments(comments);
+        Integer id = Integer.parseInt(paramMap.get("id").toString());
+        boolean result = iApplicationWorkFlowDao.updateApplicationWorkFlowById(id, workflow);
+        Map<String, Object> resultMap = new HashMap<>();
+        if(!result){
+            resultMap.put("result", "failed");
+            return resultMap;
+        }
+
+        String email = paramMap.get("email").toString();
+        String approvedText = "Your onboarding request has been approved, welcome onboarding!";
+        String rejectedText = "Your onboarding request has been rejected, please log in with your account to see the reason";
+
+        //send email
+        emailService.sendMail(email, "Your onboarding result has updated",
+                approve.equals("yes")?approvedText : rejectedText);
+
+        resultMap.put("result", "success");
+        return resultMap;
+    }
+
 }
