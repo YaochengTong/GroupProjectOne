@@ -10,7 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.*;
 
 @Service
 @Transactional
@@ -39,8 +43,17 @@ public class UpdateNameSectionServiceImpl implements IUpdateNameSectionService {
 
     @Override
     public boolean updateAge(Integer age, Integer userId) {
+        Person person = iUserDao.getPersonByUserId(userId);
+        Calendar calendar = Calendar.getInstance();
+        Integer year = calendar.get(Calendar.YEAR);
+        Integer month = calendar.get(Calendar.MONTH) + 1;
 
-        return false;
+        Integer birthYear = year - age;
+        Timestamp birthday = Timestamp.valueOf(birthYear.toString() + "-" + month.toString() + "-01 00:00:00");
+        person.setDob(birthday);
+        System.out.println("Set age to " + age);
+
+        return true;
     }
 
     @Override
@@ -62,15 +75,22 @@ public class UpdateNameSectionServiceImpl implements IUpdateNameSectionService {
     }
 
     @Override
-    public boolean updateDOB(Timestamp DOB, Integer userId) {
+    public boolean updateDOB(String DOB, Integer userId) {
+        Person person = iUserDao.getPersonByUserId(userId);
 
-        return false;
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Timestamp dob = Timestamp.valueOf(DOB);
+        person.setDob(dob);
+        iPersonDao.updatePerson(person);
+
+        return true;
+
     }
 
 
     @Override
     public boolean updatePreferredName(String preferredName, Integer userId) {
-
-        return false;
+        System.out.println("Set Preferred Name: " + preferredName);
+        return true;
     }
 }

@@ -28,7 +28,7 @@ public class UpdateEmploymentSectionServiceImpl implements IUpdateEmploymentSect
     IVisaStatusDao iVisaStatusDao;
 
     @Override
-    public boolean updateEmployment(String title, String workAuthorization, String authorizationEndDate, String authorizationStartDate, String employmentEndDate, String employmentStartDate, Integer userId) {
+    public boolean updateEmployment(String title, String workAuthorization, String authorizationStartDate, String authorizationEndDate, String employmentStartDate, String employmentEndDate, Integer userId) {
         Integer employeeId = iUserDao.getEmployeeIdByUserId(userId);
         Employee employee = iEmployeeDao.getEmployeeById(employeeId);
 
@@ -40,7 +40,7 @@ public class UpdateEmploymentSectionServiceImpl implements IUpdateEmploymentSect
         Timestamp ESD = Timestamp.valueOf(employmentStartDate);
         Timestamp EED = Timestamp.valueOf(employmentEndDate);
         employee.setVisaStartDate(ASD);
-        employee.setVisaEndDate(ASD);
+        employee.setVisaEndDate(AED);
         employee.setStartDate(ESD);
         employee.setEndDate(EED);
 
