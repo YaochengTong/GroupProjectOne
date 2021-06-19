@@ -39,4 +39,11 @@ public class HireController {
         iHireService.onboardSubmission(files, paramMap);
         return resultMap;
     }
+
+    @GetMapping("/getOnboardApplications")
+    public Map<String, Object> getOnboardApplication(@RequestParam Map<String, Object> paramMap){
+        //Map<String, Object> resultMap = new HashMap<>();
+        Map<String, Object> resultMap = iHireService.getOnboardApplications(paramMap);
+        return resultMap;
+    }
 }

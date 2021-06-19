@@ -5,7 +5,6 @@ import { MatSelectChange } from '@angular/material/select';
 import * as moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { VisaNotificationComponent } from './visa-notification/visa-notification.component';
-import { empty } from 'rxjs';
 
 @Component({
   selector: 'app-visa',
