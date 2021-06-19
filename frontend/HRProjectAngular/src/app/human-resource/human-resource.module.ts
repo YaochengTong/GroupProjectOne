@@ -33,7 +33,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { HTTPReq } from '../service/HTTPReq/HTTPReq.service';
 
 
-
 import { NameSectionDialogComponent } from './components/personal-info/name-section-dialog/name-section-dialog.component';
 import { AddressSectionDialogComponent } from './components/personal-info/address-section-dialog/address-section-dialog.component';
 import { ContactSectionDialogComponent } from './components/personal-info/contact-section-dialog/contact-section-dialog.component';
@@ -56,7 +55,7 @@ import { DetailsDialogComponent } from './components/hire/details-dialog/details
     ContactSectionDialogComponent,
     EmergencyContactSectionDialogComponent,
     EmploymentSectionDialogComponent,
-    DetailsDialogComponent
+    DetailsDialogComponent,
   ],
   imports: [
     CommonModule,
