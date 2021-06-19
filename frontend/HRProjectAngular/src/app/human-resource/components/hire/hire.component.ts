@@ -76,9 +76,13 @@ export class HireComponent implements OnInit{
 
   }
 
-  getRecord(name: any): void {
-    //DetailsDialogComponent
-    const dialogRef = this.dialog.open(DetailsDialogComponent);
+  getRecord(id: any): void {
+    let obj = this.dataSource.find(item => item.applicationId == id);
+    const dialogRef = this.dialog.open(DetailsDialogComponent, {
+      data: { application: obj },
+      minHeight: '700px',
+      minWidth: '1200px',
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

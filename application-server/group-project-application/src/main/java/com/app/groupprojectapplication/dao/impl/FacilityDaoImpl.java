@@ -9,7 +9,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class FacilityDaoImpl implements IFacilityDao {
@@ -32,10 +31,10 @@ public class FacilityDaoImpl implements IFacilityDao {
     }
 
     @Override
-    public int getNumOfTypeByHouseId(Integer house_id, Integer type_number) {
+    public int getNumOfTypeByHouseId(Integer house_id, String f_type) {
         Session session = sessionFactory.getCurrentSession();
-        List<Integer> result = session
-            .createQuery("SELECT quantity FROM Facility f WHERE f.house.id = " + house_id + "AND f.id = " + type_number)
+        List<Integer> result = session.createNativeQuery(
+            "SELECT quantity FROM facility where house_id =" + house_id + " AND type = '" + f_type + "'")
             .getResultList();
         return result.get(0);
     }
@@ -47,6 +46,5 @@ public class FacilityDaoImpl implements IFacilityDao {
             .getResultList();
         return resultList;
     }
-
 
 }

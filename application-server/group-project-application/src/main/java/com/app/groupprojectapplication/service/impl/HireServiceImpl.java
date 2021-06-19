@@ -45,6 +45,9 @@ public class HireServiceImpl implements IHireService {
     private IApplicationWorkFlowDao iApplicationWorkFlowDao;
 
     @Autowired
+    private IAddressDao iAddressDao;
+
+    @Autowired
     private EmailService emailService;
 
     @Autowired
@@ -115,6 +118,11 @@ public class HireServiceImpl implements IHireService {
         Integer person_id = iPersonDao.insertPerson(person);
         person.setId(person_id);
 
+        for(Address address : person.getAddresses()){
+            address.setPerson(person);
+            iAddressDao.insertAddress(address);
+        }
+
         //update user
         iUserDao.updateUser(user);
 
@@ -137,6 +145,10 @@ public class HireServiceImpl implements IHireService {
         //insert emergency contact person
         Integer emergencyPerson1ID = iPersonDao.insertPerson(emergencyContactPerson);
         emergencyContactPerson.setId(emergencyPerson1ID);
+        for(Address address : emergencyContactPerson.getAddresses()){
+            address.setPerson(emergencyContactPerson);
+            iAddressDao.insertAddress(address);
+        }
 
         //insert into contact
         Contact contact = this.buildContact(
@@ -148,6 +160,7 @@ public class HireServiceImpl implements IHireService {
                 false,
                 paramMap.get("emergency1Relationship").toString());
         iContactDao.insertContact(contact);
+
 
         //emergency contact 2
         if(paramMap.get("emergency2FirstName") != null && !paramMap.get("emergency2FirstName").equals("")) {
@@ -167,6 +180,11 @@ public class HireServiceImpl implements IHireService {
             );
             //insert emergency contact 2
             Integer emergencyPerson2Id = iPersonDao.insertPerson(emergencyPerson2);
+            for(Address address : emergencyPerson2.getAddresses()){
+                address.setPerson(emergencyPerson2);
+                iAddressDao.insertAddress(address);
+            }
+
             //insert into contact
             Contact emergencyContact2 = this.buildContact(person,
                     emergencyPerson2Id,
@@ -197,6 +215,11 @@ public class HireServiceImpl implements IHireService {
             );
             //insert reference contact
             Integer referencePersonId = iPersonDao.insertPerson(referencePerson);
+            for(Address address : referencePerson.getAddresses()){
+                address.setPerson(referencePerson);
+                iAddressDao.insertAddress(address);
+            }
+
             //insert into contact
             Contact referenceContact = this.buildContact(
                     person,
@@ -360,10 +383,11 @@ public class HireServiceImpl implements IHireService {
             map.put("SSN", person.getSsn());
             map.put("Gender", person.getGender());
             map.put("DateOfBirth", person.getDob());
-            map.put("Primary phone", person.getPrimaryPhone());
-            map.put("Work phone", person.getAlternatePhone());
+            map.put("PrimaryPhone", person.getPrimaryPhone());
+            map.put("WorkPhone", person.getAlternatePhone());
             //address
-            Optional<Address> person_address = person.getAddresses().stream().findFirst();
+            List<Address> addressList = iAddressDao.getAddressByPersonId(person.getId());
+            Optional<Address> person_address = addressList.stream().findFirst();
             person_address.ifPresent(value -> {
                 map.put("Address", value.getAddressLine1());
                 map.put("Address2", value.getAddressLine2());
@@ -382,6 +406,21 @@ public class HireServiceImpl implements IHireService {
             map.put("visaStartDate", employee.getVisaStartDate());
             map.put("visaEndDate", employee.getVisaEndDate());
 
+            //personal documents
+            List<PersonalDocument> documents = iPersonalDocumentDao.
+                    getPersonalDocumentsByUserId(user.getId());
+            List<Map<String, Object>> documentMapList = new ArrayList<>();
+            documents.forEach((item) -> {
+                Map<String, Object> documentMap = new HashMap<>();
+                documentMap.put("id", item.getId());
+                documentMap.put("comment", item.getComment());
+                documentMap.put("createDate", item.getCreateDate());
+                documentMap.put("title", item.getTitle());
+                documentMap.put("path", item.getPath().substring(0, item.getPath().indexOf('?')));
+                documentMapList.add(documentMap);
+            });
+            map.put("documents", documentMapList);
+
             //visa status
             String visaType = iVisaStatusDao.getVisaTypeByEmployeeId(employee.getId());
             map.put("visaType", visaType);
@@ -394,11 +433,15 @@ public class HireServiceImpl implements IHireService {
                 }
                 else if(contact.getIsReferrence() == (byte)1){
                     Map<String, Object> referenceMap = new HashMap<>();
-                    Person contactPerson = contact.getPerson();
+                    Integer contactPersonId = contact.getRelated_person_id();
+                    Person contactPerson = iPersonDao.getPersonById(contactPersonId);
                     referenceMap.put("ReferenceContactFirstName", contactPerson.getFirstName());
                     referenceMap.put("ReferenceContactLastName", contactPerson.getLastName());
                     referenceMap.put("ReferenceContactMiddleName", contactPerson.getMiddleName());
-                    Optional<Address> address = contactPerson.getAddresses().stream().findFirst();
+                    referenceMap.put("ReferenceContactPhone", contactPerson.getPrimaryPhone());
+                    List<Address> referenceAddressList = iAddressDao.
+                            getAddressByPersonId(contactPerson.getId());
+                    Optional<Address> address = referenceAddressList.stream().findFirst();
                     address.ifPresent(value -> {
                         referenceMap.put("ReferenceContactAddress", value.getAddressLine1());
                         referenceMap.put("ReferenceContactAddress2", value.getAddressLine2());
@@ -415,23 +458,28 @@ public class HireServiceImpl implements IHireService {
 
             List<Map<String, Object>> emergencyContactMapList = new ArrayList<>();
             for(int i=0; i<emergencyContactList.size(); i++){
-                int finalI = i + 1;
+                //int finalI = i + 1;
                 Map<String, Object> emergencyMap = new HashMap<>();
-                Person emergencyPerson = emergencyContactList.get(i).getPerson();
-                emergencyMap.put("EmergencyContact" + finalI + "FirstName", emergencyPerson.getFirstName());
-                emergencyMap.put("EmergencyContact" + finalI + "LastName", emergencyPerson.getLastName());
-                emergencyMap.put("EmergencyContact" + finalI + "MiddleName", emergencyPerson.getMiddleName());
-                Optional<Address> address = emergencyPerson.getAddresses().stream().findFirst();
+
+                Integer emergencyPersonId = emergencyContactList.get(i).getRelated_person_id();
+                Person emergencyPerson = iPersonDao.getPersonById(emergencyPersonId);
+                emergencyMap.put("EmergencyContactFirstName", emergencyPerson.getFirstName());
+                emergencyMap.put("EmergencyContactLastName", emergencyPerson.getLastName());
+                emergencyMap.put("EmergencyContactMiddleName", emergencyPerson.getMiddleName());
+                emergencyMap.put("EmergencyContactPhone", emergencyPerson.getPrimaryPhone());
+                List<Address> emergencyAddressList = iAddressDao.
+                        getAddressByPersonId(emergencyPerson.getId());
+                Optional<Address> address = emergencyAddressList.stream().findFirst();
                 address.ifPresent(value -> {
-                    emergencyMap.put("EmergencyContact" + finalI + "Address", value.getAddressLine1());
-                    emergencyMap.put("EmergencyContact" + finalI + "Address2", value.getAddressLine2());
-                    emergencyMap.put("EmergencyContact" + finalI + "City", value.getCity());
-                    emergencyMap.put("EmergencyContact" + finalI + "StateAbbr", value.getStateAbbr());
-                    emergencyMap.put("EmergencyContact" + finalI + "StateFullName", value.getStateName());
-                    emergencyMap.put("EmergencyContact" + finalI + "StatePostalCode", value.getZipCode());
+                    emergencyMap.put("EmergencyContactAddress", value.getAddressLine1());
+                    emergencyMap.put("EmergencyContactAddress2", value.getAddressLine2());
+                    emergencyMap.put("EmergencyContactCity", value.getCity());
+                    emergencyMap.put("EmergencyContactStateAbbr", value.getStateAbbr());
+                    emergencyMap.put("EmergencyContactStateFullName", value.getStateName());
+                    emergencyMap.put("EmergencyContactPostalCode", value.getZipCode());
                 });
-                emergencyMap.put("EmergencyContact" + finalI + "Email", emergencyPerson.getEmail());
-                emergencyMap.put("EmergencyContact" + finalI + "RelationShip",
+                emergencyMap.put("EmergencyContactEmail", emergencyPerson.getEmail());
+                emergencyMap.put("EmergencyContactRelationShip",
                         emergencyContactList.get(i).getRelationship());
                 emergencyContactMapList.add(emergencyMap);
             }
