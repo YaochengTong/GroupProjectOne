@@ -9,5 +9,5 @@ public interface IVisaStatusService {
     List<VisaStatusInfo> getVisaInfo();
     VisaStatusInfo getVisaInfoByUserId(Integer userId, Integer index);
     String findEmailByUserId(Integer userId);
-    String updateInfo(Map<String, Object> result);
+    boolean updateInfo(Map<String, Object> result);
 }

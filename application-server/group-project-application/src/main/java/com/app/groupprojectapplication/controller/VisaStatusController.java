@@ -39,9 +39,7 @@ public class VisaStatusController {
         if (params != null) {
             System.out.println(params);
             resultMap.put("success", true);
-
-            // to do
-            // backend update database
+            iVisaStatusService.updateInfo(params);
 
         } else {
             System.err.println("Did not get data");
