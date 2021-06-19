@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { House } from '../domain/house';
 import { HousingService } from '../housing.service';
-import { HTTPReq } from '../../../../service/HTTPReq/HTTPReq.service';
 
 @Component({
   selector: 'app-housing-page',
@@ -12,19 +11,16 @@ export class HousingPageComponent implements OnInit {
   houses: House[] = [];
   selectedHouse?: House;
 
-  constructor(
-    private housingService: HousingService,
-    private httpClient: HTTPReq
-  ) {}
+  constructor(private housingService: HousingService) {}
 
   ngOnInit(): void {
-    this.httpClient
-      .getData('/get-houses', null, 'http://localhost:8999')
-      .subscribe((data: any) => {
-        console.log(data.allHouse);
-      });
+    // @ts-ignore
+    this.housingService.getHouses().subscribe((h) => {
+      this.houses = h;
+      console.log(h);
+    });
 
-    this.housingService.getHouses().subscribe((h) => (this.houses = h));
+    // console.log(this.houses);
   }
 
   onSelect(h: House): void {

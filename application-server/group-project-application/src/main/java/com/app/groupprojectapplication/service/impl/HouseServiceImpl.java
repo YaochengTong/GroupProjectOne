@@ -111,10 +111,10 @@ public class HouseServiceImpl implements IHouseService {
         HouseFacilityInfo hi = new HouseFacilityInfo();
         House h = f.getHouse();
         hi.setFacilityId(f.getId());
-        hi.setNumberOfBeds(iFacilityDao.getNumOfTypeByHouseId(h.getId(), 1));
-        hi.setNumberOfMattresses(iFacilityDao.getNumOfTypeByHouseId(h.getId(), 2));
-        hi.setNumberOfTables(iFacilityDao.getNumOfTypeByHouseId(h.getId(), 3));
-        hi.setNumberOfChairs(iFacilityDao.getNumOfTypeByHouseId(h.getId(), 4));
+        hi.setNumberOfBeds(iFacilityDao.getNumOfTypeByHouseId(h.getId(), "bed"));
+        hi.setNumberOfMattresses(iFacilityDao.getNumOfTypeByHouseId(h.getId(), "mattress"));
+        hi.setNumberOfTables(iFacilityDao.getNumOfTypeByHouseId(h.getId(), "table"));
+        hi.setNumberOfChairs(iFacilityDao.getNumOfTypeByHouseId(h.getId(), "chair"));
 
         List<HouseFacilityReportInfo> houseFacilityReportInfoList = new ArrayList<>();
 

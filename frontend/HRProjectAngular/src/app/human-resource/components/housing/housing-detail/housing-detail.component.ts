@@ -30,16 +30,12 @@ export class HousingDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getHouse();
-    // @ts-ignore
-    this.facility = this.house.facility;
-    // @ts-ignore
-    this.employee = this.house.employee;
-  }
-
-  getHouse(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.housingService.getHouseById(id).subscribe((h) => (this.house = h));
+    this.housingService.getHouseById(id).subscribe((h) => {
+      this.house = h;
+      this.facility = h.houseFacilityInfoList;
+      this.employee = h.houseEmployeeInfoList;
+    });
   }
 
   goBack(): void {
