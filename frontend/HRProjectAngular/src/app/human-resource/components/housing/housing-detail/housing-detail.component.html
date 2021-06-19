@@ -6,7 +6,7 @@
   </button>
 </div>
 
-<mat-grid-list cols="1" rowHeight="2:1">
+<mat-grid-list cols="1" rowHeight="1:1">
   <div *ngIf="house">
     <mat-grid-tile>
       <mat-card class="clickable">
@@ -41,41 +41,52 @@
       <mat-card class="clickable">
         <mat-card-title>Facility Info</mat-card-title>
         <mat-card-content>
+
           <mat-list *ngFor="let f of facility">
-            <mat-list-item>
-              <strong>Number of Beds:</strong> &nbsp;
-              <input
-                [(ngModel)]="f.numberOfBeds"
-                placeholder="{{ f.numberOfBeds }}"
-              />
-            </mat-list-item>
-            <mat-list-item>
-              <strong>Number of Mattresses:</strong> &nbsp;
-              <input
-                [(ngModel)]="f.numberOfMattresses"
-                placeholder="{{ f.numberOfMattresses }}"
-              />
-            </mat-list-item>
-            <mat-list-item>
-              <strong>Number of Tables:</strong> &nbsp;
-              <input
-                [(ngModel)]="f.numberOfTables"
-                placeholder="{{ f.numberOfTables }}"
-              />
-            </mat-list-item>
-            <mat-list-item>
-              <strong>Number of Chairs:</strong> &nbsp;
-              <input
-                [(ngModel)]="f.numberOfChairs"
-                placeholder="{{ f.numberOfChairs }}"
-              />
-            </mat-list-item>
+            <div id="facilityInfo">
+              <mat-list-item>
+                <strong>Facility Info Id:</strong> &nbsp;
+                <input
+                  [(ngModel)]="f.facilityId"
+                  placeholder="{{ f.facilityId }}"
+                />
+              </mat-list-item>
+              <mat-list-item>
+                <strong>Number of Beds:</strong> &nbsp;
+                <input
+                  [(ngModel)]="f.numberOfBeds"
+                  placeholder="{{ f.numberOfBeds }}"
+                />
+              </mat-list-item>
+              <mat-list-item>
+                <strong>Number of Mattresses:</strong> &nbsp;
+                <input
+                  [(ngModel)]="f.numberOfMattresses"
+                  placeholder="{{ f.numberOfMattresses }}"
+                />
+              </mat-list-item>
+              <mat-list-item>
+                <strong>Number of Tables:</strong> &nbsp;
+                <input
+                  [(ngModel)]="f.numberOfTables"
+                  placeholder="{{ f.numberOfTables }}"
+                />
+              </mat-list-item>
+              <mat-list-item>
+                <strong>Number of Chairs:</strong> &nbsp;
+                <input
+                  [(ngModel)]="f.numberOfChairs"
+                  placeholder="{{ f.numberOfChairs }}"
+                />
+              </mat-list-item>
+              <div id="facilityButton">
+              <button (click)="openDialog()" color="primary" mat-raised-button>
+                Facility Reports
+              </button>
+                </div>
+            </div>
           </mat-list>
-          <mat-card-actions>
-            <button (click)="openDialog()" color="primary" mat-raised-button>
-              Facility Reports
-            </button>
-          </mat-card-actions>
+
         </mat-card-content>
       </mat-card>
       <mat-card class="clickable">
@@ -84,16 +95,16 @@
           <mat-list *ngFor="let e of employee">
             <div id="employeeInfo">
               <mat-list-item>
-                <strong>Name:</strong> &nbsp; {{ e.name }}
+                <strong>Name:</strong> &nbsp; {{ e.employeeName }}
               </mat-list-item>
               <mat-list-item>
-                <strong>Phone:</strong> &nbsp; {{ e.phone }}
+                <strong>Phone:</strong> &nbsp; {{ e.employeePhone }}
               </mat-list-item>
               <mat-list-item>
-                <strong>Email:</strong> &nbsp; {{ e.email }}
+                <strong>Email:</strong> &nbsp; {{ e.employeeEmail }}
               </mat-list-item>
               <mat-list-item>
-                <strong>Car:</strong> &nbsp; {{ e.car }}
+                <strong>Car:</strong> &nbsp; {{ e.employeeCar }}
               </mat-list-item>
               <div id="employeeButton">
                 <button

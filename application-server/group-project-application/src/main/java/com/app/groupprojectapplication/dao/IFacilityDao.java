@@ -11,7 +11,7 @@ public interface IFacilityDao {
 
     List<Facility> getFacilityByHouseId(Integer house_id);
 
-    int getNumOfTypeByHouseId(Integer house_id, Integer type_number);
+    int getNumOfTypeByHouseId(Integer house_id, String facilityType);
 
     List<FacilityReport> getAllFacilityReportByHouseId(Employee e);
 

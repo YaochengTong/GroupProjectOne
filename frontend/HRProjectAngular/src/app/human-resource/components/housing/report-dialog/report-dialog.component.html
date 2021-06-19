@@ -1,22 +1,22 @@
-<p>Waiting for backend</p>
+<p>Waiting for backend...</p>
 <mat-accordion class="example-headers-align" multi>
   <mat-expansion-panel *ngFor="let r of reports" hideToggle>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <strong>Title:</strong> &nbsp;{{ r.title }}
+        <strong>Title:</strong> &nbsp;{{ r.houseFacilityReportTitle }}
       </mat-panel-title>
     </mat-expansion-panel-header>
     <mat-list>
       <mat-list-item>
-        <strong>Report Date:</strong> &nbsp; {{ r.reportDate }}
+        <strong>Report Date:</strong> &nbsp; {{ r.houseFacilityReportDate }}
       </mat-list-item>
       <mat-list-item>
-        <strong>Description:</strong> &nbsp;{{ r.description }}
+        <strong>Description:</strong> &nbsp;{{ r.houseFacilityReportDescription }}
       </mat-list-item>
       <mat-list-item>
-        <strong>Status:</strong>&nbsp; {{ r.status }}
+        <strong>Status:</strong>&nbsp; {{ r.houseFacilityReportStatus }}
       </mat-list-item>
-      <mat-list-item> <strong>Details:</strong> details </mat-list-item>
+      <mat-list-item><strong>Details:</strong> details</mat-list-item>
     </mat-list>
   </mat-expansion-panel>
 
