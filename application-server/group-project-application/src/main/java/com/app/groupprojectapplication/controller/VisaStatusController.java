@@ -1,5 +1,6 @@
 package com.app.groupprojectapplication.controller;
 
+import com.app.groupprojectapplication.email.EmailService;
 import com.app.groupprojectapplication.service.IVisaStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,9 @@ public class VisaStatusController {
 
     @Autowired
     private IVisaStatusService iVisaStatusService;
+
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping("/{user_id}")
     public Map<String, Object> getVisaStatusInfo(@PathVariable Integer user_id) {
@@ -32,12 +36,35 @@ public class VisaStatusController {
     @PostMapping("/update")
     public Map<String, Object> updateVisaStatusInfo(@RequestParam Map<String, Object> params) {
         Map<String, Object> resultMap = new HashMap<>();
-        try {
+        if (params != null) {
             System.out.println(params);
             resultMap.put("success", true);
-        } catch (Exception e) {
-            e.printStackTrace();
-            resultMap.put("reason", "Did not get data");
+
+            // to do
+            // backend update database
+
+        } else {
+            System.err.println("Did not get data");
+            resultMap.put("reason", "Got Null data");
+        }
+        return resultMap;
+    }
+
+    @PostMapping("/send-notification")
+    public Map<String, Object> sendNotification(@RequestParam Map<String, Object> params) {
+        Map<String, Object> resultMap = new HashMap<>();
+        if (params != null) {
+            System.out.println(params);
+            String title = "Reminder: Report Updates on Visa Status";
+            String content = "Please check your visa status. Based on our database, you may need to provide further document ( " + params.get("message") + " ) to maintain your legal work authorization in 90 days.\n" +
+                    "If you are in a moderate situation, please ignore this email.";
+            String email = iVisaStatusService.findEmailByUserId(Integer.parseInt((String)params.get("userId")));
+            emailService.sendMail(email, title, content);
+            resultMap.put("success", true);
+            resultMap.put("email", email);
+        } else {
+            resultMap.put("success", false);
+            resultMap.put("reason", "Got Null data");
         }
         return resultMap;
     }
