@@ -350,7 +350,9 @@ public class HireServiceImpl implements IHireService {
         for(ApplicationWorkflow awf : resultList){
             Map<String, Object> map = new HashMap<>();
             User user = awf.getUser();
+            map.put("applicationId", awf.getId());
             map.put("userId", user.getId());
+            map.put("email", user.getEmail());
             Person person = user.getPerson();
             map.put("firstName", person.getFirstName());
             map.put("lastName", person.getLastName());

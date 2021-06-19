@@ -59,11 +59,12 @@ public class ApplicationWorkflowDaoImpl implements IApplicationWorkFlowDao {
     @Override
     public List<ApplicationWorkflow> getApplicationWorkFlowByApplicationType(String applicationType) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "FROM " +
-                "ApplicationWorkflow awf join fetch awf.user as user " +
-                " join fetch user.person as person" +
-                " join fetch person.contacts " +
-                "WHERE awf.type = :type";
+        String hql = "select awf FROM " +
+                "ApplicationWorkflow awf " +
+                //"join fetch awf.user as user " +
+                //" join fetch user.person as person" +
+                //" join fetch person.contacts " +
+                " WHERE awf.type = :type";
         Query<ApplicationWorkflow> query = session.createQuery(hql);
         query.setParameter("type", applicationType);
         List<ApplicationWorkflow> resultList = query.getResultList();
