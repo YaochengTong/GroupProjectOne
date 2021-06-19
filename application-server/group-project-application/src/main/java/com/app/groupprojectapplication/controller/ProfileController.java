@@ -2,13 +2,19 @@ package com.app.groupprojectapplication.controller;
 
 import com.app.groupprojectapplication.service.*;
 //import org.graalvm.compiler.debug.TimeSource;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.KeyDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,8 +78,9 @@ public class ProfileController {
 
     @PostMapping("/{user_id}/updateAddressSection")
     public Map<String, Object> updateProfileAddressSection(@RequestParam Map<String, Object> params,
-                                             @PathVariable Integer user_id) {
+                                             @PathVariable Integer user_id) throws IOException {
         Map<String, Object> resultMap = new HashMap<>();
+
         String priAdd1 = params.get("priAdd1").toString();
         String priAdd2 = params.get("priAdd2").toString();
         String priCity = params.get("priCity").toString();
@@ -87,6 +94,7 @@ public class ProfileController {
 
         iUpdateAddressSectionService.updateAdd(priAdd1, priAdd2, priCity, priState, priZip,
                 secAdd1, secAdd2, secCity, secState, secZip, user_id);
+
         resultMap.put("AddressUpdateResult", "success");
         return resultMap;
     }
@@ -166,3 +174,6 @@ public class ProfileController {
         return resultMap;
     }
 }
+
+
+

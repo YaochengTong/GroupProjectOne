@@ -22,10 +22,12 @@ import { PersonalInfoComponent } from './components/personal-info/personal-info.
 import { HrPageComponent } from './components/hr-page/hr-page.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
+import {MatSelectModule} from '@angular/material/select';
+
 
 import { HttpClientModule } from '@angular/common/http';
 import { HTTPReq } from '../service/HTTPReq/HTTPReq.service';
@@ -77,7 +79,8 @@ import { DetailsDialogComponent } from './components/hire/details-dialog/details
     MatDialogModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
-    MatTabsModule
+    MatTabsModule,
+    MatSelectModule
   ],
   providers: [HTTPReq],
   exports: [
