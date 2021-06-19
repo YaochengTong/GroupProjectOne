@@ -16,7 +16,6 @@ import java.util.List;
 @Repository
 public class EmployeeDaoImpl implements IEmployeeDao {
 
-    Employee employee;
 
     @Autowired
     protected SessionFactory sessionFactory;
@@ -31,14 +30,15 @@ public class EmployeeDaoImpl implements IEmployeeDao {
     @Override
     public Employee getEmployeeById(Integer id) {
         Session session = sessionFactory.getCurrentSession();
-        employee = session.get(Employee.class, id);
+        Employee employee = session.get(Employee.class, id);
         return employee;
     }
 
     @Override
-    public void insertEmployee(Employee employee) {
+    public Integer insertEmployee(Employee employee) {
         Session session = sessionFactory.getCurrentSession();
-        session.save(employee);
+        Integer id = (Integer) session.save(employee);
+        return id;
     }
 
     @Override

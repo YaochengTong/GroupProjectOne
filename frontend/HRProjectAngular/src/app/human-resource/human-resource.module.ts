@@ -25,7 +25,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatDialogModule} from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
+import {MatTabsModule} from '@angular/material/tabs';
 
 import { HttpClientModule } from '@angular/common/http';
 import { HTTPReq } from '../service/HTTPReq/HTTPReq.service';
@@ -37,6 +37,7 @@ import { AddressSectionDialogComponent } from './components/personal-info/addres
 import { ContactSectionDialogComponent } from './components/personal-info/contact-section-dialog/contact-section-dialog.component';
 import { EmergencyContactSectionDialogComponent } from './components/personal-info/emergency-contact-section-dialog/emergency-contact-section-dialog.component';
 import { EmploymentSectionDialogComponent } from './components/personal-info/employment-section-dialog/employment-section-dialog.component';
+import { DetailsDialogComponent } from './components/hire/details-dialog/details-dialog.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { EmploymentSectionDialogComponent } from './components/personal-info/emp
     AddressSectionDialogComponent,
     ContactSectionDialogComponent,
     EmergencyContactSectionDialogComponent,
-    EmploymentSectionDialogComponent
+    EmploymentSectionDialogComponent,
+    DetailsDialogComponent
   ],
   imports: [
     CommonModule,
@@ -75,6 +77,7 @@ import { EmploymentSectionDialogComponent } from './components/personal-info/emp
     MatDialogModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    MatTabsModule
   ],
   providers: [HTTPReq],
   exports: [
