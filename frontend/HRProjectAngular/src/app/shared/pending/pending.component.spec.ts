@@ -1,19 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VisaComponent } from './visa.component';
+import { PendingComponent } from './pending.component';
 
-describe('VisaComponent', () => {
-  let component: VisaComponent;
-  let fixture: ComponentFixture<VisaComponent>;
+describe('PendingComponent', () => {
+  let component: PendingComponent;
+  let fixture: ComponentFixture<PendingComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [VisaComponent],
-    }).compileComponents();
+      declarations: [ PendingComponent ]
+    })
+    .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VisaComponent);
+    fixture = TestBed.createComponent(PendingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

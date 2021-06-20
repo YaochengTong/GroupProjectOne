@@ -22,14 +22,14 @@ public class VisaStatusController {
     @GetMapping("/{user_id}")
     public Map<String, Object> getVisaStatusInfo(@PathVariable Integer user_id) {
         Map<String, Object> visaStatusInfo = new HashMap<>();
-        visaStatusInfo.put("visaStatusInfo", iVisaStatusService.getVisaInfoByUserId(user_id, 0));
+        visaStatusInfo.put("visaStatusInfo", iVisaStatusService.getVisaInfo(user_id));
         return visaStatusInfo;
     }
 
     @GetMapping("/all")
     public Map<String, Object> getVisaStatusInfoList() {
         Map<String, Object> visaStatusInfoList = new HashMap<>();
-        visaStatusInfoList.put("visaStatusInfoList", iVisaStatusService.getVisaInfo());
+        visaStatusInfoList.put("visaStatusInfoList", iVisaStatusService.getVisaInfoList());
         return visaStatusInfoList;
     }
 
@@ -39,6 +39,7 @@ public class VisaStatusController {
         if (params != null) {
             System.out.println(params);
             resultMap.put("success", true);
+
             iVisaStatusService.updateInfo(params);
 
         } else {
@@ -66,4 +67,6 @@ public class VisaStatusController {
         }
         return resultMap;
     }
+
+
 }

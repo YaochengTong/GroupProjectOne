@@ -18,7 +18,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -77,9 +79,24 @@ public class AmazonS3FileService implements InitializingBean {
         ListObjectsRequest listObjectsRequest = new ListObjectsRequest().withBucketName(bucket).withPrefix(prefix + "/");
         ObjectListing objectListing = client.listObjects(listObjectsRequest);
         for(S3ObjectSummary os : objectListing.getObjectSummaries()) {
-            documents.add(os.getKey().replace(prefix + "/",""));
-            System.out.println(os.getKey().replace(prefix + "/",""));
+            System.out.println(os.getKey());
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            documents.add(os.getKey().replace(prefix + "/","").split("\\.")[0] + "_" + format.format(os.getLastModified()));
         }
         return documents;
+    }
+
+    public void deleteFolder(String prefix) {
+        ListObjectsRequest listObjectsRequest = new ListObjectsRequest().withBucketName(bucket).withPrefix(prefix + "/");
+        ObjectListing objectListing = client.listObjects(listObjectsRequest);
+        for(S3ObjectSummary os : objectListing.getObjectSummaries()) {
+            client.deleteObject(bucket, os.getKey());
+        }
+        printOutName();
+    }
+
+    public void deleteOneFile(String prefix, String fileName) {
+        client.deleteObject(bucket, prefix + "/" + fileName);
+        printOutName();
     }
 }
