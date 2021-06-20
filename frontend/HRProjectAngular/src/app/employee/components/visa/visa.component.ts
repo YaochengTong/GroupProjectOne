@@ -85,6 +85,7 @@ export class VisaComponent implements OnInit {
           this.visaInfo = data.visaStatusInfo;
           this.documents = this.visaInfo.documentReceived;
           if (this.visaInfo.message != null) { this.messageNum = 1;}
+          if (this.visaInfo.currStep == "7") { this.isShowMessage = false; this.isSubmitted = true }
         }
       )
     } else {
@@ -119,8 +120,7 @@ export class VisaComponent implements OnInit {
       }
     }
     else if (idx == "3") {
-      this.isShowMessage = false;
-      return;
+      return
     }
     else if (idx == "4") {
       // uploaded i-20

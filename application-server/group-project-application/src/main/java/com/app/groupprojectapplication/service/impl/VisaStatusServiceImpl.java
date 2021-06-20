@@ -95,7 +95,7 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
             Employee employee = iEmployeeDao.getEmployeeById(iUserDao.getEmployeeIdByUserId(user.getId()));
             Person person = iUserDao.getPersonByUserId(userId);
             Integer dayLeft = iVisaStatusDao.getVisaAuthorizationLeftDay(employee.getId());
-            String currentStep = getCurrentStep(iApplicationWorkFlowDao.getApplicationWorkFlowByUserIdAndApplicationType(userId, applicationType));
+            String currentStep = iApplicationWorkFlowDao.getApplicationWorkFlowByUserIdAndApplicationType(userId, applicationType).get(0).getStatus();
             System.out.println(currentStep);
             visaStatusInfo = new VisaStatusInfo();
             visaStatusInfo.setUserId(userId);
@@ -114,12 +114,6 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
         }
 
         return visaStatusInfo;
-    }
-
-    private String getCurrentStep(List<ApplicationWorkflow> applicationWorkflowList) {
-        applicationWorkflowList.sort(Comparator.comparing(a -> map.get(a.getStatus()).get(2)));
-        applicationWorkflowList.stream().forEach(a -> System.out.println(a.toString()));
-        return applicationWorkflowList.get(0).getStatus();
     }
 
     @Override

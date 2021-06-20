@@ -1,6 +1,7 @@
 package com.app.groupprojectapplication.service.impl;
 
 import com.amazonaws.services.dynamodbv2.xspec.M;
+import com.amazonaws.services.opsworks.model.App;
 import com.app.groupprojectapplication.dao.*;
 import com.app.groupprojectapplication.domain.*;
 import com.app.groupprojectapplication.email.EmailService;
@@ -533,20 +534,34 @@ public class HireServiceImpl implements IHireService {
     public Map<String, Object> auditApplications(Map<String, Object> paramMap) {
         String approve = paramMap.get("approve").toString();
         String comments = paramMap.get("comments").toString();
-        ApplicationWorkflow workflow = new ApplicationWorkflow();
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        ApplicationWorkflow onBoardingWorkflow = new ApplicationWorkflow();
+        ApplicationWorkflow visaWorkflow = new ApplicationWorkflow();
         if(approve.equals("yes")){
-            workflow.setStatus("Approved");
+            /**
+             * Step 1: update on-boarding application workflow
+             */
+            onBoardingWorkflow.setStatus("Approved");
             Integer user_id = Integer.parseInt(paramMap.get("user_id").toString());
             UserRole userRole = iUserRoleDao.getUserRoleByUserId(user_id).get(0);
             userRole.setActivateFlag((byte)1);
             iUserRoleDao.updateUserRole(userRole);
+            /**
+             * Step 2: start a new visa status application workflow
+             */
+            visaWorkflow.setStatus("OPT Receipt");
+            visaWorkflow.setUser(iUserDao.getUserById(user_id));
+            visaWorkflow.setCreateDate(timestamp);
+            visaWorkflow.setModificationDate(timestamp);
+            visaWorkflow.setType("visa status application");
+            iApplicationWorkFlowDao.insertApplicationWorkFlow(visaWorkflow);
         }
         else{
-            workflow.setStatus("Rejected");
+            onBoardingWorkflow.setStatus("Rejected");
         }
-        workflow.setComments(comments);
+        onBoardingWorkflow.setComments(comments);
         Integer id = Integer.parseInt(paramMap.get("id").toString());
-        boolean result = iApplicationWorkFlowDao.updateApplicationWorkFlowById(id, workflow);
+        boolean result = iApplicationWorkFlowDao.updateApplicationWorkFlowById(id, onBoardingWorkflow);
         Map<String, Object> resultMap = new HashMap<>();
         if(!result){
             resultMap.put("result", "failed");
