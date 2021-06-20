@@ -17,4 +17,6 @@ public interface IPersonDao {
     Person getPersonIdByFullName(String fullName);
 
     void updatePhoneById(String phone,Integer id);
+
+    void mergePerson(Person person);
 }

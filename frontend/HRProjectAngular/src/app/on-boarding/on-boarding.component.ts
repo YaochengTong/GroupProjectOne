@@ -396,16 +396,16 @@ export class OnBoardingComponent implements OnInit{
     //second argument formData: the form that contains your files
     //third argument obj: the object that contains the information you want to send to the backend
     //a.k.a the OnBoardingForm
-    // this.httpRequestService.fileUploadWithParams('/hire/submitOnboard', formData, paramObj).subscribe(
-    //     (data: any) => {
-    //         console.log(data);
-    //         this.submitting = false;
-    //         this.router.navigate(['/pending']);
-    //     },
-    //     err => {
-    //         console.log(err);
-    //         this.submitting = false;
-    //     });
+    this.httpRequestService.fileUploadWithParams('/hire/submitOnboard', formData, paramObj).subscribe(
+        (data: any) => {
+            console.log(data);
+            this.submitting = false;
+            this.router.navigate(['/pending']);
+        },
+        err => {
+            console.log(err);
+            this.submitting = false;
+        });
 
   }
 

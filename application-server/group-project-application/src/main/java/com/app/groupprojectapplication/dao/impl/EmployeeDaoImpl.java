@@ -83,5 +83,11 @@ public class EmployeeDaoImpl implements IEmployeeDao {
         session.saveOrUpdate(employee);
     }
 
+    @Override
+    public void mergeEmployee(Employee employee) {
+        Session session = sessionFactory.getCurrentSession();
+        session.merge(employee);
+    }
+
 
 }

@@ -11,6 +11,8 @@ public interface IEmployeeDao {
     void deleteUserById(Integer id);
     Integer getUserIdByEmployeeId(Integer employeeId);
     void updateEmployee(Employee employee);
+
+    void mergeEmployee(Employee employee);
     //String getTitleById(Integer id);
     //String getManagerId(Integer id);
     //String getStartDate(Integer id);
