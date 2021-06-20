@@ -42,6 +42,7 @@ import { ContactSectionDialogComponent } from './components/personal-info/contac
 import { EmergencyContactSectionDialogComponent } from './components/personal-info/emergency-contact-section-dialog/emergency-contact-section-dialog.component';
 import { EmploymentSectionDialogComponent } from './components/personal-info/employment-section-dialog/employment-section-dialog.component';
 import { DetailsDialogComponent } from './components/hire/details-dialog/details-dialog.component';
+import { PreviewTxtComponent } from './components/home/preview-txt/preview-txt.component';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import { DetailsDialogComponent } from './components/hire/details-dialog/details
     EmergencyContactSectionDialogComponent,
     EmploymentSectionDialogComponent,
     DetailsDialogComponent,
+    PreviewTxtComponent,
   ],
   imports: [
     CommonModule,
