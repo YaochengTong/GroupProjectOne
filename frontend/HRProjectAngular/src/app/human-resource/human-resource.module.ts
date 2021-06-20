@@ -27,6 +27,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
 import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 
 import { HttpClientModule } from '@angular/common/http';
@@ -79,7 +80,8 @@ import { DetailsDialogComponent } from './components/hire/details-dialog/details
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatTabsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule
   ],
   providers: [HTTPReq],
   exports: [

@@ -2,8 +2,7 @@
 <mat-dialog-content class="mat-typography" style="min-height: 600px;">
     <mat-tab-group>
         <mat-tab label="Personal Info"> 
-            <form [formGroup]="personalInfoForm" novalidate>
-                <!--      Company      -->
+            <div>
                 <div class="row">
                   <div class="col">
                     <mat-card-content>User's registration email: &nbsp;
@@ -23,7 +22,7 @@
                 <div class="row">
                   <div class="col">
                     <span style="color: red;">
-                        <input matInput placeholder="Add comments here..."/>
+                        <input [(ngModel)]="commentsObj.FirstName" matInput placeholder="Add comments here..."/>
                     </span>
                     <mat-form-field class="full-width">
                       <input
@@ -36,7 +35,7 @@
                   </div>
                   <div class="col">
                     <span style="color: red;">
-                        <input matInput placeholder="Add comments here..."/>
+                        <input [(ngModel)]="commentsObj.LastName" matInput placeholder="Add comments here..."/>
                     </span>
                     <mat-form-field class="full-width">
                       <input
@@ -50,7 +49,7 @@
             
                   <div class="col">
                     <span style="color: red;">
-                        <input matInput placeholder="Add comments here..."/>
+                        <input [(ngModel)]="commentsObj.MiddleName" matInput placeholder="Add comments here..."/>
                     </span>
                     <mat-form-field class="full-width">
                       <input
@@ -69,7 +68,7 @@
                 <div class="row">
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input matInput [(ngModel)]="commentsObj.SSN" placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -82,7 +81,7 @@
                     </div>
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input [(ngModel)]="commentsObj.Gender" matInput placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -96,7 +95,7 @@
                 
                     <div class="col">
                         <span style="color: red;">
-                        <input matInput placeholder="Add comments here..."/>
+                        <input matInput [(ngModel)]="commentsObj.DOB" placeholder="Add comments here..."/>
                     </span>
                         <mat-form-field class="full-width">
                         <input
@@ -114,7 +113,7 @@
                     <br/>
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input [(ngModel)]="commentsObj.Citizen" matInput placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -127,7 +126,7 @@
                     </div>
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input [(ngModel)]="commentsObj.CitizenType" matInput placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -146,7 +145,7 @@
                 <div class="row">
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input [(ngModel)]="commentsObj.WorkAuth" matInput placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -159,7 +158,7 @@
                     </div>
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input [(ngModel)]="commentsObj.AuthStart" matInput placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -173,7 +172,7 @@
                 
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input [(ngModel)]="commentsObj.AuthEnd" matInput placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -192,7 +191,7 @@
                 <div class="row">
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input [(ngModel)]="commentsObj.DriverLicense" matInput placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -206,7 +205,7 @@
 
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input [(ngModel)]="commentsObj.DriverLicenseExpireDate" matInput placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -220,7 +219,7 @@
                 
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input [(ngModel)]="commentsObj.PrimaryPhone" matInput placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -239,7 +238,7 @@
                 <div class="row">
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input [(ngModel)]="commentsObj.Car" matInput placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -253,7 +252,7 @@
 
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input [(ngModel)]="commentsObj.AlterPhone" matInput placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -273,7 +272,7 @@
                 <div class="row">
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input [(ngModel)]="commentsObj.Address1" matInput placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -287,7 +286,7 @@
                 
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input [(ngModel)]="commentsObj.Address2" matInput placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -306,7 +305,7 @@
                 <div class="row">
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input [(ngModel)]="commentsObj.City" matInput placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -320,7 +319,7 @@
 
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input [(ngModel)]="commentsObj.State" matInput placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -334,7 +333,7 @@
                 
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input [(ngModel)]="commentsObj.PostalCode" matInput placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -347,17 +346,17 @@
                     </div>
                 </div>
 
-            </form>
+            </div>
         </mat-tab>
 
         <mat-tab label="Contact"> 
             <br/>
             <h4>Reference Contact</h4>
-            <form [formGroup]="contactInfoForm" novalidate>
+            <div>
                 <div class="row">
                   <div class="col">
                     <span style="color: red;">
-                        <input matInput placeholder="Add comments here..."/>
+                        <input [(ngModel)]="commentsObj.RFirstName"  matInput placeholder="Add comments here..."/>
                     </span>
                     <mat-form-field class="full-width">
                       <input
@@ -370,7 +369,7 @@
                   </div>
                   <div class="col">
                     <span style="color: red;">
-                        <input matInput placeholder="Add comments here..."/>
+                        <input [(ngModel)]="commentsObj.RLastName" matInput placeholder="Add comments here..."/>
                     </span>
                     <mat-form-field class="full-width">
                       <input
@@ -384,7 +383,7 @@
             
                   <div class="col">
                     <span style="color: red;">
-                        <input matInput placeholder="Add comments here..."/>
+                        <input [(ngModel)]="commentsObj.RMiddleName" matInput placeholder="Add comments here..."/>
                     </span>
                     <mat-form-field class="full-width">
                       <input
@@ -403,7 +402,7 @@
                 <div class="row">
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input [(ngModel)]="commentsObj.RPhone" matInput placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -417,7 +416,7 @@
 
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input [(ngModel)]="commentsObj.RAddress1" matInput placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -431,7 +430,7 @@
                 
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input [(ngModel)]="commentsObj.RAddress2" matInput placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -450,7 +449,7 @@
                 <div class="row">
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input [(ngModel)]="commentsObj.RCity" matInput placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -464,7 +463,7 @@
 
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input [(ngModel)]="commentsObj.RState" matInput placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -478,7 +477,7 @@
                 
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input [(ngModel)]="commentsObj.RPostalCode" matInput placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -497,7 +496,7 @@
                 <div class="row">
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input [(ngModel)]="commentsObj.REmail" matInput placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -511,7 +510,7 @@
 
                     <div class="col">
                         <span style="color: red;">
-                            <input matInput placeholder="Add comments here..."/>
+                            <input [(ngModel)]="commentsObj.RRelation" matInput placeholder="Add comments here..."/>
                         </span>
                         <mat-form-field class="full-width">
                         <input
@@ -532,7 +531,7 @@
                     <div class="row">
                         <div class="col">
                           <span style="color: red;">
-                              <input matInput placeholder="Add comments here..."/>
+                              <input [(ngModel)]="commentsObj.EContacts[i].EFirstName" matInput placeholder="Add comments here..."/>
                           </span>
                           <mat-form-field class="full-width">
                             <input
@@ -545,7 +544,7 @@
                         </div>
                         <div class="col">
                           <span style="color: red;">
-                              <input matInput placeholder="Add comments here..."/>
+                              <input [(ngModel)]="commentsObj.EContacts[i].ELastName" matInput placeholder="Add comments here..."/>
                           </span>
                           <mat-form-field class="full-width">
                             <input
@@ -559,7 +558,7 @@
                   
                         <div class="col">
                           <span style="color: red;">
-                              <input matInput placeholder="Add comments here..."/>
+                              <input [(ngModel)]="commentsObj.EContacts[i].EMiddleName" matInput placeholder="Add comments here..."/>
                           </span>
                           <mat-form-field class="full-width">
                             <input
@@ -578,7 +577,7 @@
                       <div class="row">
                           <div class="col">
                               <span style="color: red;">
-                                  <input matInput placeholder="Add comments here..."/>
+                                  <input [(ngModel)]="commentsObj.EContacts[i].EPhone" matInput placeholder="Add comments here..."/>
                               </span>
                               <mat-form-field class="full-width">
                               <input
@@ -592,7 +591,7 @@
       
                           <div class="col">
                               <span style="color: red;">
-                                  <input matInput placeholder="Add comments here..."/>
+                                  <input [(ngModel)]="commentsObj.EContacts[i].EAddress1" matInput placeholder="Add comments here..."/>
                               </span>
                               <mat-form-field class="full-width">
                               <input
@@ -606,7 +605,7 @@
                       
                           <div class="col">
                               <span style="color: red;">
-                                  <input matInput placeholder="Add comments here..."/>
+                                  <input [(ngModel)]="commentsObj.EContacts[i].EAddress2" matInput placeholder="Add comments here..."/>
                               </span>
                               <mat-form-field class="full-width">
                               <input
@@ -625,7 +624,7 @@
                       <div class="row">
                           <div class="col">
                               <span style="color: red;">
-                                  <input matInput placeholder="Add comments here..."/>
+                                  <input [(ngModel)]="commentsObj.EContacts[i].ECity" matInput placeholder="Add comments here..."/>
                               </span>
                               <mat-form-field class="full-width">
                               <input
@@ -639,7 +638,7 @@
       
                           <div class="col">
                               <span style="color: red;">
-                                  <input matInput placeholder="Add comments here..."/>
+                                  <input [(ngModel)]="commentsObj.EContacts[i].EState" matInput placeholder="Add comments here..."/>
                               </span>
                               <mat-form-field class="full-width">
                               <input
@@ -653,7 +652,7 @@
                       
                           <div class="col">
                               <span style="color: red;">
-                                  <input matInput placeholder="Add comments here..."/>
+                                  <input [(ngModel)]="commentsObj.EContacts[i].EPostalCode" matInput placeholder="Add comments here..."/>
                               </span>
                               <mat-form-field class="full-width">
                               <input
@@ -672,7 +671,7 @@
                       <div class="row">
                           <div class="col">
                               <span style="color: red;">
-                                  <input matInput placeholder="Add comments here..."/>
+                                  <input [(ngModel)]="commentsObj.EContacts[i].EEmail" matInput placeholder="Add comments here..."/>
                               </span>
                               <mat-form-field class="full-width">
                               <input
@@ -686,7 +685,7 @@
       
                           <div class="col">
                               <span style="color: red;">
-                                  <input matInput placeholder="Add comments here..."/>
+                                  <input [(ngModel)]="commentsObj.EContacts[i].ERelation" matInput placeholder="Add comments here..."/>
                               </span>
                               <mat-form-field class="full-width">
                               <input
@@ -700,18 +699,18 @@
                       </div>
                 </div>
 
-            </form>
+            </div>
         </mat-tab>
 
         <mat-tab label="Files">
-            <form [formGroup]="fileForm" novalidate>
+            <div>
                 <div *ngFor="let document of applicationObj.documents; let i = index">
                     <br/>
                     <br/>
                     <div class="row">
                         <div class="col">
                             <span style="color: red;">
-                                <input matInput placeholder="Add comments here..."/>
+                                <input [(ngModel)]="commentsObj.files[i].comment" matInput placeholder="Add comments here..."/>
                             </span>
 
                             <p>{{document.title}}: <a [href]="document.path">download</a> </p>
@@ -719,7 +718,7 @@
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
         </mat-tab>
 
     </mat-tab-group>
@@ -727,7 +726,7 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="center" style="text-align: center;">
-    <button mat-button color="primary">Approve</button>
-    <button mat-button color="warn">Reject</button>
+    <button mat-button color="primary" (click)="onApprove()">Approve</button>
+    <button mat-button color="warn" (click)="onReject()">Reject</button>
     <button mat-button mat-dialog-close>Cancel</button>
 </mat-dialog-actions>

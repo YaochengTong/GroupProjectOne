@@ -40,8 +40,6 @@ public class VisaStatusController {
             System.out.println(params);
             resultMap.put("success", true);
 
-            // to do
-            // backend update database
             iVisaStatusService.updateInfo(params);
 
         } else {

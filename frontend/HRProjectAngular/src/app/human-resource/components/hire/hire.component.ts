@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import { HTTPReq } from 'src/app/service/HTTPReq/HTTPReq.service';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import { DetailsDialogComponent } from './details-dialog/details-dialog.component';
 
 import { DatePipe } from '@angular/common';
+import { MessageService } from 'src/app/service/Message/message.service';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -31,7 +32,8 @@ export class HireComponent implements OnInit{
   
   dataSource: any = [];
 
-  constructor(private httpRequestService: HTTPReq, private _snackBar: MatSnackBar, public dialog: MatDialog) {}
+  constructor(private httpRequestService: HTTPReq, private _snackBar: MatSnackBar, 
+    public dialog: MatDialog, private messageService: MessageService) {}
 
   currentHRUserId: number = -1;
 
@@ -41,6 +43,7 @@ export class HireComponent implements OnInit{
   ]);
 
   matcher = new MyErrorStateMatcher();
+  messageSub: any;
 
   ngOnInit(): void {
     let retrievedObject: any = localStorage.getItem('user');
@@ -49,6 +52,18 @@ export class HireComponent implements OnInit{
     this.currentHRUserId = user.id;
     //this.username = user.username;
 
+    this.getApplicationTable();
+
+    this.messageSub = this.messageService.messageObj$.subscribe(value => {
+        //console.log(value)
+        if(value.refreshNeeded){
+          this.getApplicationTable();
+        }
+    });
+
+  }
+
+  getApplicationTable(): void {
     this.httpRequestService.getData('/hire/getOnboardApplications', {}).subscribe(
       (data: any) => {
         console.log(data)
@@ -73,20 +88,179 @@ export class HireComponent implements OnInit{
         });
       }
     );
+  }
+
+
+  commentsObj: any = {
+    'FirstName': '',
+    'LastName': '',
+    'MiddleName': '',
+    'SSN': '',
+    'Gender': '',
+    'DOB': '',
+    'WorkAuth': '',
+    'Citizen': '',
+    'CitizenType': '',
+    'AuthStart': '',
+    'AuthEnd': '',
+    'DriverLicense': '',
+    'DriverLicenseExpireDate': '',
+    'PrimaryPhone': '',
+    'Car': '',
+    'AlterPhone': '',
+    'Address1': '',
+    'Address2': '',
+    'City': '',
+    'State': '',
+    'PostalCode': '',
+
+    //reference contact
+    'RFirstName': '',
+    'RLastName': '',
+    'RMiddleName': '',
+    'RPhone': '',
+    'RAddress1': '',
+    'RAddress2': '',
+    'RCity': '',
+    'RState': '',
+    'RPostalCode': '',
+    'REmail': '',
+    'RRelation': '',
+
+    //emergency contacts
+    'EContacts': [
+      {
+        'EFirstName': 'qwe',
+        'ELastName': '',
+        'EMiddleName': '',
+        'EPhone': '',
+        'EAddress1': '',
+        'EAddress2': '',
+        'ECity': '',
+        'EState': '',
+        'EPostalCode': '',
+        'EEmail': '',
+        'ERelation': '',
+      },
+      {
+        'EFirstName': '',
+        'ELastName': '',
+        'EMiddleName': '',
+        'EPhone': '',
+        'EAddress1': '',
+        'EAddress2': '',
+        'ECity': '',
+        'EState': '',
+        'EPostalCode': '',
+        'EEmail': '',
+        'ERelation': '',
+      }
+    ],
+
+    files: [
+
+    ]
 
   }
 
+
+  currentVisitedId: any = '';
+
   getRecord(id: any): void {
     let obj = this.dataSource.find(item => item.applicationId == id);
+    //console.log(this.commentsObj)
+    if(this.currentVisitedId !== id){
+      this.resetCommentObj();
+    }
     const dialogRef = this.dialog.open(DetailsDialogComponent, {
-      data: { application: obj },
+      data: { application: obj, commentObj: this.commentsObj },
       minHeight: '700px',
       minWidth: '1200px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      this.resetCommentObj();
+      this.currentVisitedId = '';
     });
+
+    dialogRef.backdropClick().subscribe(result => {
+      this.currentVisitedId = id;
+      //console.log(this.commentsObj)
+    }); 
+  }
+
+  resetCommentObj(): void {
+    this.commentsObj = {
+      'FirstName': '',
+      'LastName': '',
+      'MiddleName': '',
+      'SSN': '',
+      'Gender': '',
+      'DOB': '',
+      'WorkAuth': '',
+      'Citizen': '',
+      'CitizenType': '',
+      'AuthStart': '',
+      'AuthEnd': '',
+      'DriverLicense': '',
+      'DriverLicenseExpireDate': '',
+      'PrimaryPhone': '',
+      'Car': '',
+      'AlterPhone': '',
+      'Address1': '',
+      'Address2': '',
+      'City': '',
+      'State': '',
+      'PostalCode': '',
+  
+      //reference contact
+      'RFirstName': '',
+      'RLastName': '',
+      'RMiddleName': '',
+      'RPhone': '',
+      'RAddress1': '',
+      'RAddress2': '',
+      'RCity': '',
+      'RState': '',
+      'RPostalCode': '',
+      'REmail': '',
+      'RRelation': '',
+  
+      //emergency contacts
+      'EContacts': [
+        {
+          'EFirstName': 'qwe',
+          'ELastName': '',
+          'EMiddleName': '',
+          'EPhone': '',
+          'EAddress1': '',
+          'EAddress2': '',
+          'ECity': '',
+          'EState': '',
+          'EPostalCode': '',
+          'EEmail': '',
+          'ERelation': '',
+        },
+        {
+          'EFirstName': '',
+          'ELastName': '',
+          'EMiddleName': '',
+          'EPhone': '',
+          'EAddress1': '',
+          'EAddress2': '',
+          'ECity': '',
+          'EState': '',
+          'EPostalCode': '',
+          'EEmail': '',
+          'ERelation': '',
+        }
+      ],
+  
+      files: [
+  
+      ]
+  
+    };
   }
 
   generateToken(): void {

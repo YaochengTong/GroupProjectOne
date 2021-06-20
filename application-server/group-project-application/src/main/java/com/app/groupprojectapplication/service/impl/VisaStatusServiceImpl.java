@@ -1,9 +1,6 @@
 package com.app.groupprojectapplication.service.impl;
 
-import com.app.groupprojectapplication.dao.IApplicationWorkFlowDao;
-import com.app.groupprojectapplication.dao.IEmployeeDao;
-import com.app.groupprojectapplication.dao.IUserDao;
-import com.app.groupprojectapplication.dao.IVisaStatusDao;
+import com.app.groupprojectapplication.dao.*;
 import com.app.groupprojectapplication.domain.*;
 import com.app.groupprojectapplication.domain.homeElement.VisaInfo;
 import com.app.groupprojectapplication.domain.visaStatusManagement.DocumentInfo;
@@ -13,12 +10,18 @@ import com.app.groupprojectapplication.service.IVisaStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
 
 @Service
+@Transactional
 public class VisaStatusServiceImpl implements IVisaStatusService {
 
     private final String applicationType = "visa status application";
@@ -41,6 +44,9 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
 
     @Autowired
     IVisaStatusDao iVisaStatusDao;
+
+    @Autowired
+    IPersonDao iPersonDao;
 
     @Autowired
     AmazonS3FileService amazonS3FileService;
@@ -117,8 +123,34 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
     }
 
     @Override
-    public String updateInfo(Map<String, Object> result) {
-        return null;
+    public boolean updateInfo(Map<String, Object> params) {
+        String fullName = params.get("fullName").toString();
+        Integer userId = Integer.parseInt(params.get("userId").toString());
+        String AED = params.get("authorizationEndDate").toString();
+        String ASD = params.get("authorizationStartDate").toString();
+        String visaType = params.get("workAuthorization").toString();
+
+        String firstName = fullName.split(" ")[0];
+        String lastName = fullName.split(" ")[1];
+        Person person = iUserDao.getPersonByUserId(userId);
+        person.setFirstName(firstName);
+        person.setLastName(lastName);
+        iPersonDao.updatePerson(person);
+
+
+        Integer employeeId = iUserDao.getEmployeeIdByUserId(userId);
+        Employee employee = iEmployeeDao.getEmployeeById(employeeId);
+        Timestamp formatASD = Timestamp.valueOf(ASD + " 00:00:00");
+        Timestamp formatAED = Timestamp.valueOf(AED + " 00:00:00");
+        employee.setVisaEndDate(formatAED);
+        employee.setVisaStartDate(formatASD);
+        iEmployeeDao.updateEmployee(employee);
+
+
+        VisaStatus visaStatus = employee.getVisaStatus();
+        visaStatus.setVisaType(visaType);
+        iVisaStatusDao.updateVisaStatus(visaStatus);
+        return true;
     }
 
     public String setFullName(Person person) {

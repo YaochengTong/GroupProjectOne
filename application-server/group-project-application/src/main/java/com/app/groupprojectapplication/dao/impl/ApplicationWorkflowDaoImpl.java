@@ -2,22 +2,14 @@ package com.app.groupprojectapplication.dao.impl;
 
 import com.app.groupprojectapplication.dao.IApplicationWorkFlowDao;
 import com.app.groupprojectapplication.domain.ApplicationWorkflow;
-import com.app.groupprojectapplication.domain.RegistrationToken;
-import com.app.groupprojectapplication.domain.User;
-import com.app.groupprojectapplication.domain.VisaStatus;
-import com.app.groupprojectapplication.domain.visaStatusManagement.DocumentInfo;
 import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.LinkedList;
+import java.sql.Timestamp;
 import java.util.List;
-import java.util.Map;
 
 
 @Repository
@@ -73,5 +65,15 @@ public class ApplicationWorkflowDaoImpl implements IApplicationWorkFlowDao {
         query.setParameter("type", applicationType);
         List<ApplicationWorkflow> resultList = query.getResultList();
         return resultList;
+    }
+
+    @Override
+    public boolean updateApplicationWorkFlowById(Integer id, ApplicationWorkflow workflow) {
+        Session session = sessionFactory.getCurrentSession();
+        ApplicationWorkflow currentWorkflow = session.get(ApplicationWorkflow.class, id);
+        currentWorkflow.setStatus(workflow.getStatus());
+        currentWorkflow.setComments(workflow.getComments());
+        currentWorkflow.setModificationDate(new Timestamp(System.currentTimeMillis()));
+        return true;
     }
 }

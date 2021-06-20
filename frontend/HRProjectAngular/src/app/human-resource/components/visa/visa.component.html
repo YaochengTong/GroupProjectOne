@@ -19,7 +19,7 @@
     <td mat-cell *matCellDef="let element;" [attr.colspan]="columnsToDisplay.length">
       <div class="example-element-detail"
            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-        <form class="detail-element">
+        <form class="detail-element" >
             <mat-form-field style="width:17em">
               <mat-label>Legal Name:</mat-label>
               <input matInput id="{{ 'name-' + element.idx }}" name="type" matInput  matInput style="color: black;" [disabled]="!isEdit" [value]="element.fullName"> 
@@ -43,19 +43,35 @@
               <div style="color:red; font-size:small" *ngIf="!isTypeValid && isSubmitted">Please choose a Visa Type</div>
             </mat-form-field>
 
-            <mat-form-field style="width:17em">
-              <mat-label>Start Date:</mat-label>
+            <mat-form-field style="width:17em" *ngIf="!isEdit">
+              <mat-label>Start Date</mat-label>
               <input matInput id="{{ 'startDate-' + element.idx }}" name="startDate" matInput  style="color: black;" [disabled]="!isEdit" [value]="element.authorizationStartDate" placeholder="yyyy-mm-dd"> 
               <div style="color:red; font-size:small" *ngIf="!isStartDateValid && isSubmitted">Pease enter valid date "yyyy-mm-dd"</div>
             </mat-form-field>
 
-            <mat-form-field style="width:17em">
+            <mat-form-field style="width:17em" *ngIf="isEdit">
+                <mat-label>Start date</mat-label>
+                <input matInput [matDatepicker]="picker1" [value]="element.authorizationStartDate" (dateChange)="addStartDateEvent(element.idx, $event)">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field style="width:17em" *ngIf="!isEdit">
               <mat-label>End Date:</mat-label>
               <input matInput id="{{ 'endDate-' + element.idx }}" name="endDate" matInput  style="color: black;" [disabled]="!isEdit" [value]="element.authorizationEndDate" placeholder="yyyy-mm-dd"> 
               <div style="color:red; font-size:small" *ngIf="!isEndDateValid && isSubmitted">Please enter valid date "yyyy-mm-dd"</div>
-            </mat-form-field><br>
+            </mat-form-field>
+            
+            <mat-form-field style="width:17em" *ngIf="isEdit">
+                <mat-label>End date</mat-label>
+                 <input matInput [matDatepicker]="picker2" [value]="element.authorizationEndDate" (dateChange)="addEndDateEvent(element.idx, $event)">
+                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                 <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field> 
+            
+            <br>
 
-            <button *ngIf="!isEdit" [id]="element.idx" style="background-color: transparent; border: none; outline: none;" (click)="onEdit($event)"><mat-icon style="font-size: medium;"> border_color</mat-icon></button><br>
+            <button *ngIf="!isEdit" [id]="element.idx" style="background-color: transparent; border: none; outline: none; cursor:pointer" (click)="onEdit($event)"><mat-icon style="font-size: medium;"> border_color</mat-icon></button><br>
             <button *ngIf="isEdit" [id]="element.idx" mat-button color="primary" (click)="onSubmit($event)">Save</button>
             <button *ngIf="isEdit" [id]="element.idx" mat-button color="gray" (click)="onCancel($event)">Cancel</button>
         </form>
@@ -65,7 +81,10 @@
             <div *ngFor="let item of element.documentReceived">
                 <mat-icon style="font-size: medium;">file_copy</mat-icon>{{item.name}}
             </div>
-            <div class="notification"><strong>Next Step: {{element.nextStep}}</strong> | <button [id]="element.idx" style="background-color: transparent; outline: none; border: none; text-decoration: underline; color: blue; cursor: pointer" (click)="sendNotification($event)">Send Notification</button> 
+            <div class="notification"><strong>Next Step: {{element.nextStep}}</strong> | 
+              <button  [id]="element.idx" *ngIf="element.idx.nextStep != 'No Further Action Needed' && element.idx.nextStep != 'I-983 Waiting for HR' "
+              style="background-color: transparent; outline: none; border: none; text-decoration: underline; color: blue; cursor: pointer" (click)="sendNotification($event)">
+                Send Notification</button> 
             </div>
         </div>
         <br>

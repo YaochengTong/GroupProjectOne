@@ -4,13 +4,11 @@ import com.app.groupprojectapplication.dao.IPersonDao;
 import com.app.groupprojectapplication.domain.Person;
 import java.math.BigInteger;
 import java.util.List;
+import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.Query;
 
 @Repository
 public class PersonDaoImpl implements IPersonDao {
@@ -66,12 +64,20 @@ public class PersonDaoImpl implements IPersonDao {
         Query query = session.createQuery(hql);
         query.setParameter("first_name", firstName);
         query.setParameter("last_name", lastName);
-        if(query.getResultList().size() != 1) {
+        if (query.getResultList().size() != 1) {
             return null;
         }
         Person person = (Person) (query).getResultList().get(0);
 
         return person;
+    }
+
+    @Override
+    public void updatePhoneById(String phone, Integer id) {
+        Session session = sessionFactory.getCurrentSession();
+        Person p = session.get(Person.class, id);
+        p.setPrimaryPhone(phone);
+        session.saveOrUpdate(p);
     }
 
 }
