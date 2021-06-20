@@ -29,6 +29,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import {MatSelectModule} from '@angular/material/select';
 import {FormControl} from '@angular/forms';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 
 import { HttpClientModule } from '@angular/common/http';
@@ -82,7 +83,8 @@ import { DetailsDialogComponent } from './components/hire/details-dialog/details
     MatProgressSpinnerModule,
     MatTabsModule,
     MatSelectModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatButtonToggleModule
   ],
   providers: [HTTPReq],
   exports: [

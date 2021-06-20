@@ -79,6 +79,12 @@ public class EmployeeDaoImpl implements IEmployeeDao {
     }
 
     @Override
+    public void mergeEmployee(Employee employee) {
+        Session session = sessionFactory.getCurrentSession();
+        session.merge(employee);
+    }
+
+
     public Employee getEmployeeByPerson(Person p) {
         Session session = sessionFactory.getCurrentSession();
         List<Employee> resultList = session.createQuery("FROM Employee WHERE person.id = " + p.getId()).getResultList();
@@ -93,5 +99,6 @@ public class EmployeeDaoImpl implements IEmployeeDao {
             .createNativeQuery("SELECT house_id FROM employee WHERE person_id =" + personId).getResultList();
         return resultList.get(0);
     }
+
 
 }
