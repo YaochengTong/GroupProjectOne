@@ -40,7 +40,7 @@
     
     
 
-        <ng-container matColumnDef="action">
+        <ng-container matColumnDef="action" >
             <!-- <button [id]="element.idx" cursor: pointer" (click)="sendNotification($event)">Send Notification</button>  -->
                 <th mat-header-cell *matHeaderCellDef>Action</th>
                   <td mat-cell *matCellDef="let element">
@@ -48,22 +48,29 @@
 
                       <mat-button-toggle-group 
                       *ngIf="element.visaInfo.nextStep == 'I-983 NEED TO BE SIGNED'"aria-label="Font Style">
-                          <mat-button-toggle value="preview" class="childButton"
+                          <mat-button-toggle value="preview" 
                             style="cursor: pointer"(click)="preview(element.userId)" >
                             Preview
                           </mat-button-toggle>
 
-                          <mat-button-toggle value="download" class="childButton"
+                          <mat-button-toggle value="download" 
                             style="cursor: pointer;"(click)="downLoad(element.userId)" >
                             DownLoad
                           </mat-button-toggle>
+                          <!-- <a href="https://gp1storage.s3.us-east-2.amazonaws.com/{{element.userId}}/I-983 Filled.txt" >Preivew</a >
+                          <br/>
+                          <a href="https://gp1storage.s3.us-east-2.amazonaws.com/{{element.userId}}/I-983 Filled.txt" target="_blank" download >DownLoad</a > -->
                      </mat-button-toggle-group>
 
                     <button mat-raised-button color="warn" style="cursor: pointer" 
                     *ngIf="element.visaInfo.nextStep != 'I-983 NEED TO BE SIGNED'"
                     (click)="sendEmail(element.visaInfo.nextStep, element.userId)"> 
                     Notify </button>
-                    
+                    <!-- <a style="cursor: pointer; color:blue" 
+                    *ngIf="element.visaInfo.nextStep != 'I-983 NEED TO BE SIGNED'"
+                    (click)="sendEmail(element.visaInfo.nextStep, element.userId)"> 
+                    Notify </a>
+                     -->
                     
                   </td>
        
