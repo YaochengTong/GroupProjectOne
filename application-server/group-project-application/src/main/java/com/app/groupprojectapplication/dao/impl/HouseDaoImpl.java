@@ -1,6 +1,7 @@
 package com.app.groupprojectapplication.dao.impl;
 
 import com.app.groupprojectapplication.dao.IHouseDao;
+import com.app.groupprojectapplication.domain.Employee;
 import com.app.groupprojectapplication.domain.House;
 import java.util.List;
 import org.hibernate.Session;
@@ -30,8 +31,8 @@ public class HouseDaoImpl implements IHouseDao {
     @Override
     public List<House> getAllHouse() {
         Session session = sessionFactory.getCurrentSession();
-        List<House> houseList = session.createQuery("FROM House").getResultList();
-        return houseList;
+        List<House> resultList = session.createQuery("FROM House").getResultList();
+        return resultList;
     }
 
     @Override

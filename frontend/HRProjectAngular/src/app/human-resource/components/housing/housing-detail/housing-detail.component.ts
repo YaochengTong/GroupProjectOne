@@ -35,6 +35,8 @@ export class HousingDetailComponent implements OnInit {
       this.house = h;
       this.facility = h.houseFacilityInfoList;
       this.employee = h.houseEmployeeInfoList;
+      this.reports = h.houseFacilityInfoList['houseFacilityReportInfo'];
+      console.log(this.reports);
     });
   }
 
@@ -45,7 +47,7 @@ export class HousingDetailComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(ReportDialogComponent, {
       width: '250px',
-      data: { facility: this.facility },
+      data: { reports: this.reports },
     });
 
     dialogRef.afterClosed().subscribe(() => {

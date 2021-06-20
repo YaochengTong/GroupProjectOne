@@ -1,19 +1,19 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav
     #drawer
-    class="sidenav"
-    fixedInViewport
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
+    class="sidenav"
+    fixedInViewport
   >
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <img
+        alt="avatar"
         class="avatar"
         matListAvatar
         src="https://markdown-bucket.s3.us-east-2.amazonaws.com/uPic/png-clipart-login-computer-icons-avatar-icon-monochrome-black-thumbnail_2021_06_16_17_09_28.png"
-        alt="avatar"
       />
       <a mat-list-item routerLink="home" routerLinkActive="active-list-item">
         <mat-icon>home</mat-icon>
@@ -32,19 +32,44 @@
         <mat-icon>flight</mat-icon>
         <span>&nbsp; Visa Status</span>
       </a>
-      <a mat-list-item routerLink="housing" routerLinkActive="active-list-item">
-        <mat-icon>house</mat-icon>
-        <span>&nbsp; Housing</span>
-      </a>
+      <div class="nested-menu">
+        <a
+          (click)="showMenu = !showMenu"
+          id="housingNav"
+          mat-list-item
+          routerLink="housing/housing-page"
+        >
+          <mat-icon>house</mat-icon>
+          <span>&nbsp; Housing</span>
+        </a>
+        <ul [class.expand]="showMenu" class="nested submenu">
+          <li>
+            <a
+              routerLink="housing/housing-page"
+              routerLinkActive="active-list-item"
+            >
+              <span>My Housing Info</span>
+            </a>
+          </li>
+          <li>
+            <a
+              routerLink="housing/facility-report"
+              routerLinkActive="active-list-item"
+            >
+              <span>My Facility Report</span>
+            </a>
+          </li>
+        </ul>
+      </div>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
       <button
-        type="button"
+        (click)="drawer.toggle()"
         aria-label="Toggle sidenav"
         mat-icon-button
-        (click)="drawer.toggle()"
+        type="button"
       >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
@@ -52,11 +77,11 @@
 
       <span class="example-spacer"></span>
       <span>Hello, {{ username }}</span>
-      <button mat-icon-button [matMenuTriggerFor]="beforeMenu">
+      <button [matMenuTriggerFor]="beforeMenu" mat-icon-button>
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #beforeMenu="matMenu" xPosition="before">
-        <button mat-menu-item (click)="onLogout()">Log out</button>
+        <button (click)="onLogout()" mat-menu-item>Log out</button>
       </mat-menu>
     </mat-toolbar>
     <!-- Add Content Here -->

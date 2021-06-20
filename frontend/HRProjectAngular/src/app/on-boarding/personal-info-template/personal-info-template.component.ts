@@ -60,6 +60,7 @@ export class PersonalInfoTemplateComponent implements OnInit {
       if(value.application && this.rejected == "true"){
         this.application = value.application;
         console.log(this.application)
+        this.email = this.application.email;
         this.personalInfoForm.setValue({
           firstName: this.application.firstName,
           lastName: this.application.lastName,
@@ -89,10 +90,10 @@ export class PersonalInfoTemplateComponent implements OnInit {
         ]);
 
         this.filePaths = {
-          'driverLicense': this.application.documents.find(item => item.title='DriverLicense')?.path,
-          'WorkAuth': this.application.documents.find(item => item.title='WorkAuth')?.path,
-          'I983': this.application.documents.find(item => item.title='I983')?.path,
-          'OPT': this.application.documents.find(item => item.title='OPTReceipt')?.path,
+          'driverLicense': this.application.documents.find(item => item.title=='DriverLicense')?.path,
+          'WorkAuth': this.application.documents.find(item => item.title=='WorkAuth')?.path,
+          'I983': this.application.documents.find(item => item.title=='I983')?.path,
+          'OPT': this.application.documents.find(item => item.title=='OPTReceipt')?.path,
         }
 
       }

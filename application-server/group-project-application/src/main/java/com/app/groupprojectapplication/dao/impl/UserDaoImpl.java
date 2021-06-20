@@ -30,9 +30,15 @@ public class  UserDaoImpl implements IUserDao {
 
     @Override
     public User getUserById(Integer id) {
+//        Session session = sessionFactory.getCurrentSession();
+//        User user = session.get(User.class, id);
         Session session = sessionFactory.getCurrentSession();
-        User user = session.get(User.class, id);
-        return user;
+        String hql = "select u FROM User u join fetch u.person where u.id=:user_id";
+        Query query = session.createQuery(hql);
+        query.setParameter("user_id", id);
+        if(query.getResultList().size() != 1)
+            return null;
+        return (User) query.getResultList().get(0);
     }
 
 

@@ -142,7 +142,7 @@ public class ProfileServiceImpl implements IProfileService {
             addressSection.setPrimaryAddr(addrMapList.get(0));
             addressSection.setSecondaryAddr(addrMapList.get(1));
         } else {
-            addressSection.setPrimaryAddr(null);
+            addressSection.setPrimaryAddr(addrMapList.get(0));
             addressSection.setSecondaryAddr(null);
         }
 

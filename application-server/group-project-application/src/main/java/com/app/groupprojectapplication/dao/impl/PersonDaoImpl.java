@@ -80,6 +80,12 @@ public class PersonDaoImpl implements IPersonDao {
         session.saveOrUpdate(p);
     }
 
+    @Override
+    public void mergePerson(Person person) {
+        Session session = sessionFactory.getCurrentSession();
+        session.merge(person);
+    }
+
 }
 
 
