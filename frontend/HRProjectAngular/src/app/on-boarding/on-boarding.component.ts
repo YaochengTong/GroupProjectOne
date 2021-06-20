@@ -22,10 +22,10 @@ export class OnBoardingComponent implements OnInit{
   constructor(private fb: FormBuilder, private router: Router, private messageService: MessageService,
       private route: ActivatedRoute, private httpRequestService: HTTPReq) {
 
-    this.fileI983 = new FormControl(this.files, [
-      Validators.required,
-      MaxSizeValidator(1024 * 1024),
-    ]);
+    // this.fileI983 = new FormControl(this.files, [
+    //   Validators.required,
+    //   MaxSizeValidator(1024 * 1024),
+    // ]);
 
     this.fileOPTReceipt = new FormControl(this.files, [
       Validators.required,
@@ -44,7 +44,7 @@ export class OnBoardingComponent implements OnInit{
 
 
     this.fileForm = new FormGroup({
-      fileI983 :this.fileI983,
+      //fileI983 :this.fileI983,
       fileOPTReceipt: this.fileOPTReceipt
     });
 
@@ -61,7 +61,7 @@ export class OnBoardingComponent implements OnInit{
   filePaths: any = {
     'driverLicense': '',
     'WorkAuth': '',
-    'I983': '',
+    //'I983': '',
     'OPT': '',
   }
 
@@ -103,13 +103,13 @@ export class OnBoardingComponent implements OnInit{
         this.filePaths = {
           'driverLicense': this.application.documents.find(item => item.title=='DriverLicense')?.path,
           'WorkAuth': this.application.documents.find(item => item.title=='WorkAuth')?.path,
-          'I983': this.application.documents.find(item => item.title=='I983')?.path,
+          //'I983': this.application.documents.find(item => item.title=='I983')?.path,
           'OPT': this.application.documents.find(item => item.title=='OPTReceipt')?.path,
         }
 
-        this.fileI983.setValidators([
-          MaxSizeValidator(1024 * 1024),
-        ])
+        // this.fileI983.setValidators([
+        //   MaxSizeValidator(1024 * 1024),
+        // ])
         this.fileOPTReceipt.setValidators([
           MaxSizeValidator(1024 * 1024),
         ]);
@@ -144,7 +144,7 @@ export class OnBoardingComponent implements OnInit{
   color: ThemePalette = 'primary';
   accept: string | undefined;
   multiple: boolean = false;
-  fileI983: FormControl;
+  //fileI983: FormControl;
   fileOPTReceipt: FormControl;
   fileWorkAuth: FormControl;
   fileDriverLicense: FormControl;
@@ -327,7 +327,7 @@ export class OnBoardingComponent implements OnInit{
 
     //put the files you want to upload into an array
     let arr: File[] = [
-      this.fileI983.value, 
+      //this.fileI983.value, 
       this.fileOPTReceipt.value,
       this.fileDriverLicense,
       this.fileWorkAuth
@@ -336,7 +336,7 @@ export class OnBoardingComponent implements OnInit{
     console.log(arr)
 
     let fileTitles: any[] = [
-      'I983',
+      //'I983',
       'OPTReceipt',
       'DriverLicense',
       'WorkAuth'
