@@ -58,6 +58,13 @@ export class OnBoardingComponent implements OnInit{
 
   application: any = {};
 
+  filePaths: any = {
+    'driverLicense': '',
+    'WorkAuth': '',
+    'I983': '',
+    'OPT': '',
+  }
+
   ngOnInit(): void {
     this.email = localStorage.getItem('email');
     this.userId = localStorage.getItem('userId');
@@ -92,6 +99,23 @@ export class OnBoardingComponent implements OnInit{
           carModel: car[1]?car[1]: '',
           carColor: car[2]?car[2]: ''
         })
+        this.showSecondEmergencyContact = this.application.emergencyContactList.length > 1;
+        this.filePaths = {
+          'driverLicense': this.application.documents.find(item => item.title=='DriverLicense')?.path,
+          'WorkAuth': this.application.documents.find(item => item.title=='WorkAuth')?.path,
+          'I983': this.application.documents.find(item => item.title=='I983')?.path,
+          'OPT': this.application.documents.find(item => item.title=='OPTReceipt')?.path,
+        }
+
+        this.fileI983.setValidators([
+          MaxSizeValidator(1024 * 1024),
+        ])
+        this.fileOPTReceipt.setValidators([
+          MaxSizeValidator(1024 * 1024),
+        ]);
+
+        this.email = this.application.email;
+
         this.messageService.sendMessage({"application": this.application});
       }
     );
@@ -104,6 +128,7 @@ export class OnBoardingComponent implements OnInit{
 
   //template values
   emergencyContact: string = "Emergency Contact";
+  emergencyContact2: string = "Emergency Contact 2";
   referenceContact: string = "Reference Contact";
   showSecondEmergencyContact: boolean = false;
   email:any;
@@ -216,7 +241,7 @@ export class OnBoardingComponent implements OnInit{
         referenceContactState: data.State,
         referenceContactPostalCode: data.PostalCode,
         referenceContactStateFullName: this.states.find((item) => item.abbreviation 
-           == this.referenceFormValue.referenceContactState)?.name
+           == data.State)?.name
     }
   };
 
@@ -235,6 +260,7 @@ export class OnBoardingComponent implements OnInit{
       emergency1StateFullName: ''
   };
   dataRefreshForEmergency1(data: any): void{
+    console.log(data)
     this.emergency1FormValue = {
       emergency1FirstName: data.FirstName,
       emergency1LastName: data.LastName,
@@ -248,7 +274,7 @@ export class OnBoardingComponent implements OnInit{
       emergency1State: data.State,
       emergency1PostalCode: data.PostalCode,
       emergency1StateFullName: this.states.find((item) => item.abbreviation 
-           == this.emergency1FormValue.emergency1State)?.name
+           == data.State)?.name
     }
   }
 
@@ -280,7 +306,7 @@ export class OnBoardingComponent implements OnInit{
       emergency2State: data.State,
       emergency2PostalCode: data.PostalCode,
       emergency2StateFullName: this.states.find((item) => item.abbreviation 
-           == this.emergency2FormValue.emergency2State)?.name
+           == data.State)?.name
     }
   }
 
@@ -294,6 +320,8 @@ export class OnBoardingComponent implements OnInit{
 
   onSubmit(): void {
     
+  console.log(this.personalInfoFormValue)
+
     //create a new formData
     let formData: FormData = new FormData();
 
@@ -323,17 +351,29 @@ export class OnBoardingComponent implements OnInit{
     paramObj['stateFullName'] = this.states.find((item) => item.abbreviation 
           == this.phoneAddressCarForm.value.state)?.name
 
+    if(!(this.personalInfoFormValue.dateOfBirth instanceof Date)){
+      this.personalInfoFormValue.dateOfBirth = new Date(this.personalInfoFormValue.dateOfBirth);
+    }
     let toTimestamp = this.personalInfoFormValue.dateOfBirth.getTime();
     paramObj['dateOfBirth'] = toTimestamp;
 
     if(this.personalInfoFormValue.driverLicenseExp){
+      if(!(this.personalInfoFormValue.driverLicenseExp instanceof Date)){
+        this.personalInfoFormValue.driverLicenseExp = new Date(this.personalInfoFormValue.driverLicenseExp);
+      }
       let toTimestamp2 = this.personalInfoFormValue.driverLicenseExp.getTime();
       paramObj['driverLicenseExp'] = toTimestamp2;
     }
 
+    if(!(this.personalInfoFormValue.authorizationStartDate instanceof Date)){
+      this.personalInfoFormValue.authorizationStartDate = new Date(this.personalInfoFormValue.authorizationStartDate);
+    }
     let toTimestamp3 = this.personalInfoFormValue.authorizationStartDate.getTime();
     paramObj['authorizationStartDate'] = toTimestamp3;
 
+    if(!(this.personalInfoFormValue.authorizationEndDate instanceof Date)){
+      this.personalInfoFormValue.authorizationEndDate = new Date(this.personalInfoFormValue.authorizationEndDate);
+    }
     let toTimestamp4 = this.personalInfoFormValue.authorizationEndDate.getTime();
     paramObj['authorizationEndDate'] = toTimestamp4;
 
@@ -347,22 +387,25 @@ export class OnBoardingComponent implements OnInit{
       }
     }
 
-    this.submitting = true;
+    //this.submitting = true;
+
+
+    console.log(paramObj)
 
     //first argument: path
     //second argument formData: the form that contains your files
     //third argument obj: the object that contains the information you want to send to the backend
     //a.k.a the OnBoardingForm
-    this.httpRequestService.fileUploadWithParams('/hire/submitOnboard', formData, paramObj).subscribe(
-        (data: any) => {
-            console.log(data);
-            this.submitting = false;
-            this.router.navigate(['/pending']);
-        },
-        err => {
-            console.log(err);
-            this.submitting = false;
-        });
+    // this.httpRequestService.fileUploadWithParams('/hire/submitOnboard', formData, paramObj).subscribe(
+    //     (data: any) => {
+    //         console.log(data);
+    //         this.submitting = false;
+    //         this.router.navigate(['/pending']);
+    //     },
+    //     err => {
+    //         console.log(err);
+    //         this.submitting = false;
+    //     });
 
   }
 

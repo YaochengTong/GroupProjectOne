@@ -58,6 +58,7 @@ export class HireComponent implements OnInit{
         //console.log(value)
         if(value.refreshNeeded){
           this.getApplicationTable();
+          this.dialog.closeAll()
         }
     });
 
@@ -172,7 +173,7 @@ export class HireComponent implements OnInit{
     if(this.currentVisitedId !== id){
       this.resetCommentObj();
     }
-    const dialogRef = this.dialog.open(DetailsDialogComponent, {
+    let dialogRef = this.dialog.open(DetailsDialogComponent, {
       data: { application: obj, commentObj: this.commentsObj },
       minHeight: '700px',
       minWidth: '1200px',

@@ -190,6 +190,7 @@
               <app-contact-template 
                 [componentTitle]="referenceContact"
                 #ReferenceContact
+                [rejected]="rejected"
                 (updateForm)="dataRefreshForReference($event)">
               </app-contact-template>
             </mat-step>
@@ -198,6 +199,7 @@
               <ng-template matStepLabel>Emergency Contact</ng-template>
               <app-contact-template 
                 [componentTitle]="emergencyContact"
+                [rejected]="rejected"
                 #EmergencyContact
                 (updateForm)="dataRefreshForEmergency1($event)"
                 >
@@ -219,8 +221,9 @@
               <div *ngIf="showSecondEmergencyContact">
                 <br/>
                 <app-contact-template 
-                  [componentTitle]="emergencyContact"
+                  [componentTitle]="emergencyContact2"
                   #EmergencyContact2
+                  [rejected]="rejected"
                   (updateForm)="dataRefreshForEmergency2($event)">
                 </app-contact-template>
               </div>
@@ -232,6 +235,7 @@
               <ng-template matStepLabel>Personal Documents</ng-template>
               <div class="row">
                 <div class="col">
+                  <span *ngIf="rejected=='true'">ok (Most Recent upload is <a [href]="filePaths.I983">here)</a></span>
                   <mat-card-content>Please upload I983 with this template</mat-card-content>
                   <a
                     href="https://gp1storage.s3.us-east-2.amazonaws.com/template/i983.pdf"
@@ -253,6 +257,7 @@
               <br/>
               <div class="row">
                 <div class="col">
+                  <span *ngIf="rejected=='true'">ok (Most Recent upload is <a [href]="filePaths.OPT">here)</a></span>
                   <mat-card-content>Please upload OPT receipt</mat-card-content>
                 </div>
                 <div class="col">
