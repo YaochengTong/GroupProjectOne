@@ -22,4 +22,5 @@ public class VisaStatusInfo {
     private Integer idx;
     private Integer userId;
     private String message;
+    private String currStep;
 }

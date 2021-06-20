@@ -24,6 +24,9 @@ public class UserServiceImpl implements IUserService {
             resultMap.put("success", false);
         }
         else{
+            Integer id = user.getId();
+            Map<String, Object> statusMap = iUserDao.getApplicationStatus(id);
+            resultMap.put("application_status", statusMap.get("application_status"));
             resultMap.put("success", true);
             resultMap.put("user", user);
         }
@@ -58,4 +61,5 @@ public class UserServiceImpl implements IUserService {
         result = iUserDao.userRegister(param);
         return result;
     }
+
 }

@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface IStatusTableElementService {
     List<StatusTableElement> getStatus();
-    StatusTableElement getStatusByEmployeeId(Integer userId);
+    StatusTableElement getStatusByUserId(Integer userId);
 }

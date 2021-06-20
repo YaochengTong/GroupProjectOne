@@ -82,7 +82,7 @@ public class TestController {
             //change "test/" to {userid}/, so that the user's files will be uploaded to
             //the folder under his userid.
             //the result here will be the link to the uploaded file
-            String result = amazonS3FileService.upload(ips, "89/" + file.getOriginalFilename());
+            String result = amazonS3FileService.upload(ips, "template/" + file.getOriginalFilename());
             System.out.println(result);
             resultMap.put("link", result);
             file1.deleteOnExit();
@@ -102,6 +102,11 @@ public class TestController {
                 .getFiles("file");
         Map<String, Object> resultMap = new HashMap<>();
         return resultMap;
+    }
+
+    @GetMapping("/print-all-files")
+    public void print() {
+        amazonS3FileService.printOutName();
     }
 
     // for config

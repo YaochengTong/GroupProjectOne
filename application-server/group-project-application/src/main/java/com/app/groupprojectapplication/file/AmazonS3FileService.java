@@ -89,7 +89,7 @@ public class AmazonS3FileService implements InitializingBean {
     public void deleteFolder(String prefix) {
         ListObjectsRequest listObjectsRequest = new ListObjectsRequest().withBucketName(bucket).withPrefix(prefix + "/");
         ObjectListing objectListing = client.listObjects(listObjectsRequest);
-        for(S3ObjectSummary os : objectListing.getObjectSummaries()) {
+        for (S3ObjectSummary os : objectListing.getObjectSummaries()) {
             client.deleteObject(bucket, os.getKey());
         }
         printOutName();

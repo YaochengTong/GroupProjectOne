@@ -90,6 +90,7 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
             Person person = iUserDao.getPersonByUserId(userId);
             Integer dayLeft = iVisaStatusDao.getVisaAuthorizationLeftDay(employee.getId());
             String currentStep = getCurrentStep(iApplicationWorkFlowDao.getApplicationWorkFlowByUserIdAndApplicationType(userId, applicationType));
+            System.out.println(currentStep);
             visaStatusInfo = new VisaStatusInfo();
             visaStatusInfo.setUserId(userId);
             visaStatusInfo.setIdx(index);
@@ -101,6 +102,7 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
             visaStatusInfo.setDocumentReceived(setDocumentInfo(userId));
             visaStatusInfo.setNextStep(map.get(currentStep).get(0));
             visaStatusInfo.setMessage(message(currentStep, dayLeft));
+            visaStatusInfo.setCurrStep(map.get(currentStep).get(2));
         } catch (Exception e) {
             System.err.println("No such employee with user id "+ userId);
         }
@@ -109,9 +111,11 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
     }
 
     private String getCurrentStep(List<ApplicationWorkflow> applicationWorkflowList) {
+        System.out.println(applicationWorkflowList);
         applicationWorkflowList.sort((a,b) -> {
-            return map.get(b.getStatus()).get(2).compareTo(map.get(a.getStatus()).get(2));
+            return map.get(a.getStatus()).get(2).compareTo(map.get(b.getStatus()).get(2));
         });
+        System.out.println(applicationWorkflowList);
         return applicationWorkflowList.get(0).getStatus();
     }
 
@@ -164,11 +168,11 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
     }
 
     public String message(String currentStep, Integer dayLeft) {
-        return dayLeft < 100 ? map.get(currentStep).get(1) : null;
+        if (currentStep.equals("OPT EAD") && dayLeft >= 100) return null;
+        return map.get(currentStep).get(1);
     }
 
     public List<DocumentInfo> setDocumentInfo(Integer userId) {
-        System.out.println("in");
         List<String> documents = amazonS3FileService.printFilesInOneFolder(String.valueOf(userId));
         List<DocumentInfo> documentInfoList = new ArrayList<>();
         for (String document : documents) {

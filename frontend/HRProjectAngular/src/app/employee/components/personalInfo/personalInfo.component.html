@@ -129,7 +129,7 @@
             <p><strong>Authorization Start Date:</strong> {{employmentSection.authorizationStartDate.substring(0,10)}}</p> 
             <p><strong>Authorization End Date:</strong> {{employmentSection.authorizationEndDate.substring(0,10)}}</p>
             <p><strong>Employment Start Date:</strong> {{employmentSection.employmentStartDate.substring(0,10)}}</p>
-            <p><strong>Employment End Date:</strong> {{employmentSection.employmentEndDate.substring(0,10)}}</p>
+            <p><strong>Employment End Date:</strong> {{employmentSection.employmentEndDate?employmentSection.employmentEndDate.substring(0,10):''}}</p>
             <p><strong>Title: </strong>{{employmentSection.title}}</p>
           </div>
           <div>

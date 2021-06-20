@@ -9,10 +9,11 @@ import java.util.Objects;
 @Table(name = "user_role", schema = "hr_db")
 public class UserRole implements Serializable {
     private Integer id;
+    private User user;
     private byte activateFlag;
     private Timestamp createDate;
     private Timestamp modificationDate;
-    private User user;
+    private User lastModifiedUser;
     private Role role;
 
     @Id
@@ -58,6 +59,15 @@ public class UserRole implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="last_modification_user_id", referencedColumnName = "id")
+    public User getLastModifiedUser() {
+        return lastModifiedUser;
+    }
+    public void setLastModifiedUser(User lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id", referencedColumnName = "id")
     public User getUser() {
         return user;
     }

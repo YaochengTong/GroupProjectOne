@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HTTPReq } from 'src/app/service/HTTPReq/HTTPReq.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { ThemePalette } from '@angular/material/core';
+import { MaxSizeValidator } from '@angular-material-components/file-input';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-visa',
@@ -11,19 +15,57 @@ export class VisaComponent implements OnInit {
 
   private userId = localStorage.getItem("userId");
   // public visaInfo: any = {};
+  // public documents: any = {};
   public userName: string = "";
   public email: string = "";
-  // public documents: any = {};
   
 
   isDataAvailable: boolean = true;
   isShowMessage: boolean = true;
   messageNum: number = 0;
 
+
+   //File upload variables
+   color: ThemePalette = 'primary';
+   multiple: boolean = false;
+   fileI983!: FormControl;
+   fileOPTEAD!: FormControl;
+   fileI20!: FormControl;
+   fileOPTSTEMReceipt!: FormControl;
+   fileOPTSTEMEAD!: FormControl;
+   files: File | undefined;
+
   constructor(
     private httpRequestService: HTTPReq,
     private snackBar: MatSnackBar
-  ) {}
+  ) {
+    this.fileI983 = new FormControl(this.files, [
+      Validators.required,
+      MaxSizeValidator(1024 * 1024),
+    ]);
+
+    this.fileOPTEAD = new FormControl(this.files, [
+      Validators.required,
+      MaxSizeValidator(1024 * 1024),
+    ]);
+
+    this.fileI20 = new FormControl(this.files, [
+      Validators.required,
+      MaxSizeValidator(1024 * 1024),
+    ]);
+
+    this.fileOPTSTEMReceipt = new FormControl(this.files, [
+      Validators.required,
+      MaxSizeValidator(1024 * 1024),
+    ]);
+
+    this.fileOPTSTEMEAD = new FormControl(this.files, [
+      Validators.required,
+      MaxSizeValidator(1024 * 1024),
+    ]);
+
+
+  }
 
   ngOnInit(): void {
 
@@ -59,16 +101,23 @@ export class VisaComponent implements OnInit {
     "workAuthorization": "F1(OPT/CPT)",
     "authorizationStartDate": "2021-06-14",
     "authorizationEndDate": "2021-09-23",
-    "authorizationDayLeft": 96,
+    "authorizationDayLeft": 95,
     "documentReceived": [
-        "OPT_EAD.txt",
-        "OPT_Receipt.txt"
+        {
+            "name": "OPT EAD_2021-06-19",
+            "date": "2021-06-19"
+        },
+        {
+            "name": "OPT Receipt_2021-06-19",
+            "date": "2021-06-19"
+        }
     ],
     "nextStep": "I-983 for OPT STEM",
     "idx": 0,
     "userId": 558,
-    "message": "Please download and fill your I-983 form"
-  }
+    "message": "Please download and fill your I-983 form",
+    "currStep": "2"
+}
   documents = this.visaInfo.documentReceived ;
 
 }

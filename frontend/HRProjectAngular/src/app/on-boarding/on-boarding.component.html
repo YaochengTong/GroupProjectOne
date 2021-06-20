@@ -19,6 +19,7 @@
               <ng-template matStepLabel>Personal Information</ng-template>
               <app-personal-info-template 
                   [email]="email" 
+                  [rejected]="rejected"
                   #personalInfoTemplate 
                   [formGroup]="personalInfoTemplate.personalInfoForm"
                   (updateForm)="dataRefreshForPersonalInfo($event)"
@@ -33,6 +34,7 @@
                 <ng-template matStepLabel>Phone, Address and Car</ng-template>
                 <div class="row">
                   <div class="col">
+                    <span *ngIf="rejected=='true'">ok</span>
                     <mat-form-field class="full-width">
                       <input
                         matInput
@@ -49,6 +51,7 @@
                   </div>
           
                   <div class="col">
+                    <span *ngIf="rejected=='true'">ok</span>
                     <mat-form-field class="full-width">
                       <input
                         matInput
@@ -61,6 +64,7 @@
           
                 <div class="row">
                   <div class="col">
+                    <span *ngIf="rejected=='true'">ok</span>
                     <mat-form-field class="full-width">
                       <input
                         matInput
@@ -76,32 +80,22 @@
                     </mat-form-field>
                   </div>
                 </div>
-                <div class="row" *ngIf="!hasUnitNumber">
+
+                <div class="row">
                   <div class="col">
-                    <button
-                      mat-stroked-button
-                      type="button"
-                      color="primary"
-                      (click)="hasUnitNumber = !hasUnitNumber"
-                    >
-                      + Add C/O, Apt, Suite, Unit
-                    </button>
-                  </div>
-                </div>
-                <div class="row" *ngIf="hasUnitNumber">
-                  <div class="col">
+                    <span *ngIf="rejected=='true'">ok</span>
                     <mat-form-field class="full-width">
                       <textarea
                         matInput
                         placeholder="Address 2"
                         formControlName="address2"
-                        required
                       ></textarea>
                     </mat-form-field>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col">
+                    <span *ngIf="rejected=='true'">ok</span>
                     <mat-form-field class="full-width">
                       <input
                         matInput
@@ -117,6 +111,7 @@
                     </mat-form-field>
                   </div>
                   <div class="col">
+                    <span *ngIf="rejected=='true'">ok</span>
                     <mat-form-field class="full-width">
                       <mat-select placeholder="State" formControlName="state" required>
                         <mat-option
@@ -135,6 +130,7 @@
                   </div>
           
                   <div class="col">
+                    <span *ngIf="rejected=='true'">ok</span>
                     <mat-form-field class="full-width">
                       <input
                         matInput
@@ -165,18 +161,21 @@
                 <!--      Car      -->
                 <div class="row">
                   <div class="col">
+                    <span *ngIf="rejected=='true'">ok</span>
                     <mat-form-field class="full-width">
                       <input matInput placeholder="Maker" formControlName="carMaker"/>
                       <mat-hint align="end">Car Make</mat-hint>
                     </mat-form-field>
                   </div>
                   <div class="col">
+                    <span *ngIf="rejected=='true'">ok</span>
                     <mat-form-field class="full-width">
                       <input matInput placeholder="Model" formControlName="carModel"/>
                       <mat-hint align="end">Car Model</mat-hint>
                     </mat-form-field>
                   </div>
                   <div class="col">
+                    <span *ngIf="rejected=='true'">ok</span>
                     <mat-form-field class="full-width">
                       <input matInput placeholder="Color" formControlName="carColor"/>
                       <mat-hint align="end">Car Color</mat-hint>
@@ -191,6 +190,7 @@
               <app-contact-template 
                 [componentTitle]="referenceContact"
                 #ReferenceContact
+                [rejected]="rejected"
                 (updateForm)="dataRefreshForReference($event)">
               </app-contact-template>
             </mat-step>
@@ -199,6 +199,7 @@
               <ng-template matStepLabel>Emergency Contact</ng-template>
               <app-contact-template 
                 [componentTitle]="emergencyContact"
+                [rejected]="rejected"
                 #EmergencyContact
                 (updateForm)="dataRefreshForEmergency1($event)"
                 >
@@ -220,8 +221,9 @@
               <div *ngIf="showSecondEmergencyContact">
                 <br/>
                 <app-contact-template 
-                  [componentTitle]="emergencyContact"
+                  [componentTitle]="emergencyContact2"
                   #EmergencyContact2
+                  [rejected]="rejected"
                   (updateForm)="dataRefreshForEmergency2($event)">
                 </app-contact-template>
               </div>
@@ -233,6 +235,7 @@
               <ng-template matStepLabel>Personal Documents</ng-template>
               <div class="row">
                 <div class="col">
+                  <span *ngIf="rejected=='true'">ok (Most Recent upload is <a [href]="filePaths.I983">here)</a></span>
                   <mat-card-content>Please upload I983 with this template</mat-card-content>
                   <a
                     href="https://gp1storage.s3.us-east-2.amazonaws.com/template/i983.pdf"
@@ -254,6 +257,7 @@
               <br/>
               <div class="row">
                 <div class="col">
+                  <span *ngIf="rejected=='true'">ok (Most Recent upload is <a [href]="filePaths.OPT">here)</a></span>
                   <mat-card-content>Please upload OPT receipt</mat-card-content>
                 </div>
                 <div class="col">

@@ -39,16 +39,25 @@ export class HomeComponent implements OnInit{
     )
   }
 
-  sendEmail(email, nextStep, employeeId): void {
+  compare(data:any) {
+    console.log(data);
+    console.log(data != "I-983 NEED TO BE SIGNED");
+  }
+
+  sendEmail(nextStep, userId): void {
     let params = {
-      email: email,
-      nextStep: nextStep,
-      employeeId: employeeId,
+      message: nextStep,
+      userId: userId,
     }
-    alert("Sent Email")
-    this.httpRequestService.postData('/notification/nextStep', params).subscribe(
+    // alert("Sent Email")
+    this.httpRequestService.postData('/visa-status-management/send-notification', 
+    params,
+    'http://localhost:8999').subscribe(
       (data: any) => {
-        console.log(data);
+        // console.log(data);
+        if (data.success == true) {
+          alert("email sent");
+        }
       }
     )
   }

@@ -26,8 +26,15 @@ public class EmployeeDaoImpl implements IEmployeeDao {
     @Override
     public Employee getEmployeeById(Integer id) {
         Session session = sessionFactory.getCurrentSession();
-        Employee employee = session.get(Employee.class, id);
-        return employee;
+        //Employee employee = session.get(Employee.class, id);
+        //Session session = sessionFactory.getCurrentSession();
+        String hql = "select e FROM Employee e join fetch e.person WHERE e.id=:employee_Id";
+        Query query = session.createQuery(hql);
+        query.setParameter("employee_Id", id);
+        if (query.getResultList().size() != 1) {
+            return null;
+        }
+        return (Employee) query.getResultList().get(0);
     }
 
     @Override

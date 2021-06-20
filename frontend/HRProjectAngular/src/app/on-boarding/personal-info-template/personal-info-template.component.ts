@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MaxSizeValidator } from '@angular-material-components/file-input';
+import { MessageService } from 'src/app/service/Message/message.service';
 
 @Component({
   selector: 'app-personal-info-template',
@@ -13,14 +14,25 @@ export class PersonalInfoTemplateComponent implements OnInit {
 
   //user email
   @Input('email') email = 'test@gmail.com';
+  @Input('rejected') rejected = 'false';
+  
+  application:any = {};
+
   @Output() updateForm: EventEmitter<any> = new EventEmitter<any>();
   @Output() updateDriverLicense: EventEmitter<any> = new EventEmitter<any>();
   @Output() updateWorkAuth: EventEmitter<any> = new EventEmitter<any>();
   @Output() updateFormValid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   date = new FormControl(this.getMonthYearString(new Date()));
+  messageSub: any;
+  filePaths: any = {
+    'driverLicense': '',
+    'WorkAuth': '',
+    'I983': '',
+    'OPT': '',
+  }
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private messageService: MessageService) {
     this.fileWorkAuth = new FormControl(this.files, [
       Validators.required,
       MaxSizeValidator(1024 * 1024),
@@ -41,6 +53,50 @@ export class PersonalInfoTemplateComponent implements OnInit {
     });
     this.fileWorkAuth.valueChanges.subscribe(val => {
       this.updateWorkAuth.emit(val);
+    });
+
+    this.messageSub = this.messageService.messageObj$.subscribe(value => {
+      console.log(value)
+      if(value.application && this.rejected == "true"){
+        this.application = value.application;
+        console.log(this.application)
+        this.email = this.application.email;
+        this.personalInfoForm.setValue({
+          firstName: this.application.firstName,
+          lastName: this.application.lastName,
+          middleName: this.application.middleName,
+          ssn: this.application.SSN,
+          gender: this.application.Gender,
+          dateOfBirth: this.application.DateOfBirth,
+      
+          isCitizen: this.application.visaType == 'green card' || this.application.visaType == 'citizen',
+          citizenType: (this.application.visaType == 'green card' 
+            || this.application.visaType == 'citizen')? this.application.visaType: 'green card',
+          authorizationType: this.application.visaType,
+          otherAuthorizationType: '',
+          authorizationStartDate: this.application.visaStartDate,
+          authorizationEndDate: this.application.visaEndDate,
+      
+          hasDriverLicense: this.application.DriverLicense?true:false,
+          driverLicense: this.application.DriverLicense,
+          driverLicenseExp: this.application.DriverLicenseExpireDate,
+        });
+        this.authorizationSelection = this.application.visaType;
+        this.fileWorkAuth.setValidators([
+          MaxSizeValidator(1024 * 1024),
+        ])
+        this.fileDriverLicense.setValidators([
+          MaxSizeValidator(1024 * 1024),
+        ]);
+
+        this.filePaths = {
+          'driverLicense': this.application.documents.find(item => item.title=='DriverLicense')?.path,
+          'WorkAuth': this.application.documents.find(item => item.title=='WorkAuth')?.path,
+          'I983': this.application.documents.find(item => item.title=='I983')?.path,
+          'OPT': this.application.documents.find(item => item.title=='OPTReceipt')?.path,
+        }
+
+      }
     });
   }
 
@@ -64,7 +120,6 @@ export class PersonalInfoTemplateComponent implements OnInit {
   citizenType: string | undefined = 'Green Card';
 
   personalInfoForm = this.fb.group({
-    company: '',
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
     middleName: '',

@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { VisaNotificationComponent } from './visa-notification/visa-notification.component';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { DateAdapter } from '@angular/material/core';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-visa',
@@ -39,6 +40,7 @@ export class VisaComponent implements OnInit {
   message: string = "";
   employeeEmail: string = "";
 
+
   columnsToDisplay = ['Full Name', 'Work Authorization', 'Expiration Date', 'Day Left'];
 
   
@@ -51,7 +53,7 @@ export class VisaComponent implements OnInit {
     this.httpRequestService.getData('/visa-status-management/all', null, 'http://localhost:8999').subscribe(
       (data: any) => {
         this.isDataAvailable = true;
-        // console.log(data.visaStatusInfoList);
+        console.log(data.visaStatusInfoList);
         this.visaStatusInfo = data.visaStatusInfoList;
       }
     )
@@ -59,11 +61,12 @@ export class VisaComponent implements OnInit {
   
   }
 
+
   onEdit(event: any) {
     this.isEdit = true;
     let index = event.currentTarget.id;
     this.tempData = this.visaStatusInfo[index];
-    // console.log(this.tempData);
+    console.log(this.tempData);
   }
 
   onCancel(event: any) {
@@ -71,7 +74,7 @@ export class VisaComponent implements OnInit {
     this.isSubmitted = false;
     let index = event.currentTarget.id;
     this.visaStatusInfo[index] = this.tempData;
-    // console.log(index);
+    console.log(index);
   }
 
   select(event: MatSelectChange) {
@@ -80,8 +83,6 @@ export class VisaComponent implements OnInit {
       text: event.source.triggerValue
     };
   }
-
-
 
   sendNotification(event: any) {
     
@@ -95,7 +96,7 @@ export class VisaComponent implements OnInit {
     params,
     'http://localhost:8999').subscribe(
       (data: any) => {
-        // console.log(data);
+        console.log(data);
         if (data.success == true) {
           this.employeeEmail = data.email;
           this.dialog.open(VisaNotificationComponent, {
@@ -160,6 +161,7 @@ export class VisaComponent implements OnInit {
         break;
     }
 
+    
     formattedDate = oriDate.toString().substring(4, 15).split(" ")[2] + "-" + month + "-" + oriDate.toString().substring(4, 15).split(" ")[1];
     return formattedDate;
   }
@@ -182,13 +184,10 @@ export class VisaComponent implements OnInit {
 
     let index = event.currentTarget.id;
     this.visaStatusInfo[index].authorizationDayLeft = 0;
-    
 
     var nameModifid = (<HTMLInputElement>document.getElementById("name-"+index)).value;
-    // var startDateModifid = (<HTMLInputElement>document.getElementById("startDate-"+index)).value;
-    // var endDateModifid = (<HTMLInputElement>document.getElementById("endDate-"+index)).value;
-    var startDateModifid = this.visaStatusInfo[index].authorizationStartDate;
-    var endDateModifid = this.visaStatusInfo[index].authorizationEndDate;
+    var startDateModifid = (<HTMLInputElement>document.getElementById("startDate-"+index)).value;
+    var endDateModifid = (<HTMLInputElement>document.getElementById("endDate-"+index)).value;
 
 
     if (nameModifid == "" || this.selectedData == null || startDateModifid == "" || endDateModifid == "") {
@@ -199,7 +198,6 @@ export class VisaComponent implements OnInit {
       return;
     }
 
-    
     this.isNameValid = true;
     this.isTypeValid = true;
     this.isStartDateValid = true;
@@ -208,25 +206,26 @@ export class VisaComponent implements OnInit {
 
     var typeModifid = this.selectedData.value;
 
+    console.log(typeModifid);
+    console.log(startDateModifid);
+    console.log(endDateModifid);
+
     this.isEdit = false;
 
     // update page data
     this.visaStatusInfo[index].fullName = nameModifid;
     this.visaStatusInfo[index].workAuthorization = typeModifid;
-
+    this.visaStatusInfo[index].authorizationStartDate = startDateModifid;
+    this.visaStatusInfo[index].authorizationEndDate = endDateModifid;
+    
     // parse to backend
     let params = {
       userId: this.visaStatusInfo[index].userId,
       fullName: nameModifid,
       workAuthorization: typeModifid,
-      authorizationStartDate: startDateModifid,
-      authorizationEndDate: endDateModifid,
+      authorizationStartDate: startDateModifid+"T00:00:00.000+00:00",
+      authorizationEndDate: endDateModifid+"T00:00:00.000+00:00",
     }
-
-    console.log("hello");
-    console.log(params);
-
-
     this.httpRequestService.postData('/visa-status-management/update', 
     params,
     'http://localhost:8999').subscribe(
@@ -244,70 +243,123 @@ export class VisaComponent implements OnInit {
   };
 
 //   visaStatusInfo = [
-//     {
-//         "fullName": "David Luo",
-//         "workAuthorization": "F1(OPT/CPT)",
-//         "authorizationStartDate": "2020-12-02",
-//         "authorizationEndDate": "2022-09-23",
-//         "authorizationDayLeft": 462,
-//         "documentReceived": [
-//             "I-983.txt",
-//             "OPT_EAD.txt",
-//             "OPT_Receipt.txt"
-//         ],
-//         "nextStep": "I-20 after I-983 isSubmitted",
-//         "idx": 0,
-//         "userId": 89
-//     },
-//     {
-//         "fullName": "Admin Admin",
-//         "workAuthorization": "F1(OPT/CPT)",
-//         "authorizationStartDate": "2021-06-14",
-//         "authorizationEndDate": "2021-12-23",
-//         "authorizationDayLeft": 188,
-//         "documentReceived": [
-//             "I-20.txt",
-//             "I-983.txt",
-//             "OPT_EAD.txt",
-//             "OPT_Receipt.txt",
-//             "OPT_STEM_EAD.txt",
-//             "OPT_STEM_Receipt.txt"
-//         ],
-//         "nextStep": "No Further Action Needed",
-//         "idx": 1,
-//         "userId": 556
-//     },
-//     {
-//         "fullName": "Ricard  Huang",
-//         "workAuthorization": "F1(OPT/CPT)",
-//         "authorizationStartDate": "2021-06-14",
-//         "authorizationEndDate": "2021-09-23",
-//         "authorizationDayLeft": 97,
-//         "documentReceived": [
-//             "I-20.txt",
-//             "I-983.txt",
-//             "OPT_EAD.txt",
-//             "OPT_Receipt.txt"
-//         ],
-//         "nextStep": "OPT STEM Receipt",
-//         "idx": 2,
-//         "userId": 557
-//     },
-//     {
-//         "fullName": "Bailey Bai",
-//         "workAuthorization": "F1(OPT/CPT)",
-//         "authorizationStartDate": "2021-06-14",
-//         "authorizationEndDate": "2021-09-23",
-//         "authorizationDayLeft": 97,
-//         "documentReceived": [
-//             "OPT_EAD.txt",
-//             "OPT_Receipt.txt"
-//         ],
-//         "nextStep": "I-983 for OPT STEM",
-//         "idx": 3,
-//         "userId": 558
-//     }
-// ]
+  //       {
+  //         "fullName": "ADMIN SUP",
+  //         "workAuthorization": "H1-B",
+  //         "authorizationStartDate": "2018-12-09",
+  //         "authorizationEndDate": "2030-12-05",
+  //         "authorizationDayLeft": 3455,
+  //         "documentReceived": [
+  //             {
+  //                 "name": "I-20_2021-06-19",
+  //                 "date": "2021-06-19"
+  //             },
+  //             {
+  //                 "name": "I-983 Filled_2021-06-19",
+  //                 "date": "2021-06-19"
+  //             },
+  //             {
+  //                 "name": "I-983 Signed_2021-06-19",
+  //                 "date": "2021-06-19"
+  //             },
+  //             {
+  //                 "name": "OPT EAD_2021-06-19",
+  //                 "date": "2021-06-19"
+  //             },
+  //             {
+  //                 "name": "OPT Receipt_2021-06-19",
+  //                 "date": "2021-06-19"
+  //             },
+  //             {
+  //                 "name": "OPT STEM EAD_2021-06-19",
+  //                 "date": "2021-06-19"
+  //             },
+  //             {
+  //                 "name": "OPT STEM Receipt_2021-06-19",
+  //                 "date": "2021-06-19"
+  //             }
+  //         ],
+  //         "nextStep": "No Further Action Needed",
+  //         "idx": 0,
+  //         "userId": 556,
+  //         "message": null
+  //     },
+  //     {
+  //         "fullName": "Ricard  Huang",
+  //         "workAuthorization": "F1(OPT/CPT)",
+  //         "authorizationStartDate": "2021-06-14",
+  //         "authorizationEndDate": "2021-09-23",
+  //         "authorizationDayLeft": 95,
+  //         "documentReceived": [
+  //             {
+  //                 "name": "I-983 Filled_2021-06-19",
+  //                 "date": "2021-06-19"
+  //             },
+  //             {
+  //                 "name": "OPT EAD_2021-06-19",
+  //                 "date": "2021-06-19"
+  //             },
+  //             {
+  //                 "name": "OPT Receipt_2021-06-19",
+  //                 "date": "2021-06-19"
+  //             }
+  //         ],
+  //         "nextStep": "OPT STEM Receipt",
+  //         "idx": 1,
+  //         "userId": 557,
+  //         "message": "Please upload your OPT STEM Receipt"
+  //     },
+  //     {
+  //         "fullName": "Bailey Bai",
+  //         "workAuthorization": "F1(OPT/CPT)",
+  //         "authorizationStartDate": "2021-06-14",
+  //         "authorizationEndDate": "2021-09-23",
+  //         "authorizationDayLeft": 95,
+  //         "documentReceived": [
+  //             {
+  //                 "name": "OPT EAD_2021-06-19",
+  //                 "date": "2021-06-19"
+  //             },
+  //             {
+  //                 "name": "OPT Receipt_2021-06-19",
+  //                 "date": "2021-06-19"
+  //             }
+  //         ],
+  //         "nextStep": "I-983 for OPT STEM",
+  //         "idx": 2,
+  //         "userId": 558,
+  //         "message": "Please download and fill your I-983 form"
+  //     },
+  //     {
+  //         "fullName": "David Li",
+  //         "workAuthorization": "F1(OPT/CPT)",
+  //         "authorizationStartDate": "2020-12-02",
+  //         "authorizationEndDate": "2022-09-23",
+  //         "authorizationDayLeft": 460,
+  //         "documentReceived": [
+  //             {
+  //                 "name": "I-983 Filled_2021-06-19",
+  //                 "date": "2021-06-19"
+  //             },
+  //             {
+  //                 "name": "I-983 Signed_2021-06-19",
+  //                 "date": "2021-06-19"
+  //             },
+  //             {
+  //                 "name": "OPT EAD_2021-06-19",
+  //                 "date": "2021-06-19"
+  //             },
+  //             {
+  //                 "name": "OPT Receipt_2021-06-19",
+  //                 "date": "2021-06-19"
+  //             }
+  //         ],
+  //         "nextStep": null,
+  //         "idx": 3,
+  //         "userId": 89,
+  //         "message": null
+  //     }
+  // ]
 
 }
 

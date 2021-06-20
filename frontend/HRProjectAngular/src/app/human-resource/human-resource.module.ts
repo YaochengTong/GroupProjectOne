@@ -26,11 +26,14 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatSelectModule} from '@angular/material/select';
+import {FormControl} from '@angular/forms';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+
 
 import { HttpClientModule } from '@angular/common/http';
 import { HTTPReq } from '../service/HTTPReq/HTTPReq.service';
+
 
 import { NameSectionDialogComponent } from './components/personal-info/name-section-dialog/name-section-dialog.component';
 import { AddressSectionDialogComponent } from './components/personal-info/address-section-dialog/address-section-dialog.component';
@@ -38,6 +41,7 @@ import { ContactSectionDialogComponent } from './components/personal-info/contac
 import { EmergencyContactSectionDialogComponent } from './components/personal-info/emergency-contact-section-dialog/emergency-contact-section-dialog.component';
 import { EmploymentSectionDialogComponent } from './components/personal-info/employment-section-dialog/employment-section-dialog.component';
 import { DetailsDialogComponent } from './components/hire/details-dialog/details-dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -78,7 +82,7 @@ import { DetailsDialogComponent } from './components/hire/details-dialog/details
     MatProgressSpinnerModule,
     MatTabsModule,
     MatSelectModule,
-    MatDatepickerModule,
+    MatDatepickerModule
   ],
   providers: [HTTPReq],
   exports: [
@@ -90,7 +94,6 @@ import { DetailsDialogComponent } from './components/hire/details-dialog/details
     AddressSectionDialogComponent,
     ContactSectionDialogComponent,
     EmergencyContactSectionDialogComponent,
-    EmploymentSectionDialogComponent,
-  ],
+    EmploymentSectionDialogComponent],
 })
 export class HumanResourceModule {}

@@ -7,6 +7,7 @@ import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.co
 import { AuthGuardForEmployee } from './core/auth.guardForEmployee';
 import { AuthGuardForHR } from './core/auth.guardForHR';
 import { OnBoardingComponent } from './on-boarding/on-boarding.component';
+import { PendingComponent } from './shared/pending/pending.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
     path: 'human-resource',
     loadChildren: () => HumanResourceModule,
     canActivate: [AuthGuardForHR],
+  },
+  { 
+    path: 'pending', 
+    component: PendingComponent 
   },
   { path: '**', component: PageNotFoundComponent },
 ];

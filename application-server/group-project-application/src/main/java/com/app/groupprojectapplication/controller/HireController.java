@@ -47,6 +47,7 @@ public class HireController {
     public Map<String, Object> auditOnboardApplication(@RequestParam Map<String, Object> paramMap){
         Map<String, Object> resultMap = new HashMap<>();
         iHireService.auditApplications(paramMap);
+        resultMap.put("result", "success");
         return resultMap;
     }
 }
