@@ -182,12 +182,12 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
             ips = files.get(0).getInputStream();
             String result = amazonS3FileService.upload(ips, userId + "/" + paramMap.get("step"));
             ips.close();
-//            PersonalDocument personalDocument = new PersonalDocument();
-//            personalDocument.setCreateDate(timestamp);
-//            personalDocument.setTitle(paramMap.get("title").toString());
-//            personalDocument.setPath(result);
-//            personalDocument.setUser(user);
-//            iPersonalDocumentDao.insertPersonalDocument(personalDocument);
+            PersonalDocument personalDocument = new PersonalDocument();
+            personalDocument.setCreateDate(timestamp);
+            personalDocument.setTitle(paramMap.get("title").toString());
+            personalDocument.setPath(result);
+            personalDocument.setUser(user);
+            iPersonalDocumentDao.insertPersonalDocument(personalDocument);
             System.out.println(result);
             resultMap.put("success", true);
         } catch (IOException e) {
