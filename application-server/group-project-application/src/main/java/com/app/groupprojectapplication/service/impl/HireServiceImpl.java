@@ -168,7 +168,8 @@ public class HireServiceImpl implements IHireService {
                 false,
                 false,
                 paramMap.get("emergency1Relationship").toString());
-        iContactDao.insertContact(contact);
+        if(existedPerson == null)
+            iContactDao.insertContact(contact);
 
 
         //emergency contact 2
@@ -410,6 +411,7 @@ public class HireServiceImpl implements IHireService {
             Map<String, Object> map = new HashMap<>();
             User user = awf.getUser();
             map.put("applicationId", awf.getId());
+            map.put("applicationStatus", awf.getStatus());
             map.put("userId", user.getId());
             map.put("email", user.getEmail());
             Person person = user.getPerson();
@@ -561,6 +563,11 @@ public class HireServiceImpl implements IHireService {
 
         resultMap.put("result", "success");
         return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> onboardReSubmission(List<MultipartFile> files, Map<String, Object> paramMap) {
+        return null;
     }
 
 }
