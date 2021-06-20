@@ -34,6 +34,8 @@ export class CheckEmployeeComponent implements OnInit, AfterViewInit {
     // 'len'
   ];
 
+
+  
   constructor(
     private httpRequestService: HTTPReq,
   ) {
@@ -49,16 +51,15 @@ export class CheckEmployeeComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     // this.httpRequestService.getData('/profile/all', null, 'http://localhost:8999').subscribe(
     //   (data:any) => {
+    //     this.isDataAvailable = true;
     //     this.dataSource = new MatTableDataSource<PeriodicElement>(data.AllProfile);
     //     this.len = Object.keys(data.AllProfile).length;
     //   }
     // )
-    this.dataSource.paginator = this.paginator;
+    // this.dataSource.paginator = this.paginator;
   }
 
-
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
+  @ViewChild(MatPaginator, {static : true}) paginator!: MatPaginator;
   ngAfterViewInit() {
   this.dataSource.paginator = this.paginator;
   }

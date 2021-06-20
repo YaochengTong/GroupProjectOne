@@ -325,6 +325,7 @@ public class HouseServiceImpl implements IHouseService {
         User u = iUserDao.getUserById(userId);
         System.out.println(u.toString());
         Employee e = iEmployeeDao.getEmployeeByPerson(u.getPerson());
+        if (e == null) { return null; }
         House h = iHouseDao.getHouseById(iEmployeeDao.getHouseIdByEmployee(e));
         return h;
     }
