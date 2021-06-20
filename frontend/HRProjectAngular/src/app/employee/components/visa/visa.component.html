@@ -92,7 +92,7 @@
               <mat-icon  ngxMatFileInputIcon>folder</mat-icon>
             </ngx-mat-file-input>
           </mat-form-field>
-          <button id="2" mat-raised-button (click)="onSubmit($event)" color="primary" style="float:right; margin: auto;" [disabled]="isSubmitted">Upload</button>
+          <button id="1" mat-raised-button (click)="onSubmit($event)" color="primary" style="float:right; margin: auto;" [disabled]="isSubmitted">Upload</button>
           <p *ngIf="isSubmitted" style="color: green; float: right; margin: auto; padding: auto;">Upload Successfully! &nbsp;  </p> 
         </div>
       </div>
@@ -137,9 +137,13 @@
     
 
     <!-- current step: i-985 filled -->
-    <mat-card-content  style="display: inline-block;" *ngIf="visaInfo.currStep == '3'">
+    <mat-card-content  style="display: inline-block; width: 100%;" *ngIf="visaInfo.currStep == '3'">
       <p>Thank you for your patience.</p>
-      <button>Close</button>
+      <div class="row">
+        <div class="col">
+          <button id="3" mat-raised-button (click)="onSubmit($event)" color="primary" style="float:right; margin: auto;" [disabled]="isSubmitted">Close</button>
+        </div>
+      </div>
     </mat-card-content>
 
     <!-- current step: i-985 signed, download signed i-985 from HR -->
@@ -158,7 +162,7 @@
                 <mat-icon  ngxMatFileInputIcon>folder</mat-icon>
               </ngx-mat-file-input>
             </mat-form-field>
-            <button id="2" mat-raised-button (click)="onSubmit($event)" color="primary" style="float:right; margin: auto;" [disabled]="isSubmitted">Upload</button>
+            <button id="4" mat-raised-button (click)="onSubmit($event)" color="primary" style="float:right; margin: auto;" [disabled]="isSubmitted">Upload</button>
             <p *ngIf="isSubmitted" style="color: green; float: right; margin: auto; padding: auto;">Upload Successfully! &nbsp;  </p> 
           </div>
         </div>
@@ -177,7 +181,7 @@
               <mat-icon  ngxMatFileInputIcon>folder</mat-icon>
             </ngx-mat-file-input>
           </mat-form-field>
-          <button id="2" mat-raised-button (click)="onSubmit($event)" color="primary" style="float:right; margin: auto;" [disabled]="isSubmitted">Upload</button>
+          <button id="5" mat-raised-button (click)="onSubmit($event)" color="primary" style="float:right; margin: auto;" [disabled]="isSubmitted">Upload</button>
           <p *ngIf="isSubmitted" style="color: green; float: right; margin: auto; padding: auto;">Upload Successfully! &nbsp;  </p> 
         </div>
       </div>
@@ -196,7 +200,7 @@
               <mat-icon  ngxMatFileInputIcon>folder</mat-icon>
             </ngx-mat-file-input>
           </mat-form-field>
-          <button id="2" mat-raised-button (click)="onSubmit($event)" color="primary" style="float:right; margin: auto;" [disabled]="isSubmitted">Upload</button>
+          <button id="6" mat-raised-button (click)="onSubmit($event)" color="primary" style="float:right; margin: auto;" [disabled]="isSubmitted">Upload</button>
           <p *ngIf="isSubmitted" style="color: green; float: right; margin: auto; padding: auto;">Upload Successfully! &nbsp;  </p> 
         </div>
       </div>

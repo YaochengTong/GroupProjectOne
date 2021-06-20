@@ -100,4 +100,16 @@ public class ApplicationWorkflow implements Serializable {
     public int hashCode() {
         return Objects.hash(id, createDate, modificationDate, status, comments, type);
     }
+
+    @Override
+    public String toString() {
+        return "ApplicationWorkflow{" +
+                "id=" + id +
+                ", createDate=" + createDate +
+                ", modificationDate=" + modificationDate +
+                ", status='" + status + '\'' +
+                ", comments='" + comments + '\'' +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }

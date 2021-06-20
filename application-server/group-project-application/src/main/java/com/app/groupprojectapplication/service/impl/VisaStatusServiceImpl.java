@@ -117,11 +117,8 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
     }
 
     private String getCurrentStep(List<ApplicationWorkflow> applicationWorkflowList) {
-        System.out.println(applicationWorkflowList);
-        applicationWorkflowList.sort((a,b) -> {
-            return map.get(a.getStatus()).get(2).compareTo(map.get(b.getStatus()).get(2));
-        });
-        System.out.println(applicationWorkflowList);
+        applicationWorkflowList.sort(Comparator.comparing(a -> map.get(a.getStatus()).get(2)));
+        applicationWorkflowList.stream().forEach(a -> System.out.println(a.toString()));
         return applicationWorkflowList.get(0).getStatus();
     }
 
@@ -178,7 +175,7 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
         ApplicationWorkflow applicationWorkflow = new ApplicationWorkflow();
         applicationWorkflow.setStatus(paramMap.get("step").toString());
         applicationWorkflow.setCreateDate(timestamp);
-        applicationWorkflow.setType("visa status management");
+        applicationWorkflow.setType("visa status application");
         applicationWorkflow.setModificationDate(timestamp);
         applicationWorkflow.setUser(user);
         iApplicationWorkFlowDao.insertApplicationWorkFlow(applicationWorkflow);

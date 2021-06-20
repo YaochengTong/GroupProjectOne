@@ -48,7 +48,9 @@ public class ApplicationWorkflowDaoImpl implements IApplicationWorkFlowDao {
         String query = "FROM ApplicationWorkflow WHERE user.id = :userId AND type = :type";
         List<ApplicationWorkflow> applicationWorkflowList = session.createQuery(query).setParameter("userId", userId).setParameter("type", applicationType).getResultList();
         session.setFlushMode(FlushMode.MANUAL);
+        applicationWorkflowList.stream().forEach(a -> System.out.println(a.toString()));
         applicationWorkflowList.sort((a,b) -> { return b.getCreateDate().compareTo(a.getCreateDate()); });
+        applicationWorkflowList.stream().forEach(a -> System.out.println(a.toString()));
         return applicationWorkflowList;
     }
 

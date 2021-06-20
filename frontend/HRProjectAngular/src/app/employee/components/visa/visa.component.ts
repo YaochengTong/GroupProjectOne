@@ -118,6 +118,10 @@ export class VisaComponent implements OnInit {
         title:"I983"
       }
     }
+    else if (idx == "3") {
+      this.isShowMessage = false;
+      return;
+    }
     else if (idx == "4") {
       // uploaded i-20
       formData.append('file', this.fileI20.value);
