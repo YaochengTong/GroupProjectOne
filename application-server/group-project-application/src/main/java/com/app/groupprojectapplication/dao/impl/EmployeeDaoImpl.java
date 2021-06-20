@@ -2,20 +2,16 @@ package com.app.groupprojectapplication.dao.impl;
 
 import com.app.groupprojectapplication.dao.IEmployeeDao;
 import com.app.groupprojectapplication.domain.Employee;
+import com.app.groupprojectapplication.domain.Person;
+import java.util.List;
+import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.Query;
-import java.util.List;
-
 
 @Repository
 public class EmployeeDaoImpl implements IEmployeeDao {
-
 
     @Autowired
     protected SessionFactory sessionFactory;
@@ -66,8 +62,7 @@ public class EmployeeDaoImpl implements IEmployeeDao {
             return null;
         }
 
-
-        return (Integer)  query.getResultList().get(0);
+        return (Integer) query.getResultList().get(0);
     }
 
     @Override
@@ -76,5 +71,20 @@ public class EmployeeDaoImpl implements IEmployeeDao {
         session.saveOrUpdate(employee);
     }
 
+    @Override
+    public Employee getEmployeeByPerson(Person p) {
+        Session session = sessionFactory.getCurrentSession();
+        List<Employee> resultList = session.createQuery("FROM Employee WHERE person.id = " + p.getId()).getResultList();
+        return resultList.get(0);
+    }
+
+    @Override
+    public int getHouseIdByEmployee(Employee e) {
+        Session session = sessionFactory.getCurrentSession();
+        int personId = e.getPerson().getId();
+        List<Integer> resultList = session
+            .createNativeQuery("SELECT house_id FROM employee WHERE person_id =" + personId).getResultList();
+        return resultList.get(0);
+    }
 
 }

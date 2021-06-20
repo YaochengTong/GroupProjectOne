@@ -7,6 +7,7 @@ import com.app.groupprojectapplication.dao.IFacilityReportDao;
 import com.app.groupprojectapplication.dao.IFacilityReportDetailDao;
 import com.app.groupprojectapplication.dao.IHouseDao;
 import com.app.groupprojectapplication.dao.IPersonDao;
+import com.app.groupprojectapplication.dao.IUserDao;
 import com.app.groupprojectapplication.domain.Employee;
 import com.app.groupprojectapplication.domain.Facility;
 import com.app.groupprojectapplication.domain.FacilityReport;
@@ -18,6 +19,7 @@ import com.app.groupprojectapplication.domain.HouseElement.HouseFacilityReportDe
 import com.app.groupprojectapplication.domain.HouseElement.HouseFacilityReportInfo;
 import com.app.groupprojectapplication.domain.HouseElement.HousePageInfo;
 import com.app.groupprojectapplication.domain.Person;
+import com.app.groupprojectapplication.domain.User;
 import com.app.groupprojectapplication.service.IHouseService;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -47,6 +49,8 @@ public class HouseServiceImpl implements IHouseService {
     IFacilityReportDetailDao iFacilityReportDetailDao;
     @Autowired
     IFacilityReportDao iFacilityReportDao;
+    @Autowired
+    IUserDao iUserDao;
 
     @Override
     @Transactional
@@ -313,6 +317,16 @@ public class HouseServiceImpl implements IHouseService {
         iPersonDao.updatePhoneById(updatePhone, contactPersonId);
         iHouseDao.updateHouseAddressByHouseId(updateAddress, houseId);
         iHouseDao.updateHouseNumberOfPersonByHouseId(updateNumberOfPerson, houseId);
+    }
+
+    @Override
+    @Transactional
+    public House getHouseByUserId(Integer userId) {
+        User u = iUserDao.getUserById(userId);
+        System.out.println(u.toString());
+        Employee e = iEmployeeDao.getEmployeeByPerson(u.getPerson());
+        House h = iHouseDao.getHouseById(iEmployeeDao.getHouseIdByEmployee(e));
+        return h;
     }
 
 }

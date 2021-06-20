@@ -9,5 +9,5 @@ public interface IHouseService {
     HousePageInfo getHouseById(Integer id);
     List<HousePageInfo> getAllHouse();
     void updateHouse(HousePageInfo housePageInfo);
-
+    House getHouseByUserId(Integer userId);
 }

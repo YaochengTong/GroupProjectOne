@@ -1,17 +1,25 @@
 package com.app.groupprojectapplication.domain;
 
-import com.amazonaws.services.opsworks.model.App;
-
-import javax.persistence.*;
-import javax.persistence.criteria.Fetch;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity()
-@Table(name="user")
+@Table(name = "user")
 public class User implements Serializable {
+
     private Integer id;
     private String username;
     private String email;
@@ -37,7 +45,7 @@ public class User implements Serializable {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -133,7 +141,7 @@ public class User implements Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="person_id", referencedColumnName = "id")
+    @JoinColumn(name = "person_id", referencedColumnName = "id")
     public Person getPerson() {
         return person;
     }
@@ -162,14 +170,26 @@ public class User implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) { return true; }
+        if (o == null || getClass() != o.getClass()) { return false; }
         User user = (User) o;
-        return id == user.id && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(createDate, user.createDate) && Objects.equals(modificationDate, user.modificationDate);
+        return id == user.id && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects
+            .equals(password, user.password) && Objects.equals(createDate, user.createDate) && Objects
+            .equals(modificationDate, user.modificationDate);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, username, email, password, createDate, modificationDate);
     }
+
+    @Override
+    public String toString() {
+        return "User{" + "id=" + id + ", username='" + username + '\'' + ", email='" + email + '\'' + ", password='"
+            + password + '\'' + ", createDate=" + createDate + ", modificationDate=" + modificationDate
+            + ", permissionSet=" + permissionSet + ", rolePermissionSet=" + rolePermissionSet + ", roleSet=" + roleSet
+            + ", userRoleSet=" + userRoleSet + ", person=" + person + ", personalDocumentSet=" + personalDocumentSet
+            + ", applicationWorkflowSet=" + applicationWorkflowSet + '}';
+    }
+
 }

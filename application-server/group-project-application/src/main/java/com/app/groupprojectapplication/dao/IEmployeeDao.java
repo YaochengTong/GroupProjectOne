@@ -1,7 +1,8 @@
 package com.app.groupprojectapplication.dao;
 
 import com.app.groupprojectapplication.domain.Employee;
-
+import com.app.groupprojectapplication.domain.House;
+import com.app.groupprojectapplication.domain.Person;
 import java.util.List;
 
 public interface IEmployeeDao {
@@ -11,6 +12,8 @@ public interface IEmployeeDao {
     void deleteUserById(Integer id);
     Integer getUserIdByEmployeeId(Integer employeeId);
     void updateEmployee(Employee employee);
+    Employee getEmployeeByPerson(Person p);
+    int getHouseIdByEmployee(Employee e);
     //String getTitleById(Integer id);
     //String getManagerId(Integer id);
     //String getStartDate(Integer id);

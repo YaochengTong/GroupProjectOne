@@ -16,15 +16,13 @@ export class EmployeeNavComponent implements OnInit {
       map((result) => result.matches),
       shareReplay()
     );
+  username: string = '';
+  showMenu = false;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
     private router: Router
-  ) {
-
-  }
-
-  username: string = '';
+  ) {}
 
   ngOnInit(): void {
     let retrievedObject: any = localStorage.getItem('user');
