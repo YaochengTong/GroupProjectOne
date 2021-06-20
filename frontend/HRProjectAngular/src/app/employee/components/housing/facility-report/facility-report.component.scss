@@ -1,0 +1,36 @@
+@import "~@angular/material/theming";
+
+.grid-container {
+  margin: 20px;
+}
+
+.mat-card {
+  width: calc(100% - 70px);
+  height: calc(100% - 70px);
+  margin: 20px;
+}
+
+.mat-card-title {
+  text-align: center;
+}
+
+.clickable {
+  cursor: pointer;
+
+  &:hover {
+    @include mat-elevation(8);
+  }
+}
+
+.center {
+  text-align: center;
+}
+
+.facilityCard {
+  margin: 5px;
+  border: 1px solid black;
+}
+
+.full-width {
+  width: 100%;
+}
