@@ -6,8 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface IVisaStatusService {
-    List<VisaStatusInfo> getVisaInfo();
-    VisaStatusInfo getVisaInfoByUserId(Integer userId, Integer index);
+    List<VisaStatusInfo> getVisaInfoList();
+    VisaStatusInfo getVisaInfo(Integer userId);
     String findEmailByUserId(Integer userId);
     String updateInfo(Map<String, Object> result);
+
 }

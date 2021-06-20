@@ -63,7 +63,7 @@
         <div class="example-element-diagram">
             <strong>Document Received: </strong>
             <div *ngFor="let item of element.documentReceived">
-                <mat-icon style="font-size: medium;">file_copy</mat-icon>{{item}}
+                <mat-icon style="font-size: medium;">file_copy</mat-icon>{{item.name}}
             </div>
             <div class="notification"><strong>Next Step: {{element.nextStep}}</strong> | <button [id]="element.idx" style="background-color: transparent; outline: none; border: none; text-decoration: underline; color: blue; cursor: pointer" (click)="sendNotification($event)">Send Notification</button> 
             </div>
