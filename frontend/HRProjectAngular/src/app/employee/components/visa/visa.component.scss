@@ -1,5 +1,14 @@
 .example-card {
+  margin-top: 5%;
   max-width: 400px;
+  float: left;
+}
+
+.example-card1 {
+  margin-top: 18%;
+  max-width: 500px;
+  display: inline-block;
+  margin-left: 5%;
 }
 
 .example-header-image {

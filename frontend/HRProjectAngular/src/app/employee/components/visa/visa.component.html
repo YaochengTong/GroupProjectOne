@@ -14,7 +14,7 @@
     <mat-icon (click)="openSnackBar('No Message!', 'close')">email</mat-icon>
   </div>
 
-  <mat-card class="example-card">
+  <mat-card class="example-card" >
     <mat-card-header>
       <div mat-card-avatar class="example-header-image"></div>
       <mat-card-title>{{userName}}</mat-card-title>
@@ -29,15 +29,85 @@
     <mat-card-content>
       <p><strong>Document Uploaded:</strong></p>
       <div *ngFor="let d of documents">
-        <ul>
-          <li>{{d}}</li> <a ref="">download</a>
-        </ul>
+        <mat-icon style="font-size: medium;">file_copy</mat-icon>{{d.name}} 
+        <button style="float: right;">download</button> <button style="float: right;">preview</button>
       </div>
     </mat-card-content>
-    <mat-card-actions>
-      <button mat-button>LIKE</button>
-      <button mat-button>SHARE</button>
-    </mat-card-actions>
+  </mat-card>
+</div>
+
+<div>
+  <mat-card class="example-card1">
+    <mat-card-header>
+      <mat-card-title>Message</mat-card-title><br>
+    </mat-card-header>
+    <hr>
+    
+    <mat-card-content style="display: inline-block;">
+      <mat-card-subtitle style="color: #F1C40F; font-style: oblique; font-weight: bold;">NEXT MOVE: {{visaInfo.message}}</mat-card-subtitle>
+      
+      <p> Your Current Visa Status: </p>
+
+      <form>
+
+        <mat-form-field style="float: left;">
+          <mat-label>Work Authorization: </mat-label>
+          <input matInput style="color: black;" disabled [value]="visaInfo.workAuthorization">
+        </mat-form-field>
+
+        <mat-form-field style="float: left;">
+          <mat-label>Authorization Day Left: </mat-label>
+          <input matInput style="color: black;" disabled [value]="visaInfo.authorizationDayLeft">
+        </mat-form-field>
+
+
+        <mat-form-field style="float: left;">
+          <mat-label>Authorization Start Date:</mat-label>
+          <input matInput style="color: black;" disabled [value]="visaInfo.authorizationStartDate">
+        </mat-form-field>
+
+        <mat-form-field style="float: left;">
+          <mat-label>Authorization End Date:</mat-label>
+          <input matInput style="color: black;" disabled [value]="visaInfo.authorizationEndDate">
+        </mat-form-field>
+     
+      </form>
+
+    </mat-card-content>
+
+    <mat-card-content style="display: inline-block;" *ngIf="visaInfo.currStep == '1'">
+      <div>
+        <button>Upload File</button>
+      </div>
+    </mat-card-content>
+ 
+
+    <mat-card-content  style="display: inline-block;" *ngIf="visaInfo.currStep == '2'">
+      <p> empty i-983</p>
+      <p> sample templete</p>
+      <button>upload</button>
+    </mat-card-content>
+
+    <mat-card-content  style="display: inline-block;" *ngIf="visaInfo.currStep == '3'">
+      <p>Thank you for your patience.</p>
+    </mat-card-content>
+
+    <mat-card-content  style="display: inline-block;" *ngIf="visaInfo.currStep == '4'">
+      <button>Submit File</button>
+    </mat-card-content>
+
+    <mat-card-content  style="display: inline-block;" *ngIf="visaInfo.currStep == '5'">
+      <div>
+        <button>Upload File</button>
+      </div>
+    </mat-card-content>
+
+    <mat-card-content  style="display: inline-block;" *ngIf="visaInfo.currStep == '6'">
+      <button>Upload File</button>
+    </mat-card-content> 
+
+
+
   </mat-card>
 </div>
 

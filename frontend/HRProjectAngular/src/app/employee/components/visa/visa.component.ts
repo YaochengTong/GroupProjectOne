@@ -11,9 +11,9 @@ export class VisaComponent implements OnInit {
 
   private userId = localStorage.getItem("userId");
   // public visaInfo: any = {};
+  // public documents: any = {};
   public userName: string = "";
   public email: string = "";
-  // public documents: any = {};
   
 
   isDataAvailable: boolean = true;
@@ -59,16 +59,23 @@ export class VisaComponent implements OnInit {
     "workAuthorization": "F1(OPT/CPT)",
     "authorizationStartDate": "2021-06-14",
     "authorizationEndDate": "2021-09-23",
-    "authorizationDayLeft": 96,
+    "authorizationDayLeft": 95,
     "documentReceived": [
-        "OPT_EAD.txt",
-        "OPT_Receipt.txt"
+        {
+            "name": "OPT EAD_2021-06-19",
+            "date": "2021-06-19"
+        },
+        {
+            "name": "OPT Receipt_2021-06-19",
+            "date": "2021-06-19"
+        }
     ],
     "nextStep": "I-983 for OPT STEM",
     "idx": 0,
     "userId": 558,
-    "message": "Please download and fill your I-983 form"
-  }
+    "message": "Please download and fill your I-983 form",
+    "currStep": "2"
+}
   documents = this.visaInfo.documentReceived ;
 
 }

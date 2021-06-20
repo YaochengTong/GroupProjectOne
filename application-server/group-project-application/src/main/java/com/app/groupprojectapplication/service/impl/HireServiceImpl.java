@@ -48,6 +48,9 @@ public class HireServiceImpl implements IHireService {
     private IAddressDao iAddressDao;
 
     @Autowired
+    private IUserRoleDao iUserRoleDao;
+
+    @Autowired
     private EmailService emailService;
 
     @Autowired
@@ -366,8 +369,14 @@ public class HireServiceImpl implements IHireService {
     public Map<String, Object> getOnboardApplications(Map<String, Object> paramMap) {
         Map<String, Object> resultMap = new HashMap<>();
         String type = "Onboarding";
-        List<ApplicationWorkflow> resultList =
-                iApplicationWorkFlowDao.getApplicationWorkFlowByApplicationType(type);
+        List<ApplicationWorkflow> resultList;
+        if(paramMap.get("userId") != null && !paramMap.get("userId").equals("")){
+            Integer id = Integer.parseInt(paramMap.get("userId").toString());
+            resultList = iApplicationWorkFlowDao.getApplicationWorkFlowByUserId(id);
+        }
+        else {
+            resultList = iApplicationWorkFlowDao.getApplicationWorkFlowByApplicationType(type);
+        }
 
         List<Map<String, Object>> list = new ArrayList<>();
         for(ApplicationWorkflow awf : resultList){
@@ -498,6 +507,10 @@ public class HireServiceImpl implements IHireService {
         ApplicationWorkflow workflow = new ApplicationWorkflow();
         if(approve.equals("yes")){
             workflow.setStatus("Approved");
+            Integer user_id = Integer.parseInt(paramMap.get("user_id").toString());
+            UserRole userRole = iUserRoleDao.getUserRoleByUserId(user_id).get(0);
+            userRole.setActivateFlag((byte)1);
+            iUserRoleDao.updateUserRole(userRole);
         }
         else{
             workflow.setStatus("Rejected");
@@ -511,11 +524,11 @@ public class HireServiceImpl implements IHireService {
             return resultMap;
         }
 
+        //send email
         String email = paramMap.get("email").toString();
         String approvedText = "Your onboarding request has been approved, welcome onboarding!";
         String rejectedText = "Your onboarding request has been rejected, please log in with your account to see the reason";
 
-        //send email
         emailService.sendMail(email, "Your onboarding result has updated",
                 approve.equals("yes")?approvedText : rejectedText);
 

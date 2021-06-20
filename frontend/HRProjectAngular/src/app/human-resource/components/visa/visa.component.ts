@@ -5,6 +5,9 @@ import { MatSelectChange } from '@angular/material/select';
 import * as moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { VisaNotificationComponent } from './visa-notification/visa-notification.component';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+import { DateAdapter } from '@angular/material/core';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-visa',
@@ -36,6 +39,7 @@ export class VisaComponent implements OnInit {
   tempData: any = {};
   message: string = "";
   employeeEmail: string = "";
+
 
   columnsToDisplay = ['Full Name', 'Work Authorization', 'Expiration Date', 'Day Left'];
 
@@ -105,6 +109,75 @@ export class VisaComponent implements OnInit {
 
   }
 
+
+
+
+  formatHandler(oriDate:any): string {
+    if (oriDate == null) {
+      return "";
+    }
+
+    console.log("Substring");
+    console.log(oriDate.toString().substring(4, 15));
+    var formattedDate;
+    var month = oriDate.toString().substring(4, 15).split(" ")[0];
+    switch(month) {
+      case "JAN":
+        month = "01";
+        break;
+      case "FEB":
+        month = "02";
+        break;
+      case "MAR":
+        month = "03";
+        break;
+      case "APR":
+        month = "04";
+        break;
+      case "MAY":
+        month = "05";
+        break;
+      case "JUN":
+        month = "06";
+        break;
+      case "JUL":
+        month = "07";
+        break;
+      case "AUG":
+        month = "08";
+        break;
+      case "SEP":
+        month = "09";
+        break;
+      case "OCT":
+        month = "10";
+        break;
+      case "NOV":
+        month = "11";
+        break;
+      default:
+        month = "12";
+        break;
+    }
+
+    
+    formattedDate = oriDate.toString().substring(4, 15).split(" ")[2] + "-" + month + "-" + oriDate.toString().substring(4, 15).split(" ")[1];
+    return formattedDate;
+  }
+
+
+  addEndDateEvent(index: number, event: MatDatepickerInputEvent<Date>) {
+    this.visaStatusInfo[index].authorizationEndDate = this.formatHandler(event.value);
+    // console.log("after formate")
+    console.log(this.visaStatusInfo[index].authorizationEndDate);
+    // console.log(this.visaStatusInfo[index].authorizationEndDate);
+  }
+
+  addStartDateEvent(index: number,event: MatDatepickerInputEvent<Date>) {
+    this.visaStatusInfo[index].authorizationStartDate = this.formatHandler(event.value);
+  }
+
+  
   onSubmit(event: any) {
     this.isSubmitted = true;
 

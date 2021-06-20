@@ -76,4 +76,19 @@ public class ApplicationWorkflowDaoImpl implements IApplicationWorkFlowDao {
         currentWorkflow.setModificationDate(new Timestamp(System.currentTimeMillis()));
         return true;
     }
+
+
+    @Override
+    public List<ApplicationWorkflow>  getApplicationWorkFlowByUserId(Integer id) {
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "select awf FROM " +
+                "ApplicationWorkflow awf " +
+                "join fetch awf.user as user " +
+                " join fetch user.person as person" +
+                " WHERE awf.user.id = :id and awf.type= 'Onboarding' " ;
+        Query<ApplicationWorkflow> query = session.createQuery(hql);
+        query.setParameter("id", id);
+        List<ApplicationWorkflow> list = query.getResultList();
+        return list;
+    }
 }

@@ -12,4 +12,5 @@ public interface IApplicationWorkFlowDao {
     List<ApplicationWorkflow> getApplicationWorkFlowByUserIdAndApplicationType(Integer employeeId, String applicationType);
     List<ApplicationWorkflow> getApplicationWorkFlowByApplicationType(String applicationType);
     boolean updateApplicationWorkFlowById(Integer id, ApplicationWorkflow workflow);
+    List<ApplicationWorkflow>  getApplicationWorkFlowByUserId(Integer id);
 }

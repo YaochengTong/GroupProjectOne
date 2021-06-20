@@ -6,6 +6,8 @@ import { MaxSizeValidator } from '@angular-material-components/file-input';
 import { HTTPReq } from 'src/app/service/HTTPReq/HTTPReq.service';
 import { states } from '../shared/constants';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
+import { Router, ActivatedRoute } from '@angular/router';
+import { MessageService } from 'src/app/service/Message/message.service';
 
 @Component({
   selector: 'app-on-boarding',
@@ -17,7 +19,8 @@ import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 })
 export class OnBoardingComponent implements OnInit{
 
-  constructor(private fb: FormBuilder, private httpRequestService: HTTPReq) {
+  constructor(private fb: FormBuilder, private router: Router, private messageService: MessageService,
+      private route: ActivatedRoute, private httpRequestService: HTTPReq) {
 
     this.fileI983 = new FormControl(this.files, [
       Validators.required,
@@ -51,9 +54,47 @@ export class OnBoardingComponent implements OnInit{
 
   submitting: boolean = false;
 
+  rejected: string = "false";
+
+  application: any = {};
+
   ngOnInit(): void {
     this.email = localStorage.getItem('email');
     this.userId = localStorage.getItem('userId');
+
+    this.route.queryParams.subscribe(params => {
+      console.log(params)
+      this.rejected = params.rejected;
+      if(this.rejected == "true"){
+        this.getApplication(this.userId);
+      }
+    });
+
+  }
+
+  getApplication(user_id): void {
+    this.httpRequestService.getData('/hire/getOnboardApplications', {'userId': user_id}).subscribe(
+      (data: any) => {
+        console.log(data)
+        this.application = data.OngoingApplications[0];
+        let car: any = [];
+        if(this.application.car)
+          car = this.application.car.split(' ');
+        this.phoneAddressCarForm.setValue({
+          address: this.application.Address,
+          address2: this.application.Address2,
+          city: this.application.City,
+          state: this.application.StateAbbr,
+          postalCode: this.application.PostalCode,
+          cellPhone: this.application.PrimaryPhone,
+          workPhone: this.application.WorkPhone,
+          carMaker: car[0]?car[0]: '',
+          carModel: car[1]?car[1]: '',
+          carColor: car[2]?car[2]: ''
+        })
+        this.messageService.sendMessage({"application": this.application});
+      }
+    );
   }
 
   date = new FormControl(this.getMonthYearString(new Date()));
@@ -316,6 +357,7 @@ export class OnBoardingComponent implements OnInit{
         (data: any) => {
             console.log(data);
             this.submitting = false;
+            this.router.navigate(['/pending']);
         },
         err => {
             console.log(err);
