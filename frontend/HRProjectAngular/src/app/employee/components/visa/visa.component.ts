@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HTTPReq } from 'src/app/service/HTTPReq/HTTPReq.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { ThemePalette } from '@angular/material/core';
+import { MaxSizeValidator } from '@angular-material-components/file-input';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-visa',
@@ -20,10 +24,48 @@ export class VisaComponent implements OnInit {
   isShowMessage: boolean = true;
   messageNum: number = 0;
 
+
+   //File upload variables
+   color: ThemePalette = 'primary';
+   multiple: boolean = false;
+   fileI983!: FormControl;
+   fileOPTEAD!: FormControl;
+   fileI20!: FormControl;
+   fileOPTSTEMReceipt!: FormControl;
+   fileOPTSTEMEAD!: FormControl;
+   files: File | undefined;
+
   constructor(
     private httpRequestService: HTTPReq,
     private snackBar: MatSnackBar
-  ) {}
+  ) {
+    this.fileI983 = new FormControl(this.files, [
+      Validators.required,
+      MaxSizeValidator(1024 * 1024),
+    ]);
+
+    this.fileOPTEAD = new FormControl(this.files, [
+      Validators.required,
+      MaxSizeValidator(1024 * 1024),
+    ]);
+
+    this.fileI20 = new FormControl(this.files, [
+      Validators.required,
+      MaxSizeValidator(1024 * 1024),
+    ]);
+
+    this.fileOPTSTEMReceipt = new FormControl(this.files, [
+      Validators.required,
+      MaxSizeValidator(1024 * 1024),
+    ]);
+
+    this.fileOPTSTEMEAD = new FormControl(this.files, [
+      Validators.required,
+      MaxSizeValidator(1024 * 1024),
+    ]);
+
+
+  }
 
   ngOnInit(): void {
 

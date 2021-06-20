@@ -75,33 +75,57 @@
 
     </mat-card-content>
 
+    <!-- current step: opt receipt -->
     <mat-card-content style="display: inline-block;" *ngIf="visaInfo.currStep == '1'">
       <div>
         <button>Upload File</button>
       </div>
     </mat-card-content>
  
-
+    <!-- current step: opt stem -->
     <mat-card-content  style="display: inline-block;" *ngIf="visaInfo.currStep == '2'">
-      <p> empty i-983</p>
-      <p> sample templete</p>
+      <div class="row">
+        <div class="col">
+          <a
+            href="https://gp1storage.s3.us-east-2.amazonaws.com/template/i983.pdf"
+          >I983 Template</a>
+          <a
+            href="https://gp1storage.s3.us-east-2.amazonaws.com/template/i983.pdf" target="_blank"
+          >I983 Instruction</a>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width" required>
+            <ngx-mat-file-input
+              [formControl]="fileI983"
+              [multiple]="multiple"
+              [color]="color"
+            >
+              <mat-icon ngxMatFileInputIcon>folder</mat-icon>
+            </ngx-mat-file-input>
+          </mat-form-field>
+        </div>
+      </div>
       <button>upload</button>
     </mat-card-content>
 
+    <!-- current step: i-985 filled -->
     <mat-card-content  style="display: inline-block;" *ngIf="visaInfo.currStep == '3'">
       <p>Thank you for your patience.</p>
     </mat-card-content>
 
+    <!-- current step: i-985 signed -->
     <mat-card-content  style="display: inline-block;" *ngIf="visaInfo.currStep == '4'">
       <button>Submit File</button>
     </mat-card-content>
 
+    <!-- current step: i-20 -->
     <mat-card-content  style="display: inline-block;" *ngIf="visaInfo.currStep == '5'">
       <div>
         <button>Upload File</button>
       </div>
     </mat-card-content>
 
+    <!-- current step: opt stem receip -->
     <mat-card-content  style="display: inline-block;" *ngIf="visaInfo.currStep == '6'">
       <button>Upload File</button>
     </mat-card-content> 
