@@ -12,3 +12,17 @@ table {
   font-size: 14px;
   width: 100%;
   }
+
+  mat-button-toggle {
+    height: 35px; 
+    width: 100px;
+    background: rgb(110, 157, 228);
+    color:white;
+    font-size: 14px;
+    font-weight: bold;
+    }
+
+    
+    .childButton .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+      line-height: 35px;
+  }
