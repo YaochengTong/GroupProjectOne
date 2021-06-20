@@ -53,8 +53,7 @@ export class CheckEmployeeComponent implements OnInit, AfterViewInit {
     'ssn',
     'startingDate',
     'visaStatus',
-    // 'order',
-    // 'len'
+    'position',
   ];
 
 

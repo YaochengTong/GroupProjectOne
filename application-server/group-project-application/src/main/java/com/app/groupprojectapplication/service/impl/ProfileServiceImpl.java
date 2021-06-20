@@ -170,24 +170,24 @@ public class ProfileServiceImpl implements IProfileService {
     @Override
     public List<Summary> getSummary() {
         List<Summary> summaryList = new ArrayList<>();
+        Integer index = 1;
         List<Employee> employeeList = iEmployeeDao.getEmployee();
         for(Employee employee : employeeList) {
-            summaryList.add(getSummaryByEmployee(employee));
+            summaryList.add(getSummaryByEmployee(employee, index));
+            index++;
         }
         return summaryList;
     }
 
 
-    private Summary getSummaryByEmployee(Employee employee) {
+    private Summary getSummaryByEmployee(Employee employee, Integer index) {
         Summary summary = new Summary();
         Person person = employee.getPerson();
-//        System.out.println(person.getSsn());
+        summary.setIndex(index);
+        summary.setEmployeeId(employee.getId());
         summary.setSSN(person.getSsn());
-//        System.out.println(getFullName(person));
         summary.setFullName(getFullName(person));
-//        System.out.println(employee.getVisaStatus().getVisaType());
         summary.setVisaType(employee.getVisaStatus().getVisaType());
-//        System.out.println(employee.getStartDate());
         summary.setStartDate(employee.getStartDate());
         return summary;
     }
