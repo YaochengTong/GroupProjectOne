@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 @Service
+@Transactional
 public class ProfileServiceImpl implements IProfileService {
 
     private Profile profile;
@@ -42,6 +43,8 @@ public class ProfileServiceImpl implements IProfileService {
         return profileList;
     }
 
+
+
     @Override
     @Transactional
     public Profile getProfileByEmployeeId(Integer user_id) {
@@ -49,6 +52,7 @@ public class ProfileServiceImpl implements IProfileService {
         Employee employee = iEmployeeDao.getEmployeeById(employee_id);
         return getProfileByEmployee(employee);
     }
+
 
 
     private Profile getProfileByEmployee(Employee employee) {
@@ -161,4 +165,31 @@ public class ProfileServiceImpl implements IProfileService {
         }
         return  fullName;
     }
+
+
+    @Override
+    public List<Summary> getSummary() {
+        List<Summary> summaryList = new ArrayList<>();
+        List<Employee> employeeList = iEmployeeDao.getEmployee();
+        for(Employee employee : employeeList) {
+            summaryList.add(getSummaryByEmployee(employee));
+        }
+        return summaryList;
+    }
+
+
+    private Summary getSummaryByEmployee(Employee employee) {
+        Summary summary = new Summary();
+        Person person = employee.getPerson();
+//        System.out.println(person.getSsn());
+        summary.setSSN(person.getSsn());
+//        System.out.println(getFullName(person));
+        summary.setFullName(getFullName(person));
+//        System.out.println(employee.getVisaStatus().getVisaType());
+        summary.setVisaType(employee.getVisaStatus().getVisaType());
+//        System.out.println(employee.getStartDate());
+        summary.setStartDate(employee.getStartDate());
+        return summary;
+    }
+
 }

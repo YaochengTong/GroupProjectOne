@@ -55,6 +55,13 @@ public class ProfileController {
         return profileList;
     }
 
+    @GetMapping("/allSummary")
+    public Map<String, Object> getSummaryList() {
+        Map<String, Object>  summaryList = new HashMap<>();
+        summaryList.put("AllSummary", iProfileService.getSummary());
+        return summaryList;
+    }
+
     @PostMapping("/{user_id}/updateNameSection")
     public Map<String, Object> updateProfileNameSection(@RequestParam Map<String, Object> params,
                                              @PathVariable Integer user_id) {

@@ -15,5 +15,5 @@ public class Summary {
     private String fullName;
     private String SSN;
     private Timestamp startDate;
-    private VisaStatus visaStatus;
+    private String visaType;
 }

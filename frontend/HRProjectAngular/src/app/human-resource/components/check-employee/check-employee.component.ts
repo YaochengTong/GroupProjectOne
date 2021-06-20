@@ -13,12 +13,35 @@ export interface PeriodicElement {
   visaStatus: string;
 }
 
+export interface PElement {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
+}
+
+const ELEMENT_DATA: PElement[] = [
+  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
+  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
+  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
+  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
+  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
+  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
+  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
+  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
+  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
+  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
+];
+
+
 
 @Component({
   selector: 'app-check-employee',
   templateUrl: './check-employee.component.html',
   styleUrls: ['./check-employee.component.scss'],
 })
+
+
 
 export class CheckEmployeeComponent implements OnInit, AfterViewInit {
 
@@ -39,16 +62,17 @@ export class CheckEmployeeComponent implements OnInit, AfterViewInit {
   constructor(
     private httpRequestService: HTTPReq,
   ) {
-    this.httpRequestService.getData('/profile/all', null, 'http://localhost:8999').subscribe(
+    this.httpRequestService.getData('/profile/allSummary', null, 'http://localhost:8999').subscribe(
       (data:any) => {
         this.isDataAvailable = true;
-        this.dataSource = new MatTableDataSource<PeriodicElement>(data.AllProfile);
-        this.len = Object.keys(data.AllProfile).length;
-        // console.log(data);
-        // console.log(data.AllProfile);
+        this.dataSource = new MatTableDataSource<PeriodicElement>(data.AllSummary);
+        this.len = Object.keys(data.AllSummary).length;
+        console.log(this.dataSource);
       }
     )
   }
+
+
 
   ngOnInit(): void {
     // this.httpRequestService.getData('/profile/all', null, 'http://localhost:8999').subscribe(
@@ -59,7 +83,6 @@ export class CheckEmployeeComponent implements OnInit, AfterViewInit {
     //   }
     // )
     // this.dataSource.paginator = this.paginator;
-    console.log(this.dataSource);
   }
 
   @ViewChild(MatPaginator) paginator! : MatPaginator;
