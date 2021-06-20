@@ -29,6 +29,7 @@ export class DetailsDialogComponent implements OnInit, OnDestroy {
       }
       this.commentsObj.files.push({'comment': ''});
     });
+    //console.log(this.commentsObj.EContacts[1])
   }
 
   ngOnDestroy(): void {

@@ -11,4 +11,5 @@ public interface IHireService {
     Map<String, Object> onboardSubmission(List<MultipartFile> files, Map<String, Object> paramMap);
     Map<String, Object> getOnboardApplications(Map<String, Object> paramMap);
     Map<String, Object> auditApplications(Map<String, Object> paramMap);
+    Map<String, Object> onboardReSubmission(List<MultipartFile> files, Map<String, Object> paramMap);
 }

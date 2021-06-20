@@ -50,4 +50,14 @@ public class HireController {
         resultMap.put("result", "success");
         return resultMap;
     }
+
+    @PostMapping("/resubmitOnboard")
+    public Map<String, Object> resubmitOnboardApplication(@RequestParam Map<String, Object> paramMap,
+                                                        HttpServletRequest request){
+        Map<String, Object> resultMap = new HashMap<>();
+        List<MultipartFile> files = ((MultipartHttpServletRequest) request)
+                .getFiles("file");
+        iHireService.onboardSubmission(files, paramMap);
+        return resultMap;
+    }
 }
