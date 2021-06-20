@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './components/home/home.component';
-import { HousingComponent } from './components/housing/housing.component';
 import { EmployeeNavComponent } from './components/employee-nav/nav.component';
 import { PersonalInfoComponent } from './components/personalInfo/personalInfo.component';
 import { VisaComponent } from './components/visa/visa.component';
@@ -18,7 +17,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { EmployeeRoutingModule } from './employee-routing.module';
 import { EmployeePageComponent } from './components/employee-page/employee-page.component';
@@ -30,11 +29,10 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import {MatStepperModule} from '@angular/material/stepper';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatBadgeModule} from '@angular/material/badge';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { HTTPReq } from '../service/HTTPReq/HTTPReq.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -53,7 +51,6 @@ import { PersonalInfoTemplateComponent } from '../on-boarding/personal-info-temp
 @NgModule({
   declarations: [
     HomeComponent,
-    HousingComponent,
     EmployeeNavComponent,
     PersonalInfoComponent,
     VisaComponent,
@@ -65,8 +62,9 @@ import { PersonalInfoTemplateComponent } from '../on-boarding/personal-info-temp
     AddressSectionDialogComponent,
     ContactSectionDialogComponent,
     EmergencyContactSectionDialogComponent,
-    EmploymentSectionDialogComponent
+    EmploymentSectionDialogComponent,
   ],
+
   imports: [
     CommonModule,
     EmployeeRoutingModule,
@@ -97,12 +95,11 @@ import { PersonalInfoTemplateComponent } from '../on-boarding/personal-info-temp
     MatStepperModule,
     MatProgressSpinnerModule,
     MatBadgeModule,
-    MatSnackBarModule
+    MatSnackBarModule,
   ],
   exports: [
     CommonModule,
     HomeComponent,
-    HousingComponent,
     EmployeeNavComponent,
     PersonalInfoComponent,
     VisaComponent,
@@ -110,12 +107,10 @@ import { PersonalInfoTemplateComponent } from '../on-boarding/personal-info-temp
     AddressSectionDialogComponent,
     ContactSectionDialogComponent,
     EmergencyContactSectionDialogComponent,
-    EmploymentSectionDialogComponent
+    EmploymentSectionDialogComponent,
   ],
 
-  providers: [
-    HTTPReq
-  ],
+  providers: [HTTPReq],
 
   bootstrap: [EmployeeNavComponent],
 })
