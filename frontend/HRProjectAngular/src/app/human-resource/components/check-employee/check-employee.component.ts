@@ -57,11 +57,12 @@ export class CheckEmployeeComponent implements OnInit, AfterViewInit {
     //   }
     // )
     // this.dataSource.paginator = this.paginator;
+    console.log(this.dataSource);
   }
 
-  @ViewChild(MatPaginator, {static : true}) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   ngAfterViewInit() {
-  this.dataSource.paginator = this.paginator;
+    this.dataSource.paginator = this.paginator;
   }
 
 

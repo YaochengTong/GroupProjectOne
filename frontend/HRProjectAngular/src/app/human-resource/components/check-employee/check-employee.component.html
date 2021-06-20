@@ -4,14 +4,14 @@
   </div>
 
 <br/>
-<div id="AllProfiles" *ngIf="isDataAvailable">
+<div id="AllProfiles" >
     <mat-form-field>
         <mat-label id="searchBar">Search</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
       </mat-form-field>
 
       <br/>
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" [hidden]="!isDataAvailable">
 
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Name</th>
