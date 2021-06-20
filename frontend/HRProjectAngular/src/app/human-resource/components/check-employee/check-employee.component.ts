@@ -44,6 +44,8 @@ export class CheckEmployeeComponent implements OnInit, AfterViewInit {
         this.isDataAvailable = true;
         this.dataSource = new MatTableDataSource<PeriodicElement>(data.AllProfile);
         this.len = Object.keys(data.AllProfile).length;
+        // console.log(data);
+        // console.log(data.AllProfile);
       }
     )
   }
@@ -60,7 +62,7 @@ export class CheckEmployeeComponent implements OnInit, AfterViewInit {
     console.log(this.dataSource);
   }
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator! : MatPaginator;
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
