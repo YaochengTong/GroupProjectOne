@@ -45,7 +45,7 @@ public class StatusTableElementImpl implements IStatusTableElementService {
 //         List<Employee> employeeList = new ArrayList<>();
         List<Integer> testIds = Arrays.asList(89, 556, 557, 558);
          for (Integer i : testIds) {
-             StatusTableElement ste = getStatusByEmployeeId(i);
+             StatusTableElement ste = getStatusByUserId(i);
              // filter out the status that doesnt need further action
              if (!ste.getVisaInfo().getNextStep().equals("No Info") &&
                      !ste.getVisaInfo().getNextStep().equals("No Action") )
@@ -57,19 +57,19 @@ public class StatusTableElementImpl implements IStatusTableElementService {
 
     @Override
     @Transactional
-    public StatusTableElement getStatusByEmployeeId(Integer userId) {
+    public StatusTableElement getStatusByUserId(Integer userId) {
         Integer employeeId = iUserDao.getEmployeeIdByUserId(userId);
         Employee employee = iEmployeeDao.getEmployeeById(employeeId);
-        return getStatusByEmployee(employee);
+        return getStatusByEmployee(employee, userId);
     }
 
 
-    private StatusTableElement getStatusByEmployee(Employee employee) {
+    private StatusTableElement getStatusByEmployee(Employee employee, Integer userId) {
         Integer employeeId = employee.getId();
-        Integer userId = iEmployeeDao.getUserIdByEmployeeId(employeeId);
         statusTableElement = new StatusTableElement();
         Person person = employee.getPerson();
-        statusTableElement.setEmployeeId(employee.getId());
+        statusTableElement.setEmployeeId(employeeId);
+        statusTableElement.setUserId(userId);
         statusTableElement.setNameInfo(setNameInfo(employee, person));
         statusTableElement.setVisaInfo(setVisaInfo(userId, employee));
 

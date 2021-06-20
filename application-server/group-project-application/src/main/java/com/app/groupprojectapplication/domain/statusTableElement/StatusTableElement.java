@@ -11,4 +11,5 @@ public class StatusTableElement {
     private Integer employeeId;
     private NameInfo nameInfo;
     private VisaInfo visaInfo;
+    private Integer userId;
 }

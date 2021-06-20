@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { VisaNotificationComponent } from './visa-notification/visa-notification.component';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { DateAdapter } from '@angular/material/core';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-visa',
@@ -38,6 +39,7 @@ export class VisaComponent implements OnInit {
   tempData: any = {};
   message: string = "";
   employeeEmail: string = "";
+
 
   columnsToDisplay = ['Full Name', 'Work Authorization', 'Expiration Date', 'Day Left'];
 
@@ -160,6 +162,7 @@ export class VisaComponent implements OnInit {
         break;
     }
 
+    
     formattedDate = oriDate.toString().substring(4, 15).split(" ")[2] + "-" + month + "-" + oriDate.toString().substring(4, 15).split(" ")[1];
     return formattedDate;
   }
