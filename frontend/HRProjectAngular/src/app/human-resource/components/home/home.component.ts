@@ -39,6 +39,11 @@ export class HomeComponent implements OnInit{
     )
   }
 
+  compare(data:any) {
+    console.log(data);
+    console.log(data != "I-983 NEED TO BE SIGNED");
+  }
+
   sendEmail(nextStep, userId): void {
     let params = {
       message: nextStep,

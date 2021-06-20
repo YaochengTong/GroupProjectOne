@@ -103,8 +103,10 @@ public class StatusTableElementImpl implements IStatusTableElementService {
         String nextStep;
         switch (currentStep) {
             case "OPT Receipt": nextStep = "OPT EAD"; break;
-            case "OPT EAD": nextStep = "I-983 for OPT STEM"; break;
-            case "I-983 Submitted": nextStep = "I-20 after I-983 Submitted"; break;
+            case "OPT EAD": nextStep = "I-983 for OPT STEM TO FILL"; break;
+            case "I-983 Filled": nextStep = "I-983 NEED TO BE SIGNED"; break;
+            case "I-983 Signed": nextStep = "I-20"; break;
+            case "I-20": nextStep = "OPT STEM RECEIPT"; break;
             case "OPT STEM Receipt": nextStep = "OPT STEP EAD"; break;
             case "OPT STEM EAD": nextStep="No Action"; break;
             default:
