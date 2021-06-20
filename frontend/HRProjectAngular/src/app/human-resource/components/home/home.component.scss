@@ -12,3 +12,24 @@ table {
   font-size: 14px;
   width: 100%;
   }
+
+  mat-button-toggle {
+    // height: 35px; 
+    width: 100px;
+    background: rgb(110, 157, 228);
+    color:white;
+    font-size: 14px;
+    font-weight: bold;
+    // transform: scaleY(0.8);
+    // .mat-button-toggle-label-content {
+    //   line-height: 35px;
+    //   }
+      
+  }
+
+  .actionCol {
+    transform: scaleY(0.8);
+  }
+
+    
+  

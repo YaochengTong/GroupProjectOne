@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Facility } from '../domain/facility';
-import { HttpClient } from '@angular/common/http';
+import { FacilityReport } from '../domain/facility-report';
 
 @Component({
   selector: 'app-report-dialog',
@@ -9,22 +8,17 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./report-dialog.component.scss'],
 })
 export class ReportDialogComponent {
-  facility: Facility;
-  reports: undefined;
+  reports: FacilityReport[] | undefined;
 
   constructor(
     public dialogRef: MatDialogRef<ReportDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Facility,
-    private httpClient: HttpClient
+    @Inject(MAT_DIALOG_DATA) public data: FacilityReport[]
   ) {
-    this.facility = data;
+    this.reports = data['reports'];
+    console.log(this.reports);
   }
 
   onCloseClick(): void {
     this.dialogRef.close();
-  }
-
-  getReportsByFacilityId(id: number) {
-    this.reports = undefined;
   }
 }

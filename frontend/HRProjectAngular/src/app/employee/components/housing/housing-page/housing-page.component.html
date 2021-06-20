@@ -1,0 +1,71 @@
+<p>Housing</p>
+<div *ngIf="!isDataAvailable" style="position: relative; top: 40%; left: 50%">
+  <mat-spinner></mat-spinner>
+  <strong>Loading...</strong>
+</div>
+<div *ngIf="isDataAvailable">
+  <div *ngIf="house" class="grid-container">
+    <mat-grid-list cols="1">
+      <mat-grid-tile>
+        <mat-card class="clickable">
+          <mat-card-title>Employee Housing Info</mat-card-title>
+          <img
+            alt="House Info"
+            mat-card-image
+            src="https://cdn.vox-cdn.com/thumbor/MmJmwDPDBXVeGW002YEif0Jvg-g=/0x0:3000x2000/1820x1213/filters:focal(1260x760:1740x1240):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/65890203/iStock_1067331614.7.jpg"
+          />
+          <mat-card-content class="center">
+            <mat-list>
+              <mat-list-item>
+                <strong>House Id:</strong> &nbsp; {{ house.houseId }}
+              </mat-list-item>
+              <mat-list>
+                <mat-list-item>
+                  <strong>Landlord:</strong> &nbsp; {{ house.landlord }}
+                </mat-list-item>
+                <mat-list-item>
+                  <strong>Phone:</strong> &nbsp; {{ house.phone }}
+                </mat-list-item>
+                <mat-list-item>
+                  <strong>Number of Person:</strong> &nbsp;
+                  {{ house.numberOfPerson }}
+                </mat-list-item>
+              </mat-list>
+            </mat-list>
+          </mat-card-content>
+          <div id="facilityReportButton">
+            <button
+              color="primary"
+              mat-raised-button
+              routerLink="/employee/housing/facility-report"
+            >
+              Report Facility Issue
+            </button>
+          </div>
+        </mat-card>
+
+        <mat-card class="clickable">
+          <mat-card-title>Employee Roommate Info</mat-card-title>
+          <mat-card-content class="center">
+            <mat-list *ngFor="let e of employees">
+              <div id="employeeInfo">
+                <mat-list-item>
+                  <strong>Name:</strong> &nbsp; {{ e.employeeName }}
+                </mat-list-item>
+                <mat-list-item>
+                  <strong>Phone:</strong> &nbsp; {{ e.employeePhone }}
+                </mat-list-item>
+                <mat-list-item>
+                  <strong>Email:</strong> &nbsp; {{ e.employeeEmail }}
+                </mat-list-item>
+                <mat-list-item>
+                  <strong>Car:</strong> &nbsp; {{ e.employeeCar }}
+                </mat-list-item>
+              </div>
+            </mat-list>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>

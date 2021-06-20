@@ -1,0 +1,96 @@
+<p>facility-report works!</p>
+
+<div class="grid-container">
+  <mat-grid-list cols="1">
+    <mat-grid-tile>
+      <mat-card class="clickable">
+        <mat-card-title>Employee Facility Reports</mat-card-title>
+        <mat-card-content>
+
+          <mat-list *ngFor="let fr of facilityReports" class="facilityCard">
+            <mat-list-item>
+              <strong>Title: </strong> &nbsp;
+              {{ fr.houseFacilityReportTitle }}
+            </mat-list-item>
+            <mat-list-item>
+              <strong>Date: </strong> &nbsp; {{ fr.houseFacilityReportDate }}
+            </mat-list-item>
+            <mat-list-item>
+              <strong>Description: </strong> &nbsp;
+              {{ fr.houseFacilityReportDescription }}
+            </mat-list-item>
+            <mat-list-item>
+              <strong>Details: </strong> &nbsp;
+              {{ fr.houseFacilityReportDetails }}
+            </mat-list-item>
+          </mat-list>
+
+        </mat-card-content>
+
+      </mat-card>
+
+      <mat-card class="clickable">
+        <mat-card-title>Report yours</mat-card-title>
+        <mat-card-content>
+          <form (ngSubmit)="onSubmit()" [formGroup]="reportForm" novalidate>
+            <mat-form-field class="full-width">
+              <input
+                formControlName="houseFacilityReportTitle"
+                matInput
+                placeholder="Title"
+                required
+              />
+              <mat-error
+                *ngIf="
+                  reportForm.controls['houseFacilityReportTitle'].hasError(
+                    'required'
+                  )
+                "
+              >
+                Title is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <textarea
+                formControlName="houseFacilityReportDescription"
+                matInput
+                placeholder="Description"
+                required
+              ></textarea>
+              <mat-error
+                *ngIf="
+                  reportForm.controls[
+                    'houseFacilityReportDescription'
+                  ].hasError('required')
+                "
+              >
+                Description is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <input
+                formControlName="houseFacilityReportStatus"
+                matInput
+                placeholder="Status"
+                required
+              />
+              <mat-error
+                *ngIf="
+                  reportForm.controls['houseFacilityReportStatus'].hasError(
+                    'required'
+                  )
+                "
+              >
+                Status is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </form>
+        </mat-card-content>
+        <mat-card-actions class="center">
+          <button (click)="onSubmit()" color="primary" mat-raised-button type="submit">Submit</button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

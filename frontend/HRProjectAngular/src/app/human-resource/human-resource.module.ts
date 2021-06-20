@@ -29,6 +29,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import {MatSelectModule} from '@angular/material/select';
 import {FormControl} from '@angular/forms';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 
 import { HttpClientModule } from '@angular/common/http';
@@ -41,6 +42,7 @@ import { ContactSectionDialogComponent } from './components/personal-info/contac
 import { EmergencyContactSectionDialogComponent } from './components/personal-info/emergency-contact-section-dialog/emergency-contact-section-dialog.component';
 import { EmploymentSectionDialogComponent } from './components/personal-info/employment-section-dialog/employment-section-dialog.component';
 import { DetailsDialogComponent } from './components/hire/details-dialog/details-dialog.component';
+import { PreviewTxtComponent } from './components/home/preview-txt/preview-txt.component';
 
 
 @NgModule({
@@ -58,6 +60,7 @@ import { DetailsDialogComponent } from './components/hire/details-dialog/details
     EmergencyContactSectionDialogComponent,
     EmploymentSectionDialogComponent,
     DetailsDialogComponent,
+    PreviewTxtComponent,
   ],
   imports: [
     CommonModule,
@@ -82,7 +85,8 @@ import { DetailsDialogComponent } from './components/hire/details-dialog/details
     MatProgressSpinnerModule,
     MatTabsModule,
     MatSelectModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatButtonToggleModule
   ],
   providers: [HTTPReq],
   exports: [

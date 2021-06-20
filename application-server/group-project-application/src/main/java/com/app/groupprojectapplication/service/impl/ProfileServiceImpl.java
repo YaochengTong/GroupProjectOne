@@ -60,7 +60,6 @@ public class ProfileServiceImpl implements IProfileService {
         profile.setContactInfoSection(setContactInfoSection(employee, person));
         profile.setEmploymentSection(setEmploymentSection(employee));
         profile.setEmergencyContactList(setEmergencyContactList(person));
-//        profile.setSummary(setSummary(employee, person));
         return profile;
     }
 
@@ -141,7 +140,10 @@ public class ProfileServiceImpl implements IProfileService {
         if (addrMapList.size() >= 2) {
             addressSection.setPrimaryAddr(addrMapList.get(0));
             addressSection.setSecondaryAddr(addrMapList.get(1));
-        } else {
+        } else if (addressList.size() ==1) {
+            addressSection.setPrimaryAddr(addrMapList.get(0));
+            addressSection.setSecondaryAddr(null);
+        } else if (addressList == null) {
             addressSection.setPrimaryAddr(null);
             addressSection.setSecondaryAddr(null);
         }

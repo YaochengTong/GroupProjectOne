@@ -33,6 +33,7 @@ export class PersonalInfoComponent implements OnInit {
     this.userId = localStorage.getItem("userId")!;
     this.httpRequestService.getData('/profile/'+this.userId, null, 'http://localhost:8999').subscribe(
       (data: any) => {
+        console.log(data)
         this.isDataAvailable = true;
         this.empolyeeId = data.profile.employee_id;
         this.nameSection = data.profile.nameSection;

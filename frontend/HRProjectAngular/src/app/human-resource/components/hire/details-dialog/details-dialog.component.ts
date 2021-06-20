@@ -123,7 +123,7 @@ export class DetailsDialogComponent implements OnInit, OnDestroy {
           'user_id': this.applicationObj.userId,
           'email': this.applicationObj.email
         }
-        this.httpRequestService.postData('/hire/generateToken', params).subscribe(
+        this.httpRequestService.postData('/hire/auditOnboard', params).subscribe(
           (data: any) => {
             console.log(data);
             if(data.result == 'success'){
@@ -162,7 +162,7 @@ export class DetailsDialogComponent implements OnInit, OnDestroy {
         'email': this.applicationObj.email,
         'user_id': this.applicationObj.userId,
       }
-      this.httpRequestService.postData('/hire/generateToken', params).subscribe(
+      this.httpRequestService.postData('/hire/auditOnboard', params).subscribe(
         (data: any) => {
           console.log(data);
           if(data.result == 'success'){

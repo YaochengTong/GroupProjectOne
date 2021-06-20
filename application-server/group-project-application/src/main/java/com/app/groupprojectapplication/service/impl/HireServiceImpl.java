@@ -93,6 +93,7 @@ public class HireServiceImpl implements IHireService {
         User user = iUserDao.getUserById(userId);
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
+        Person existedPerson = user.getPerson();
         /**
          * Step 1: deal with the form
          */
@@ -118,12 +119,17 @@ public class HireServiceImpl implements IHireService {
         user.setPerson(person);
 
         //insert person
-        Integer person_id = iPersonDao.insertPerson(person);
-        person.setId(person_id);
-
-        for(Address address : person.getAddresses()){
-            address.setPerson(person);
-            iAddressDao.insertAddress(address);
+        if(existedPerson == null){
+            Integer person_id = iPersonDao.insertPerson(person);
+            person.setId(person_id);
+            for(Address address : person.getAddresses()){
+                address.setPerson(person);
+                iAddressDao.insertAddress(address);
+            }
+        }
+        else{
+            person.setId(existedPerson.getId());
+            iPersonDao.mergePerson(person);
         }
 
         //update user
@@ -237,7 +243,20 @@ public class HireServiceImpl implements IHireService {
 
         //1.4 Insert into visa status and employee
         //Visa status
-        VisaStatus visaStatus = new VisaStatus();
+        // and employee
+        Employee employee;
+        VisaStatus visaStatus;
+        Integer existedEmployeeId = iUserDao.getEmployeeIdByUserId(user.getId());
+        if(existedEmployeeId != null) {
+            employee = iEmployeeDao.getEmployeeById(existedEmployeeId);
+            visaStatus = employee.getVisaStatus();
+        }
+        else {
+            employee = new Employee();
+            visaStatus = new VisaStatus();
+        }
+
+        //VisaStatus visaStatus = new VisaStatus();
         visaStatus.setModificationDate(timestamp);
         Boolean isCitizen = Boolean.parseBoolean(paramMap.get("isCitizen").toString());
         if(isCitizen){
@@ -257,8 +276,7 @@ public class HireServiceImpl implements IHireService {
         else visaStatus.setIsActive((byte) 0);
         visaStatus.setUser(user);
 
-        //employee
-        Employee employee = new Employee();
+
         employee.setPerson(person);
         employee.setTitle("javaSDE");
         employee.setManagerId(8842);
@@ -282,10 +300,19 @@ public class HireServiceImpl implements IHireService {
         employeeSet.add(employee);
         visaStatus.setEmployeeSet(employeeSet);
 
-        Integer visaStatusId = iVisaStatusDao.insertVisa(visaStatus);
-        visaStatus.setId(visaStatusId);
+        if(existedEmployeeId == null) {
+            Integer visaStatusId = iVisaStatusDao.insertVisa(visaStatus);
+            visaStatus.setId(visaStatusId);
+        }
 
-        Integer employeeId = iEmployeeDao.insertEmployee(employee);
+        Integer employeeId;
+        if(existedEmployeeId != null) {
+            employeeId = existedEmployeeId.intValue();
+            //iEmployeeDao.mergeEmployee(employee);
+        }
+        else {
+            employeeId = iEmployeeDao.insertEmployee(employee);
+        }
         employee.setId(employeeId);
 
         //step 1.5 insert into application workflow

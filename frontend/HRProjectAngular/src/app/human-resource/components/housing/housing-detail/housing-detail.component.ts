@@ -18,6 +18,7 @@ export class HousingDetailComponent implements OnInit {
   house: House | undefined;
   facility: Facility[] | undefined;
   employee: Employee[] | undefined;
+  facilityReport: FacilityReport[] | undefined;
   reports: FacilityReport[] | undefined;
 
   // reports: FacilityReport[] | undefined;
@@ -35,6 +36,7 @@ export class HousingDetailComponent implements OnInit {
       this.house = h;
       this.facility = h.houseFacilityInfoList;
       this.employee = h.houseEmployeeInfoList;
+      this.facilityReport = h.houseFacilityInfoList[0].houseFacilityReportInfo;
     });
   }
 
@@ -44,8 +46,8 @@ export class HousingDetailComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(ReportDialogComponent, {
-      width: '250px',
-      data: { facility: this.facility },
+      width: '500px',
+      data: { reports: this.facilityReport },
     });
 
     dialogRef.afterClosed().subscribe(() => {
