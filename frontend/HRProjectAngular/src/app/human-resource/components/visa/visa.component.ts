@@ -61,6 +61,7 @@ export class VisaComponent implements OnInit {
   
   }
 
+
   onEdit(event: any) {
     this.isEdit = true;
     let index = event.currentTarget.id;

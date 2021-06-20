@@ -104,7 +104,7 @@ public class StatusTableElementImpl implements IStatusTableElementService {
         switch (currentStep) {
             case "OPT Receipt": nextStep = "OPT EAD"; break;
             case "OPT EAD": nextStep = "I-983 for OPT STEM TO FILL"; break;
-            case "I-983 Filled": nextStep = "I-983 NEED BE SIGNED"; break;
+            case "I-983 Filled": nextStep = "I-983 NEED TO BE SIGNED"; break;
             case "I-983 Signed": nextStep = "I-20"; break;
             case "I-20": nextStep = "OPT STEM RECEIPT"; break;
             case "OPT STEM Receipt": nextStep = "OPT STEP EAD"; break;
