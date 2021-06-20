@@ -159,4 +159,19 @@ public class UserDaoImpl implements IUserDao {
         resultMap.put("token", token);
         return resultMap;
     }
+
+    @Override
+    public Map<String, Object> getApplicationStatus(Integer user_id) {
+        Map<String, Object> resultMap = new HashMap<>();
+        String sql = "SELECT awf.status AS status from application_workflow as awf where awf.user_id=?";
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql,
+                new Object[]{user_id});
+        if(rows.size() != 1){
+            resultMap.put("success", false);
+            resultMap.put("reason", "Application status not found");
+        }
+        String status = rows.get(0).get("status").toString();
+        resultMap.put("application_status", status);
+        return resultMap;
+    }
 }

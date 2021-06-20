@@ -120,6 +120,7 @@ export class DetailsDialogComponent implements OnInit, OnDestroy {
           'comments': comments,
           'approve': 'yes',
           'id': this.applicationObj.applicationId,
+          'user_id': this.applicationObj.userId,
           'email': this.applicationObj.email
         }
         this.httpRequestService.postData('/hire/generateToken', params).subscribe(
@@ -158,7 +159,8 @@ export class DetailsDialogComponent implements OnInit, OnDestroy {
         'comments': comments,
         'approve': 'no',
         'id': this.applicationObj.applicationId,
-        'email': this.applicationObj.email
+        'email': this.applicationObj.email,
+        'user_id': this.applicationObj.userId,
       }
       this.httpRequestService.postData('/hire/generateToken', params).subscribe(
         (data: any) => {

@@ -11,4 +11,5 @@ public interface IUserRoleDao {
     List<UserRole> getUserRoleByRoleId(Integer roleId);
 //    List<UserRole> getUserRoleByLastModifiedUserId(Integer lastUserId);
     void insertUserRole(UserRole userRole);
+    boolean updateUserRole(UserRole userRole);
 }
