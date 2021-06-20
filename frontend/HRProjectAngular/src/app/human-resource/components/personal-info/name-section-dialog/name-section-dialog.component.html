@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Edit Personal Infomatino</h1>
+<div mat-dialog-content>
+    <mat-label>Full Name</mat-label>
+    <input matInput [(ngModel)]="data.nameSection.fullName"><br>
+    <mat-label>Preferred Name</mat-label>
+    <input matInput [(ngModel)]="data.nameSection.preferredName" placeholder="data.nameSection.preferredName"><br>
+    <mat-label>Age</mat-label>
+    <input matInput [(ngModel)]="data.nameSection.age" placeholder="data.nameSection.age"><br>
+    <mat-label>SS#</mat-label>
+    <input matInput [(ngModel)]="data.nameSection.ssn" placeholder="data.nameSection.ssn"><br>
+    <mat-label>Date of Birth</mat-label>
+    <input matInput [(ngModel)]="data.nameSection.dob" placeholder="data.nameSection.dob"><br>
+    <mat-label>Avatar</mat-label>
+    <input matInput [(ngModel)]="data.nameSection.avatar" placeholder="data.nameSection.avatar"><br>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onCancelClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="data.nameSection" cdkFocusInitial>Save</button>
+</div>

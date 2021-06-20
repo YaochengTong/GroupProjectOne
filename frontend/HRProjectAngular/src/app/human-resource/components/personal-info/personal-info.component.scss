@@ -1,0 +1,22 @@
+.example-card {
+  // display: inline-block;
+}
+
+.example-header-image {
+  background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
+  background-size: cover;
+}
+
+.card-group {
+  // display: inline-block
+}
+
+.inline-block {
+  display: inline;
+}
+
+.card-button {
+  position: relative;
+  bottom: 10px;
+  right: -100px;
+}

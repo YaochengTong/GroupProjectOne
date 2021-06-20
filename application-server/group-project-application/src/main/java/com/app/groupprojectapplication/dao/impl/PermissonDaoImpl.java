@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,26 +22,21 @@ public class PermissonDaoImpl implements IPermissionDao {
 
     @Override
     public Permission getPermissionById(Integer id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         permission = session.get(Permission.class, id);
-        session.close();
         return permission;
     }
 
     @Override
     public List<Permission> getPermissionsByLastModifiedUserId(Integer user_id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         List<Permission> permissionsList = session.createQuery("From Permission p Where p.user.id = " + user_id).getResultList();
-        session.close();
         return permissionsList;
     }
 
     @Override
     public void insertPermission(Permission permission) {
-        Session session = sessionFactory.openSession();
-        Transaction ts = session.beginTransaction();
+        Session session = sessionFactory.getCurrentSession();
         session.save(permission);
-        ts.commit();
-        session.close();
     }
 }

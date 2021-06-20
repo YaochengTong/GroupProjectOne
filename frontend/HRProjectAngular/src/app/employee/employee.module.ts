@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './components/home/home.component';
-import { HousingComponent } from './components/housing/housing.component';
 import { EmployeeNavComponent } from './components/employee-nav/nav.component';
 import { PersonalInfoComponent } from './components/personalInfo/personalInfo.component';
 import { VisaComponent } from './components/visa/visa.component';
@@ -18,32 +17,54 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { EmployeeRoutingModule } from './employee-routing.module';
 import { EmployeePageComponent } from './components/employee-page/employee-page.component';
 import { HumanResourceModule } from '../human-resource/human-resource.module';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
-import { OnBoardingComponent } from './components/on-boarding/on-boarding.component';
+import { OnBoardingComponent } from '../on-boarding/on-boarding.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatDialogModule} from '@angular/material/dialog';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { HTTPReq } from '../service/HTTPReq/HTTPReq.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { NameSectionDialogComponent } from './components/personalInfo/name-section-dialog/name-section-dialog.component';
+import { AddressSectionDialogComponent } from './components/personalInfo/address-section-dialog/address-section-dialog.component';
+import { ContactSectionDialogComponent } from './components/personalInfo/contact-section-dialog/contact-section-dialog.component';
+import { EmergencyContactSectionDialogComponent } from './components/personalInfo/emergency-contact-section-dialog/emergency-contact-section-dialog.component';
+import { EmploymentSectionDialogComponent } from './components/personalInfo/employment-section-dialog/employment-section-dialog.component';
+import { ContactTemplateComponent } from '../on-boarding/contact-template/contact-template.component';
+import { PersonalInfoTemplateComponent } from '../on-boarding/personal-info-template/personal-info-template.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
-    HousingComponent,
     EmployeeNavComponent,
     PersonalInfoComponent,
     VisaComponent,
     EmployeePageComponent,
     OnBoardingComponent,
+    ContactTemplateComponent,
+    PersonalInfoTemplateComponent,
+    NameSectionDialogComponent,
+    AddressSectionDialogComponent,
+    ContactSectionDialogComponent,
+    EmergencyContactSectionDialogComponent,
+    EmploymentSectionDialogComponent,
   ],
+
   imports: [
     CommonModule,
     EmployeeRoutingModule,
@@ -67,15 +88,26 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatNativeDateModule,
     MatCheckboxModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    FlexLayoutModule,
+    NgxMatFileInputModule,
+    FormsModule,
+    MatStepperModule,
+    MatProgressSpinnerModule,
+    MatBadgeModule,
+    MatSnackBarModule,
   ],
   exports: [
     CommonModule,
     HomeComponent,
-    HousingComponent,
     EmployeeNavComponent,
     PersonalInfoComponent,
     VisaComponent,
+    NameSectionDialogComponent,
+    AddressSectionDialogComponent,
+    ContactSectionDialogComponent,
+    EmergencyContactSectionDialogComponent,
+    EmploymentSectionDialogComponent,
   ],
 
   providers: [HTTPReq],

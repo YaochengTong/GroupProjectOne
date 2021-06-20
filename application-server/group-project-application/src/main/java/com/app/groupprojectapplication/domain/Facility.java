@@ -7,27 +7,23 @@ import java.util.Objects;
 @Entity
 @Table(name="facility")
 public class Facility implements Serializable {
-    private int id;
+    private Integer id;
     private String type;
     private String description;
-    private int numberOfBeds;
-    private int numberOfMattresses;
-    private int numberOfTables;
-    private int numberOfChairs;
+    private Integer quantity;
     private House house;
 
     public Facility() {
     }
 
-
-
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -52,43 +48,13 @@ public class Facility implements Serializable {
     }
 
     @Basic
-    @Column(name = "number_of_beds")
-    public int getNumberOfBeds() {
-        return numberOfBeds;
+    @Column(name = "quantity")
+    public Integer getQuantity() {
+        return quantity;
     }
 
-    public void setNumberOfBeds(int numberOfBeds) {
-        this.numberOfBeds = numberOfBeds;
-    }
-
-    @Basic
-    @Column(name = "number_of_mattresses")
-    public int getNumberOfMattresses() {
-        return numberOfMattresses;
-    }
-
-    public void setNumberOfMattresses(int numberOfMattresses) {
-        this.numberOfMattresses = numberOfMattresses;
-    }
-
-    @Basic
-    @Column(name = "number_of_tables")
-    public int getNumberOfTables() {
-        return numberOfTables;
-    }
-
-    public void setNumberOfTables(int numberOfTables) {
-        this.numberOfTables = numberOfTables;
-    }
-
-    @Basic
-    @Column(name = "number_of_chairs")
-    public int getNumberOfChairs() {
-        return numberOfChairs;
-    }
-
-    public void setNumberOfChairs(int numberOfChairs) {
-        this.numberOfChairs = numberOfChairs;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -106,11 +72,11 @@ public class Facility implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Facility facility = (Facility) o;
-        return id == facility.id && numberOfBeds == facility.numberOfBeds && numberOfMattresses == facility.numberOfMattresses && numberOfTables == facility.numberOfTables && numberOfChairs == facility.numberOfChairs && Objects.equals(type, facility.type) && Objects.equals(description, facility.description);
+        return id == facility.id && quantity == facility.quantity && Objects.equals(type, facility.type) && Objects.equals(description, facility.description) && Objects.equals(house, facility.house);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, type, description, numberOfBeds, numberOfMattresses, numberOfTables, numberOfChairs);
+        return Objects.hash(id, type, description, quantity, house);
     }
 }

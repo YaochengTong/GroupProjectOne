@@ -3,27 +3,20 @@ import { CommonModule } from '@angular/common';
 
 import { LoginRoutingModule } from './login-routing.module';
 import { LoginPageComponent } from './login-page/login-page.component';
-import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { ExtendedModule, FlexModule } from '@angular/flex-layout';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { RegisterPageComponent } from './register-page/register-page.component';
 
 @NgModule({
-  declarations: [LoginPageComponent],
+  declarations: [LoginPageComponent, RegisterPageComponent],
   imports: [
     CommonModule,
     LoginRoutingModule,
-    FormsModule,
-    MatFormFieldModule,
-    // MatInputModule,
     FlexModule,
-    MatCheckboxModule,
     ExtendedModule,
-    MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSlideToggleModule,
   ],
   exports: [LoginPageComponent],
 })

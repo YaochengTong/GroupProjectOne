@@ -8,20 +8,22 @@ import java.util.Objects;
 @Entity
 @Table(name = "user_role", schema = "hr_db")
 public class UserRole implements Serializable {
-    private int id;
+    private Integer id;
+    private User user;
     private byte activateFlag;
     private Timestamp createDate;
     private Timestamp modificationDate;
-    private User user;
+    private User lastModifiedUser;
     private Role role;
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -57,6 +59,15 @@ public class UserRole implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="last_modification_user_id", referencedColumnName = "id")
+    public User getLastModifiedUser() {
+        return lastModifiedUser;
+    }
+    public void setLastModifiedUser(User lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id", referencedColumnName = "id")
     public User getUser() {
         return user;
     }

@@ -5,6 +5,7 @@
 .sidenav-container {
   height: 100%;
 }
+
 //
 //.sidenav {
 //  width: 300px;
@@ -21,5 +22,39 @@
 }
 
 .active-list-item {
-  color: #3F51B5 !important; /* Note: You could also use a custom theme */
+  color: #3f51b5 !important; /* Note: You could also use a custom theme */
+}
+
+.avatar {
+  margin: 16px 16px 16px 60px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.nested-menu {
+  .nested {
+    list-style-type: none;
+  }
+
+  .submenu {
+    display: none;
+    height: 0;
+  }
+
+  & .expand {
+    &.submenu {
+      display: block;
+      list-style-type: none;
+      height: auto;
+      margin: 0;
+
+      li {
+        a {
+          padding: 10px;
+          display: block;
+        }
+      }
+    }
+  }
 }

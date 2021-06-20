@@ -1,0 +1,59 @@
+<link rel="stylesheet" href="housing-page.component.scss">
+<p>You can directly click the card for housing details</p>
+<!--<p>Please patiently wait 10 second due to data nested performance issue</p>-->
+<p>Landlord is random string due to no database column</p>
+<div *ngIf="!isDataAvailable" style="position: relative; top: 40%; left: 50%">
+  <mat-spinner></mat-spinner>
+  <strong>Loading...</strong>
+</div>
+<div *ngIf="isDataAvailable">
+  <mat-grid-list cols="3" rowHeight="500px">
+    <mat-grid-tile *ngFor="let h of houses" [colspan]="1" [rowspan]="1">
+      <mat-card
+        [class.selected]="h === selectedHouse"
+        class="clickable"
+        matRipple
+        routerLink="detail/{{ h.houseId }}"
+      >
+        <mat-card-title>{{ h.address }}</mat-card-title>
+        <br/>
+        <img
+          alt="House Info"
+          mat-card-image
+          src="https://cdn.vox-cdn.com/thumbor/MmJmwDPDBXVeGW002YEif0Jvg-g=/0x0:3000x2000/1820x1213/filters:focal(1260x760:1740x1240):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/65890203/iStock_1067331614.7.jpg"
+        />
+
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item>
+              <strong>Landlord:</strong> &nbsp; {{ h.landlord }}
+            </mat-list-item>
+            <mat-list-item>
+              <strong>Phone:</strong> &nbsp; {{ h.phone }}
+            </mat-list-item>
+            <mat-list-item>
+              <strong>Number of Person:</strong> &nbsp;
+              {{ h.numberOfPerson }}
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+        <!--      <mat-card-actions>-->
+        <!--        <button mat-raised-button color="primary">Details</button>-->
+        <!--      </mat-card-actions>-->
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <div *ngIf="selectedHouse">
+    <h2>{{ selectedHouse.address | uppercase }} Details</h2>
+    <div><span>id: </span>{{ selectedHouse.houseId }}</div>
+    <div>
+      <label for="hero-name">Hero address: </label>
+      <input
+        [(ngModel)]="selectedHouse.address"
+        id="hero-name"
+        placeholder="name"
+      />
+    </div>
+  </div>
+</div>

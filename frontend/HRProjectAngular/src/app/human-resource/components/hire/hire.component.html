@@ -1,34 +1,65 @@
-<br/>
+<br />
+
 <div id="tokenDiv">
+  <form class="example-form">
+    <mat-form-field class="example-full-width">
+      <mat-label>Email</mat-label>
+      <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
+             placeholder="Ex. pat@example.com">
+      <mat-hint>Make sure the email address is correct.</mat-hint>
+      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="emailFormControl.hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <button style="float: right;"  mat-raised-button color="primary" (click)="generateToken()">Generate token</button>
+  </form>
+</div>
+
+<div id="applicationDiv">
+  <h4>Ongoing Applications</h4>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
-  
-    <!-- Position Column -->
-    <ng-container matColumnDef="position">
-      <th mat-header-cell *matHeaderCellDef> No. </th>
-      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+
+    <ng-container matColumnDef="itemIndex">
+      <th mat-header-cell *matHeaderCellDef>No.</th>
+      <td mat-cell *matCellDef="let element; let i = index;">{{i + 1}}</td>
     </ng-container>
-  
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+
+    <ng-container matColumnDef="firstName">
+      <th mat-header-cell *matHeaderCellDef>First Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.firstName }}</td>
     </ng-container>
-  
-    <!-- Weight Column -->
-    <ng-container matColumnDef="weight">
-      <th mat-header-cell *matHeaderCellDef> Weight </th>
-      <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+
+    <ng-container matColumnDef="lastName">
+      <th mat-header-cell *matHeaderCellDef>Last Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
     </ng-container>
-  
-    <!-- Symbol Column -->
-    <ng-container matColumnDef="symbol">
-      <th mat-header-cell *matHeaderCellDef> Symbol </th>
-      <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+
+    <ng-container matColumnDef="visaType">
+      <th mat-header-cell *matHeaderCellDef>Visa Type</th>
+      <td mat-cell *matCellDef="let element">{{ element.visaType }}</td>
     </ng-container>
-  
+
+    <ng-container matColumnDef="visaStartDate">
+      <th mat-header-cell *matHeaderCellDef>Visa Start Date</th>
+      <td mat-cell *matCellDef="let element">{{ element.visaStartDate }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="visaEndDate">
+      <th mat-header-cell *matHeaderCellDef>Visa End Date</th>
+      <td mat-cell *matCellDef="let element">{{ element.visaEndDate }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="getdetails">
+      <th mat-header-cell *matHeaderCellDef> Details </th>
+      <td mat-cell *matCellDef="let element"> 
+        <button mat-stroked-button color="primary" (click)="getRecord(element.applicationId)">Details</button>
+      </td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>  
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
 </div>

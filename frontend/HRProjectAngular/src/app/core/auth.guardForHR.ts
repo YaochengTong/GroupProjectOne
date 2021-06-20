@@ -12,18 +12,21 @@ import { Observable } from 'rxjs';
 })
 export class AuthGuardForHR implements CanActivate {
   constructor(private router: Router) {}
+
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    if(!localStorage.getItem('isLogged')){
-        this.router.navigate(['/login']);
-        return false;
+    if (!localStorage.getItem('isLogged')) {
+      this.router.navigate(['/login']);
+      return false;
     }
-    let retrievedObject:any = localStorage.getItem('user');
+    let retrievedObject: any = localStorage.getItem('user');
     let user = JSON.parse(retrievedObject);
-    if(user.roleName !== 'HR' )
-        return false;
+    if (user.roleName !== 'HR') {
+      this.router.navigate(['/login']);
+      return false;
+    }
     return true;
   }
 }

@@ -1,31 +1,51 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest, HttpHeaders, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'any'
+  providedIn: 'any',
 })
 export class HTTPReq {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  getData(path: string, paramObj: any, endPoint: string = 'http://localhost:8999'): Observable<any> {
+  getData(
+    path: string,
+    paramObj: any,
+    endPoint: string = 'http://localhost:8999'
+  ): Observable<any> {
     return this.http.get(endPoint + path, {
       headers: {
-        'Allow-Cross-Origin-Origin0': '*'
+        'Allow-Cross-Origin-Origin0': '*',
       },
       responseType: 'json',
-      params: paramObj
+      params: paramObj,
     });
   }
 
-  postData(path: string, paramObj: any, endPoint: string = 'http://localhost:8999'): Observable<any> {
+  postData(
+    path: string,
+    paramObj: any,
+    endPoint: string = 'http://localhost:8999'
+  ): Observable<any> {
     return this.http.post(endPoint + path, null, {
       headers: {
-        'Allow-Cross-Origin-Origin0': '*'
+        'Allow-Cross-Origin-Origin0': '*',
       },
       responseType: 'json',
-      params: paramObj
+      params: paramObj,
+
     });
+  }
+
+  fileUploadWithParams(path: string, formData: FormData, paramObj: any,
+        endPoint: string = 'http://localhost:8999') : Observable<any>
+  {
+      return this.http.post(endPoint + path, formData, {
+        headers: {
+          'Allow-Cross-Origin-Origin0': '*',
+        },
+        responseType: 'json',
+        params: paramObj,
+      });
   }
 }

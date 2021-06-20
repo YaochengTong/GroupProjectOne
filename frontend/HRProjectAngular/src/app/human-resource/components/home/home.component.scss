@@ -1,21 +1,35 @@
-.grid-container {
-  margin: 20px;
+#AllStatus {
+  width: 80%;
+  height: 100px;
+  display: block;
+  margin: 0 auto;
 }
 
-.dashboard-card {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  bottom: 15px;
-}
+table {
+  width: 100%;
+  }
+  .mat-form-field {
+  font-size: 14px;
+  width: 100%;
+  }
 
-.more-button {
-  position: absolute;
-  top: 5px;
-  right: 10px;
-}
+  mat-button-toggle {
+    // height: 35px; 
+    width: 100px;
+    background: rgb(110, 157, 228);
+    color:white;
+    font-size: 14px;
+    font-weight: bold;
+    // transform: scaleY(0.8);
+    // .mat-button-toggle-label-content {
+    //   line-height: 35px;
+    //   }
+      
+  }
 
-.dashboard-card-content {
-  text-align: center;
-}
+  .actionCol {
+    transform: scaleY(0.8);
+  }
+
+    
+  

@@ -1,0 +1,64 @@
+table {
+  width: 90%;
+  margin: auto;
+  margin-top: 5em;
+  padding: 5%;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.header {
+  font-size: larger;
+  color: black;
+  font: bolder;
+}
+
+.primary {
+  font-size: medium;
+  color: #3f434b;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+  background-color: rgba($color: #1652cb, $alpha: 0.1);
+  height: 18em;
+}
+
+.example-element-diagram {
+  width: 70%;
+  height: 15em;
+  border: 2px dotted gray;
+  font-weight: lighter;
+  padding: 1%;
+  margin-right: 5%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  float: right;
+}
+
+.detail-element {
+  position: relative;
+  margin: auto;
+  margin-left: 2%;
+}
+
+.detail-element-content {
+  position: relative;
+  font-size: 15px;
+  margin: auto;
+}

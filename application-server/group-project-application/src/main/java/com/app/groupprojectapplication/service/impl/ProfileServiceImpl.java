@@ -3,6 +3,7 @@ package com.app.groupprojectapplication.service.impl;
 import com.app.groupprojectapplication.dao.IContactDao;
 import com.app.groupprojectapplication.dao.IEmployeeDao;
 import com.app.groupprojectapplication.dao.IPersonDao;
+import com.app.groupprojectapplication.dao.IUserDao;
 import com.app.groupprojectapplication.domain.*;
 import com.app.groupprojectapplication.domain.profile.*;
 import com.app.groupprojectapplication.service.IProfileService;
@@ -27,6 +28,9 @@ public class ProfileServiceImpl implements IProfileService {
     @Autowired
     IPersonDao iPersonDao;
 
+    @Autowired
+    IUserDao iUserDao;
+
     @Override
     @Transactional
     public List<Profile> getProfile() {
@@ -40,7 +44,8 @@ public class ProfileServiceImpl implements IProfileService {
 
     @Override
     @Transactional
-    public Profile getProfileByEmployeeId(Integer employee_id) {
+    public Profile getProfileByEmployeeId(Integer user_id) {
+        Integer employee_id = iUserDao.getEmployeeIdByUserId(user_id);
         Employee employee = iEmployeeDao.getEmployeeById(employee_id);
         return getProfileByEmployee(employee);
     }
@@ -55,32 +60,29 @@ public class ProfileServiceImpl implements IProfileService {
         profile.setContactInfoSection(setContactInfoSection(employee, person));
         profile.setEmploymentSection(setEmploymentSection(employee));
         profile.setEmergencyContactList(setEmergencyContactList(person));
-//        profile.setSummary(setSummary(employee, person));
         return profile;
     }
 
-//    private Summary setSummary(Employee employee, Person person) {
-//        Summary summary = new Summary();
-//        summary.setFullName(getFullName(person));
-//        summary.setSSN(person.getSsn());
-//        summary.setStartDate(employee.getStartDate());
-//        summary.setVisaStatus(setw);
-//        System.out.println(summary.toString());
-//        return summary;
-//    }
-
-
-    private List<EmergencyContact> setEmergencyContactList(Person person) {
-        List<EmergencyContact> emergencyContactList = new ArrayList<>();
+    private EmergencyContactList setEmergencyContactList(Person person) {
+        EmergencyContactList emergencyContactList = new EmergencyContactList();
         List<Contact> contactList = iContactDao.getEmergencyByPersonId(person.getId());
-        for (Contact contact : contactList) {
+
+        if (contactList.size() == 2) {
             EmergencyContact emergencyContact = new EmergencyContact();
-            Person emergencyPerson = iPersonDao.getPersonById(contact.getRelated_person_id());
+            Person emergencyPerson = iPersonDao.getPersonById(contactList.get(1).getRelated_person_id());
             emergencyContact.setFullName(getFullName(emergencyPerson));
             emergencyContact.setPhone(emergencyPerson.getPrimaryPhone());
             emergencyContact.setAddress(setAddressSection(emergencyPerson));
-            emergencyContactList.add(emergencyContact);
+            emergencyContactList.setEmergencyPerson1(emergencyContact);
         }
+
+        EmergencyContact emergencyContact = new EmergencyContact();
+        Person emergencyPerson = iPersonDao.getPersonById(contactList.get(0).getRelated_person_id());
+        emergencyContact.setFullName(getFullName(emergencyPerson));
+        emergencyContact.setPhone(emergencyPerson.getPrimaryPhone());
+        emergencyContact.setAddress(setAddressSection(emergencyPerson));
+        emergencyContactList.setEmergencyPerson1(emergencyContact);
+
         return emergencyContactList;
      }
 
@@ -115,6 +117,7 @@ public class ProfileServiceImpl implements IProfileService {
         nameSection.setAvatar(employee.getAvartar());
         nameSection.setDOB(person.getDob());
         nameSection.setSSN(person.getSsn());
+        nameSection.setAge(iPersonDao.getAge(person.getId()));
         return nameSection;
     }
 
@@ -125,8 +128,8 @@ public class ProfileServiceImpl implements IProfileService {
         for (int i = 0; i < 2; i++) {
             if (addressList.size() > i) {
                 Map<String, String> addrMap = new HashMap<>();
-                addrMap.put("Address Line 1", addressList.get(i).getAddressLine1());
-                addrMap.put("Address Line 2", addressList.get(i).getAddressLine2());
+                addrMap.put("AddressLine1", addressList.get(i).getAddressLine1());
+                addrMap.put("AddressLine2", addressList.get(i).getAddressLine2());
                 addrMap.put("City", addressList.get(i).getCity());
                 addrMap.put("State", addressList.get(i).getStateName());
                 addrMap.put("Zip", addressList.get(i).getZipCode());
@@ -137,7 +140,10 @@ public class ProfileServiceImpl implements IProfileService {
         if (addrMapList.size() >= 2) {
             addressSection.setPrimaryAddr(addrMapList.get(0));
             addressSection.setSecondaryAddr(addrMapList.get(1));
-        } else {
+        } else if (addressList.size() ==1) {
+            addressSection.setPrimaryAddr(addrMapList.get(0));
+            addressSection.setSecondaryAddr(null);
+        } else if (addressList == null) {
             addressSection.setPrimaryAddr(null);
             addressSection.setSecondaryAddr(null);
         }

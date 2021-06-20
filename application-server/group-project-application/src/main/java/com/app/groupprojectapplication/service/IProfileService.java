@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface IProfileService {
     List<Profile> getProfile();
-    Profile getProfileByEmployeeId(Integer employee_id);
-
+    Profile getProfileByEmployeeId(Integer user_id);
 }

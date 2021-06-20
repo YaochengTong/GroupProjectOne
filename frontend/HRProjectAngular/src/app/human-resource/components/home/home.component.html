@@ -1,25 +1,93 @@
-<div class="grid-container">
-    <h1 class="mat-h1">Hello {{userName}}</h1>
-    <mat-grid-list cols="2" rowHeight="350px">
-      <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
-        <mat-card class="dashboard-card">
-          <mat-card-header>
-            <mat-card-title>
-              {{card.title}}
-              <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                <mat-icon>more_vert</mat-icon>
-              </button>
-              <mat-menu #menu="matMenu" xPosition="before">
-                <button mat-menu-item>Expand</button>
-                <button mat-menu-item>Remove</button>
-              </mat-menu>
-            </mat-card-title>
-          </mat-card-header>
-          <mat-card-content class="dashboard-card-content">
-            <div>Card Content Here</div>
-          </mat-card-content>
-        </mat-card>
-      </mat-grid-tile>
-    </mat-grid-list>
-  </div>
-  
+<div *ngIf="!isDataAvailable" style="position: relative; top: 40%; left: 50%">
+  <mat-spinner></mat-spinner>
+  <strong>Loading...</strong>
+</div>
+
+<br/>
+<div *ngIf="isDataAvailable" id="AllStatus">
+  <table [dataSource]="dataSource" class="mat-elevation-z8" mat-table>
+    <ng-container matColumnDef="id">
+      <th *matHeaderCellDef mat-header-cell>Id</th>
+      <td *matCellDef="let element" mat-cell>{{ element.employeeId }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th *matHeaderCellDef mat-header-cell>Name</th>
+      <td *matCellDef="let element" mat-cell>
+        {{ element.nameInfo.fullName }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="visaType">
+      <th *matHeaderCellDef mat-header-cell>VisaType</th>
+      <td *matCellDef="let element" mat-cell>
+        {{ element.visaInfo.visaType }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="expirationDate">
+      <th *matHeaderCellDef mat-header-cell>Expiration Date</th>
+      <td *matCellDef="let element" mat-cell>
+        {{ element.visaInfo.expirationDate.substring(0, 10) }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="dayLeft">
+      <th *matHeaderCellDef mat-header-cell>Day Left</th>
+      <td *matCellDef="let element" mat-cell>{{ element.visaInfo.dayLeft }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th *matHeaderCellDef mat-header-cell>Next Step</th>
+      <td *matCellDef="let element" mat-cell>
+        {{ element.visaInfo.nextStep }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <!-- <button [id]="element.idx" cursor: pointer" (click)="sendNotification($event)">Send Notification</button>  -->
+      <th *matHeaderCellDef mat-header-cell>Action</th>
+      <td *matCellDef="let element" mat-cell>
+        <mat-button-toggle-group
+          *ngIf="element.visaInfo.nextStep == 'I-983 NEED TO BE SIGNED'"
+          aria-label="Font Style"
+        >
+          <mat-button-toggle
+            (click)="preview(element.userId)"
+            class="childButton"
+            style="cursor: pointer"
+            value="preview"
+          >
+            Preview
+          </mat-button-toggle>
+
+<!--          <iframe-->
+<!--            frameborder="0"-->
+<!--            src="https://markdown-bucket.s3.us-east-2.amazonaws.com/uPic/1_2021_06_20_04_08_28.txt">-->
+<!--          </iframe>-->
+          <mat-button-toggle
+            (click)="downLoad(element.userId)"
+            class="childButton"
+            style="cursor: pointer"
+            value="download"
+          >
+            DownLoad
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+
+        <button
+          (click)="sendEmail(element.visaInfo.nextStep, element.userId)"
+          *ngIf="element.visaInfo.nextStep != 'I-983 NEED TO BE SIGNED'"
+          color="warn"
+          mat-raised-button
+          style="cursor: pointer"
+        >
+          Notify
+        </button>
+      </td>
+    </ng-container>
+
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+  </table>
+</div>

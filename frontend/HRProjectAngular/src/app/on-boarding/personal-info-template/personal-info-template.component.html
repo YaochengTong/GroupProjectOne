@@ -1,0 +1,309 @@
+<form [formGroup]="personalInfoForm" novalidate>
+    <!--      Company      -->
+    <div class="row">
+      <div class="col">
+        <mat-card-content>Your registration email: &nbsp;
+          <mat-form-field>
+            <input
+              [value]="email"
+              matInput
+              disabled
+            />
+          </mat-form-field>
+        </mat-card-content>
+      </div>
+      <div class="col">
+      </div>
+    </div>
+    <!--      Name      -->
+    <div class="row">
+      <div class="col">
+        <span *ngIf="rejected=='true'">ok</span>
+        <mat-form-field class="full-width">
+          <input
+            matInput
+            placeholder="First name"
+            formControlName="firstName"
+            required
+          />
+          <mat-error
+            *ngIf="personalInfoForm.controls['firstName'].hasError('required')"
+          >
+            First name is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <span *ngIf="rejected=='true'">ok</span>
+        <mat-form-field class="full-width">
+          <input
+            matInput
+            placeholder="Last name"
+            formControlName="lastName"
+            required
+          />
+          <mat-error
+            *ngIf="personalInfoForm.controls['lastName'].hasError('required')"
+          >
+            Last name is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col">
+        <span *ngIf="rejected=='true'">ok</span>
+        <mat-form-field class="full-width">
+          <input
+            matInput
+            placeholder="Middle name"
+            formControlName="middleName"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col">
+        <span *ngIf="rejected=='true'">ok</span>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="SSN" formControlName="ssn" required/>
+          <mat-error
+            *ngIf="personalInfoForm.controls['ssn'].hasError('required')"
+          >
+            SSN is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col">
+        <span *ngIf="rejected=='true'">ok</span>
+        <mat-form-field class="full-width">
+          <mat-label>Gender</mat-label>
+          <mat-select formControlName="gender" required>
+            <mat-option value="m">Male</mat-option>
+            <mat-option value="f">Female</mat-option>
+            <mat-option value="u">No Answer</mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="personalInfoForm.controls['gender'].hasError('required')"
+          >
+            Gender is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col">
+        <span *ngIf="rejected=='true'">ok</span>
+        <mat-form-field class="full-width">
+          <mat-label>Date of Birth</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="dateOfBirth"
+            required
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker">
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error
+            *ngIf="
+              personalInfoForm.controls['dateOfBirth'].hasError('required')
+            "
+          >
+            Date of Birth is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <br/>
+    <!--      Nested Questions      -->
+    <div class="row">
+      <div class="col">
+        <span *ngIf="rejected=='true'">ok</span>
+        <mat-card-content>
+          Are you a citizen or permanent resident of the U.S?
+        </mat-card-content>
+        <mat-form-field class="full-width">
+          <mat-select
+            formControlName="isCitizen"
+            placeholder="Citizenship"
+            required
+            [(ngModel)]="isCitizen"
+          >
+            <mat-option [value]="true">Yes</mat-option>
+            <mat-option [value]="false">No</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col" *ngIf="isCitizen === true">
+        <span *ngIf="rejected=='true'">ok</span>
+        <mat-card-content>Green Card or Citizen</mat-card-content>
+        <mat-form-field class="full-width">
+          <mat-label>Citizen Type</mat-label>
+          <mat-select formControlName="citizenType" [(ngModel)]="citizenType" [required]="isCitizen === true">
+            <mat-option value="green card">Green Card</mat-option>
+            <mat-option value="citizen">Citizen</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col" *ngIf="isCitizen === false">
+        <span *ngIf="rejected=='true'">ok</span>
+        <mat-card-content>What is your work authorization?</mat-card-content>
+        <mat-form-field class="full-width">
+          <mat-label>Authorization Type</mat-label>
+          <mat-select
+            formControlName="authorizationType"
+            (selectionChange)="selectionOnOther()"
+            [(ngModel)]="authorizationSelection"
+          >
+            <mat-option value="H1B">H1B</mat-option>
+            <mat-option value="L2">L2</mat-option>
+            <mat-option value="F1(OPT)">F1(OPT)</mat-option>
+            <mat-option value="F1(OPT) STEM">F1(OPT) STEM</mat-option>
+            <mat-option value="H4">H4</mat-option>
+            <mat-option [value]="true">OTHER</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col" *ngIf="isCitizen === false">
+        <span *ngIf="rejected=='true'">ok</span>
+        <mat-card-content
+        >Enter Your Authentication Date Range
+        </mat-card-content>
+        <mat-form-field class="full-width">
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input
+              matStartDate
+              formControlName="authorizationStartDate"
+              placeholder="Start date"
+            />
+            <input
+              matEndDate
+              formControlName="authorizationEndDate"
+              placeholder="End date"
+            />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+
+          <mat-error
+            *ngIf="
+              personalInfoForm.controls.authorizationStartDate.hasError(
+                'matStartDateInvalid'
+              )
+            "
+          >
+            Invalid start date
+          </mat-error>
+          <mat-error
+            *ngIf="
+              personalInfoForm.controls.authorizationEndDate.hasError(
+                'matEndDateInvalid'
+              )
+            "
+          >
+            Invalid end date
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col" *ngIf="authorizationSelection === true">
+        <mat-card-content>Specify your work authorization</mat-card-content>
+        <mat-form-field class="full-width">
+          <input
+            matInput
+            formControlName="otherAuthorizationType"
+            placeholder="Other Work Auth Type"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="col" *ngIf="isCitizen === false">
+        <span *ngIf="rejected=='true'">ok (Most recent upload is <a [href]="filePaths.WorkAuth">here)</a></span>
+        <mat-card-content>Upload your work authorization</mat-card-content>
+        <mat-form-field class="full-width">
+          <ngx-mat-file-input
+            [formControl]="fileWorkAuth"
+            [multiple]="multiple"
+            [color]="color"
+          >
+            <mat-icon ngxMatFileInputIcon>folder</mat-icon>
+          </ngx-mat-file-input>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <span *ngIf="rejected=='true'">ok</span>
+        <mat-card-content> Do you have a driver license?</mat-card-content>
+        <mat-form-field class="full-width">
+          <mat-select
+            formControlName="hasDriverLicense"
+            placeholder="Driver License"
+            required
+            [(ngModel)]="hasDriverLicense"
+          >
+            <mat-option [value]="true">Yes</mat-option>
+            <mat-option [value]="false">No</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col" *ngIf="hasDriverLicense === true">
+        <span *ngIf="rejected=='true'">ok</span>
+        <mat-card-content>Enter Driver License</mat-card-content>
+
+        <mat-form-field class="full-width">
+          <input
+            matInput
+            placeholder="Drive License"
+            formControlName="driverLicense"
+            [required]="hasDriverLicense === true"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="col" *ngIf="hasDriverLicense === true">
+        <span *ngIf="rejected=='true'">ok</span>
+        <mat-card-content>Enter Expiration Date</mat-card-content>
+
+        <mat-form-field class="full-width">
+          <mat-label>Expiration Date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="driverLicenseExp"
+            [required]="hasDriverLicense === true"
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker">
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="col" *ngIf="hasDriverLicense === true">
+        <span *ngIf="rejected=='true'">ok (Most Recent upload is <a [href]="filePaths.driverLicense">here)</a></span>
+        <mat-card-content>Upload your driver license</mat-card-content>
+        <mat-form-field class="full-width">
+          <ngx-mat-file-input
+            [formControl]="fileDriverLicense"
+            [multiple]="multiple"
+            [color]="color"
+            [required]="hasDriverLicense === true"
+          >
+            <mat-icon ngxMatFileInputIcon>folder</mat-icon>
+          </ngx-mat-file-input>
+        </mat-form-field>
+      </div>
+    </div>
+</form>

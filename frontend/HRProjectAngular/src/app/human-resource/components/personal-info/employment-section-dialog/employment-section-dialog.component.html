@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Edit Personal Infomatino</h1>
+<div mat-dialog-content>
+    <mat-label>Work Authorization</mat-label>
+    <input matInput [(ngModel)]="data.employmentSection.workAuthorization" placeholder="data.employmentSection.workAuthorization"><br>
+    <mat-label>Authorization Start Date</mat-label>
+    <input matInput [(ngModel)]="data.employmentSection.authorizationStartDate" placeholder="data.employmentSection.authorizationStartDate"><br>
+    <mat-label>Authorization End Date</mat-label>
+    <input matInput [(ngModel)]="data.employmentSection.authorizationEndDate" placeholder="data.employmentSection.aauthorizationEndDatege"><br>
+    <mat-label>Employment Start Date</mat-label>
+    <input matInput [(ngModel)]="data.employmentSection.employmentStartDate" placeholder="data.employmentSection.employmentStartDate"><br>
+    <mat-label>Employment End Date</mat-label>
+    <input matInput [(ngModel)]="data.employmentSection.employmentEndDate" placeholder="data.employmentSection.employmentEndDate"><br>
+    <mat-label>Title</mat-label>
+    <input matInput [(ngModel)]="data.employmentSection.title" placeholder="data.employmentSection.title"><br>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onCancelClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="data.employmentSection" cdkFocusInitial>Save</button>
+</div>

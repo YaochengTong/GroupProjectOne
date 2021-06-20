@@ -7,7 +7,6 @@ import com.app.groupprojectauth.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +24,9 @@ public class UserServiceImpl implements IUserService {
             resultMap.put("success", false);
         }
         else{
+            Integer id = user.getId();
+            Map<String, Object> statusMap = iUserDao.getApplicationStatus(id);
+            resultMap.put("application_status", statusMap.get("application_status"));
             resultMap.put("success", true);
             resultMap.put("user", user);
         }
@@ -42,9 +44,10 @@ public class UserServiceImpl implements IUserService {
         }
         else{
             Token token = (Token) tokenResult.get("token");
-            Date date = new Date();
-            Date converted_date = token.getValidUntil();
-            if(date.compareTo(converted_date) > 0){
+            long currentTime = System.currentTimeMillis();
+            long expirationTime = token.getValidUntil().getTime();
+
+            if(currentTime > expirationTime){
                 result.put("success", false);
                 result.put("reason", "token has expired");
                 return result;
@@ -58,4 +61,5 @@ public class UserServiceImpl implements IUserService {
         result = iUserDao.userRegister(param);
         return result;
     }
+
 }

@@ -24,18 +24,18 @@ public class Employee implements Serializable {
     private Person person;
     private VisaStatus visaStatus;
     private Set<PersonalDocument> personalDocumentSet;
-    private Set<ApplicationWorkflow> applicationWorkflowSet;
     private Set<FacilityReport> facilityReportSet;
     private Set<FacilityReportDetail> facilityReportDetailSet;
     private Set<RegistrationToken> registrationTokenSet;
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -176,15 +176,6 @@ public class Employee implements Serializable {
 
     public void setVisaStatus(VisaStatus visaStatus) {
         this.visaStatus = visaStatus;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
-    public Set<ApplicationWorkflow> getApplicationWorkflowSet() {
-        return applicationWorkflowSet;
-    }
-
-    public void setApplicationWorkflowSet(Set<ApplicationWorkflow> applicationWorkflowSet) {
-        this.applicationWorkflowSet = applicationWorkflowSet;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")

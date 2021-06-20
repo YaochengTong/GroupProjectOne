@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Repository
@@ -21,18 +22,14 @@ public class RegistrationTokenDaoImpl implements IRegistrationTokenDao {
 
     @Override
     public RegistrationToken getRegistrationTokenById(Integer id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         registrationToken = session.get(RegistrationToken.class, id);
-        session.close();
         return registrationToken;
     }
 
     @Override
     public void insertRegistrationToke(RegistrationToken registrationToken) {
-        Session session = sessionFactory.openSession();
-        Transaction ts = session.beginTransaction();
+        Session session = sessionFactory.getCurrentSession();
         session.save(registrationToken);
-        ts.commit();
-        session.close();
     }
 }

@@ -8,7 +8,7 @@ import java.util.Objects;
 @Entity
 @Table(name="permission")
 public class Permission implements Serializable {
-    private int id;
+    private Integer id;
     private String permissionName;
     private String description;
     private Timestamp createDate;
@@ -17,11 +17,12 @@ public class Permission implements Serializable {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

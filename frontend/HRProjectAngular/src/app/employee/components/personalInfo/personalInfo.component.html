@@ -1,12 +1,145 @@
-<div style="width: 90%; margin: auto">
-  <mat-grid-list cols="4" rowHeight="100px">
-    <mat-grid-tile
-      *ngFor="let tile of tiles"
-      [colspan]="tile.cols"
-      [rowspan]="tile.rows"
-      [style.background]="tile.color"
-    >
-      {{ tile.text }}
+<div style="position: relative; top: 40%; left: 50%;" *ngIf="!isDataAvailable">
+    <mat-spinner></mat-spinner>
+    <strong>Loading...</strong>
+  </div>
+
+<div style="width: 90%; margin: auto" *ngIf="isDataAvailable">
+  <mat-grid-list cols="4">
+    
+    <mat-grid-tile [rowspan]=2>
+      <div style="width: 90%; height:70%; margin: auto; background-color: #97abe7; padding: 2em;">
+        <div class="example-card" >
+          <div class="card-header">
+            <mat-icon >assignment_ind</mat-icon>
+            <p style=" font-size: larger"><strong>Personal Info</strong></p>
+          </div>
+      
+          <div class="card-content"> 
+            <p><strong>Full Name: </strong>{{nameSection.fullName}}</p>
+            <p><strong>preferred Name: </strong>{{nameSection.preferredName}}</p>
+            <p><strong>Age: </strong>{{nameSection.age}}</p>
+            <p><strong>SS#: </strong>{{nameSection.ssn}}</p>
+            <p><strong>Date of Birth: </strong>{{nameSection.dob.substring(0,10)}}</p>
+          </div>
+          <div>
+            <button mat-raised-button color="primary" (click)="editNameSection()">Edit</button>
+          </div>
+        </div>
+      </div>
     </mat-grid-tile>
+
+    <mat-grid-tile [rowspan]=2.5>
+      <div style="width: 90%; height:60%;margin: auto; padding: 2em; border-color: #8ccee9; background-color: beige ">
+        <div class="example-card">
+          <div class="card-header" style="width: 120%; background-color: #02727c">
+            <mat-icon>my_location</mat-icon>
+            <p style=" font-size: large"><strong>Address Info</strong></p>
+          </div>
+      
+          <mat-card-subtitle>Primary Address</mat-card-subtitle>
+          <div class="card-content">
+            <p><strong>Address Line 1:</strong> {{addressSection.primaryAddr.AddressLine1}} ,</p>
+            <p *ngIf="addressSection.primaryAddr.AddressLine2 != null"><strong>Address Line 2:</strong> {{addressSection.primaryAddr.AddressLine2}} ,</p>
+            <p><strong>City:</strong> {{addressSection.primaryAddr.City}}, </p>
+            <p><strong>State:</strong> {{addressSection.primaryAddr.State}}, {{addressSection.primaryAddr.Zip}}</p>
+          </div>
+
+          <mat-card-subtitle *ngIf="addressSection.secondaryAddr != null">Secondary Address</mat-card-subtitle>
+          <div class="card-content" *ngIf="addressSection.secondaryAddr != null">
+            <p><strong>Address Line 1:</strong> {{addressSection.secondaryAddr.AddressLine1}} ,</p>
+            <p *ngIf="addressSection.secondaryAddr.AddressLine2 != null"><strong>Address Line 2:</strong> {{addressSection.primaryAddr.AddressLine2}} ,</p>
+            <p><strong>City:</strong> {{addressSection.secondaryAddr.City}}, </p>
+            <p><strong>State:</strong> {{addressSection.secondaryAddr.State}}, {{addressSection.secondaryAddr.Zip}}</p>
+          </div>
+
+          <div>
+            <button mat-raised-button color="primary" (click)="editAddressSection()">Edit</button>
+          </div>
+        </div>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile [rowspan]=2>
+      <div style="width: 90%; height:80%;margin: auto; background-color: #7a90d1; padding: 2em;">
+        <div class="example-card">
+          <div class="card-header">
+            <mat-icon>contacts</mat-icon>
+            <p style=" font-size: larger"><strong>Contact Info</strong></p>
+          </div>
+      
+          <div class="card-content">
+            <p><strong>Personal Email:</strong> {{contactSection.personalEmail}}</p>
+            <p><strong>Work Email:</strong> {{contactSection.workEmail}}</p>
+            <p><strong>Ceil Phone:</strong> {{contactSection.ceilphone}}</p>
+            <p><strong>Work Phone:</strong> {{contactSection.workPhone}}</p>
+          </div>
+          <div>
+            <button mat-raised-button color="primary" (click)="editContactSection()">Edit</button>
+          </div>
+        </div>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile [rowspan]=3>
+      <div style="width: 90%; height:70%;margin: auto; background-color: #88a6f8; padding: 2em;">
+        <div class="example-card">
+          <div class="card-header">
+            <mat-icon>ring_volume</mat-icon>
+            <p style="font-size: larger"><strong>Emergency Contact Info</strong></p>
+          </div>
+      
+          <div>
+            <p>{{emergencyContactList.emergencyPerson1.fullName}}</p>
+            <p><strong>Phone#</strong>{{emergencyContactList.emergencyPerson1.phone}}</p>
+            <mat-card-subtitle>Primary Address</mat-card-subtitle>
+            <div class="card-content">
+              <p><strong>Address Line 1:</strong> {{emergencyContactList.emergencyPerson1.address.primaryAddr.AddressLine1}} ,</p>
+              <p *ngIf="emergencyContactList.emergencyPerson1.address.primaryAddr.AddressLine2 != null"><strong>Address Line 2:</strong> {{emergencyContactList.emergencyPerson1.address.primaryAddr.AddressLine2}} ,</p>
+              <p><strong>City: </strong> {{emergencyContactList.emergencyPerson1.address.primaryAddr.City}}</p>
+              <p><strong>State:</strong> {{emergencyContactList.emergencyPerson1.address.primaryAddr.State}}, {{emergencyContactList.emergencyPerson1.address.primaryAddr.Zip}}</p>
+            </div>
+
+            <mat-card-subtitle *ngIf="emergencyContactList.emergencyPerson1.address.secondaryAddr != null">Secondary Address</mat-card-subtitle>
+            <div class="card-content" *ngIf="emergencyContactList.emergencyPerson1.address.secondaryAddr != null">
+              <p><strong>Address Line 1:</strong> {{emergencyContactList.emergencyPerson1.address.secondaryAddr.AddressLine1}} ,</p>
+              <p *ngIf="emergencyContactList.emergencyPerson1.address.secondaryAddr.AddressLine2 != null"><strong>Address Line 2:</strong> {{emergencyContactList.emergencyPerson1.address.primaryAddr.AddressLine2}} ,</p>
+              <p><strong>City:</strong> {{emergencyContactList.emergencyPerson1.address.secondaryAddr.City}}, </p><br>
+              <p><strong>State: </strong>{{emergencyContactList.emergencyPerson1.address.secondaryAddr.State}}, {{emergencyContactList.emergencyPerson1.address.secondaryAddr.Zip}}</p>
+            </div>
+
+          </div>
+
+          <div>
+            <button mat-raised-button color="primary" (click)="editEmergencyContactList()">Edit</button>
+          </div>
+        </div>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile [rowspan]=2>
+      <div style="width: 90%;height:80%; margin: auto; background-color:#8ccee9; padding: 2em;">
+        <div class="example-card">
+          <div class="card-header">
+            <mat-icon>file_copy</mat-icon>
+            <p style=" font-size: larger"><strong>Employment Info</strong></p>
+          </div>
+      
+          <div class="card-content">
+            <p><strong>Work Authorization:</strong> {{employmentSection.workAuthorization}}</p>
+            <p><strong>Authorization Start Date:</strong> {{employmentSection.authorizationStartDate.substring(0,10)}}</p> 
+            <p><strong>Authorization End Date:</strong> {{employmentSection.authorizationEndDate.substring(0,10)}}</p>
+            <p><strong>Employment Start Date:</strong> {{employmentSection.employmentStartDate.substring(0,10)}}</p>
+            <p><strong>Employment End Date:</strong> {{employmentSection.employmentEndDate?employmentSection.employmentEndDate.substring(0,10):''}}</p>
+            <p><strong>Title: </strong>{{employmentSection.title}}</p>
+          </div>
+          <div>
+            <button mat-raised-button color="primary" (click)="editEmploymentSection()">Edit</button>
+          </div>
+        </div>
+      </div>
+    </mat-grid-tile>
+
+    
   </mat-grid-list>
 </div>
+

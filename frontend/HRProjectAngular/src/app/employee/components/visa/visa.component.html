@@ -1,25 +1,211 @@
+<div style="position: relative; top: 40%; left: 50%;" *ngIf="!isDataAvailable">
+  <mat-spinner></mat-spinner>
+  <strong>Loading...</strong>
+</div>
+
+<div *ngIf="isDataAvailable">
 <div style="width: 90%; margin: auto">
-  <mat-card class="example-card">
+  <div *ngIf="!isSubmitted || isShowMessage" style="position: absolute; right: 2%; top: 20%;">
+    <mat-icon (click)="isShowMessage = !isShowMessage" [matBadge]="messageNum" matBadgeColor="warn">email</mat-icon>
+    <p style="font-style: oblique; color: #F1C40F; display: inline;"> You have a new message! </p>
+  </div>
+
+  <div *ngIf="isSubmitted && !isShowMessage" style="position: absolute; right: 10%; top: 20%;">
+    <mat-icon (click)="openSnackBar('No Message!', 'close')">email</mat-icon>
+  </div>
+
+  <mat-card class="example-card" >
     <mat-card-header>
       <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>Shiba Inu</mat-card-title>
-      <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+      <mat-card-title>{{userName}}</mat-card-title>
+      <mat-card-subtitle>{{email}}</mat-card-subtitle>
     </mat-card-header>
     <img
       mat-card-image
       src="https://material.angular.io/assets/img/examples/shiba2.jpg"
       alt="Photo of a Shiba Inu"
     />
+    <hr>
     <mat-card-content>
-      <p>
-        The Shiba Inu is the smallest of the six original and distinct spitz
-        breeds of dog from Japan. A small, agile dog that copes very well with
-        mountainous terrain, the Shiba Inu was originally bred for hunting.
-      </p>
+      <p><strong>Document Uploaded:</strong></p>
+      <div *ngFor="let d of documents">
+        <mat-icon style="font-size: medium;">file_copy</mat-icon>
+        <a 
+        [href]="'http://gp1storage.s3.us-east-2.amazonaws.com/' + userId + '/' + d.name.split('_')['0'] + '.txt'" target="http://gp1storage.s3.us-east-2.amazonaws.com/template/i983Instructions.pdf"
+        >{{d.name}}</a> 
+          <a style="float: right;" href="#">Preview</a>
+          <!-- <button style="float: right;">preview</button> -->
+      </div>
     </mat-card-content>
-    <mat-card-actions>
-      <button mat-button>LIKE</button>
-      <button mat-button>SHARE</button>
-    </mat-card-actions>
   </mat-card>
+</div>
+
+<div *ngIf="isShowMessage">
+  <mat-card class="example-card1">
+    <mat-card-header>
+      <mat-card-title>Message</mat-card-title><br>
+    </mat-card-header>
+    <hr>
+    
+    <mat-card-content style="display: inline-block;">
+      <br>
+      <p> Your Current Visa Status: </p>
+      <form>
+        <br>
+        <mat-form-field style="float: left;">
+          <mat-label>Work Authorization: </mat-label>
+          <input matInput style="color: black;" disabled [value]="visaInfo.workAuthorization">
+        </mat-form-field>
+
+        <mat-form-field style="float: left;">
+          <mat-label>Authorization Day Left: </mat-label>
+          <input matInput style="color: black;" disabled [value]="visaInfo.authorizationDayLeft">
+        </mat-form-field>
+
+
+        <mat-form-field style="float: left;">
+          <mat-label>Authorization Start Date:</mat-label>
+          <input matInput style="color: black;" disabled [value]="visaInfo.authorizationStartDate">
+        </mat-form-field>
+
+        <mat-form-field style="float: left;">
+          <mat-label>Authorization End Date:</mat-label>
+          <input matInput style="color: black;" disabled [value]="visaInfo.authorizationEndDate">
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-content>
+      <br>
+      <mat-card-subtitle style="color: #F1C40F; font-style: oblique; display: inline-block; text-decoration: underline; width: 100%;">NEXT MOVE: {{visaInfo.message}}</mat-card-subtitle>
+    </mat-card-content>
+
+    <!-- current step: opt receipt -->
+    <mat-card-content style="display: inline-block;" *ngIf="visaInfo.currStep == '1'">
+      <div class="row">
+        <div class="col">
+          <mat-form-field style="float: right; width: 100%;" class="full-width" required>
+            <ngx-mat-file-input
+              [formControl]="fileOPTEAD"
+              [multiple]="multiple"
+              [color]="color"
+            >
+              <mat-icon  ngxMatFileInputIcon>folder</mat-icon>
+            </ngx-mat-file-input>
+          </mat-form-field>
+          <button id="2" mat-raised-button (click)="onSubmit($event)" color="primary" style="float:right; margin: auto;" [disabled]="isSubmitted">Upload</button>
+          <p *ngIf="isSubmitted" style="color: green; float: right; margin: auto; padding: auto;">Upload Successfully! &nbsp;  </p> 
+        </div>
+      </div>
+    </mat-card-content>
+ 
+    <!-- current step: opt stem -->
+    <div *ngIf="visaInfo.currStep == '2'">
+      <mat-card-content  style="display: inline-block;">
+        <div class="row">
+          <div class="col">
+            <a
+              href="https://gp1storage.s3.us-east-2.amazonaws.com/template/i983.pdf"
+            >I-983 Template</a><br>
+            
+          </div>
+        </div>
+      </mat-card-content>
+  
+      <mat-card-content>    
+        <div class="row">
+          <div class="col">
+            <a
+            href="http://gp1storage.s3.us-east-2.amazonaws.com/template/i983Instructions.pdf" target="http://gp1storage.s3.us-east-2.amazonaws.com/template/i983Instructions.pdf"
+            >I-983 Instructions</a>
+            <mat-form-field style="float: right; width: 100%;" class="full-width" required>
+              <ngx-mat-file-input
+                [formControl]="fileI983"
+                [multiple]="multiple"
+                [color]="color"
+              >
+                <mat-icon  ngxMatFileInputIcon>folder</mat-icon>
+              </ngx-mat-file-input>
+            </mat-form-field>
+            <button id="2" mat-raised-button (click)="onSubmit($event)" color="primary" style="float:right; margin: auto;" [disabled]="isSubmitted">Upload</button>
+            <p *ngIf="isSubmitted" style="color: green; float: right; margin: auto; padding: auto;">Upload Successfully! &nbsp;  </p> 
+          </div>
+        </div>
+        
+  
+      </mat-card-content>
+    </div>
+    
+
+    <!-- current step: i-985 filled -->
+    <mat-card-content  style="display: inline-block;" *ngIf="visaInfo.currStep == '3'">
+      <p>Thank you for your patience.</p>
+      <button>Close</button>
+    </mat-card-content>
+
+    <!-- current step: i-985 signed, download signed i-985 from HR -->
+    <mat-card-content  style="display: inline-block;" *ngIf="visaInfo.currStep == '4'">    
+       <div class="row">
+          <div class="col">
+            <a
+            href="http://gp1storage.s3.us-east-2.amazonaws.com/template/i983Instructions.pdf" target="http://gp1storage.s3.us-east-2.amazonaws.com/template/i983Instructions.pdf"
+            >I-983 Signed From HR</a>
+            <mat-form-field style="float: right; width: 100%;" class="full-width" required>
+              <ngx-mat-file-input
+                [formControl]="fileI20"
+                [multiple]="multiple"
+                [color]="color"
+              >
+                <mat-icon  ngxMatFileInputIcon>folder</mat-icon>
+              </ngx-mat-file-input>
+            </mat-form-field>
+            <button id="2" mat-raised-button (click)="onSubmit($event)" color="primary" style="float:right; margin: auto;" [disabled]="isSubmitted">Upload</button>
+            <p *ngIf="isSubmitted" style="color: green; float: right; margin: auto; padding: auto;">Upload Successfully! &nbsp;  </p> 
+          </div>
+        </div>
+    </mat-card-content>
+
+    <!-- current step: i-20 -->
+    <mat-card-content  style="display: inline-block;" *ngIf="visaInfo.currStep == '5'">
+      <div class="row">
+        <div class="col">
+          <mat-form-field style="float: right; width: 100%;" class="full-width" required>
+            <ngx-mat-file-input
+              [formControl]="fileOPTSTEMReceipt"
+              [multiple]="multiple"
+              [color]="color"
+            >
+              <mat-icon  ngxMatFileInputIcon>folder</mat-icon>
+            </ngx-mat-file-input>
+          </mat-form-field>
+          <button id="2" mat-raised-button (click)="onSubmit($event)" color="primary" style="float:right; margin: auto;" [disabled]="isSubmitted">Upload</button>
+          <p *ngIf="isSubmitted" style="color: green; float: right; margin: auto; padding: auto;">Upload Successfully! &nbsp;  </p> 
+        </div>
+      </div>
+    </mat-card-content>
+
+    <!-- current step: opt stem receip -->
+    <mat-card-content  style="display: inline-block;" *ngIf="visaInfo.currStep == '6'">
+      <div class="row">
+        <div class="col">
+          <mat-form-field style="float: right; width: 100%;" class="full-width" required>
+            <ngx-mat-file-input
+              [formControl]="fileOPTSTEMEAD"
+              [multiple]="multiple"
+              [color]="color"
+            >
+              <mat-icon  ngxMatFileInputIcon>folder</mat-icon>
+            </ngx-mat-file-input>
+          </mat-form-field>
+          <button id="2" mat-raised-button (click)="onSubmit($event)" color="primary" style="float:right; margin: auto;" [disabled]="isSubmitted">Upload</button>
+          <p *ngIf="isSubmitted" style="color: green; float: right; margin: auto; padding: auto;">Upload Successfully! &nbsp;  </p> 
+        </div>
+      </div>
+    </mat-card-content> 
+
+
+
+  </mat-card>
+</div>
+
+
 </div>

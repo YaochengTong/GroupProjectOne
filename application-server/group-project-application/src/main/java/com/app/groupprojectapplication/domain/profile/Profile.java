@@ -16,7 +16,7 @@ public class Profile {
     private AddressSection addressSection;
     private ContactInfoSection contactInfoSection;
     private EmploymentSection employmentSection;
-    private List<EmergencyContact> emergencyContactList;
+    private EmergencyContactList emergencyContactList;
     private List<DocumentSection> documentSectionList;
 //    private Summary summary;
 
