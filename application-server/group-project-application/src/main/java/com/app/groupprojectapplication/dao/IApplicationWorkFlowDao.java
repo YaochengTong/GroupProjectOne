@@ -9,7 +9,7 @@ public interface IApplicationWorkFlowDao {
     ApplicationWorkflow getApplicationWorkFlowById(Integer id);
     List<ApplicationWorkflow> getApplicationWorkFlowByStatus(String status);
     void insertApplicationWorkFlow(ApplicationWorkflow applicationWorkflow);
-    ApplicationWorkflow getApplicationWorkFlowByUserIdAndApplicationType(Integer employeeId, String applicationType);
+    List<ApplicationWorkflow> getApplicationWorkFlowByUserIdAndApplicationType(Integer employeeId, String applicationType);
     List<ApplicationWorkflow> getApplicationWorkFlowByApplicationType(String applicationType);
     boolean updateApplicationWorkFlowById(Integer id, ApplicationWorkflow workflow);
     List<ApplicationWorkflow>  getApplicationWorkFlowByUserId(Integer id);

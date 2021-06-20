@@ -2,20 +2,14 @@ package com.app.groupprojectapplication.dao.impl;
 
 import com.app.groupprojectapplication.dao.IApplicationWorkFlowDao;
 import com.app.groupprojectapplication.domain.ApplicationWorkflow;
-import com.app.groupprojectapplication.domain.RegistrationToken;
-import com.app.groupprojectapplication.domain.User;
 import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Map;
 
 
 @Repository
@@ -49,12 +43,13 @@ public class ApplicationWorkflowDaoImpl implements IApplicationWorkFlowDao {
     }
 
     @Override
-    public ApplicationWorkflow getApplicationWorkFlowByUserIdAndApplicationType(Integer userId, String applicationType) {
+    public List<ApplicationWorkflow> getApplicationWorkFlowByUserIdAndApplicationType(Integer userId, String applicationType) {
         Session session = sessionFactory.getCurrentSession();
         String query = "FROM ApplicationWorkflow WHERE user.id = :userId AND type = :type";
-        ApplicationWorkflow applicationWorkflow = (ApplicationWorkflow) session.createQuery(query).setParameter("userId", userId).setParameter("type", applicationType).getResultList().get(0);
+        List<ApplicationWorkflow> applicationWorkflowList = session.createQuery(query).setParameter("userId", userId).setParameter("type", applicationType).getResultList();
         session.setFlushMode(FlushMode.MANUAL);
-        return applicationWorkflow;
+        applicationWorkflowList.sort((a,b) -> { return b.getCreateDate().compareTo(a.getCreateDate()); });
+        return applicationWorkflowList;
     }
 
     @Override

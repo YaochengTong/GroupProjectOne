@@ -1,16 +1,11 @@
 package com.app.groupprojectapplication.dao.impl;
 
-import com.app.groupprojectapplication.dao.IFacilityReport;
 import com.app.groupprojectapplication.dao.IRoleDao;
-import com.app.groupprojectapplication.domain.PersonalDocument;
 import com.app.groupprojectapplication.domain.Role;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 

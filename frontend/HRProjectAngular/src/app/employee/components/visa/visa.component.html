@@ -1,25 +1,45 @@
+<div style="position: relative; top: 40%; left: 50%;" *ngIf="!isDataAvailable">
+  <mat-spinner></mat-spinner>
+  <strong>Loading...</strong>
+</div>
+
+<div *ngIf="isDataAvailable">
 <div style="width: 90%; margin: auto">
+  <div *ngIf="isShowMessage" style="position: absolute; right: 2%; top: 20%;">
+    <mat-icon [matBadge]="messageNum" matBadgeColor="warn">email</mat-icon>
+    <p style="font-style: oblique; color: #F1C40F; display: inline;"> You have a new message! </p>
+  </div>
+
+  <div *ngIf="!isShowMessage" style="position: absolute; right: 10%; top: 20%;">
+    <mat-icon (click)="openSnackBar('No Message!', 'close')">email</mat-icon>
+  </div>
+
   <mat-card class="example-card">
     <mat-card-header>
       <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>Shiba Inu</mat-card-title>
-      <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+      <mat-card-title>{{userName}}</mat-card-title>
+      <mat-card-subtitle>{{email}}</mat-card-subtitle>
     </mat-card-header>
     <img
       mat-card-image
       src="https://material.angular.io/assets/img/examples/shiba2.jpg"
       alt="Photo of a Shiba Inu"
     />
+    <hr>
     <mat-card-content>
-      <p>
-        The Shiba Inu is the smallest of the six original and distinct spitz
-        breeds of dog from Japan. A small, agile dog that copes very well with
-        mountainous terrain, the Shiba Inu was originally bred for hunting.
-      </p>
+      <p><strong>Document Uploaded:</strong></p>
+      <div *ngFor="let d of documents">
+        <ul>
+          <li>{{d}}</li> <a ref="">download</a>
+        </ul>
+      </div>
     </mat-card-content>
     <mat-card-actions>
       <button mat-button>LIKE</button>
       <button mat-button>SHARE</button>
     </mat-card-actions>
   </mat-card>
+</div>
+
+
 </div>

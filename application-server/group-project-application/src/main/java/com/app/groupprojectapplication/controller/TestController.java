@@ -7,6 +7,7 @@ import com.app.groupprojectapplication.email.EmailService;
 import com.app.groupprojectapplication.file.AmazonS3FileService;
 import com.app.groupprojectapplication.service.IHireService;
 import com.app.groupprojectapplication.service.ITestService;
+import com.app.groupprojectapplication.service.IVisaStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,6 +46,9 @@ public class TestController {
     @Autowired
     private UserDaoImpl userDao;
 
+    @Autowired
+    private IVisaStatusService iVisaStatusService;
+
     @GetMapping("/get")
     //To see the example output, visit http://localhost:8999/test/get?a=1
     public Map<String, Object> testMethod(@RequestParam Map<String, Object> paramMap){
@@ -78,7 +82,7 @@ public class TestController {
             //change "test/" to {userid}/, so that the user's files will be uploaded to
             //the folder under his userid.
             //the result here will be the link to the uploaded file
-            String result = amazonS3FileService.upload(ips, "556/" + file.getOriginalFilename());
+            String result = amazonS3FileService.upload(ips, "89/" + file.getOriginalFilename());
             System.out.println(result);
             resultMap.put("link", result);
             file1.deleteOnExit();
@@ -98,5 +102,22 @@ public class TestController {
                 .getFiles("file");
         Map<String, Object> resultMap = new HashMap<>();
         return resultMap;
+    }
+
+    // for config
+    @GetMapping("/delete/{user_id}")
+    public Map<String, Object> deleteAmazonS3Folder(@PathVariable Integer user_id) {
+        amazonS3FileService.deleteFolder(String.valueOf(user_id));
+        Map<String, Object> result = new HashMap<>();
+        result.put("delete", "yes");
+        return result;
+    }
+
+    @GetMapping("/delete/{user_id}/{filename}")
+    public Map<String, Object> deleteAmazonS3Folder(@PathVariable Integer user_id, @PathVariable String filename) {
+        amazonS3FileService.deleteOneFile(String.valueOf(user_id), filename);
+        Map<String, Object> result = new HashMap<>();
+        result.put("delete", "yes");
+        return result;
     }
 }

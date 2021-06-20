@@ -3,6 +3,7 @@ package com.app.groupprojectapplication.service.impl;
 import com.app.groupprojectapplication.dao.IContactDao;
 import com.app.groupprojectapplication.dao.IEmployeeDao;
 import com.app.groupprojectapplication.dao.IFacilityDao;
+import com.app.groupprojectapplication.dao.IFacilityReportDao;
 import com.app.groupprojectapplication.dao.IFacilityReportDetailDao;
 import com.app.groupprojectapplication.dao.IHouseDao;
 import com.app.groupprojectapplication.dao.IPersonDao;
@@ -21,6 +22,7 @@ import com.app.groupprojectapplication.service.IHouseService;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -43,6 +45,8 @@ public class HouseServiceImpl implements IHouseService {
     IEmployeeDao iEmployeeDao;
     @Autowired
     IFacilityReportDetailDao iFacilityReportDetailDao;
+    @Autowired
+    IFacilityReportDao iFacilityReportDao;
 
     @Override
     @Transactional
@@ -175,18 +179,7 @@ public class HouseServiceImpl implements IHouseService {
         return resultList;
     }
 
-    public FacilityReportDetail getBackFacilityReportDetail(HouseFacilityReportDetail hrd) {
-        FacilityReportDetail res = new FacilityReportDetail();
-        int reportDetailId = hrd.getReportDetailId();
-        res.setId(reportDetailId);
-        res.setEmployee(iEmployeeDao.getEmployeeById(hrd.getEmployeeId()));
-        res.setComments(hrd.getComments());
-        res.setCreateDate(Timestamp.valueOf(hrd.getCreateDate()));
-        res.setFacilityReport(iFacilityReportDetailDao.getFacilityReportByReportDetailId(reportDetailId));
-        res.setLastModificationDate(new Timestamp(new Date().getTime()));
-        return res;
-    }
-    //
+    //@Transactional
     //public House updateHouseUsingPageInfo(HousePageInfo hpi) {
     //    House h = new House();
     //    int houseId = hpi.getHouseId();
@@ -199,14 +192,129 @@ public class HouseServiceImpl implements IHouseService {
     //    Set<Employee> eSet = new HashSet<>();
     //    Set<Facility> fSet = new HashSet<>();
     //    h.setEmployeeSet();
-    //    h.setFacilitySet();
+    //    h.setFacilitySet(transferBackFacility(hpi.getHouseFacilityInfoList()));
+    //}
+
+    @Transactional
+    public FacilityReportDetail getBackFacilityReportDetail(HouseFacilityReportDetail hrd) {
+        FacilityReportDetail res = new FacilityReportDetail();
+        int reportDetailId = hrd.getReportDetailId();
+        res.setId(reportDetailId);
+        res.setEmployee(iEmployeeDao.getEmployeeById(hrd.getEmployeeId()));
+        res.setComments(hrd.getComments());
+        res.setCreateDate(Timestamp.valueOf(hrd.getCreateDate()));
+        res.setFacilityReport(iFacilityReportDetailDao.getFacilityReportByReportDetailId(reportDetailId));
+        res.setLastModificationDate(new Timestamp(new Date().getTime()));
+        return res;
+    }
+
+    public Set<FacilityReportDetail> transferBackFacilityReportDetail(List<HouseFacilityReportDetail> list) {
+        Set<FacilityReportDetail> frd = new HashSet<>();
+        for (HouseFacilityReportDetail hFrd : list) {
+            FacilityReportDetail f = getBackFacilityReportDetail(hFrd);
+            frd.add(f);
+        }
+        return frd;
+    }
+
+    @Transactional
+    public FacilityReport getBackFacilityReport(HouseFacilityReportInfo h) {
+        FacilityReport res = new FacilityReport();
+        int id = h.getHouseFacilityReportId();
+        res.setId(id);
+        res.setTitle(h.getHouseFacilityReportTitle());
+        res.setReportDate(Timestamp.valueOf(h.getHouseFacilityReportDate()));
+        res.setDescription(h.getHouseFacilityReportDescription());
+        res.setStatus(h.getHouseFacilityReportStatus());
+        res.setEmployee(iFacilityReportDao.getEmployeeById(id));
+        res.setFacilityReportDetailSet(transferBackFacilityReportDetail(h.getHouseFacilityReportDetails()));
+        return res;
+    }
+
+    //public Facility getBackFacility(HouseFacilityInfo h) {
+    //    Facility f = new Facility();
+    //    int id = h.getFacilityId();
+    //    f.setId(id);
+    //    f.setType(h.get);
+    //    return f;
+    //}
+
+    @Transactional
+    public Set<Facility> transferBackFacility(List<HouseFacilityInfo> hList) {
+        Set<Facility> res = new HashSet<>();
+        Facility bed = new Facility();
+        Facility mattress = new Facility();
+        Facility table = new Facility();
+        Facility chair = new Facility();
+
+        for (HouseFacilityInfo h : hList) {
+            int facilityId = h.getFacilityId();
+            String type = iFacilityDao.getFacilityTypeById(facilityId);
+            if (type.equals("bed")) {
+                bed.setId(facilityId);
+                bed.setType("bed");
+                bed.setDescription(iFacilityDao.getFacilityDescriptionById(facilityId));
+                bed.setQuantity(h.getNumberOfBeds());
+                bed.setHouse(iFacilityDao.getHouseById(facilityId));
+            }
+            if (type.equals("mattress")) {
+                mattress.setId(facilityId);
+                mattress.setType("mattress");
+                mattress.setDescription(iFacilityDao.getFacilityDescriptionById(facilityId));
+                mattress.setQuantity(h.getNumberOfMattresses());
+                mattress.setHouse(iFacilityDao.getHouseById(facilityId));
+            }
+            if (type.equals("table")) {
+                table.setId(facilityId);
+                table.setType("table");
+                table.setDescription(iFacilityDao.getFacilityDescriptionById(facilityId));
+                table.setQuantity(h.getNumberOfTables());
+                table.setHouse(iFacilityDao.getHouseById(facilityId));
+            }
+            if (type.equals("chair")) {
+                chair.setId(facilityId);
+                chair.setType("chair");
+                chair.setDescription(iFacilityDao.getFacilityDescriptionById(facilityId));
+                chair.setQuantity(h.getNumberOfBeds());
+                chair.setHouse(iFacilityDao.getHouseById(facilityId));
+            }
+        }
+        res.add(bed);
+        res.add(mattress);
+        res.add(table);
+        res.add(chair);
+        return res;
+    }
+
+    //public Set<Employee> transferBackEmployee(List<HouseEmployeeInfo> eList) {
+    //    Set<Employee>
     //}
     //
-    //public Set<FacilityReportDetail> transferBackFacilityReportDetail(List<HouseFacilityReportDetail> list) {
-    //
+    //public Employee getBackEmployee(HouseEmployeeInfo he) {
+    //    Employee e = new Employee();
+    //    int eId = he.getEmployeeId();
+    //    e.setId(eId);
+    //    e.setTitle(he.get);
     //}
-    //
-    //public FacilityReport getBackFacilityReport()
+
+    @Transactional
+    public void updateHouse(HousePageInfo hpi) {
+        int houseId = hpi.getHouseId();
+        String updateAddress = hpi.getAddress();
+        int updateNumberOfPerson = hpi.getNumberOfPerson();
+        String updatePhone = hpi.getPhone();
+
+        System.out.println("Person phone: " + updatePhone);
+        System.out.println("updateNumberOfPerson : " + updateNumberOfPerson);
+        // Find person
+        int contactId = iHouseDao.getContactIdByHouseId(houseId);
+        int contactPersonId = iContactDao.getPersonIdByContactId(contactId);
+
+        iPersonDao.updatePhoneById(updatePhone, contactPersonId);
+        iHouseDao.updateHouseAddressByHouseId(updateAddress, houseId);
+        iHouseDao.updateHouseNumberOfPersonByHouseId(updateNumberOfPerson, houseId);
+    }
+
 }
 
 

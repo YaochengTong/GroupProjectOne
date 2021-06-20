@@ -5,6 +5,8 @@ import { MatSelectChange } from '@angular/material/select';
 import * as moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { VisaNotificationComponent } from './visa-notification/visa-notification.component';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+import { DateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-visa',
@@ -49,7 +51,7 @@ export class VisaComponent implements OnInit {
     this.httpRequestService.getData('/visa-status-management/all', null, 'http://localhost:8999').subscribe(
       (data: any) => {
         this.isDataAvailable = true;
-        console.log(data.visaStatusInfoList);
+        // console.log(data.visaStatusInfoList);
         this.visaStatusInfo = data.visaStatusInfoList;
       }
     )
@@ -61,7 +63,7 @@ export class VisaComponent implements OnInit {
     this.isEdit = true;
     let index = event.currentTarget.id;
     this.tempData = this.visaStatusInfo[index];
-    console.log(this.tempData);
+    // console.log(this.tempData);
   }
 
   onCancel(event: any) {
@@ -69,7 +71,7 @@ export class VisaComponent implements OnInit {
     this.isSubmitted = false;
     let index = event.currentTarget.id;
     this.visaStatusInfo[index] = this.tempData;
-    console.log(index);
+    // console.log(index);
   }
 
   select(event: MatSelectChange) {
@@ -78,6 +80,8 @@ export class VisaComponent implements OnInit {
       text: event.source.triggerValue
     };
   }
+
+
 
   sendNotification(event: any) {
     
@@ -91,7 +95,7 @@ export class VisaComponent implements OnInit {
     params,
     'http://localhost:8999').subscribe(
       (data: any) => {
-        console.log(data);
+        // console.log(data);
         if (data.success == true) {
           this.employeeEmail = data.email;
           this.dialog.open(VisaNotificationComponent, {
@@ -105,15 +109,86 @@ export class VisaComponent implements OnInit {
 
   }
 
+
+
+
+  formatHandler(oriDate:any): string {
+    if (oriDate == null) {
+      return "";
+    }
+
+    console.log("Substring");
+    console.log(oriDate.toString().substring(4, 15));
+    var formattedDate;
+    var month = oriDate.toString().substring(4, 15).split(" ")[0];
+    switch(month) {
+      case "JAN":
+        month = "01";
+        break;
+      case "FEB":
+        month = "02";
+        break;
+      case "MAR":
+        month = "03";
+        break;
+      case "APR":
+        month = "04";
+        break;
+      case "MAY":
+        month = "05";
+        break;
+      case "JUN":
+        month = "06";
+        break;
+      case "JUL":
+        month = "07";
+        break;
+      case "AUG":
+        month = "08";
+        break;
+      case "SEP":
+        month = "09";
+        break;
+      case "OCT":
+        month = "10";
+        break;
+      case "NOV":
+        month = "11";
+        break;
+      default:
+        month = "12";
+        break;
+    }
+
+    formattedDate = oriDate.toString().substring(4, 15).split(" ")[2] + "-" + month + "-" + oriDate.toString().substring(4, 15).split(" ")[1];
+    return formattedDate;
+  }
+
+
+  addEndDateEvent(index: number, event: MatDatepickerInputEvent<Date>) {
+    this.visaStatusInfo[index].authorizationEndDate = this.formatHandler(event.value);
+    // console.log("after formate")
+    console.log(this.visaStatusInfo[index].authorizationEndDate);
+    // console.log(this.visaStatusInfo[index].authorizationEndDate);
+  }
+
+  addStartDateEvent(index: number,event: MatDatepickerInputEvent<Date>) {
+    this.visaStatusInfo[index].authorizationStartDate = this.formatHandler(event.value);
+  }
+
+  
   onSubmit(event: any) {
     this.isSubmitted = true;
 
     let index = event.currentTarget.id;
     this.visaStatusInfo[index].authorizationDayLeft = 0;
+    
 
     var nameModifid = (<HTMLInputElement>document.getElementById("name-"+index)).value;
-    var startDateModifid = (<HTMLInputElement>document.getElementById("startDate-"+index)).value;
-    var endDateModifid = (<HTMLInputElement>document.getElementById("endDate-"+index)).value;
+    // var startDateModifid = (<HTMLInputElement>document.getElementById("startDate-"+index)).value;
+    // var endDateModifid = (<HTMLInputElement>document.getElementById("endDate-"+index)).value;
+    var startDateModifid = this.visaStatusInfo[index].authorizationStartDate;
+    var endDateModifid = this.visaStatusInfo[index].authorizationEndDate;
 
 
     if (nameModifid == "" || this.selectedData == null || startDateModifid == "" || endDateModifid == "") {
@@ -124,6 +199,7 @@ export class VisaComponent implements OnInit {
       return;
     }
 
+    
     this.isNameValid = true;
     this.isTypeValid = true;
     this.isStartDateValid = true;
@@ -132,26 +208,25 @@ export class VisaComponent implements OnInit {
 
     var typeModifid = this.selectedData.value;
 
-    console.log(typeModifid);
-    console.log(startDateModifid);
-    console.log(endDateModifid);
-
     this.isEdit = false;
 
     // update page data
     this.visaStatusInfo[index].fullName = nameModifid;
     this.visaStatusInfo[index].workAuthorization = typeModifid;
-    this.visaStatusInfo[index].authorizationStartDate = startDateModifid;
-    this.visaStatusInfo[index].authorizationEndDate = endDateModifid;
-    
+
     // parse to backend
     let params = {
       userId: this.visaStatusInfo[index].userId,
       fullName: nameModifid,
       workAuthorization: typeModifid,
-      authorizationStartDate: startDateModifid+"T00:00:00.000+00:00",
-      authorizationEndDate: endDateModifid+"T00:00:00.000+00:00",
+      authorizationStartDate: startDateModifid,
+      authorizationEndDate: endDateModifid,
     }
+
+    console.log("hello");
+    console.log(params);
+
+
     this.httpRequestService.postData('/visa-status-management/update', 
     params,
     'http://localhost:8999').subscribe(
