@@ -4,8 +4,12 @@ import com.app.groupprojectapplication.email.EmailService;
 import com.app.groupprojectapplication.service.IVisaStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -65,6 +69,19 @@ public class VisaStatusController {
             resultMap.put("success", false);
             resultMap.put("reason", "Got Null data");
         }
+        return resultMap;
+    }
+
+    @PostMapping("/{userId}/upload")
+    public Map<String, Object> getUploadFile(@RequestParam Map<String, Object> paramMap,
+                                                        HttpServletRequest request,
+                                             @PathVariable Integer userId){
+        List<MultipartFile> files = ((MultipartHttpServletRequest) request)
+                .getFiles("file");
+        System.out.println(files);
+        System.out.println(paramMap);
+        System.out.println(userId);
+        Map<String, Object> resultMap = iVisaStatusService.uploadAndUpdate(files, paramMap, userId);
         return resultMap;
     }
 

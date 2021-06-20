@@ -5,12 +5,12 @@
 
 <div *ngIf="isDataAvailable">
 <div style="width: 90%; margin: auto">
-  <div *ngIf="isShowMessage" style="position: absolute; right: 2%; top: 20%;">
-    <mat-icon [matBadge]="messageNum" matBadgeColor="warn">email</mat-icon>
+  <div *ngIf="!isSubmitted || isShowMessage" style="position: absolute; right: 2%; top: 20%;">
+    <mat-icon (click)="isShowMessage = !isShowMessage" [matBadge]="messageNum" matBadgeColor="warn">email</mat-icon>
     <p style="font-style: oblique; color: #F1C40F; display: inline;"> You have a new message! </p>
   </div>
 
-  <div *ngIf="!isShowMessage" style="position: absolute; right: 10%; top: 20%;">
+  <div *ngIf="isSubmitted && !isShowMessage" style="position: absolute; right: 10%; top: 20%;">
     <mat-icon (click)="openSnackBar('No Message!', 'close')">email</mat-icon>
   </div>
 
@@ -29,14 +29,18 @@
     <mat-card-content>
       <p><strong>Document Uploaded:</strong></p>
       <div *ngFor="let d of documents">
-        <mat-icon style="font-size: medium;">file_copy</mat-icon>{{d.name}} 
-        <button style="float: right;">download</button> <button style="float: right;">preview</button>
+        <mat-icon style="font-size: medium;">file_copy</mat-icon>
+        <a 
+        [href]="'http://gp1storage.s3.us-east-2.amazonaws.com/' + userId + '/' + d.name.split('_')['0'] + '.txt'" target="http://gp1storage.s3.us-east-2.amazonaws.com/template/i983Instructions.pdf"
+        >{{d.name}}</a> 
+        
+          <button style="float: right;">preview</button>
       </div>
     </mat-card-content>
   </mat-card>
 </div>
 
-<div>
+<div *ngIf="isShowMessage">
   <mat-card class="example-card1">
     <mat-card-header>
       <mat-card-title>Message</mat-card-title><br>
@@ -44,12 +48,10 @@
     <hr>
     
     <mat-card-content style="display: inline-block;">
-      <mat-card-subtitle style="color: #F1C40F; font-style: oblique; font-weight: bold;">NEXT MOVE: {{visaInfo.message}}</mat-card-subtitle>
-      
+      <br>
       <p> Your Current Visa Status: </p>
-
       <form>
-
+        <br>
         <mat-form-field style="float: left;">
           <mat-label>Work Authorization: </mat-label>
           <input matInput style="color: black;" disabled [value]="visaInfo.workAuthorization">
@@ -70,9 +72,11 @@
           <mat-label>Authorization End Date:</mat-label>
           <input matInput style="color: black;" disabled [value]="visaInfo.authorizationEndDate">
         </mat-form-field>
-     
       </form>
-
+    </mat-card-content>
+    <mat-card-content>
+      <br>
+      <mat-card-subtitle style="color: #F1C40F; font-style: oblique; display: inline-block; text-decoration: underline; width: 100%;">NEXT MOVE: {{visaInfo.message}}</mat-card-subtitle>
     </mat-card-content>
 
     <!-- current step: opt receipt -->
@@ -83,44 +87,59 @@
     </mat-card-content>
  
     <!-- current step: opt stem -->
-    <mat-card-content  style="display: inline-block;" *ngIf="visaInfo.currStep == '2'">
-      <div class="row">
-        <div class="col">
-          <a
-            href="https://gp1storage.s3.us-east-2.amazonaws.com/template/i983.pdf"
-          >I983 Template</a>
-          <a
-            href="https://gp1storage.s3.us-east-2.amazonaws.com/template/i983.pdf" target="_blank"
-          >I983 Instruction</a>
+    <div *ngIf="visaInfo.currStep == '2'">
+      <mat-card-content  style="display: inline-block;">
+        <div class="row">
+          <div class="col">
+            <a
+              href="https://gp1storage.s3.us-east-2.amazonaws.com/template/i983.pdf"
+            >I-983 Template</a><br>
+            
+          </div>
         </div>
-        <div class="col">
-          <mat-form-field class="full-width" required>
-            <ngx-mat-file-input
-              [formControl]="fileI983"
-              [multiple]="multiple"
-              [color]="color"
-            >
-              <mat-icon ngxMatFileInputIcon>folder</mat-icon>
-            </ngx-mat-file-input>
-          </mat-form-field>
+      </mat-card-content>
+  
+      <mat-card-content>    
+        <div class="row">
+          <div class="col">
+            <a
+            href="http://gp1storage.s3.us-east-2.amazonaws.com/template/i983Instructions.pdf" target="http://gp1storage.s3.us-east-2.amazonaws.com/template/i983Instructions.pdf"
+            >I-983 Instructions</a>
+            <mat-form-field style="float: right; width: 100%;" class="full-width" required>
+              <ngx-mat-file-input
+                [formControl]="fileI983"
+                [multiple]="multiple"
+                [color]="color"
+              >
+                <mat-icon  ngxMatFileInputIcon>folder</mat-icon>
+              </ngx-mat-file-input>
+            </mat-form-field>
+            <button id="2" mat-raised-button (click)="onSubmit($event)" color="primary" style="float:right; margin: auto;" [disabled]="isSubmitted">Upload</button>
+            <p *ngIf="isSubmitted" style="color: green; float: right; margin: auto; padding: auto;">Upload Successfully! &nbsp;  </p> 
+          </div>
         </div>
-      </div>
-      <button>upload</button>
-    </mat-card-content>
+        
+  
+      </mat-card-content>
+    </div>
+    
 
     <!-- current step: i-985 filled -->
     <mat-card-content  style="display: inline-block;" *ngIf="visaInfo.currStep == '3'">
       <p>Thank you for your patience.</p>
+      <button>Close</button>
     </mat-card-content>
 
-    <!-- current step: i-985 signed -->
-    <mat-card-content  style="display: inline-block;" *ngIf="visaInfo.currStep == '4'">
-      <button>Submit File</button>
+    <!-- current step: i-985 signed, download signed i-985 from HR -->
+    <mat-card-content  style="display: inline-block;" *ngIf="visaInfo.currStep == '4'">    
+      <a></a>
+      <button>upload</button>
     </mat-card-content>
 
     <!-- current step: i-20 -->
     <mat-card-content  style="display: inline-block;" *ngIf="visaInfo.currStep == '5'">
       <div>
+        
         <button>Upload File</button>
       </div>
     </mat-card-content>

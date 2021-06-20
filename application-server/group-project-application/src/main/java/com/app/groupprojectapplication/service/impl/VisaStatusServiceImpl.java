@@ -2,7 +2,6 @@ package com.app.groupprojectapplication.service.impl;
 
 import com.app.groupprojectapplication.dao.*;
 import com.app.groupprojectapplication.domain.*;
-import com.app.groupprojectapplication.domain.homeElement.VisaInfo;
 import com.app.groupprojectapplication.domain.visaStatusManagement.DocumentInfo;
 import com.app.groupprojectapplication.domain.visaStatusManagement.VisaStatusInfo;
 import com.app.groupprojectapplication.file.AmazonS3FileService;
@@ -10,6 +9,10 @@ import com.app.groupprojectapplication.service.IVisaStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -53,6 +56,9 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
 
     @Autowired
     IApplicationWorkFlowDao iApplicationWorkFlowDao;
+
+    @Autowired
+    IPersonalDocumentDao iPersonalDocumentDao;
 
     @Override
     @Transactional
@@ -155,6 +161,41 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
         visaStatus.setVisaType(visaType);
         iVisaStatusDao.updateVisaStatus(visaStatus);
         return true;
+    }
+
+    @Override
+    public Map<String, Object> uploadAndUpdate(List<MultipartFile> files, Map<String, Object> paramMap, Integer userId) {
+        Map<String, Object> resultMap = new HashMap<>();
+        User user = iUserDao.getUserById(userId);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        /**
+         * Step 1: update backend
+         */
+        // create new Application Flow
+        // insert application flow
+
+        /**
+         * Step 2: File uploads
+         */
+        InputStream ips = null;
+        try {
+            ips = files.get(0).getInputStream();
+            String result = amazonS3FileService.upload(ips, userId + "/" + paramMap.get("step"));
+            ips.close();
+//            PersonalDocument personalDocument = new PersonalDocument();
+//            personalDocument.setCreateDate(timestamp);
+//            personalDocument.setTitle(paramMap.get("title").toString());
+//            personalDocument.setPath(result);
+//            personalDocument.setUser(user);
+//            iPersonalDocumentDao.insertPersonalDocument(personalDocument);
+            System.out.println(result);
+            resultMap.put("success", true);
+        } catch (IOException e) {
+            e.printStackTrace();
+            resultMap.put("success", false);
+            resultMap.put("reason", e.toString());
+        }
+        return resultMap;
     }
 
     public String setFullName(Person person) {
