@@ -33,8 +33,8 @@
         <a 
         [href]="'http://gp1storage.s3.us-east-2.amazonaws.com/' + userId + '/' + d.name.split('_')['0'] + '.txt'" target="http://gp1storage.s3.us-east-2.amazonaws.com/template/i983Instructions.pdf"
         >{{d.name}}</a> 
-        
-          <button style="float: right;">preview</button>
+          <a style="float: right;" href="#">Preview</a>
+          <!-- <button style="float: right;">preview</button> -->
       </div>
     </mat-card-content>
   </mat-card>
@@ -81,8 +81,20 @@
 
     <!-- current step: opt receipt -->
     <mat-card-content style="display: inline-block;" *ngIf="visaInfo.currStep == '1'">
-      <div>
-        <button>Upload File</button>
+      <div class="row">
+        <div class="col">
+          <mat-form-field style="float: right; width: 100%;" class="full-width" required>
+            <ngx-mat-file-input
+              [formControl]="fileOPTEAD"
+              [multiple]="multiple"
+              [color]="color"
+            >
+              <mat-icon  ngxMatFileInputIcon>folder</mat-icon>
+            </ngx-mat-file-input>
+          </mat-form-field>
+          <button id="2" mat-raised-button (click)="onSubmit($event)" color="primary" style="float:right; margin: auto;" [disabled]="isSubmitted">Upload</button>
+          <p *ngIf="isSubmitted" style="color: green; float: right; margin: auto; padding: auto;">Upload Successfully! &nbsp;  </p> 
+        </div>
       </div>
     </mat-card-content>
  
@@ -132,21 +144,62 @@
 
     <!-- current step: i-985 signed, download signed i-985 from HR -->
     <mat-card-content  style="display: inline-block;" *ngIf="visaInfo.currStep == '4'">    
-      <a></a>
-      <button>upload</button>
+       <div class="row">
+          <div class="col">
+            <a
+            href="http://gp1storage.s3.us-east-2.amazonaws.com/template/i983Instructions.pdf" target="http://gp1storage.s3.us-east-2.amazonaws.com/template/i983Instructions.pdf"
+            >I-983 Signed From HR</a>
+            <mat-form-field style="float: right; width: 100%;" class="full-width" required>
+              <ngx-mat-file-input
+                [formControl]="fileI20"
+                [multiple]="multiple"
+                [color]="color"
+              >
+                <mat-icon  ngxMatFileInputIcon>folder</mat-icon>
+              </ngx-mat-file-input>
+            </mat-form-field>
+            <button id="2" mat-raised-button (click)="onSubmit($event)" color="primary" style="float:right; margin: auto;" [disabled]="isSubmitted">Upload</button>
+            <p *ngIf="isSubmitted" style="color: green; float: right; margin: auto; padding: auto;">Upload Successfully! &nbsp;  </p> 
+          </div>
+        </div>
     </mat-card-content>
 
     <!-- current step: i-20 -->
     <mat-card-content  style="display: inline-block;" *ngIf="visaInfo.currStep == '5'">
-      <div>
-        
-        <button>Upload File</button>
+      <div class="row">
+        <div class="col">
+          <mat-form-field style="float: right; width: 100%;" class="full-width" required>
+            <ngx-mat-file-input
+              [formControl]="fileOPTSTEMReceipt"
+              [multiple]="multiple"
+              [color]="color"
+            >
+              <mat-icon  ngxMatFileInputIcon>folder</mat-icon>
+            </ngx-mat-file-input>
+          </mat-form-field>
+          <button id="2" mat-raised-button (click)="onSubmit($event)" color="primary" style="float:right; margin: auto;" [disabled]="isSubmitted">Upload</button>
+          <p *ngIf="isSubmitted" style="color: green; float: right; margin: auto; padding: auto;">Upload Successfully! &nbsp;  </p> 
+        </div>
       </div>
     </mat-card-content>
 
     <!-- current step: opt stem receip -->
     <mat-card-content  style="display: inline-block;" *ngIf="visaInfo.currStep == '6'">
-      <button>Upload File</button>
+      <div class="row">
+        <div class="col">
+          <mat-form-field style="float: right; width: 100%;" class="full-width" required>
+            <ngx-mat-file-input
+              [formControl]="fileOPTSTEMEAD"
+              [multiple]="multiple"
+              [color]="color"
+            >
+              <mat-icon  ngxMatFileInputIcon>folder</mat-icon>
+            </ngx-mat-file-input>
+          </mat-form-field>
+          <button id="2" mat-raised-button (click)="onSubmit($event)" color="primary" style="float:right; margin: auto;" [disabled]="isSubmitted">Upload</button>
+          <p *ngIf="isSubmitted" style="color: green; float: right; margin: auto; padding: auto;">Upload Successfully! &nbsp;  </p> 
+        </div>
+      </div>
     </mat-card-content> 
 
 

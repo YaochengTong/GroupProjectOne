@@ -133,6 +133,7 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
     }
 
     @Override
+    @Transactional
     public boolean updateInfo(Map<String, Object> params) {
         String fullName = params.get("fullName").toString();
         Integer userId = Integer.parseInt(params.get("userId").toString());
@@ -164,6 +165,7 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
     }
 
     @Override
+    @Transactional
     public Map<String, Object> uploadAndUpdate(List<MultipartFile> files, Map<String, Object> paramMap, Integer userId) {
         Map<String, Object> resultMap = new HashMap<>();
         User user = iUserDao.getUserById(userId);
@@ -173,6 +175,13 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
          */
         // create new Application Flow
         // insert application flow
+        ApplicationWorkflow applicationWorkflow = new ApplicationWorkflow();
+        applicationWorkflow.setStatus(paramMap.get("step").toString());
+        applicationWorkflow.setCreateDate(timestamp);
+        applicationWorkflow.setType("visa status management");
+        applicationWorkflow.setModificationDate(timestamp);
+        applicationWorkflow.setUser(user);
+        iApplicationWorkFlowDao.insertApplicationWorkFlow(applicationWorkflow);
 
         /**
          * Step 2: File uploads

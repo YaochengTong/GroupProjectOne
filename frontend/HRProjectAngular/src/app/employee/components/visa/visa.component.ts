@@ -80,7 +80,6 @@ export class VisaComponent implements OnInit {
     if (this.userId != null) {
       this.httpRequestService.getData('/visa-status-management/' + this.userId, null, 'http://localhost:8999').subscribe(
         (data: any) => {
-          console.log(data.visaStatusInfo);
 
           this.isDataAvailable = true;
           this.visaInfo = data.visaStatusInfo;
@@ -103,8 +102,7 @@ export class VisaComponent implements OnInit {
     var formData: FormData = new FormData();
     if (idx == "1") {
       // uploaded OPT EAD
-      let file: File = this.fileOPTEAD.value;
-      formData.append('file', file);
+      formData.append('file', this.fileOPTEAD.value);
       this.params = {
         step: "OPT EAD",
         title:"OPTEAD"
@@ -114,31 +112,36 @@ export class VisaComponent implements OnInit {
     }
     else if (idx == "2") {
       // uploaded I-983 filled
-       // uploaded OPT EAD
-       console.log("in");
-       let file: File = this.fileI983.value;
-       console.log(file);
-       formData.append('file', this.fileI983.value);
-       this.params = {
-         step: "I-983 Filled",
-         title:"I983"
-       }
-       console.log(JSON.stringify(formData));
-       formData.forEach((value, key) => {
-        console.log(key + " " + value)
-      });
- 
+      formData.append('file', this.fileI983.value);
+      this.params = {
+        step: "I-983 Filled",
+        title:"I983"
+      }
     }
     else if (idx == "4") {
       // uploaded i-20
+      formData.append('file', this.fileI20.value);
+      this.params = {
+        step: "I-20",
+        title:"I20"
+      }
     }
     else if (idx == "5") {
       // upload EAD STEM receipt
+      formData.append('file', this.fileOPTSTEMReceipt.value);
+      this.params = {
+        step: "OPT STEM Receipt",
+        title:"OPTSTEMReceipt"
+      }
     }
     else if (idx == "6") {
       // upload EAD STEM EAD
+      formData.append('file', this.fileOPTSTEMEAD.value);
+      this.params = {
+        step: "OPT STEM EAD",
+        title:"OPTSTEMEAD"
+      }
     }
-    console.log(formData);
     
     this.httpRequestService.fileUploadWithParams('/visa-status-management/' + this.userId + '/upload', formData, this.params).subscribe(
       (data: any) => {
