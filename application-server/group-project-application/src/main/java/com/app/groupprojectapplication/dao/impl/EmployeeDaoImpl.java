@@ -3,6 +3,7 @@ package com.app.groupprojectapplication.dao.impl;
 import com.app.groupprojectapplication.dao.IEmployeeDao;
 import com.app.groupprojectapplication.domain.Employee;
 import com.app.groupprojectapplication.domain.Person;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
@@ -84,7 +85,6 @@ public class EmployeeDaoImpl implements IEmployeeDao {
         session.merge(employee);
     }
 
-
     public Employee getEmployeeByPerson(Person p) {
         Session session = sessionFactory.getCurrentSession();
         List<Employee> resultList = session.createQuery("FROM Employee WHERE person.id = " + p.getId()).getResultList();
@@ -92,13 +92,18 @@ public class EmployeeDaoImpl implements IEmployeeDao {
     }
 
     @Override
-    public int getHouseIdByEmployee(Employee e) {
+    public Integer getHouseIdByEmployee(Employee e) {
         Session session = sessionFactory.getCurrentSession();
         int personId = e.getPerson().getId();
-        List<Integer> resultList = session
-            .createNativeQuery("SELECT house_id FROM employee WHERE person_id =" + personId).getResultList();
+        List<Integer> resultList = new ArrayList<>();
+        try {
+            resultList = session.createNativeQuery("SELECT house_id FROM employee WHERE person_id =" + personId)
+                .getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        if (resultList == null) { return null; }
         return resultList.get(0);
     }
-
 
 }

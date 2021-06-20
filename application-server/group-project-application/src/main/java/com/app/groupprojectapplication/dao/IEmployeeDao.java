@@ -17,7 +17,7 @@ public interface IEmployeeDao {
     void mergeEmployee(Employee employee);
 
     Employee getEmployeeByPerson(Person p);
-    int getHouseIdByEmployee(Employee e);
+    Integer getHouseIdByEmployee(Employee e);
     //String getTitleById(Integer id);
     //String getManagerId(Integer id);
     //String getStartDate(Integer id);
