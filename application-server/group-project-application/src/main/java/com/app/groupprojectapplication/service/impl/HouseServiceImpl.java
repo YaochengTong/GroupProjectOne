@@ -8,6 +8,7 @@ import com.app.groupprojectapplication.dao.IFacilityReportDetailDao;
 import com.app.groupprojectapplication.dao.IHouseDao;
 import com.app.groupprojectapplication.dao.IPersonDao;
 import com.app.groupprojectapplication.dao.IUserDao;
+import com.app.groupprojectapplication.domain.Contact;
 import com.app.groupprojectapplication.domain.Employee;
 import com.app.groupprojectapplication.domain.Facility;
 import com.app.groupprojectapplication.domain.FacilityReport;
@@ -328,6 +329,24 @@ public class HouseServiceImpl implements IHouseService {
         if (e == null) { return null; }
         House h = iHouseDao.getHouseById(iEmployeeDao.getHouseIdByEmployee(e));
         return h;
+    }
+
+    @Override
+    @Transactional
+    public List<House> getAllTestHouses() {
+        return iHouseDao.getAllHouse();
+    }
+
+    @Override
+    @Transactional
+    public void addHouseByUserId(HousePageInfo housePageInfo, Integer userId) {
+        Person p = iUserDao.getPersonByUserId(userId);
+        Contact c = iContactDao.getContactByPersonId(p.getId()).get(0);
+        House h = new House();
+        h.setNumberOfPerson(housePageInfo.getNumberOfPerson());
+        h.setAddress(housePageInfo.getAddress());
+        h.setContact(c);
+        iUserDao.addHouse(h);
     }
 
 }

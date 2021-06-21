@@ -1,4 +1,6 @@
-<link rel="stylesheet" href="housing-page.component.scss">
+<script src="housing-page.component.ts"></script>
+<script src="../../../../employee/components/housing/facility-report/facility-report.component.ts"></script>
+<link href="housing-page.component.scss" rel="stylesheet"/>
 <p>You can directly click the card for housing details</p>
 <!--<p>Please patiently wait 10 second due to data nested performance issue</p>-->
 <p>Landlord is random string due to no database column</p>
@@ -40,6 +42,72 @@
         <!--      <mat-card-actions>-->
         <!--        <button mat-raised-button color="primary">Details</button>-->
         <!--      </mat-card-actions>-->
+      </mat-card>
+    </mat-grid-tile>
+
+    <!--     Add House-->
+    <mat-grid-tile>
+      <mat-card>
+        <mat-card-title>Add House</mat-card-title>
+        <mat-card-content>
+          <form (ngSubmit)="onSubmit()" [formGroup]="houseForm" novalidate>
+            <mat-form-field class="full-width">
+              <input
+                formControlName="address"
+                matInput
+                placeholder="Address"
+                required
+              />
+              <mat-error
+                *ngIf="houseForm.controls['address'].hasError('required')"
+              >
+                Address is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <input
+                formControlName="userId"
+                matInput
+                placeholder="Your Current UserId: {{userId}}"
+                required
+              />
+              <mat-error
+                *ngIf="
+                  houseForm.controls['userId'].hasError('required')
+                "
+              >
+                User ID is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <input
+                formControlName="numberOfPerson"
+                matInput
+                placeholder="Number Of Person"
+                required
+              />
+              <mat-error
+                *ngIf="
+                  houseForm.controls['numberOfPerson'].hasError('required')
+                "
+              >
+                Number Of Person is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </form>
+        </mat-card-content>
+        <mat-card-actions class="center">
+          <button
+            (click)="onSubmit()"
+            color="primary"
+            mat-raised-button
+            type="submit"
+          >
+            Submit
+          </button>
+        </mat-card-actions>
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>

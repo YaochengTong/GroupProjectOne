@@ -1,1 +1,10 @@
-
+.example-card {
+  width: 350px;
+  margin-left: 2%;
+  margin-top: 2%;
+  background-color: transparent;
+}
+.example-header-image {
+  background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
+  background-size: cover;
+}

@@ -131,6 +131,7 @@ export class OnBoardingComponent implements OnInit{
   emergencyContact2: string = "Emergency Contact 2";
   referenceContact: string = "Reference Contact";
   showSecondEmergencyContact: boolean = false;
+  showReferenceContact: boolean = false;
   email:any;
   userId: any;
 

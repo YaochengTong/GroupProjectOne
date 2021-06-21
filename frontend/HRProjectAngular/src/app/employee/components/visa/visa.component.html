@@ -20,25 +20,42 @@
       <mat-card-title>{{userName}}</mat-card-title>
       <mat-card-subtitle>{{email}}</mat-card-subtitle>
     </mat-card-header>
-    <img
-      mat-card-image
-      src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-      alt="Photo of a Shiba Inu"
-    />
-    <hr>
+    <form>
+      <br>
+      <mat-form-field style="float: left;">
+        <mat-label>Work Authorization: </mat-label>
+        <input matInput style="color: black;" disabled [value]="visaInfo.workAuthorization">
+      </mat-form-field>
+
+      <mat-form-field style="float: left;">
+        <mat-label>Authorization Day Left: </mat-label>
+        <input matInput style="color: black;" disabled [value]="visaInfo.authorizationDayLeft">
+      </mat-form-field>
+
+
+      <mat-form-field style="float: left;">
+        <mat-label>Authorization Start Date:</mat-label>
+        <input matInput style="color: black;" disabled [value]="visaInfo.authorizationStartDate">
+      </mat-form-field>
+
+      <mat-form-field style="float: left;">
+        <mat-label>Authorization End Date:</mat-label>
+        <input matInput style="color: black;" disabled [value]="visaInfo.authorizationEndDate">
+      </mat-form-field>
+    </form>
     <mat-card-content>
       <p><strong>Document Uploaded:</strong></p>
-      <div *ngFor="let d of documents">
+      <div *ngFor="let d of documents; let i = index">
         <mat-icon style="font-size: medium;">file_copy</mat-icon>
-        <a 
-        [href]="'http://gp1storage.s3.us-east-2.amazonaws.com/' + userId + '/' + d.name.split('_')['0'] + '.txt'" target="http://gp1storage.s3.us-east-2.amazonaws.com/template/i983Instructions.pdf"
-        >{{d.name}}</a> 
-          <a style="float: right;" href="#">Preview</a>
-          <!-- <button style="float: right;">preview</button> -->
+        <button [id]="i" style="outline: none; border: none; background-color: transparent; text-decoration: underline; color: blue; " (click)="preview($event)">{{d.name}}</button>
+        <a style="float: right;"
+        [href]="'https://gp1storage.s3.us-east-2.amazonaws.com/'+ userId + '/' + d.name.split('_')['0'] + '.txt'"
+        >downLoad</a> 
       </div>
     </mat-card-content>
   </mat-card>
 </div>
+
 
 <div *ngIf="isShowMessage">
   <mat-card class="example-card1">
@@ -80,7 +97,7 @@
     </mat-card-content>
 
     <!-- current step: opt receipt -->
-    <mat-card-content style="display: inline-block;" *ngIf="visaInfo.currStep == '1'">
+    <mat-card-content *ngIf="visaInfo.currStep == '1'">
       <div class="row">
         <div class="col">
           <mat-form-field style="float: right; width: 100%;" class="full-width" required>
@@ -92,8 +109,11 @@
               <mat-icon  ngxMatFileInputIcon>folder</mat-icon>
             </ngx-mat-file-input>
           </mat-form-field>
-          <button id="1" mat-raised-button (click)="onSubmit($event)" color="primary" style="float:right; margin: auto;" [disabled]="isSubmitted">Upload</button>
-          <p *ngIf="isSubmitted" style="color: green; float: right; margin: auto; padding: auto;">Upload Successfully! &nbsp;  </p> 
+          <div style="width: 100%;">
+            <button id="1" mat-raised-button (click)="onSubmit($event)" color="primary" style="float:right; margin: auto;" [disabled]="isSubmitted">Upload</button>
+            <p *ngIf="isSubmitted" style="color: green; float: right; margin: auto; padding: auto;">Upload Successfully! &nbsp;  </p> 
+          </div>
+         
         </div>
       </div>
     </mat-card-content>
