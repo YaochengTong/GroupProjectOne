@@ -8,10 +8,23 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class EmployeeService {
-  constructor(private httpClient: HttpClient) {}
+  token: any;
+
+  constructor(private httpClient: HttpClient) {
+    this.token = localStorage.getItem('token')
+      ? localStorage.getItem('token')
+      : '';
+  }
 
   getEmployeeList(): Observable<Employee[]> {
     const url = 'http://localhost:8999/profile/allSummary';
-    return this.httpClient.get<any>(url).pipe(map((employees) => employees.AllSummary));
+    return this.httpClient
+      .get<any>(url, {
+        headers: {
+          'Allow-Cross-Origin-Origin0': '*',
+          token: this.token,
+        },
+      })
+      .pipe(map((employees) => employees.AllSummary));
   }
 }

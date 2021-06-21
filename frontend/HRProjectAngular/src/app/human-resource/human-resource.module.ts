@@ -25,15 +25,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
-import {MatSelectModule} from '@angular/material/select';
-import {FormControl} from '@angular/forms';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
-
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HTTPReq } from '../service/HTTPReq/HTTPReq.service';
-
 
 import { NameSectionDialogComponent } from './components/personal-info/name-section-dialog/name-section-dialog.component';
 import { AddressSectionDialogComponent } from './components/personal-info/address-section-dialog/address-section-dialog.component';
@@ -44,7 +41,6 @@ import { DetailsDialogComponent } from './components/hire/details-dialog/details
 import { PreviewTxtComponent } from './components/home/preview-txt/preview-txt.component';
 
 import { AuthInterceptor } from '../service/HTTPReq/HttpInterceptor';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -52,7 +48,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     NavComponent,
     PersonalInfoComponent,
     VisaComponent,
-    CheckEmployeeComponent,
     HireComponent,
     HrPageComponent,
     NameSectionDialogComponent,
@@ -89,11 +84,14 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     MatDatepickerModule,
     MatButtonToggleModule,
   ],
-  providers: [HTTPReq, {
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi: true
-  }],
+  providers: [
+    HTTPReq,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   exports: [
     NavComponent,
     HomeComponent,
