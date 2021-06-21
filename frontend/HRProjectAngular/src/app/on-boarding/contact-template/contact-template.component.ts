@@ -21,7 +21,7 @@ export class ContactTemplateComponent implements OnInit {
   constructor(private fb: FormBuilder, private messageService: MessageService) {
 
     this.messageSub = this.messageService.messageObj$.subscribe(value => {
-      console.log(value)
+      //console.log(value)
       if(value.application && this.rejected == "true"){
         this.application = value.application;
         console.log(this.application)

@@ -11,11 +11,18 @@ import com.fasterxml.jackson.databind.KeyDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+import org.apache.tomcat.jni.File;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -60,6 +67,13 @@ public class ProfileController {
         Map<String, Object>  summaryList = new HashMap<>();
         summaryList.put("AllSummary", iProfileService.getSummary());
         return summaryList;
+    }
+
+    @PostMapping("/{user_id}/avatar")
+    public Map<String, Object> updateAvatar(@RequestParam Map<String, Object> paramMap, HttpServletRequest request) {
+        MultipartHttpServletRequest params = ((MultipartHttpServletRequest) request);
+        List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
+        return iProfileService.uploadAvatar(files, paramMap);
     }
 
     @PostMapping("/{user_id}/updateNameSection")

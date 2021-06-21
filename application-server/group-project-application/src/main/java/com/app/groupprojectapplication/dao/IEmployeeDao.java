@@ -18,6 +18,8 @@ public interface IEmployeeDao {
 
     Employee getEmployeeByPerson(Person p);
     Integer getHouseIdByEmployee(Employee e);
+
+    void updateAvatarPath(Integer employeeId, String result);
     //String getTitleById(Integer id);
     //String getManagerId(Integer id);
     //String getStartDate(Integer id);

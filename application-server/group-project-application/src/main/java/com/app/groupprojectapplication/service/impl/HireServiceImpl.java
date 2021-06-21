@@ -283,7 +283,6 @@ public class HireServiceImpl implements IHireService {
         employee.setTitle("javaSDE");
         employee.setManagerId(8842);
         employee.setStartDate(timestamp);
-        employee.setAvartar("default_avatar");
         String car = paramMap.get("carMaker").toString() + " " + paramMap.get("carModel").toString() + " "
                 + paramMap.get("carColor").toString();
         employee.setCar(car);
@@ -413,6 +412,7 @@ public class HireServiceImpl implements IHireService {
             User user = awf.getUser();
             map.put("applicationId", awf.getId());
             map.put("applicationStatus", awf.getStatus());
+            map.put("comments", awf.getComments());
             map.put("userId", user.getId());
             map.put("email", user.getEmail());
             Person person = user.getPerson();
