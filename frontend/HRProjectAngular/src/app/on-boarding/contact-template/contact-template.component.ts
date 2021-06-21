@@ -12,6 +12,7 @@ export class ContactTemplateComponent implements OnInit {
 
   @Input('componentTitle') title = '';
   @Input('rejected') rejected = 'false';
+  @Input('validationIf') validate = true;
   @Output() updateForm: EventEmitter<any> = new EventEmitter<any>();
 
   messageSub: any;
@@ -20,7 +21,7 @@ export class ContactTemplateComponent implements OnInit {
   constructor(private fb: FormBuilder, private messageService: MessageService) {
 
     this.messageSub = this.messageService.messageObj$.subscribe(value => {
-      console.log(value)
+      //console.log(value)
       if(value.application && this.rejected == "true"){
         this.application = value.application;
         console.log(this.application)
@@ -98,6 +99,10 @@ export class ContactTemplateComponent implements OnInit {
         ]),
       ],
     })
+
+    // console.log(this.validate)
+    // if(!this.validate)
+    //   this.ContactForm.clearValidators();
   }
 
   ContactForm: FormGroup;
@@ -108,6 +113,12 @@ export class ContactTemplateComponent implements OnInit {
     this.ContactForm.valueChanges.subscribe(val => {
       this.dataRefresh();
     });
+  }
+
+  ngOnChanges(changes: any): void{
+    // console.log(123)
+    // if(!this.validate)
+    //    this.ContactForm.clearValidators();
   }
 
   dataRefresh(): void{

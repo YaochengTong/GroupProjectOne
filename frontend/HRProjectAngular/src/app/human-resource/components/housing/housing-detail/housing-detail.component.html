@@ -49,15 +49,11 @@
       <mat-card class="clickable">
         <mat-card-title>Facility Info</mat-card-title>
         <mat-card-content>
-
           <mat-list *ngFor="let f of facility">
             <div id="facilityInfo">
               <mat-list-item>
                 <strong>Facility Info Id:</strong> &nbsp;
-                <input
-                  [(ngModel)]="f.facilityId"
-                  placeholder="{{ f.facilityId }}"
-                />
+                {{ f.facilityId }}
               </mat-list-item>
               <mat-list-item>
                 <strong>Number of Beds:</strong> &nbsp;
@@ -88,13 +84,16 @@
                 />
               </mat-list-item>
               <div id="facilityButton">
-                <button (click)="openDialog()" color="primary" mat-raised-button>
+                <button
+                  (click)="openDialog()"
+                  color="primary"
+                  mat-raised-button
+                >
                   Facility Reports
                 </button>
               </div>
             </div>
           </mat-list>
-
         </mat-card-content>
       </mat-card>
       <mat-card class="clickable">
@@ -118,7 +117,7 @@
                 <button
                   color="primary"
                   mat-raised-button
-                  onClick="window.location='human-resource/check-employee'"
+                  (click)="redirect(e.employeeId)"
                 >
                   Check Employee
                 </button>

@@ -15,8 +15,87 @@ export class PersonalInfoTemplateComponent implements OnInit {
   //user email
   @Input('email') email = 'test@gmail.com';
   @Input('rejected') rejected = 'false';
+  @Input('comments') comment: any = {
+    'FirstName': '',
+    'LastName': '',
+    'MiddleName': '',
+    'SSN': '',
+    'Gender': '',
+    'DOB': '',
+    'WorkAuth': '',
+    'Citizen': '',
+    'CitizenType': '',
+    'AuthStart': '',
+    'AuthEnd': '',
+    'DriverLicense': '',
+    'DriverLicenseExpireDate': '',
+    'PrimaryPhone': '',
+    'Car': '',
+    'AlterPhone': '',
+    'Address1': '',
+    'Address2': '',
+    'City': '',
+    'State': '',
+    'PostalCode': '',
+
+    //reference contact
+    'RFirstName': '',
+    'RLastName': '',
+    'RMiddleName': '',
+    'RPhone': '',
+    'RAddress1': '',
+    'RAddress2': '',
+    'RCity': '',
+    'RState': '',
+    'RPostalCode': '',
+    'REmail': '',
+    'RRelation': '',
+
+    //emergency contacts
+    'EContacts': [
+      {
+        'EFirstName': '',
+        'ELastName': '',
+        'EMiddleName': '',
+        'EPhone': '',
+        'EAddress1': '',
+        'EAddress2': '',
+        'ECity': '',
+        'EState': '',
+        'EPostalCode': '',
+        'EEmail': '',
+        'ERelation': '',
+      },
+      {
+        'EFirstName': '',
+        'ELastName': '',
+        'EMiddleName': '',
+        'EPhone': '',
+        'EAddress1': '',
+        'EAddress2': '',
+        'ECity': '',
+        'EState': '',
+        'EPostalCode': '',
+        'EEmail': '',
+        'ERelation': '',
+      }
+    ],
+
+    files: [
+
+    ]
+
+  };
+
+  commentStyle(item): any {
+    if(item == ''){
+      return {"color": "green"};
+    }
+    return {"color": "red"};
+  }
   
   application:any = {};
+  
 
   @Output() updateForm: EventEmitter<any> = new EventEmitter<any>();
   @Output() updateDriverLicense: EventEmitter<any> = new EventEmitter<any>();

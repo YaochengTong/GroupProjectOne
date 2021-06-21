@@ -13,9 +13,11 @@ export class HTTPReq {
     paramObj: any,
     endPoint: string = 'http://localhost:8999'
   ): Observable<any> {
+    let token:any = localStorage.getItem('token')?localStorage.getItem('token'):'';
     return this.http.get(endPoint + path, {
       headers: {
         'Allow-Cross-Origin-Origin0': '*',
+        'token': token
       },
       responseType: 'json',
       params: paramObj,
@@ -27,9 +29,12 @@ export class HTTPReq {
     paramObj: any,
     endPoint: string = 'http://localhost:8999'
   ): Observable<any> {
+    let token:any = localStorage.getItem('token')?localStorage.getItem('token'):'';
+    console.log(token)
     return this.http.post(endPoint + path, null, {
       headers: {
         'Allow-Cross-Origin-Origin0': '*',
+        'token': token
       },
       responseType: 'json',
       params: paramObj,
@@ -40,12 +45,15 @@ export class HTTPReq {
   fileUploadWithParams(path: string, formData: FormData, paramObj: any,
         endPoint: string = 'http://localhost:8999') : Observable<any>
   {
-      return this.http.post(endPoint + path, formData, {
-        headers: {
-          'Allow-Cross-Origin-Origin0': '*',
-        },
-        responseType: 'json',
-        params: paramObj,
-      });
+    let token:any = localStorage.getItem('token')?localStorage.getItem('token'):'';
+    return this.http.post(endPoint + path, formData, {
+      headers: {
+        'Allow-Cross-Origin-Origin0': '*',
+        'token': token
+      },
+      responseType: 'json',
+      params: paramObj,
+    });
   }
+  
 }

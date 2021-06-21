@@ -62,4 +62,18 @@ public class HousingController {
         return g.toJson(hpi);
     }
 
+    @GetMapping("/test-houses")
+    public Map<String, Object> getTestHouses() {
+        Map<String, Object> resultMap = new HashMap<>();
+        List<House> hList = iHouseService.getAllTestHouses();
+        resultMap.put("testHouses", hList);
+        return resultMap;
+    }
+
+    @PostMapping("/add-house/{userId}")
+    public String addHouseByUserId(@PathVariable Integer userId, @RequestBody HousePageInfo housePageInfo) {
+        iHouseService.addHouseByUserId(housePageInfo, userId);
+        return "success";
+    }
+
 }

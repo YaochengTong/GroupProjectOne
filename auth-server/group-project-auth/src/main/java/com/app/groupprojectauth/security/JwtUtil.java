@@ -14,6 +14,7 @@ public class JwtUtil {
         JwtBuilder builder = Jwts.builder()
                 .setSubject(subject)
                 .setIssuedAt(now)
+                .setExpiration(new Date(now.getTime() + 1000 * 60 * 60))
                 .signWith(SignatureAlgorithm.HS256, signingKey);
 
         return builder.compact();

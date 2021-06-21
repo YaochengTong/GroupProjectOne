@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { DOCUMENT, Location } from '@angular/common';
 import { House } from '../domain/house';
 import { HousingService } from '../housing.service';
 import { Facility } from '../domain/facility';
@@ -27,7 +27,8 @@ export class HousingDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private housingService: HousingService,
     private location: Location,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    @Inject(DOCUMENT) private document: Document
   ) {}
 
   ngOnInit(): void {
@@ -63,5 +64,10 @@ export class HousingDetailComponent implements OnInit {
         .subscribe(() => this.goBack());
     }
     alert('You have updated housing info successfully');
+  }
+
+  redirect(employeeId: number) {
+    this.document.location.href =
+      'human-resource/check-employee/detail/' + employeeId;
   }
 }

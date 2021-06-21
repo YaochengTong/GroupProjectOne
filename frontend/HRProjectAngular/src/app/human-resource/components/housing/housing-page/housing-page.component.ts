@@ -8,6 +8,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-housing-page',
@@ -29,10 +30,22 @@ export class HousingPageComponent implements OnInit {
   selectedHouse?: House;
   isDataAvailable: boolean = false;
 
-  constructor(private housingService: HousingService) {}
+  houseForm = this.fb.group({
+    address: [null, Validators.required],
+    numberOfPerson: [null, Validators.required],
+    userId: [null, Validators.required],
+  });
+
+  userId = 0;
+
+  constructor(
+    private housingService: HousingService,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
-    // @ts-ignore
+    this.userId = Number(localStorage.getItem('userId'));
+
     this.housingService.getHouses().subscribe((h) => {
       this.houses = h;
       console.log(h);
@@ -48,5 +61,15 @@ export class HousingPageComponent implements OnInit {
 
   public onCardClick(h: House) {
     this.selectedHouse = h;
+  }
+
+  refresh(): void {}
+
+  onSubmit() {
+    let house = new House(this.houseForm.value);
+    this.housingService
+      .addHouse(house, this.houseForm.value.userId)
+      .subscribe(() => this.refresh());
+    alert('House added');
   }
 }
