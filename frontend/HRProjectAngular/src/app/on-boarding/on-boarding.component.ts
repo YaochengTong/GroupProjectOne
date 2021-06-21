@@ -471,7 +471,7 @@ export class OnBoardingComponent implements OnInit{
       }
     }
 
-    //this.submitting = true;
+    this.submitting = true;
 
 
     console.log(paramObj)
