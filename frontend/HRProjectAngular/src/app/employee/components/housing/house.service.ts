@@ -17,17 +17,36 @@ export class HouseService {
   constructor(private httpClient: HttpClient) {}
 
   getHouseInfoByUserId(id: number): Observable<House> {
+    let token:any = localStorage.getItem('token')?localStorage.getItem('token'):'';
     const url = 'http://localhost:8999/housing/get-user-house/' + id;
-    return this.httpClient.get<House>(url);
+    return this.httpClient.get<House>(url, {
+      headers: {
+        'Allow-Cross-Origin-Origin0': '*',
+        'token': token
+      },
+    });
   }
 
   getAllFacilityReportByHouseId(id: number): Observable<FacilityReport[]> {
+    let token:any = localStorage.getItem('token')?localStorage.getItem('token'):'';
     const url = 'http://localhost:8999/housing/get-facility-report/' + id;
-    return this.httpClient.get<FacilityReport[]>(url);
+    return this.httpClient.get<FacilityReport[]>(url, {
+      headers: {
+        'Allow-Cross-Origin-Origin0': '*',
+        'token': token
+      },
+    });
   }
 
   postFacilityReportByUserId(fr: FacilityReport,id:number): Observable<FacilityReport> {
+    let token:any = localStorage.getItem('token')?localStorage.getItem('token'):'';
     const url = 'http://localhost:8999/facility-report/post-facility-report/'+ id;
-    return this.httpClient.post<FacilityReport>(url, fr, httpOptions);
+    return this.httpClient.post<FacilityReport>(url, fr, {
+      headers: {
+        'Allow-Cross-Origin-Origin0': '*',
+        'token': token,
+        'Content-Type': 'application/json',
+      },
+    });
   }
 }

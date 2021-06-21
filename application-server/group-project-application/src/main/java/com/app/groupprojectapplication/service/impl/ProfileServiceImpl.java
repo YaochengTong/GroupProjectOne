@@ -6,6 +6,7 @@ import com.app.groupprojectapplication.dao.IPersonDao;
 import com.app.groupprojectapplication.dao.IUserDao;
 import com.app.groupprojectapplication.domain.*;
 import com.app.groupprojectapplication.domain.profile.*;
+import com.app.groupprojectapplication.file.AmazonS3FileService;
 import com.app.groupprojectapplication.service.IProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,9 @@ public class ProfileServiceImpl implements IProfileService {
 
     @Autowired
     IUserDao iUserDao;
+
+    @Autowired
+    AmazonS3FileService amazonS3FileService;
 
     @Override
     @Transactional
@@ -64,7 +68,22 @@ public class ProfileServiceImpl implements IProfileService {
         profile.setContactInfoSection(setContactInfoSection(employee, person));
         profile.setEmploymentSection(setEmploymentSection(employee));
         profile.setEmergencyContactList(setEmergencyContactList(person));
+        profile.setDocumentSectionList(setDocumentSectionList(iEmployeeDao.getUserIdByEmployeeId(employee.getId())));
         return profile;
+    }
+
+    private List<DocumentSection> setDocumentSectionList(Integer userId) {
+        List<String> names = amazonS3FileService.printFilesInOneFolder(String.valueOf(userId));
+        List<DocumentSection> documentSectionList = new ArrayList<>();
+        for (String name : names) {
+            DocumentSection documentSection = new DocumentSection();
+            documentSection.setName(name);
+            documentSection.setPath("https://gp1storage.s3.us-east-2.amazonaws.com/" + userId + "/" + name.split("_")[0]+ ".txt");
+            documentSectionList.add(documentSection);
+        }
+        return documentSectionList;
+
+
     }
 
     private EmergencyContactList setEmergencyContactList(Person person) {

@@ -48,6 +48,9 @@ import { ContactTemplateComponent } from '../on-boarding/contact-template/contac
 import { PersonalInfoTemplateComponent } from '../on-boarding/personal-info-template/personal-info-template.component';
 import { VisaNotificationComponent } from '../human-resource/components/visa/visa-notification/visa-notification.component';
 
+import { AuthInterceptor } from '../service/HTTPReq/HttpInterceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     HomeComponent,
@@ -111,7 +114,11 @@ import { VisaNotificationComponent } from '../human-resource/components/visa/vis
     EmploymentSectionDialogComponent,
   ],
 
-  providers: [HTTPReq],
+  providers: [HTTPReq, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }],
 
   bootstrap: [EmployeeNavComponent],
 })

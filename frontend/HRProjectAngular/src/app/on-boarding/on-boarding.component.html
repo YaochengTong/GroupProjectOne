@@ -187,12 +187,27 @@
 
             <mat-step [stepControl]="ReferenceContact.ContactForm" errorMessage="Reference contact is required.">
               <ng-template matStepLabel>Reference Contact</ng-template>
-              <app-contact-template 
-                [componentTitle]="referenceContact"
-                #ReferenceContact
-                [rejected]="rejected"
-                (updateForm)="dataRefreshForReference($event)">
-              </app-contact-template>
+              <div class="row">
+                <div class="col">
+                  <button
+                    mat-stroked-button
+                    type="button"
+                    color="primary"
+                    (click)="showReferenceContact = !showReferenceContact"
+                  >
+                    {{!showReferenceContact?"+ Add a reference contact" : "Remove reference contact"}}
+                  </button>
+                </div>
+              </div>
+              <div [hidden]="!showReferenceContact">
+                <app-contact-template 
+                  [componentTitle]="referenceContact"
+                  #ReferenceContact
+                  [validationIf]="showReferenceContact"
+                  [rejected]="rejected"
+                  (updateForm)="dataRefreshForReference($event)">
+                </app-contact-template>
+              </div>
             </mat-step>
 
             <mat-step [stepControl]="EmergencyContact.ContactForm" errorMessage="Emergency contact is required.">

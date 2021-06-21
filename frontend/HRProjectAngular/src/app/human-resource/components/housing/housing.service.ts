@@ -21,22 +21,36 @@ export class HousingService {
 
   getHouses(): Observable<House[]> {
     const url = 'http://localhost:8999/housing/get-houses';
-    return this.httpClient.get<any>(url).pipe(map((houses) => houses.allHouse));
+    let token:any = localStorage.getItem('token')?localStorage.getItem('token'):'';
+    return this.httpClient.get<any>(url, {
+      headers: {
+        'Allow-Cross-Origin-Origin0': '*',
+        'token': token
+      },
+    }).pipe(map((houses) => houses.allHouse));
   }
 
   getHouseById(id: number): Observable<House> {
-    const url = 'http://localhost:8999/housing/get-house/' + id;
-    return this.httpClient.get<any>(url).pipe(map((h) => h.house));
+    let token:any = localStorage.getItem('token')?localStorage.getItem('token'):'';
+    const url2 = 'http://localhost:8999/housing/get-house/' + id;
+    return this.httpClient.get<any>(url2, {
+      headers: {
+        'Allow-Cross-Origin-Origin0': '*',
+        'token': token
+      },
+    }).pipe(map((h) => h.house));
   }
 
   updateHouse(house: House): Observable<any> {
-    const url = 'http://localhost:8999/housing/update-house';
-    return this.httpClient.post<House>(url, house, httpOptions);
-  }
-
-  addHouse(house: House, id: number): Observable<House> {
-    const url = 'http://localhost:8999/housing/add-house/' + id;
-    return this.httpClient.post<House>(url, house, httpOptions);
+    let token:any = localStorage.getItem('token')?localStorage.getItem('token'):'';
+    const url3 = 'http://localhost:8999/housing/update-house';
+    return this.httpClient.post<House>(url3, house, {
+      headers: {
+        'Allow-Cross-Origin-Origin0': '*',
+        'Content-Type': 'application/json',
+        'token': token
+      },
+    });
   }
 
   // getFacilityListByHouseId(id: number): Observable<Facility[]> {}
