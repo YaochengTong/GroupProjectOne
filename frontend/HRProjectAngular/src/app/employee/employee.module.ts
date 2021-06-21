@@ -36,8 +36,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { HTTPReq } from '../service/HTTPReq/HTTPReq.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { NameSectionDialogComponent } from './components/personalInfo/name-section-dialog/name-section-dialog.component';
@@ -47,6 +46,7 @@ import { EmergencyContactSectionDialogComponent } from './components/personalInf
 import { EmploymentSectionDialogComponent } from './components/personalInfo/employment-section-dialog/employment-section-dialog.component';
 import { ContactTemplateComponent } from '../on-boarding/contact-template/contact-template.component';
 import { PersonalInfoTemplateComponent } from '../on-boarding/personal-info-template/personal-info-template.component';
+import { VisaNotificationComponent } from '../human-resource/components/visa/visa-notification/visa-notification.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +54,7 @@ import { PersonalInfoTemplateComponent } from '../on-boarding/personal-info-temp
     EmployeeNavComponent,
     PersonalInfoComponent,
     VisaComponent,
+    VisaNotificationComponent,
     EmployeePageComponent,
     OnBoardingComponent,
     ContactTemplateComponent,
