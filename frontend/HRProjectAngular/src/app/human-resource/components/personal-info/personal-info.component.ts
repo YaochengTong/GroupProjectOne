@@ -7,6 +7,8 @@ import { EmergencyContactSectionDialogComponent } from './emergency-contact-sect
 import { EmploymentSectionDialogComponent } from './employment-section-dialog/employment-section-dialog.component';
 import { HTTPReq } from 'src/app/service/HTTPReq/HTTPReq.service';
 
+// import { MatTableDataSource } from '@angular/material/table';
+
 @Component({
   selector: 'app-personal-info',
   templateUrl: './personal-info.component.html',
@@ -20,6 +22,7 @@ export class PersonalInfoComponent implements OnInit {
   public contactSection;
   public employmentSection;
   public emergencyContactList;
+  // public dataSource;
   isDataAvailable: boolean = false;
  
   
@@ -41,6 +44,8 @@ export class PersonalInfoComponent implements OnInit {
         this.contactSection = data.profile.contactInfoSection;
         this.employmentSection = data.profile.employmentSection;
         this.emergencyContactList = data.profile.emergencyContactList;
+        // this.dataSource = new MatTableDataSource(data.profile);
+        // console.log(this.dataSource);
       }
     )
   }

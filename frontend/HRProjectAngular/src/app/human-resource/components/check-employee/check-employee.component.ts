@@ -1,8 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { HTTPReq } from 'src/app/service/HTTPReq/HTTPReq.service';
 import { Component, ViewChild, AfterViewInit, OnInit} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatButtonModule } from '@angular/material/button';
 import { MatTableDataSource } from '@angular/material/table';
 
 
@@ -13,14 +12,15 @@ export interface PeriodicElement {
   visaStatus: string;
 }
 
-
 @Component({
   selector: 'app-check-employee',
   templateUrl: './check-employee.component.html',
   styleUrls: ['./check-employee.component.scss'],
 })
 
-export class CheckEmployeeComponent implements OnInit, AfterViewInit {
+
+
+export class CheckEmployeeComponent implements OnInit {
 
   public dataSource;
   public len!: number;
@@ -30,8 +30,8 @@ export class CheckEmployeeComponent implements OnInit, AfterViewInit {
     'ssn',
     'startingDate',
     'visaStatus',
-    // 'order',
-    // 'len'
+    'position',
+    'details'
   ];
 
 
@@ -39,29 +39,29 @@ export class CheckEmployeeComponent implements OnInit, AfterViewInit {
   constructor(
     private httpRequestService: HTTPReq,
   ) {
-    this.httpRequestService.getData('/profile/all', null, 'http://localhost:8999').subscribe(
+    this.httpRequestService.getData('/profile/allSummary', null, 'http://localhost:8999').subscribe(
       (data:any) => {
         this.isDataAvailable = true;
-        this.dataSource = new MatTableDataSource<PeriodicElement>(data.AllProfile);
-        this.len = Object.keys(data.AllProfile).length;
+        this.dataSource = new MatTableDataSource<PeriodicElement>(data.AllSummary);
+        this.len = Object.keys(data.AllSummary).length;
+        console.log(this.dataSource);
       }
     )
   }
 
-  ngOnInit(): void {
-    // this.httpRequestService.getData('/profile/all', null, 'http://localhost:8999').subscribe(
-    //   (data:any) => {
-    //     this.isDataAvailable = true;
-    //     this.dataSource = new MatTableDataSource<PeriodicElement>(data.AllProfile);
-    //     this.len = Object.keys(data.AllProfile).length;
-    //   }
-    // )
-    // this.dataSource.paginator = this.paginator;
+  details(employeeId : number) {
+    alert(employeeId);
   }
 
-  @ViewChild(MatPaginator, {static : true}) paginator!: MatPaginator;
+
+  @ViewChild(MatPaginator) paginator! : MatPaginator;
+  ngOnInit(): void {
+    console.log(this.isDataAvailable);
+  }
+
+  
   ngAfterViewInit() {
-  this.dataSource.paginator = this.paginator;
+    this.dataSource.paginator = this.paginator;
   }
 
 

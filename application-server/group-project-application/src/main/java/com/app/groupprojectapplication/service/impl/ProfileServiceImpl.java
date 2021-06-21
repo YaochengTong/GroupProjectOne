@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 @Service
+@Transactional
 public class ProfileServiceImpl implements IProfileService {
 
     private Profile profile;
@@ -46,6 +47,8 @@ public class ProfileServiceImpl implements IProfileService {
         return profileList;
     }
 
+
+
     @Override
     @Transactional
     public Profile getProfileByEmployeeId(Integer user_id) {
@@ -53,6 +56,7 @@ public class ProfileServiceImpl implements IProfileService {
         Employee employee = iEmployeeDao.getEmployeeById(employee_id);
         return getProfileByEmployee(employee);
     }
+
 
 
     private Profile getProfileByEmployee(Employee employee) {
@@ -180,4 +184,31 @@ public class ProfileServiceImpl implements IProfileService {
         }
         return  fullName;
     }
+
+
+    @Override
+    public List<Summary> getSummary() {
+        List<Summary> summaryList = new ArrayList<>();
+        Integer index = 1;
+        List<Employee> employeeList = iEmployeeDao.getEmployee();
+        for(Employee employee : employeeList) {
+            summaryList.add(getSummaryByEmployee(employee, index));
+            index++;
+        }
+        return summaryList;
+    }
+
+
+    private Summary getSummaryByEmployee(Employee employee, Integer index) {
+        Summary summary = new Summary();
+        Person person = employee.getPerson();
+        summary.setIndex(index);
+        summary.setEmployeeId(employee.getId());
+        summary.setSSN(person.getSsn());
+        summary.setFullName(getFullName(person));
+        summary.setVisaType(employee.getVisaStatus().getVisaType());
+        summary.setStartDate(employee.getStartDate());
+        return summary;
+    }
+
 }
