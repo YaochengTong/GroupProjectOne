@@ -21,6 +21,7 @@ export class PersonalInfoComponent implements OnInit {
   public contactSection: any = {};
   public employmentSection: any = {};
   public emergencyContactList: any = {};
+  public documentSection: any = {};
   isDataAvailable: boolean = false;
   
 
@@ -41,10 +42,16 @@ export class PersonalInfoComponent implements OnInit {
         this.contactSection = data.profile.contactInfoSection;
         this.employmentSection = data.profile.employmentSection;
         this.emergencyContactList = data.profile.emergencyContactList;
+        this.documentSection = data.profile.documentSectionList;
       }
     )
   }
 
+  preview(): void {
+
+  }
+
+  
   editNameSection() :void {
       const dialogRef = this.dialog.open(NameSectionDialogComponent,
         {
