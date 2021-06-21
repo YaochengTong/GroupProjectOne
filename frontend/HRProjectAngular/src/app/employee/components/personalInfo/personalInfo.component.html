@@ -50,7 +50,7 @@
     </mat-card-header>
     <mat-card-content style="background-color: white;">
       <div style="padding:2%; " *ngFor="let d of documentSection">
-        <mat-icon  style="float: left; font-size: medium;">file_copy</mat-icon><button style="outline: none; background-color: transparent; border: none; text-decoration: underline;" (click)="preview()">{{d.name}}</button>
+        <mat-icon  style="float: left; font-size: medium;">file_copy</mat-icon><a href="https://markdown-bucket.s3.us-east-2.amazonaws.com/uPic/preview_2021_06_21_13_06_34.pdf">{{d.name}}</a>
         <a style="float: right;" href={{d.path}} style="float: right;">download</a>
         <br><br>
       </div>

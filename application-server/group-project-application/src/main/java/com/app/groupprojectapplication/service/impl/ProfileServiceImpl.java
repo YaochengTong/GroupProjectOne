@@ -209,7 +209,7 @@ public class ProfileServiceImpl implements IProfileService {
         try {
             System.out.println("???");
             InputStream ips = files.get(0).getInputStream();
-            String result = amazonS3FileService.upload(ips, userId + "/" + files.get(0).getOriginalFilename());
+            String result = amazonS3FileService.upload(ips,  "avatar/" + userId +"/" + files.get(0).getOriginalFilename());
             resultMap.put("success", true);
             resultMap.put("path", result);
             iEmployeeDao.updateAvatarPath(employeeId, result);

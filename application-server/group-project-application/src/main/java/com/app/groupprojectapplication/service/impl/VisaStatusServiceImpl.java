@@ -180,7 +180,7 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
         InputStream ips = null;
         try {
             ips = files.get(0).getInputStream();
-            String result = amazonS3FileService.upload(ips, userId + "/" + paramMap.get("step"));
+            String result = amazonS3FileService.upload(ips, userId + "/" + paramMap.get("step") +".txt");
             ips.close();
             PersonalDocument personalDocument = new PersonalDocument();
             personalDocument.setCreateDate(timestamp);

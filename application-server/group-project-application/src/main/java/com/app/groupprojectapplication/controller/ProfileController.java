@@ -88,7 +88,7 @@ public class ProfileController {
         String dob = params.get("dob").toString();
 
         iUpdateNameSectionService.updateSSN(ssn, user_id);
-        iUpdateNameSectionService.updateAvatar(avatar, user_id);
+//        iUpdateNameSectionService.updateAvatar(avatar, user_id);
         iUpdateNameSectionService.updateFullName(fullName, user_id);
         iUpdateNameSectionService.updateAge(age, user_id);
         iUpdateNameSectionService.updateDOB(dob, user_id);

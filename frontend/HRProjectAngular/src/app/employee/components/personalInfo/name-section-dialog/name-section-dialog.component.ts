@@ -60,6 +60,7 @@ export class NameSectionDialogComponent implements OnInit {
     formData.append('file', this.avatar.value);
     this.httpRequestServic.fileUploadWithParams('/profile/'+ this.userId +'/avatar', formData, params).subscribe(
       (data: any) => {
+        
         this.data.nameSection.avatar = data.path;
         console.log(data);
       }, 
@@ -67,6 +68,8 @@ export class NameSectionDialogComponent implements OnInit {
         console.log(err);
       }
     )
+    this.dialogRef.close();
   }
+  
 
 }
