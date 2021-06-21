@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { HTTPReq } from 'src/app/service/HTTPReq/HTTPReq.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NameSectionDialogComponent } from './name-section-dialog/name-section-dialog.component';
 import { AddressSectionDialogComponent } from './address-section-dialog/address-section-dialog.component';
 import { ContactSectionDialogComponent } from './contact-section-dialog/contact-section-dialog.component';
 import { EmergencyContactSectionDialogComponent } from './emergency-contact-section-dialog/emergency-contact-section-dialog.component';
 import { EmploymentSectionDialogComponent } from './employment-section-dialog/employment-section-dialog.component';
-import { HTTPReq } from 'src/app/service/HTTPReq/HTTPReq.service';
 
 // import { MatTableDataSource } from '@angular/material/table';
 
@@ -15,28 +15,29 @@ import { HTTPReq } from 'src/app/service/HTTPReq/HTTPReq.service';
   styleUrls: ['./personal-info.component.scss'],
 })
 export class PersonalInfoComponent implements OnInit {
+  
   public userId!: string;
   public empolyeeId!: number;
-  public nameSection;
-  public addressSection;
-  public contactSection;
-  public employmentSection;
-  public emergencyContactList;
-  // public dataSource;
+  public nameSection: any = {};
+  public addressSection: any = {};
+  public contactSection: any = {};
+  public employmentSection: any = {};
+  public emergencyContactList: any = {};
+  public documentSection: any = {};
+  public avartar: string = "https://markdown-bucket.s3.us-east-2.amazonaws.com/uPic/png-clipart-login-computer-icons-avatar-icon-monochrome-black-thumbnail_2021_06_16_17_09_28.png";
   isDataAvailable: boolean = false;
- 
   
 
   constructor(
     private httpRequestService: HTTPReq,
-    public dialog: MatDialog,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    console.log("Userid" + this.userId);
     this.userId = localStorage.getItem("userId")!;
     this.httpRequestService.getData('/profile/'+this.userId, null, 'http://localhost:8999').subscribe(
       (data: any) => {
+        console.log(data)
         this.isDataAvailable = true;
         this.empolyeeId = data.profile.employee_id;
         this.nameSection = data.profile.nameSection;
@@ -44,13 +45,17 @@ export class PersonalInfoComponent implements OnInit {
         this.contactSection = data.profile.contactInfoSection;
         this.employmentSection = data.profile.employmentSection;
         this.emergencyContactList = data.profile.emergencyContactList;
-        // this.dataSource = new MatTableDataSource(data.profile);
-        // console.log(this.dataSource);
+        this.documentSection = data.profile.documentSectionList;
+        localStorage.setItem("avatar", this.nameSection.avatar);
       }
     )
   }
-  
 
+  preview(): void {
+
+  }
+
+  
   editNameSection() :void {
       const dialogRef = this.dialog.open(NameSectionDialogComponent,
         {
@@ -59,6 +64,7 @@ export class PersonalInfoComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
+          window.location.reload();
           console.log(result);
           this.httpRequestService.postData('/profile/' + this.userId +"/updateNameSection",
           result,
@@ -70,7 +76,6 @@ export class PersonalInfoComponent implements OnInit {
         })
   }
 
-  
   editAddressSection() : void {
     let addVar = {
       priAdd1: this.addressSection.primaryAddr.AddressLine1,
@@ -84,26 +89,24 @@ export class PersonalInfoComponent implements OnInit {
       secState: this.addressSection.secondaryAddr.State,
       secZip: this.addressSection.secondaryAddr.Zip,
     }
-  
+
     const dialogRef = this.dialog.open(AddressSectionDialogComponent,
       {
         width: '500px',
         data: {"addressSection": this.addressSection}
       });
 
-
-
       dialogRef.afterClosed().subscribe(result => {
-       
+        window.location.reload();
         console.log(addVar);
         this.httpRequestService.postData('/profile/' + this.userId +"/updateAddressSection",
           addVar,
           'http://localhost:8999').subscribe(
             (data: any) => {
-              // console.log(data);
+              console.log(data);
             }
           )
-        })
+      })
   }
 
   editContactSection() : void {
@@ -114,14 +117,15 @@ export class PersonalInfoComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
+        window.location.reload();
         console.log(result);
         this.httpRequestService.postData('/profile/' + this.userId +"/updateContactSection",
-        result,
-        'http://localhost:8999').subscribe(
-          (data: any) => {
-            console.log(data);
-          }
-        )
+          result,
+          'http://localhost:8999').subscribe(
+            (data: any) => {
+              console.log(data);
+            }
+          )
       })
   }
   
@@ -134,14 +138,15 @@ export class PersonalInfoComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
+        window.location.reload();
         console.log(result);
         this.httpRequestService.postData('/profile/' + this.userId +"/updateEmploymentSection",
-        result,
-        'http://localhost:8999').subscribe(
-          (data: any) => {
-            console.log(data);
-          }
-        )
+          result,
+          'http://localhost:8999').subscribe(
+            (data: any) => {
+              console.log(data);
+            }
+          )
       })
   }
 
@@ -172,8 +177,7 @@ export class PersonalInfoComponent implements OnInit {
       EP2secState: this.emergencyContactList.emergencyPerson1.address.secondaryAddr.State,
       EP2secZip: this.emergencyContactList.emergencyPerson1.address.secondaryAddr.Zip,
     }
-
-
+    
     const dialogRef = this.dialog.open(EmergencyContactSectionDialogComponent,
       {
         width: '500px',
@@ -181,16 +185,19 @@ export class PersonalInfoComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
+        window.location.reload();
         console.log(addVar);
         this.httpRequestService.postData('/profile/' + this.userId +"/updateEmergencySection",
-        addVar,
-        'http://localhost:8999').subscribe(
-          (data: any) => {
-            console.log(data);
-          }
-        )
+          addVar,
+          'http://localhost:8999').subscribe(
+            (data: any) => {
+              console.log(data);
+            }
+          )
       })
   }
+
+
 
 
 }
