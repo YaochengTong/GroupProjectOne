@@ -48,6 +48,9 @@ import { EmploymentSectionDialogComponent } from './components/personalInfo/empl
 import { ContactTemplateComponent } from '../on-boarding/contact-template/contact-template.component';
 import { PersonalInfoTemplateComponent } from '../on-boarding/personal-info-template/personal-info-template.component';
 
+import { AuthInterceptor } from '../service/HTTPReq/HttpInterceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     HomeComponent,
@@ -110,7 +113,11 @@ import { PersonalInfoTemplateComponent } from '../on-boarding/personal-info-temp
     EmploymentSectionDialogComponent,
   ],
 
-  providers: [HTTPReq],
+  providers: [HTTPReq, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }],
 
   bootstrap: [EmployeeNavComponent],
 })

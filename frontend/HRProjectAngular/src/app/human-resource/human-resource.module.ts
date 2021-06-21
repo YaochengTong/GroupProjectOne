@@ -44,6 +44,8 @@ import { EmploymentSectionDialogComponent } from './components/personal-info/emp
 import { DetailsDialogComponent } from './components/hire/details-dialog/details-dialog.component';
 import { PreviewTxtComponent } from './components/home/preview-txt/preview-txt.component';
 
+import { AuthInterceptor } from '../service/HTTPReq/HttpInterceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -88,7 +90,11 @@ import { PreviewTxtComponent } from './components/home/preview-txt/preview-txt.c
     MatDatepickerModule,
     MatButtonToggleModule
   ],
-  providers: [HTTPReq],
+  providers: [HTTPReq, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }],
   exports: [
     NavComponent,
     HomeComponent,
