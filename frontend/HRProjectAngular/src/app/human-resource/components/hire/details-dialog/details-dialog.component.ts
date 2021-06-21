@@ -34,9 +34,9 @@ export class DetailsDialogComponent implements OnInit, OnDestroy {
   }
 
   preview(path): void {
-    console.log(123123)
     const dialogRef = this.dialog.open(PreviewComponent, {
-      width: '500px',
+      width: '600px',
+      minHeight: '600px',
       data: { data: path },
     });
   }
