@@ -205,6 +205,7 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
         } else {
             fullName = person.getFirstName() + " " + person.getMiddleName() + " " + person.getLastName();
         }
+//        System.out.println(fullName);
         return fullName;
     }
 
