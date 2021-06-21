@@ -2,6 +2,7 @@
 <div mat-dialog-content>
     <form>
         <mat-form-field>
+          <mat-label>Avatar</mat-label>
             <ngx-mat-file-input
             [formControl]="avatar"
             [multiple]="multiple"
@@ -21,10 +22,9 @@
     <input matInput [(ngModel)]="data.nameSection.ssn" placeholder="data.nameSection.ssn"><br>
     <mat-label>Date of Birth</mat-label>
     <input matInput [(ngModel)]="data.nameSection.dob" placeholder="data.nameSection.dob"><br>
-    <mat-label>Avatar</mat-label>
-    <input matInput [(ngModel)]="data.nameSection.avatar" placeholder="data.nameSection.avatar"><br>
+    
 </div>
 <div mat-dialog-actions>
     <button mat-button (click)="onCancelClick()">Cancel</button>
-    <button mat-button [mat-dialog-close]="data.nameSection" cdkFocusInitial (click)="onSave()">Save</button>
+    <button mat-button  (click)="onSave()">Save</button>
 </div>

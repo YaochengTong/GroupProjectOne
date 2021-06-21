@@ -62,7 +62,7 @@ export class PersonalInfoComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-          window.location.reload();
+          if (result == null) { window.location.reload();}
           console.log(result);
           this.httpRequestService.postData('/profile/' + this.userId +"/updateNameSection",
           result,
@@ -95,7 +95,9 @@ export class PersonalInfoComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        window.location.reload();
+        if (result == null) { window.location.reload();}
+        console.log(result);
+        
         console.log(addVar);
         this.httpRequestService.postData('/profile/' + this.userId +"/updateAddressSection",
           addVar,
@@ -104,6 +106,7 @@ export class PersonalInfoComponent implements OnInit {
               console.log(data);
             }
           )
+          
       })
   }
 
@@ -115,7 +118,7 @@ export class PersonalInfoComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        window.location.reload();
+        if (result == null) { window.location.reload();}
         console.log(result);
         this.httpRequestService.postData('/profile/' + this.userId +"/updateContactSection",
           result,
@@ -136,7 +139,7 @@ export class PersonalInfoComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        window.location.reload();
+        if (result == null) { window.location.reload();}
         console.log(result);
         this.httpRequestService.postData('/profile/' + this.userId +"/updateEmploymentSection",
           result,
@@ -183,7 +186,7 @@ export class PersonalInfoComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        window.location.reload();
+        if (result == null) { window.location.reload();}
         console.log(addVar);
         this.httpRequestService.postData('/profile/' + this.userId +"/updateEmergencySection",
           addVar,
