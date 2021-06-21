@@ -17,7 +17,7 @@ public class RestConfig {
     @Bean
     public RestTemplate restClient() {
         return builder
-                .setConnectTimeout(Duration.ofMillis(5000))
+                .setConnectTimeout(Duration.ofMillis(60000))
                 .build();
     }
 }
