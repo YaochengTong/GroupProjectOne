@@ -523,7 +523,7 @@
                     </div>
                 </div>
 
-                <div *ngFor="let emergencyContact of applicationObj.emergencyContactList; let i = index">
+                <div *ngFor="let emergencyContact of applicationObj.emergencyContactList; let i = index;">
                     <br/>
                     <br/>
                     <mat-divider></mat-divider>
@@ -713,7 +713,8 @@
                                 <input [(ngModel)]="commentsObj.files[i].comment" matInput placeholder="Add comments here..."/>
                             </span>
 
-                            <p>{{document.title}}: <a [href]="document.path">download</a> </p>
+                            <!-- <p>{{document.title}}: <a [href]="document.path">download</a> </p> -->
+                            <p>{{document.title}}: <a [href]="document.path">download </a> <button mat-button color="primary" (click)="preview(document.path)"> preview</button></p>
                             <br/>
                         </div>
                     </div>
@@ -726,7 +727,7 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="center" style="text-align: center;">
-    <button mat-button color="primary" (click)="onApprove()">Approve</button>
-    <button mat-button color="warn" (click)="onReject()">Reject</button>
+    <button mat-button color="primary" (click)="onApprove()" [disabled]="applicationObj.applicationStatus != 'Pending'">Approve</button>
+    <button mat-button color="warn" (click)="onReject()" [disabled]="applicationObj.applicationStatus != 'Pending'">Reject</button>
     <button mat-button mat-dialog-close>Cancel</button>
 </mat-dialog-actions>

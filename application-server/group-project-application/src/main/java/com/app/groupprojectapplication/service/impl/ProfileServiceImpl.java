@@ -6,14 +6,19 @@ import com.app.groupprojectapplication.dao.IPersonDao;
 import com.app.groupprojectapplication.dao.IUserDao;
 import com.app.groupprojectapplication.domain.*;
 import com.app.groupprojectapplication.domain.profile.*;
+import com.app.groupprojectapplication.file.AmazonS3FileService;
 import com.app.groupprojectapplication.service.IProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 @Service
+@Transactional
 public class ProfileServiceImpl implements IProfileService {
 
     private Profile profile;
@@ -31,6 +36,9 @@ public class ProfileServiceImpl implements IProfileService {
     @Autowired
     IUserDao iUserDao;
 
+    @Autowired
+    AmazonS3FileService amazonS3FileService;
+
     @Override
     @Transactional
     public List<Profile> getProfile() {
@@ -42,6 +50,8 @@ public class ProfileServiceImpl implements IProfileService {
         return profileList;
     }
 
+
+
     @Override
     @Transactional
     public Profile getProfileByEmployeeId(Integer user_id) {
@@ -49,6 +59,7 @@ public class ProfileServiceImpl implements IProfileService {
         Employee employee = iEmployeeDao.getEmployeeById(employee_id);
         return getProfileByEmployee(employee);
     }
+
 
 
     private Profile getProfileByEmployee(Employee employee) {
@@ -60,7 +71,22 @@ public class ProfileServiceImpl implements IProfileService {
         profile.setContactInfoSection(setContactInfoSection(employee, person));
         profile.setEmploymentSection(setEmploymentSection(employee));
         profile.setEmergencyContactList(setEmergencyContactList(person));
+        profile.setDocumentSectionList(setDocumentSectionList(iEmployeeDao.getUserIdByEmployeeId(employee.getId())));
         return profile;
+    }
+
+    private List<DocumentSection> setDocumentSectionList(Integer userId) {
+        List<String> names = amazonS3FileService.printFilesInOneFolder(String.valueOf(userId));
+        List<DocumentSection> documentSectionList = new ArrayList<>();
+        for (String name : names) {
+            DocumentSection documentSection = new DocumentSection();
+            documentSection.setName(name);
+            documentSection.setPath("https://gp1storage.s3.us-east-2.amazonaws.com/" + userId + "/" + name.split("_")[0]+ ".txt");
+            documentSectionList.add(documentSection);
+        }
+        return documentSectionList;
+
+
     }
 
     private EmergencyContactList setEmergencyContactList(Person person) {
@@ -161,4 +187,52 @@ public class ProfileServiceImpl implements IProfileService {
         }
         return  fullName;
     }
+
+
+    @Override
+    public List<Summary> getSummary() {
+        List<Summary> summaryList = new ArrayList<>();
+        Integer index = 1;
+        List<Employee> employeeList = iEmployeeDao.getEmployee();
+        for(Employee employee : employeeList) {
+            summaryList.add(getSummaryByEmployee(employee, index));
+            index++;
+        }
+        return summaryList;
+    }
+
+    @Override
+    public Map<String, Object> uploadAvatar(List<MultipartFile> files, Map<String, Object> paramMap) {
+        Map<String, Object> resultMap = new HashMap<>();
+        Integer userId = Integer.parseInt((String) paramMap.get("userId"));
+        Integer employeeId = iUserDao.getEmployeeIdByUserId(userId);
+        try {
+            System.out.println("???");
+            InputStream ips = files.get(0).getInputStream();
+            String result = amazonS3FileService.upload(ips,  "avatar/" + userId +"/" + files.get(0).getOriginalFilename());
+            resultMap.put("success", true);
+            resultMap.put("path", result);
+            iEmployeeDao.updateAvatarPath(employeeId, result);
+            ips.close();
+        } catch (IOException e) {
+            resultMap.put("reason", e.toString());
+            resultMap.put("success", false);
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+
+
+    private Summary getSummaryByEmployee(Employee employee, Integer index) {
+        Summary summary = new Summary();
+        Person person = employee.getPerson();
+        summary.setIndex(index);
+        summary.setEmployeeId(employee.getId());
+        summary.setSSN(person.getSsn());
+        summary.setFullName(getFullName(person));
+        summary.setVisaType(employee.getVisaStatus().getVisaType());
+        summary.setStartDate(employee.getStartDate());
+        return summary;
+    }
+
 }

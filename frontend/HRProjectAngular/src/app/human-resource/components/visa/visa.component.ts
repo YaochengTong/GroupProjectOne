@@ -53,6 +53,7 @@ export class VisaComponent implements OnInit {
     this.httpRequestService.getData('/visa-status-management/all', null, 'http://localhost:8999').subscribe(
       (data: any) => {
         this.isDataAvailable = true;
+        console.log("Original data");
         console.log(data.visaStatusInfoList);
         this.visaStatusInfo = data.visaStatusInfoList;
       }
@@ -118,7 +119,7 @@ export class VisaComponent implements OnInit {
       return "";
     }
 
-    console.log("Substring");
+    // console.log("Substring");
     console.log(oriDate.toString().substring(4, 15));
     var formattedDate;
     var month = oriDate.toString().substring(4, 15).split(" ")[0];
@@ -186,9 +187,16 @@ export class VisaComponent implements OnInit {
     this.visaStatusInfo[index].authorizationDayLeft = 0;
 
     var nameModifid = (<HTMLInputElement>document.getElementById("name-"+index)).value;
-    var startDateModifid = (<HTMLInputElement>document.getElementById("startDate-"+index)).value;
-    var endDateModifid = (<HTMLInputElement>document.getElementById("endDate-"+index)).value;
+    // var startDateModifid = (<HTMLInputElement>document.getElementById("startDate-"+index)).value;
+    // var endDateModifid = (<HTMLInputElement>document.getElementById("endDate-"+index)).value;
 
+    var startDateModifid = this.visaStatusInfo[index].authorizationStartDate;
+    var endDateModifid = this.visaStatusInfo[index].authorizationEndDate;
+
+    console.log("hello");
+    console.log(typeModifid);
+    console.log(startDateModifid);
+    console.log(endDateModifid);
 
     if (nameModifid == "" || this.selectedData == null || startDateModifid == "" || endDateModifid == "") {
       if (nameModifid == "") { this.isNameValid = false;  console.log("name null")}
@@ -206,10 +214,7 @@ export class VisaComponent implements OnInit {
 
     var typeModifid = this.selectedData.value;
 
-    console.log(typeModifid);
-    console.log(startDateModifid);
-    console.log(endDateModifid);
-
+ 
     this.isEdit = false;
 
     // update page data
@@ -218,14 +223,20 @@ export class VisaComponent implements OnInit {
     this.visaStatusInfo[index].authorizationStartDate = startDateModifid;
     this.visaStatusInfo[index].authorizationEndDate = endDateModifid;
     
+
+  
     // parse to backend
     let params = {
       userId: this.visaStatusInfo[index].userId,
       fullName: nameModifid,
       workAuthorization: typeModifid,
-      authorizationStartDate: startDateModifid+"T00:00:00.000+00:00",
-      authorizationEndDate: endDateModifid+"T00:00:00.000+00:00",
+      authorizationStartDate: startDateModifid,
+      authorizationEndDate: endDateModifid,
     }
+
+    console.log("update INFO")
+    console.log(params);
+    
     this.httpRequestService.postData('/visa-status-management/update', 
     params,
     'http://localhost:8999').subscribe(

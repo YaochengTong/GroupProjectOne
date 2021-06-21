@@ -1,5 +1,17 @@
 <h1 mat-dialog-title>Edit Personal Infomatino</h1>
 <div mat-dialog-content>
+    <form>
+        <mat-form-field>
+          <mat-label>Avatar</mat-label>
+            <ngx-mat-file-input
+            [formControl]="avatar"
+            [multiple]="multiple"
+            [color]="color"
+          >
+            <mat-icon  ngxMatFileInputIcon>folder</mat-icon>
+          </ngx-mat-file-input>  
+        </mat-form-field>
+    </form>
     <mat-label>Full Name</mat-label>
     <input matInput [(ngModel)]="data.nameSection.fullName" placeholder="data.nameSection.fullName"><br>
     <mat-label>Preferred Name</mat-label>
@@ -10,10 +22,9 @@
     <input matInput [(ngModel)]="data.nameSection.ssn" placeholder="data.nameSection.ssn"><br>
     <mat-label>Date of Birth</mat-label>
     <input matInput [(ngModel)]="data.nameSection.dob" placeholder="data.nameSection.dob"><br>
-    <mat-label>Avatar</mat-label>
-    <input matInput [(ngModel)]="data.nameSection.avatar" placeholder="data.nameSection.avatar"><br>
+    
 </div>
 <div mat-dialog-actions>
     <button mat-button (click)="onCancelClick()">Cancel</button>
-    <button mat-button [mat-dialog-close]="data.nameSection" cdkFocusInitial>Save</button>
+    <button mat-button  (click)="onSave()">Save</button>
 </div>

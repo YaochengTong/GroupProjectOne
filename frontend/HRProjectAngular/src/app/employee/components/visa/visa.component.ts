@@ -3,7 +3,10 @@ import { HTTPReq } from 'src/app/service/HTTPReq/HTTPReq.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { ThemePalette } from '@angular/material/core';
 import { MaxSizeValidator } from '@angular-material-components/file-input';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {MatDialog} from '@angular/material/dialog';
+import { PreviewComponent } from './preview/preview.component';
+
 
 
 @Component({
@@ -39,7 +42,8 @@ export class VisaComponent implements OnInit {
 
   constructor(
     private httpRequestService: HTTPReq,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog
   ) {
     this.fileI983 = new FormControl(this.files, [
       Validators.required,
@@ -84,7 +88,9 @@ export class VisaComponent implements OnInit {
           this.isDataAvailable = true;
           this.visaInfo = data.visaStatusInfo;
           this.documents = this.visaInfo.documentReceived;
+          console.log(this.visaInfo);
           if (this.visaInfo.message != null) { this.messageNum = 1;}
+          if (this.visaInfo.currStep == "7") { this.isShowMessage = false; this.isSubmitted = true }
         }
       )
     } else {
@@ -117,6 +123,9 @@ export class VisaComponent implements OnInit {
         step: "I-983 Filled",
         title:"I983"
       }
+    }
+    else if (idx == "3") {
+      return
     }
     else if (idx == "4") {
       // uploaded i-20
@@ -155,27 +164,15 @@ export class VisaComponent implements OnInit {
     );
   }
 
-//   visaInfo = {
-//     "fullName": "Bailey Bai",
-//     "workAuthorization": "F1(OPT/CPT)",
-//     "authorizationStartDate": "2021-06-14",
-//     "authorizationEndDate": "2021-09-23",
-//     "authorizationDayLeft": 95,
-//     "documentReceived": [
-//         {
-//             "name": "OPT EAD_2021-06-19",
-//             "date": "2021-06-19"
-//         },
-//         {
-//             "name": "OPT Receipt_2021-06-19",
-//             "date": "2021-06-19"
-//         }
-//     ],
-//     "nextStep": "I-983 for OPT STEM",
-//     "idx": 0,
-//     "userId": 558,
-//     "message": "Please download and fill your I-983 form",
-//     "currStep": "2"
-// }
+  preview(event: any) {
+    let idx = event.currentTarget.id;
+    const dialogRef = this.dialog.open(PreviewComponent, {
+      width: '500px',
+      data: {
+        userId: this.userId,
+        file: this.visaInfo.documentReceived[idx].name.split('_')[0]
+      }
+    })
+  }
 
 }

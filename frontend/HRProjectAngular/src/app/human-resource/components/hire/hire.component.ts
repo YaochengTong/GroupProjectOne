@@ -27,7 +27,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class HireComponent implements OnInit{
 
   displayedColumns: string[] = [
-    'itemIndex', 'firstName', 'lastName', 'visaType', 'visaStartDate', 'visaEndDate', 'getdetails'
+    'itemIndex', 'firstName', 'lastName', 'visaType', 'visaStartDate', 'visaEndDate', 'status', 'getdetails'
   ];
   
   dataSource: any = [];
@@ -62,6 +62,24 @@ export class HireComponent implements OnInit{
         }
     });
 
+  }
+
+  statusStyle(item): any {
+    if(item == 'Pending'){
+      return {
+        color: 'blue'
+      }
+    }
+    if(item == 'Rejected'){
+      return {
+        color: 'red'
+      }
+    }
+
+    return {
+        color: 'green'
+    }
+    
   }
 
   getApplicationTable(): void {

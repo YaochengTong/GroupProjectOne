@@ -19,13 +19,92 @@ import { MessageService } from 'src/app/service/Message/message.service';
 })
 export class OnBoardingComponent implements OnInit{
 
+  comments: any = {
+    'FirstName': '',
+    'LastName': '',
+    'MiddleName': '',
+    'SSN': '',
+    'Gender': '',
+    'DOB': '',
+    'WorkAuth': '',
+    'Citizen': '',
+    'CitizenType': '',
+    'AuthStart': '',
+    'AuthEnd': '',
+    'DriverLicense': '',
+    'DriverLicenseExpireDate': '',
+    'PrimaryPhone': '',
+    'Car': '',
+    'AlterPhone': '',
+    'Address1': '',
+    'Address2': '',
+    'City': '',
+    'State': '',
+    'PostalCode': '',
+
+    //reference contact
+    'RFirstName': '',
+    'RLastName': '',
+    'RMiddleName': '',
+    'RPhone': '',
+    'RAddress1': '',
+    'RAddress2': '',
+    'RCity': '',
+    'RState': '',
+    'RPostalCode': '',
+    'REmail': '',
+    'RRelation': '',
+
+    //emergency contacts
+    'EContacts': [
+      {
+        'EFirstName': '',
+        'ELastName': '',
+        'EMiddleName': '',
+        'EPhone': '',
+        'EAddress1': '',
+        'EAddress2': '',
+        'ECity': '',
+        'EState': '',
+        'EPostalCode': '',
+        'EEmail': '',
+        'ERelation': '',
+      },
+      {
+        'EFirstName': '',
+        'ELastName': '',
+        'EMiddleName': '',
+        'EPhone': '',
+        'EAddress1': '',
+        'EAddress2': '',
+        'ECity': '',
+        'EState': '',
+        'EPostalCode': '',
+        'EEmail': '',
+        'ERelation': '',
+      }
+    ],
+
+    files: [
+
+    ]
+
+  };
+
+  commentStyle(item): any {
+    if(item == ''){
+      return {"color": "green"};
+    }
+    return {"color": "red"};
+  }
+
   constructor(private fb: FormBuilder, private router: Router, private messageService: MessageService,
       private route: ActivatedRoute, private httpRequestService: HTTPReq) {
 
-    this.fileI983 = new FormControl(this.files, [
-      Validators.required,
-      MaxSizeValidator(1024 * 1024),
-    ]);
+    // this.fileI983 = new FormControl(this.files, [
+    //   Validators.required,
+    //   MaxSizeValidator(1024 * 1024),
+    // ]);
 
     this.fileOPTReceipt = new FormControl(this.files, [
       Validators.required,
@@ -44,7 +123,7 @@ export class OnBoardingComponent implements OnInit{
 
 
     this.fileForm = new FormGroup({
-      fileI983 :this.fileI983,
+      //fileI983 :this.fileI983,
       fileOPTReceipt: this.fileOPTReceipt
     });
 
@@ -61,7 +140,7 @@ export class OnBoardingComponent implements OnInit{
   filePaths: any = {
     'driverLicense': '',
     'WorkAuth': '',
-    'I983': '',
+    //'I983': '',
     'OPT': '',
   }
 
@@ -103,13 +182,13 @@ export class OnBoardingComponent implements OnInit{
         this.filePaths = {
           'driverLicense': this.application.documents.find(item => item.title=='DriverLicense')?.path,
           'WorkAuth': this.application.documents.find(item => item.title=='WorkAuth')?.path,
-          'I983': this.application.documents.find(item => item.title=='I983')?.path,
+          //'I983': this.application.documents.find(item => item.title=='I983')?.path,
           'OPT': this.application.documents.find(item => item.title=='OPTReceipt')?.path,
         }
 
-        this.fileI983.setValidators([
-          MaxSizeValidator(1024 * 1024),
-        ])
+        // this.fileI983.setValidators([
+        //   MaxSizeValidator(1024 * 1024),
+        // ])
         this.fileOPTReceipt.setValidators([
           MaxSizeValidator(1024 * 1024),
         ]);
@@ -117,6 +196,10 @@ export class OnBoardingComponent implements OnInit{
         this.email = this.application.email;
 
         this.messageService.sendMessage({"application": this.application});
+        //console.log(JSON.parse(this.application.comments))
+        this.comments = JSON.parse(this.application.comments);
+        console.log(this.application);
+        console.log(this.comments);
       }
     );
   }
@@ -131,6 +214,7 @@ export class OnBoardingComponent implements OnInit{
   emergencyContact2: string = "Emergency Contact 2";
   referenceContact: string = "Reference Contact";
   showSecondEmergencyContact: boolean = false;
+  showReferenceContact: boolean = false;
   email:any;
   userId: any;
 
@@ -144,7 +228,7 @@ export class OnBoardingComponent implements OnInit{
   color: ThemePalette = 'primary';
   accept: string | undefined;
   multiple: boolean = false;
-  fileI983: FormControl;
+  //fileI983: FormControl;
   fileOPTReceipt: FormControl;
   fileWorkAuth: FormControl;
   fileDriverLicense: FormControl;
@@ -260,7 +344,7 @@ export class OnBoardingComponent implements OnInit{
       emergency1StateFullName: ''
   };
   dataRefreshForEmergency1(data: any): void{
-    console.log(data)
+    //console.log(data)
     this.emergency1FormValue = {
       emergency1FirstName: data.FirstName,
       emergency1LastName: data.LastName,
@@ -320,14 +404,14 @@ export class OnBoardingComponent implements OnInit{
 
   onSubmit(): void {
     
-  console.log(this.personalInfoFormValue)
+    console.log(this.personalInfoFormValue)
 
     //create a new formData
     let formData: FormData = new FormData();
 
     //put the files you want to upload into an array
     let arr: File[] = [
-      this.fileI983.value, 
+      //this.fileI983.value, 
       this.fileOPTReceipt.value,
       this.fileDriverLicense,
       this.fileWorkAuth
@@ -336,7 +420,7 @@ export class OnBoardingComponent implements OnInit{
     console.log(arr)
 
     let fileTitles: any[] = [
-      'I983',
+      //'I983',
       'OPTReceipt',
       'DriverLicense',
       'WorkAuth'
@@ -387,7 +471,7 @@ export class OnBoardingComponent implements OnInit{
       }
     }
 
-    //this.submitting = true;
+    this.submitting = true;
 
 
     console.log(paramObj)

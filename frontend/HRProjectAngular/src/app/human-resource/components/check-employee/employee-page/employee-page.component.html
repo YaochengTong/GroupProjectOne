@@ -1,0 +1,71 @@
+<div *ngIf="!isDataAvailable" style="position: relative; top: 40%; left: 50%">
+  <mat-spinner></mat-spinner>
+  <strong>Loading...</strong>
+</div>
+
+<br/>
+<div *ngIf="isDataAvailable" id="AllProfiles">
+  <mat-form-field>
+    <mat-label id="searchBar">Search</mat-label>
+    <input #input (keyup)="applyFilter($event)" matInput placeholder="Search"/>
+  </mat-form-field>
+
+  <br/>
+  <table [dataSource]="dataSource" class="mat-elevation-z8" mat-table>
+    <ng-container matColumnDef="name">
+      <th *matHeaderCellDef mat-header-cell>Name</th>
+      <td *matCellDef="let element" mat-cell>{{ element.fullName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="ssn">
+      <th *matHeaderCellDef mat-header-cell>SSN</th>
+      <td *matCellDef="let element" mat-cell>{{ element.ssn }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="startingDate">
+      <th *matHeaderCellDef mat-header-cell>Starting Date</th>
+      <td *matCellDef="let element" mat-cell>
+        {{ element.startDate.substring(0, 10) }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="visaStatus">
+      <th *matHeaderCellDef mat-header-cell>Visa Status</th>
+      <td *matCellDef="let element" mat-cell>{{ element.visaType }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="position">
+      <th *matHeaderCellDef mat-header-cell>Position</th>
+      <td *matCellDef="let element" mat-cell>
+        {{ element.index }} / {{ this.len }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="details">
+      <th *matHeaderCellDef mat-header-cell>Details</th>
+      <td *matCellDef="let element" mat-cell>
+        <button
+          color="primary"
+          mat-raised-button
+          routerLink="detail/{{ element.employeeId }}"
+        >
+          Details
+        </button>
+      </td>
+    </ng-container>
+
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+
+    <tr *matNoDataRow class="mat-row">
+      <td class="mat-cell" colspan="4">
+        No data matching the filter "{{ input.value }}"
+      </td>
+    </tr>
+  </table>
+
+  <!-- <mat-paginator
+    [pageSizeOptions]="[2, 5, 10, 20]"
+    showFirstLastButtons
+  ></mat-paginator> -->
+</div>

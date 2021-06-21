@@ -95,7 +95,7 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
             Employee employee = iEmployeeDao.getEmployeeById(iUserDao.getEmployeeIdByUserId(user.getId()));
             Person person = iUserDao.getPersonByUserId(userId);
             Integer dayLeft = iVisaStatusDao.getVisaAuthorizationLeftDay(employee.getId());
-            String currentStep = getCurrentStep(iApplicationWorkFlowDao.getApplicationWorkFlowByUserIdAndApplicationType(userId, applicationType));
+            String currentStep = iApplicationWorkFlowDao.getApplicationWorkFlowByUserIdAndApplicationType(userId, applicationType).get(0).getStatus();
             System.out.println(currentStep);
             visaStatusInfo = new VisaStatusInfo();
             visaStatusInfo.setUserId(userId);
@@ -114,15 +114,6 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
         }
 
         return visaStatusInfo;
-    }
-
-    private String getCurrentStep(List<ApplicationWorkflow> applicationWorkflowList) {
-        System.out.println(applicationWorkflowList);
-        applicationWorkflowList.sort((a,b) -> {
-            return map.get(a.getStatus()).get(2).compareTo(map.get(b.getStatus()).get(2));
-        });
-        System.out.println(applicationWorkflowList);
-        return applicationWorkflowList.get(0).getStatus();
     }
 
     @Override
@@ -178,7 +169,7 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
         ApplicationWorkflow applicationWorkflow = new ApplicationWorkflow();
         applicationWorkflow.setStatus(paramMap.get("step").toString());
         applicationWorkflow.setCreateDate(timestamp);
-        applicationWorkflow.setType("visa status management");
+        applicationWorkflow.setType("visa status application");
         applicationWorkflow.setModificationDate(timestamp);
         applicationWorkflow.setUser(user);
         iApplicationWorkFlowDao.insertApplicationWorkFlow(applicationWorkflow);
@@ -189,7 +180,7 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
         InputStream ips = null;
         try {
             ips = files.get(0).getInputStream();
-            String result = amazonS3FileService.upload(ips, userId + "/" + paramMap.get("step"));
+            String result = amazonS3FileService.upload(ips, userId + "/" + paramMap.get("step") +".txt");
             ips.close();
             PersonalDocument personalDocument = new PersonalDocument();
             personalDocument.setCreateDate(timestamp);
@@ -214,6 +205,7 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
         } else {
             fullName = person.getFirstName() + " " + person.getMiddleName() + " " + person.getLastName();
         }
+//        System.out.println(fullName);
         return fullName;
     }
 

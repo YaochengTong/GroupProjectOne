@@ -66,10 +66,12 @@ public class UpdateNameSectionServiceImpl implements IUpdateNameSectionService {
 
     @Override
     public boolean updateAvatar(String avatar, Integer userId) {
+        System.out.println("avatar");
+        System.out.println(avatar);
         Integer employeeId = iUserDao.getEmployeeIdByUserId(userId);
         Employee employee = iEmployeeDao.getEmployeeById(employeeId);
         employee.setAvartar(avatar);
-        iEmployeeDao.updateEmployee(employee);
+//        iEmployeeDao.updateEmployee(employee);
 
         return true;
     }
@@ -79,9 +81,9 @@ public class UpdateNameSectionServiceImpl implements IUpdateNameSectionService {
         Person person = iUserDao.getPersonByUserId(userId);
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Timestamp dob = Timestamp.valueOf(DOB);
-        person.setDob(dob);
-        iPersonDao.updatePerson(person);
+//        Timestamp dob = Timestamp.valueOf(DOB);
+//        person.setDob(dob);
+//        iPersonDao.updatePerson(person);
 
         return true;
 

@@ -10,4 +10,8 @@ public interface IHouseService {
     List<HousePageInfo> getAllHouse();
     void updateHouse(HousePageInfo housePageInfo);
     House getHouseByUserId(Integer userId);
+    List<House> getAllTestHouses();
+
+    void addHouseByUserId(HousePageInfo housePageInfo, Integer userId);
+
 }

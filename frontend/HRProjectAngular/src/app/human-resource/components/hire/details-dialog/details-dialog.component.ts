@@ -1,10 +1,11 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 import { HTTPReq } from 'src/app/service/HTTPReq/HTTPReq.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { MessageService } from 'src/app/service/Message/message.service';
-
+import { PreviewComponent } from './preview/preview.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-details-dialog',
@@ -18,7 +19,7 @@ export class DetailsDialogComponent implements OnInit, OnDestroy {
   email: string = "test@gmail.com";
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: {application: any, commentObj: any}, 
-        private httpRequestService: HTTPReq, private _snackBar: MatSnackBar, private messageService: MessageService) { 
+        private httpRequestService: HTTPReq, private _snackBar: MatSnackBar, private messageService: MessageService, public dialog: MatDialog) { 
     this.applicationObj = data.application;
     //console.log(data.commentObj)
     //this.commentsObj = data.commentObj;
@@ -28,6 +29,15 @@ export class DetailsDialogComponent implements OnInit, OnDestroy {
         item.createDate = datePipe.transform(item.createDate, 'MM/dd/yyyy');
       }
       this.commentsObj.files.push({'comment': ''});
+    });
+    //console.log(this.commentsObj.EContacts[1])
+  }
+
+  preview(path): void {
+    const dialogRef = this.dialog.open(PreviewComponent, {
+      width: '600px',
+      minHeight: '600px',
+      data: { data: path },
     });
   }
 

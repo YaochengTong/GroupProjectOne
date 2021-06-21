@@ -18,7 +18,6 @@ public class Profile {
     private EmploymentSection employmentSection;
     private EmergencyContactList emergencyContactList;
     private List<DocumentSection> documentSectionList;
-//    private Summary summary;
 
 }
 

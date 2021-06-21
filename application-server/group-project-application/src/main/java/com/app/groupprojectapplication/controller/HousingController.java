@@ -1,6 +1,5 @@
 package com.app.groupprojectapplication.controller;
 
-import com.app.groupprojectapplication.dao.IHouseDao;
 import com.app.groupprojectapplication.domain.House;
 import com.app.groupprojectapplication.domain.HouseElement.HousePageInfo;
 import com.app.groupprojectapplication.service.IHouseService;
@@ -24,13 +23,16 @@ public class HousingController {
 
     @Autowired
     private IHouseService iHouseService;
-    @Autowired
-    private IHouseDao iHouseDao;
 
     @GetMapping("/get-houses")
     public Map<String, Object> postAllHouse() {
         Map<String, Object> resultMap = new HashMap<>();
         List<HousePageInfo> houses = iHouseService.getAllHouse();
+
+        if (houses == null) {
+            resultMap.put("failed", "failed");
+            return resultMap;
+        }
         resultMap.put("allHouse", houses);
         return resultMap;
     }
@@ -39,7 +41,6 @@ public class HousingController {
     public Map<String, Object> getHouseById(@PathVariable Integer houseId) {
         Map<String, Object> resultMap = new HashMap<>();
         HousePageInfo h = iHouseService.getHouseById(houseId);
-        System.out.println(h.toString());
         resultMap.put("house", h);
         return resultMap;
     }
@@ -54,10 +55,25 @@ public class HousingController {
 
     @GetMapping("/get-user-house/{userId}")
     public String getHouseByUserId(@PathVariable Integer userId) {
-        House h = iHouseService.getHouseByUserId(userId);
-        HousePageInfo hpi = iHouseService.getHouseById(h.getId());
         Gson g = new Gson();
+        House h = iHouseService.getHouseByUserId(userId);
+        if (h == null) { return g.toJson("failed"); }
+        HousePageInfo hpi = iHouseService.getHouseById(h.getId());
         return g.toJson(hpi);
+    }
+
+    @GetMapping("/test-houses")
+    public Map<String, Object> getTestHouses() {
+        Map<String, Object> resultMap = new HashMap<>();
+        List<House> hList = iHouseService.getAllTestHouses();
+        resultMap.put("testHouses", hList);
+        return resultMap;
+    }
+
+    @PostMapping("/add-house/{userId}")
+    public String addHouseByUserId(@PathVariable Integer userId, @RequestBody HousePageInfo housePageInfo) {
+        iHouseService.addHouseByUserId(housePageInfo, userId);
+        return "success";
     }
 
 }

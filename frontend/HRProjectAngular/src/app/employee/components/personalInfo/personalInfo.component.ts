@@ -21,6 +21,8 @@ export class PersonalInfoComponent implements OnInit {
   public contactSection: any = {};
   public employmentSection: any = {};
   public emergencyContactList: any = {};
+  public documentSection: any = {};
+  public avartar: string = "https://markdown-bucket.s3.us-east-2.amazonaws.com/uPic/png-clipart-login-computer-icons-avatar-icon-monochrome-black-thumbnail_2021_06_16_17_09_28.png";
   isDataAvailable: boolean = false;
   
 
@@ -41,10 +43,17 @@ export class PersonalInfoComponent implements OnInit {
         this.contactSection = data.profile.contactInfoSection;
         this.employmentSection = data.profile.employmentSection;
         this.emergencyContactList = data.profile.emergencyContactList;
+        this.documentSection = data.profile.documentSectionList;
+        localStorage.setItem("avatar", this.nameSection.avatar);
       }
     )
   }
 
+  preview(): void {
+
+  }
+
+  
   editNameSection() :void {
       const dialogRef = this.dialog.open(NameSectionDialogComponent,
         {
@@ -53,8 +62,8 @@ export class PersonalInfoComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
+          if (result == null) { window.location.reload();}
           console.log(result);
-          // console.log("hello");
           this.httpRequestService.postData('/profile/' + this.userId +"/updateNameSection",
           result,
           'http://localhost:8999').subscribe(
@@ -86,6 +95,9 @@ export class PersonalInfoComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
+        if (result == null) { window.location.reload();}
+        console.log(result);
+        
         console.log(addVar);
         this.httpRequestService.postData('/profile/' + this.userId +"/updateAddressSection",
           addVar,
@@ -94,6 +106,7 @@ export class PersonalInfoComponent implements OnInit {
               console.log(data);
             }
           )
+          
       })
   }
 
@@ -105,6 +118,7 @@ export class PersonalInfoComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
+        if (result == null) { window.location.reload();}
         console.log(result);
         this.httpRequestService.postData('/profile/' + this.userId +"/updateContactSection",
           result,
@@ -125,6 +139,7 @@ export class PersonalInfoComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
+        if (result == null) { window.location.reload();}
         console.log(result);
         this.httpRequestService.postData('/profile/' + this.userId +"/updateEmploymentSection",
           result,
@@ -171,6 +186,7 @@ export class PersonalInfoComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
+        if (result == null) { window.location.reload();}
         console.log(addVar);
         this.httpRequestService.postData('/profile/' + this.userId +"/updateEmergencySection",
           addVar,

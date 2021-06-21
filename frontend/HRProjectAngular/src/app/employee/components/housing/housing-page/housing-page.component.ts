@@ -36,8 +36,10 @@ export class HousingPageComponent implements OnInit {
   ngOnInit(): void {
     this.userId = Number(localStorage.getItem('userId'));
     this.hs.getHouseInfoByUserId(this.userId).subscribe((h) => {
-      this.house = h;
-      this.employees = h.houseEmployeeInfoList;
+      if (h != null) {
+        this.house = h;
+        this.employees = h.houseEmployeeInfoList;
+      }
       this.isDataAvailable = true;
       console.log(h);
     });

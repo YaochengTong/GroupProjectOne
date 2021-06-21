@@ -1,6 +1,7 @@
 package com.app.groupprojectapplication.dao;
 
 import com.app.groupprojectapplication.domain.Employee;
+import com.app.groupprojectapplication.domain.House;
 import com.app.groupprojectapplication.domain.Person;
 import com.app.groupprojectapplication.domain.User;
 
@@ -18,4 +19,7 @@ public interface IUserDao {
     Integer getEmployeeIdByUserId(Integer userId);
     Integer getPersonIdByUserId(Integer userId);
     Person getPersonByUserId(Integer userId);
+
+    void addHouse(House h);
+
 }

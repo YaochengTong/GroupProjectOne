@@ -12,8 +12,10 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @ToString
 public class Summary {
+    private Integer index;
+    private Integer employeeId;
     private String fullName;
     private String SSN;
     private Timestamp startDate;
-    private VisaStatus visaStatus;
+    private String visaType;
 }
