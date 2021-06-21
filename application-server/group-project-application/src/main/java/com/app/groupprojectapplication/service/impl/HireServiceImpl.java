@@ -283,7 +283,6 @@ public class HireServiceImpl implements IHireService {
         employee.setTitle("javaSDE");
         employee.setManagerId(8842);
         employee.setStartDate(timestamp);
-        employee.setAvartar("default_avatar");
         String car = paramMap.get("carMaker").toString() + " " + paramMap.get("carModel").toString() + " "
                 + paramMap.get("carColor").toString();
         employee.setCar(car);

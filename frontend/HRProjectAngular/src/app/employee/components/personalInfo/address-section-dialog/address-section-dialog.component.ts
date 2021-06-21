@@ -35,12 +35,11 @@ export class AddressSectionDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.origindata = this.data;
     console.log(this.origindata);
   }
 
   onCancelClick(): void {
-    this.data = this.origindata;
+
     this.dialogRef.close();
   }
 

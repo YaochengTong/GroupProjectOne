@@ -1,31 +1,44 @@
 <h1 mat-dialog-title>Edit Address Infomatino</h1>
 <div mat-dialog-content>
-    <h3>Primary Address</h3>
-    <mat-label>Address Line 1</mat-label>
-    <input matInput [(ngModel)]="data.addressSection.primaryAddr.AddressLine1" placeholder="data.addressSection.primaryAddr.AddressLine1"><br>
-    <mat-label>Address Line 2</mat-label>
-    <input matInput [(ngModel)]="data.addressSection.primaryAddr.AddressLine2" placeholder="data.addressSection.primaryAddr.AddressLine2"><br>
-    <mat-label>City</mat-label>
-    <input matInput [(ngModel)]="data.addressSection.primaryAddr.City" placeholder="data.addressSection.primaryAddr.City"><br>
-    <mat-label>State</mat-label>
-    <input matInput [(ngModel)]="data.addressSection.primaryAddr.State" placeholder="data.addressSection.primaryAddr.State"><br>
-    <mat-label>Zip Code</mat-label>
-    <input matInput [(ngModel)]="data.addressSection.primaryAddr.Zip" placeholder="data.addressSection.primaryAddr.Zip"><br>
-    <br>
-    <h3>Secondary Address</h3>
-        <mat-label>Address Line 1</mat-label>
-        <input matInput [(ngModel)]="data.addressSection.secondaryAddr.AddressLine1" placeholder="data.addressSection.secondaryAddr.AddressLine1"><br>
-        <mat-label>Address Line 2</mat-label>
-        <input matInput [(ngModel)]="data.addressSection.secondaryAddr.AddressLine2" placeholder="data.addressSection.secondaryAddr.AddressLine2"><br>
-        <mat-label>City</mat-label>
-        <input matInput [(ngModel)]="data.addressSection.secondaryAddr.City" placeholder="data.addressSection.secondaryAddr.City"><br>
-        <mat-label>State</mat-label>
-        <input matInput [(ngModel)]="data.addressSection.secondaryAddr.State" placeholder="data.addressSection.secondaryAddr.State"><br>
-        <mat-label>Zip Code</mat-label>
-        <input matInput [(ngModel)]="data.addressSection.secondaryAddr.Zip" placeholder="data.addressSection.secondaryAddr.Zip"><br>
+    <form>
+        <h3>Primary Address</h3>
+        <mat-form-field><mat-label>Address Line 1</mat-label>
+            <input matInput [(ngModel)]="data.addressSection.primaryAddr.AddressLine1" [value]="data.addressSection.primaryAddr.AddressLine1"><br>
+            </mat-form-field>
+        <mat-form-field><mat-label>Address Line 2</mat-label>
+            <input matInput [(ngModel)]="data.addressSection.primaryAddr.AddressLine2" [value]="data.addressSection.primaryAddr.AddressLine2"><br>
+            </mat-form-field>
+        <mat-form-field>
+            <mat-label>City</mat-label>
+            <input matInput [(ngModel)]="data.addressSection.primaryAddr.City" [value]="data.addressSection.primaryAddr.City"><br>
+            </mat-form-field>
+        <mat-form-field><mat-label>State</mat-label>
+            <input matInput [(ngModel)]="data.addressSection.primaryAddr.State" [value]="data.addressSection.primaryAddr.State"><br>
+            </mat-form-field>
+        <mat-form-field><mat-label>Zip Code</mat-label>
+            <input matInput [(ngModel)]="data.addressSection.primaryAddr.Zip" [value]="data.addressSection.primaryAddr.Zip"><br>
+            </mat-form-field>
+            <h3>Secondary Address</h3>
+
+        <mat-form-field><mat-label>Address Line 1</mat-label>
+            <input matInput [(ngModel)]="data.addressSection.secondaryAddr.AddressLine1" [value]="data.addressSection.secondaryAddr.AddressLine1"><br>
+            </mat-form-field>
+        <mat-form-field><mat-label>Address Line 2</mat-label>
+            <input matInput [(ngModel)]="data.addressSection.secondaryAddr.AddressLine2" [value]="data.addressSection.secondaryAddr.AddressLine2"><br>
+            </mat-form-field>
+        <mat-form-field><mat-label>City</mat-label>
+            <input matInput [(ngModel)]="data.addressSection.secondaryAddr.City" [value]="data.addressSection.secondaryAddr.City"><br>
+            </mat-form-field>
+        <mat-form-field><mat-label>State</mat-label>
+            <input matInput [(ngModel)]="data.addressSection.secondaryAddr.State" [value]="data.addressSection.secondaryAddr.State"><br>
+            </mat-form-field>
+        <mat-form-field><mat-label>Zip Code</mat-label>
+            <input matInput [(ngModel)]="data.addressSection.secondaryAddr.Zip" [value]="data.addressSection.secondaryAddr.Zip"><br>
+            </mat-form-field>
+    </form>
         
 </div>
 <div mat-dialog-actions>
-    <button mat-button (click)="onCancelClick()">Cancel</button>
-    <button mat-button [mat-dialog-close]="data.addressSection" cdkFocusInitial>Save</button>
+    <button mat-button style="background-color: grey;" (click)="onCancelClick()">Cancel</button>
+    <button mat-button color="Primary" [mat-dialog-close]="data.addressSection" cdkFocusInitial>Save</button>
 </div>

@@ -106,4 +106,13 @@ public class EmployeeDaoImpl implements IEmployeeDao {
         return resultList.get(0);
     }
 
+    @Override
+    public void updateAvatarPath(Integer employeeId, String result) {
+        Session session = sessionFactory.getCurrentSession();
+        System.out.println(result);
+        String query = "update Employee e set e.avartar = ?1 where e.id = ?2";
+        session.createQuery(query).setParameter(1, result).setParameter(2, employeeId).executeUpdate();
+        return;
+    }
+
 }

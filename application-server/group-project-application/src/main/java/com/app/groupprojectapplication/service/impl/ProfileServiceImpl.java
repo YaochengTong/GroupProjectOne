@@ -11,7 +11,10 @@ import com.app.groupprojectapplication.service.IProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 @Service
@@ -196,6 +199,27 @@ public class ProfileServiceImpl implements IProfileService {
             index++;
         }
         return summaryList;
+    }
+
+    @Override
+    public Map<String, Object> uploadAvatar(List<MultipartFile> files, Map<String, Object> paramMap) {
+        Map<String, Object> resultMap = new HashMap<>();
+        Integer userId = Integer.parseInt((String) paramMap.get("userId"));
+        Integer employeeId = iUserDao.getEmployeeIdByUserId(userId);
+        try {
+            System.out.println("???");
+            InputStream ips = files.get(0).getInputStream();
+            String result = amazonS3FileService.upload(ips, userId + "/" + files.get(0).getOriginalFilename());
+            resultMap.put("success", true);
+            resultMap.put("path", result);
+            iEmployeeDao.updateAvatarPath(employeeId, result);
+            ips.close();
+        } catch (IOException e) {
+            resultMap.put("reason", e.toString());
+            resultMap.put("success", false);
+            e.printStackTrace();
+        }
+        return resultMap;
     }
 
 
