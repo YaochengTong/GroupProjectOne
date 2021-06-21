@@ -713,7 +713,8 @@
                                 <input [(ngModel)]="commentsObj.files[i].comment" matInput placeholder="Add comments here..."/>
                             </span>
 
-                            <p>{{document.title}}: <a [href]="document.path">download</a> </p>
+                            <!-- <p>{{document.title}}: <a [href]="document.path">download</a> </p> -->
+                            <p>{{document.title}}: <a [href]="document.path">download </a> <button mat-button color="primary" (click)="preview(document.path)"> preview</button></p>
                             <br/>
                         </div>
                     </div>

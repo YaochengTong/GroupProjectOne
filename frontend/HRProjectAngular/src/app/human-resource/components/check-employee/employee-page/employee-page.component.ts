@@ -10,7 +10,6 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./employee-page.component.scss'],
 })
 export class EmployeePageComponent implements OnInit, AfterViewInit {
-  public len = 5;
   isDataAvailable: boolean = false;
   displayedColumns: string[] = [
     'name',
@@ -22,8 +21,9 @@ export class EmployeePageComponent implements OnInit, AfterViewInit {
   ];
   employees: Employee[] = [];
   public dataSource;
+  public len;
   //@ts-ignore
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private es: EmployeeService) {}
 
@@ -32,7 +32,9 @@ export class EmployeePageComponent implements OnInit, AfterViewInit {
       this.employees = e;
       this.isDataAvailable = true;
       this.dataSource = new MatTableDataSource<Employee>(this.employees);
+      this.len = Object.keys(e).length;
       console.log(this.dataSource);
+      console.log(this.len);
     });
   }
 
@@ -41,7 +43,7 @@ export class EmployeePageComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    // this.dataSource.paginator = this.paginator;
   }
 
   applyFilter(event: Event) {

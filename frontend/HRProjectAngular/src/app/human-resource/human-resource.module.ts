@@ -41,6 +41,7 @@ import { DetailsDialogComponent } from './components/hire/details-dialog/details
 import { PreviewTxtComponent } from './components/home/preview-txt/preview-txt.component';
 
 import { AuthInterceptor } from '../service/HTTPReq/HttpInterceptor';
+import { PreviewComponent } from './components/hire/details-dialog/preview/preview.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { AuthInterceptor } from '../service/HTTPReq/HttpInterceptor';
     EmploymentSectionDialogComponent,
     DetailsDialogComponent,
     PreviewTxtComponent,
+    PreviewComponent,
   ],
   imports: [
     CommonModule,
