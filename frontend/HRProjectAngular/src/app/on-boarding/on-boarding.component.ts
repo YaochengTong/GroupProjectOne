@@ -19,6 +19,85 @@ import { MessageService } from 'src/app/service/Message/message.service';
 })
 export class OnBoardingComponent implements OnInit{
 
+  comments: any = {
+    'FirstName': '',
+    'LastName': '',
+    'MiddleName': '',
+    'SSN': '',
+    'Gender': '',
+    'DOB': '',
+    'WorkAuth': '',
+    'Citizen': '',
+    'CitizenType': '',
+    'AuthStart': '',
+    'AuthEnd': '',
+    'DriverLicense': '',
+    'DriverLicenseExpireDate': '',
+    'PrimaryPhone': '',
+    'Car': '',
+    'AlterPhone': '',
+    'Address1': '',
+    'Address2': '',
+    'City': '',
+    'State': '',
+    'PostalCode': '',
+
+    //reference contact
+    'RFirstName': '',
+    'RLastName': '',
+    'RMiddleName': '',
+    'RPhone': '',
+    'RAddress1': '',
+    'RAddress2': '',
+    'RCity': '',
+    'RState': '',
+    'RPostalCode': '',
+    'REmail': '',
+    'RRelation': '',
+
+    //emergency contacts
+    'EContacts': [
+      {
+        'EFirstName': '',
+        'ELastName': '',
+        'EMiddleName': '',
+        'EPhone': '',
+        'EAddress1': '',
+        'EAddress2': '',
+        'ECity': '',
+        'EState': '',
+        'EPostalCode': '',
+        'EEmail': '',
+        'ERelation': '',
+      },
+      {
+        'EFirstName': '',
+        'ELastName': '',
+        'EMiddleName': '',
+        'EPhone': '',
+        'EAddress1': '',
+        'EAddress2': '',
+        'ECity': '',
+        'EState': '',
+        'EPostalCode': '',
+        'EEmail': '',
+        'ERelation': '',
+      }
+    ],
+
+    files: [
+
+    ]
+
+  };
+
+  commentStyle(item): any {
+    if(item == ''){
+      return {"color": "green"};
+    }
+    return {"color": "red"};
+  }
+
   constructor(private fb: FormBuilder, private router: Router, private messageService: MessageService,
       private route: ActivatedRoute, private httpRequestService: HTTPReq) {
 
@@ -117,6 +196,10 @@ export class OnBoardingComponent implements OnInit{
         this.email = this.application.email;
 
         this.messageService.sendMessage({"application": this.application});
+        //console.log(JSON.parse(this.application.comments))
+        this.comments = JSON.parse(this.application.comments);
+        console.log(this.application);
+        console.log(this.comments);
       }
     );
   }
@@ -261,7 +344,7 @@ export class OnBoardingComponent implements OnInit{
       emergency1StateFullName: ''
   };
   dataRefreshForEmergency1(data: any): void{
-    console.log(data)
+    //console.log(data)
     this.emergency1FormValue = {
       emergency1FirstName: data.FirstName,
       emergency1LastName: data.LastName,
@@ -321,7 +404,7 @@ export class OnBoardingComponent implements OnInit{
 
   onSubmit(): void {
     
-  console.log(this.personalInfoFormValue)
+    console.log(this.personalInfoFormValue)
 
     //create a new formData
     let formData: FormData = new FormData();

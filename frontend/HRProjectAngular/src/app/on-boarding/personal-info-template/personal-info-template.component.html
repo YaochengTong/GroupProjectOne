@@ -18,7 +18,7 @@
     <!--      Name      -->
     <div class="row">
       <div class="col">
-        <span *ngIf="rejected=='true'">ok</span>
+        <span *ngIf="rejected=='true'" [style]="commentStyle(comment.FirstName)">{{comment.FirstName != ''?comment.FirstName: 'ok'}}</span>
         <mat-form-field class="full-width">
           <input
             matInput
@@ -34,7 +34,7 @@
         </mat-form-field>
       </div>
       <div class="col">
-        <span *ngIf="rejected=='true'">ok</span>
+        <span *ngIf="rejected=='true'" [style]="commentStyle(comment.LastName)">{{comment.LastName != ''?comment.LastName: 'ok'}}</span>
         <mat-form-field class="full-width">
           <input
             matInput
@@ -51,7 +51,7 @@
       </div>
 
       <div class="col">
-        <span *ngIf="rejected=='true'">ok</span>
+        <span *ngIf="rejected=='true'" [style]="commentStyle(comment.MiddleName)">{{comment.MiddleName != ''?comment.MiddleName: 'ok'}}</span>
         <mat-form-field class="full-width">
           <input
             matInput
@@ -64,7 +64,7 @@
     
     <div class="row">
       <div class="col">
-        <span *ngIf="rejected=='true'">ok</span>
+        <span *ngIf="rejected=='true'" [style]="commentStyle(comment.Address2)">{{comment.Address2 != ''?comment.Address2: 'ok'}}</span>
         <mat-form-field class="full-width">
           <input matInput placeholder="SSN" formControlName="ssn" required/>
           <mat-error
@@ -76,7 +76,7 @@
       </div>
 
       <div class="col">
-        <span *ngIf="rejected=='true'">ok</span>
+        <span *ngIf="rejected=='true'" [style]="commentStyle(comment.Gender)">{{comment.Gender != ''?comment.Gender: 'ok'}}</span>
         <mat-form-field class="full-width">
           <mat-label>Gender</mat-label>
           <mat-select formControlName="gender" required>
@@ -93,7 +93,7 @@
       </div>
 
       <div class="col">
-        <span *ngIf="rejected=='true'">ok</span>
+        <span *ngIf="rejected=='true'" [style]="commentStyle(comment.DOB)">{{comment.DOB != ''?comment.DOB: 'ok'}}</span>
         <mat-form-field class="full-width">
           <mat-label>Date of Birth</mat-label>
           <input
@@ -120,7 +120,7 @@
     <!--      Nested Questions      -->
     <div class="row">
       <div class="col">
-        <span *ngIf="rejected=='true'">ok</span>
+        <span *ngIf="rejected=='true'" [style]="commentStyle(comment.Citizen)">{{comment.Citizen != ''?comment.Citizen: 'ok'}}</span>
         <mat-card-content>
           Are you a citizen or permanent resident of the U.S?
         </mat-card-content>
@@ -137,7 +137,7 @@
         </mat-form-field>
       </div>
       <div class="col" *ngIf="isCitizen === true">
-        <span *ngIf="rejected=='true'">ok</span>
+        <span *ngIf="rejected=='true'" [style]="commentStyle(comment.CitizenType)">{{comment.CitizenType != ''?comment.CitizenType: 'ok'}}</span>
         <mat-card-content>Green Card or Citizen</mat-card-content>
         <mat-form-field class="full-width">
           <mat-label>Citizen Type</mat-label>
@@ -149,7 +149,7 @@
       </div>
 
       <div class="col" *ngIf="isCitizen === false">
-        <span *ngIf="rejected=='true'">ok</span>
+        <span *ngIf="rejected=='true'" [style]="commentStyle(comment.WorkAuth)">{{comment.WorkAuth != ''?comment.WorkAuth: 'ok'}}</span>
         <mat-card-content>What is your work authorization?</mat-card-content>
         <mat-form-field class="full-width">
           <mat-label>Authorization Type</mat-label>
@@ -171,7 +171,7 @@
 
     <div class="row">
       <div class="col" *ngIf="isCitizen === false">
-        <span *ngIf="rejected=='true'">ok</span>
+        <span *ngIf="rejected=='true'" [style]="commentStyle(comment.AuthStart)">{{comment.AuthStart != ''?comment.AuthStart: 'ok'}}</span>
         <mat-card-content
         >Enter Your Authentication Date Range
         </mat-card-content>
@@ -228,7 +228,7 @@
       </div>
 
       <div class="col" *ngIf="isCitizen === false">
-        <span *ngIf="rejected=='true'">ok (Most recent upload is <a [href]="filePaths.WorkAuth">here)</a></span>
+        <span *ngIf="rejected=='true'"><span *ngIf="rejected=='true'" [style]="commentStyle(comment.files[0].comment)">{{comment.files[0].comment != ''?comment.files[0].comment: 'ok'}}</span> (Most recent upload is <a [href]="filePaths.WorkAuth">here)</a></span>
         <mat-card-content>Upload your work authorization</mat-card-content>
         <mat-form-field class="full-width">
           <ngx-mat-file-input
@@ -260,7 +260,7 @@
       </div>
 
       <div class="col" *ngIf="hasDriverLicense === true">
-        <span *ngIf="rejected=='true'">ok</span>
+        <span *ngIf="rejected=='true'" [style]="commentStyle(comment.DriverLicense)">{{comment.DriverLicense != ''?comment.DriverLicense: 'ok'}}</span>
         <mat-card-content>Enter Driver License</mat-card-content>
 
         <mat-form-field class="full-width">
@@ -274,7 +274,7 @@
       </div>
 
       <div class="col" *ngIf="hasDriverLicense === true">
-        <span *ngIf="rejected=='true'">ok</span>
+        <span *ngIf="rejected=='true'" [style]="commentStyle(comment.DriverLicenseExpireDate)">{{comment.DriverLicenseExpireDate != ''?comment.DriverLicenseExpireDate: 'ok'}}</span>
         <mat-card-content>Enter Expiration Date</mat-card-content>
 
         <mat-form-field class="full-width">
@@ -292,7 +292,7 @@
       </div>
 
       <div class="col" *ngIf="hasDriverLicense === true">
-        <span *ngIf="rejected=='true'">ok (Most Recent upload is <a [href]="filePaths.driverLicense">here)</a></span>
+        <span *ngIf="rejected=='true'"><span *ngIf="rejected=='true'" [style]="commentStyle(comment.files[1].comment)">{{comment.files[1].comment != ''?comment.files[1].comment: 'ok'}}</span> (Most Recent upload is <a [href]="filePaths.driverLicense">here)</a></span>
         <mat-card-content>Upload your driver license</mat-card-content>
         <mat-form-field class="full-width">
           <ngx-mat-file-input

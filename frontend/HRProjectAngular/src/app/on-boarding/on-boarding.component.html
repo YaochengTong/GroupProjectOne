@@ -20,6 +20,7 @@
               <app-personal-info-template 
                   [email]="email" 
                   [rejected]="rejected"
+                  [comments]="comments"
                   #personalInfoTemplate 
                   [formGroup]="personalInfoTemplate.personalInfoForm"
                   (updateForm)="dataRefreshForPersonalInfo($event)"
@@ -34,7 +35,7 @@
                 <ng-template matStepLabel>Phone, Address and Car</ng-template>
                 <div class="row">
                   <div class="col">
-                    <span *ngIf="rejected=='true'">ok</span>
+                    <span *ngIf="rejected=='true'" [style]="commentStyle(comments.SSN)">{{comments.SSN != ''?comments.SSN: 'ok'}}</span>
                     <mat-form-field class="full-width">
                       <input
                         matInput
@@ -51,7 +52,7 @@
                   </div>
           
                   <div class="col">
-                    <span *ngIf="rejected=='true'">ok</span>
+                    <span *ngIf="rejected=='true'" [style]="commentStyle(comments.PrimaryPhone)">{{comments.PrimaryPhone != ''?comments.PrimaryPhone: 'ok'}}</span>
                     <mat-form-field class="full-width">
                       <input
                         matInput
@@ -64,7 +65,7 @@
           
                 <div class="row">
                   <div class="col">
-                    <span *ngIf="rejected=='true'">ok</span>
+                    <span *ngIf="rejected=='true'" [style]="commentStyle(comments.Address1)">{{comments.Address1 != ''?comments.Address1: 'ok'}}</span>
                     <mat-form-field class="full-width">
                       <input
                         matInput
@@ -83,7 +84,7 @@
 
                 <div class="row">
                   <div class="col">
-                    <span *ngIf="rejected=='true'">ok</span>
+                    <span *ngIf="rejected=='true'" [style]="commentStyle(comments.Address1)">{{comments.Address1 != ''?comments.Address1: 'ok'}}</span>
                     <mat-form-field class="full-width">
                       <textarea
                         matInput
@@ -95,7 +96,7 @@
                 </div>
                 <div class="row">
                   <div class="col">
-                    <span *ngIf="rejected=='true'">ok</span>
+                    <span *ngIf="rejected=='true'" [style]="commentStyle(comments.City)">{{comments.City != ''?comments.City: 'ok'}}</span>
                     <mat-form-field class="full-width">
                       <input
                         matInput
@@ -111,7 +112,7 @@
                     </mat-form-field>
                   </div>
                   <div class="col">
-                    <span *ngIf="rejected=='true'">ok</span>
+                    <span *ngIf="rejected=='true'" [style]="commentStyle(comments.State)">{{comments.State != ''?comments.State: 'ok'}}</span>
                     <mat-form-field class="full-width">
                       <mat-select placeholder="State" formControlName="state" required>
                         <mat-option
@@ -130,7 +131,7 @@
                   </div>
           
                   <div class="col">
-                    <span *ngIf="rejected=='true'">ok</span>
+                    <span *ngIf="rejected=='true'" [style]="commentStyle(comments.PostalCode)">{{comments.PostalCode != ''?comments.PostalCode: 'ok'}}</span>
                     <mat-form-field class="full-width">
                       <input
                         matInput
@@ -161,21 +162,21 @@
                 <!--      Car      -->
                 <div class="row">
                   <div class="col">
-                    <span *ngIf="rejected=='true'">ok</span>
+                    <span *ngIf="rejected=='true'" [style]="commentStyle(comments.Car)">{{comments.Car != ''?comments.Car: 'ok'}}</span>
                     <mat-form-field class="full-width">
                       <input matInput placeholder="Maker" formControlName="carMaker"/>
                       <mat-hint align="end">Car Make</mat-hint>
                     </mat-form-field>
                   </div>
                   <div class="col">
-                    <span *ngIf="rejected=='true'">ok</span>
+                    <span *ngIf="rejected=='true'" style="color: green;">ok</span>
                     <mat-form-field class="full-width">
                       <input matInput placeholder="Model" formControlName="carModel"/>
                       <mat-hint align="end">Car Model</mat-hint>
                     </mat-form-field>
                   </div>
                   <div class="col">
-                    <span *ngIf="rejected=='true'">ok</span>
+                    <span *ngIf="rejected=='true'" style="color: green;">ok</span>
                     <mat-form-field class="full-width">
                       <input matInput placeholder="Color" formControlName="carColor"/>
                       <mat-hint align="end">Car Color</mat-hint>
