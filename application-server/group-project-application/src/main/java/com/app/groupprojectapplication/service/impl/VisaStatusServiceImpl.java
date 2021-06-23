@@ -4,6 +4,7 @@ import com.app.groupprojectapplication.dao.*;
 import com.app.groupprojectapplication.domain.*;
 import com.app.groupprojectapplication.domain.visaStatusManagement.DocumentInfo;
 import com.app.groupprojectapplication.domain.visaStatusManagement.VisaStatusInfo;
+import com.app.groupprojectapplication.exception.NoSuchEmployeeException;
 import com.app.groupprojectapplication.file.AmazonS3FileService;
 import com.app.groupprojectapplication.service.IVisaStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,17 +68,17 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
         List<User> users = iUserDao.getAllUsers();
         int index = 0;
 
-//        // official code:
-//        for (User user : users) {
-//            VisaStatusInfo visaStatusInfo = getVisaInfoByUserId(user.getId(), index);
-//            if (visaStatusInfo != null) {visaStatusInfoList.add(visaStatusInfo); index++;}
-//        }
-
-        // for test usage: because of incomplete database
-        for (Integer userId: Arrays.asList(556, 557,558, 89)) {
-            VisaStatusInfo visaStatusInfo = getVisaInfoByUserId(userId, index);
+        // official code:
+        for (User user : users) {
+            VisaStatusInfo visaStatusInfo = getVisaInfoByUserId(user.getId(), index);
             if (visaStatusInfo != null) {visaStatusInfoList.add(visaStatusInfo); index++;}
         }
+
+//        // for test usage: because of incomplete database
+//        for (Integer userId: Arrays.asList(556, 557,558, 89)) {
+//            VisaStatusInfo visaStatusInfo = getVisaInfoByUserId(userId, index);
+//            if (visaStatusInfo != null) {visaStatusInfoList.add(visaStatusInfo); index++;}
+//        }
 
         return visaStatusInfoList;
     }
@@ -110,7 +111,8 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
             visaStatusInfo.setMessage(message(currentStep, dayLeft));
             visaStatusInfo.setCurrStep(map.get(currentStep).get(2));
         } catch (Exception e) {
-            System.err.println("No such employee with user id "+ userId);
+//            System.err.println("No such employee with user id "+ userId);
+            throw new NoSuchEmployeeException(userId);
         }
 
         return visaStatusInfo;
