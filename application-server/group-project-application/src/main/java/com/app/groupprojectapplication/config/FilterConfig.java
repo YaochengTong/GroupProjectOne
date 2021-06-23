@@ -15,14 +15,14 @@ import java.util.Collections;
 @Configuration
 public class FilterConfig {
 
-    @Bean
-    public FilterRegistrationBean<JwtFilter> jwtFilter() {
-        final FilterRegistrationBean<JwtFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new JwtFilter());
-        registrationBean.addUrlPatterns("/*");
-
-        return registrationBean;
-    }
+//    @Bean
+//    public FilterRegistrationBean<JwtFilter> jwtFilter() {
+//        final FilterRegistrationBean<JwtFilter> registrationBean = new FilterRegistrationBean<>();
+//        registrationBean.setFilter(new JwtFilter());
+//        registrationBean.addUrlPatterns("/*");
+//
+//        return registrationBean;
+//    }
 
 //    @Bean
 //    CorsConfigurationSource corsConfigurationSource() {

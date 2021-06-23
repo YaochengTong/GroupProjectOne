@@ -1,5 +1,6 @@
 package com.app.groupprojectapplication.controller;
 
+import com.app.groupprojectapplication.exception.ApplicationNotFoundException;
 import com.app.groupprojectapplication.service.IHireService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -38,8 +39,12 @@ public class HireController {
     }
 
     @GetMapping("/getOnboardApplications")
-    public Map<String, Object> getOnboardApplication(@RequestParam Map<String, Object> paramMap){
+    public Map<String, Object> getOnboardApplication(@RequestParam Map<String, Object> paramMap) throws ApplicationNotFoundException {
         Map<String, Object> resultMap = iHireService.getOnboardApplications(paramMap);
+        List<Map<String, Object>> list = (List<Map<String, Object>>) resultMap.get("OngoingApplications");
+        if(list.size() == 0){
+            throw new ApplicationNotFoundException("Application not found");
+        }
         return resultMap;
     }
 
