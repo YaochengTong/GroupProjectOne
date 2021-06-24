@@ -11,8 +11,6 @@ class GroupProjectApplicationTests {
 
     @Test
     void contextLoads() {
-
-        System.out.println(ih.getAllHouse());
     }
 
 }
