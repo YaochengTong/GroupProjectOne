@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Builder
 public class HomeElement {
     private Integer employeeId;
     private HousingInfo housingInfo;
