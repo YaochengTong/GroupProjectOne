@@ -69,16 +69,16 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
         int index = 0;
 
         // official code:
-        for (User user : users) {
-            VisaStatusInfo visaStatusInfo = getVisaInfoByUserId(user.getId(), index);
-            if (visaStatusInfo != null) {visaStatusInfoList.add(visaStatusInfo); index++;}
-        }
-
-//        // for test usage: because of incomplete database
-//        for (Integer userId: Arrays.asList(556, 557,558, 89)) {
-//            VisaStatusInfo visaStatusInfo = getVisaInfoByUserId(userId, index);
+//        for (User user : users) {
+//            VisaStatusInfo visaStatusInfo = getVisaInfoByUserId(user.getId(), index);
 //            if (visaStatusInfo != null) {visaStatusInfoList.add(visaStatusInfo); index++;}
 //        }
+
+        // for test usage: because of incomplete database
+        for (Integer userId: Arrays.asList(556, 557,558, 89)) {
+            VisaStatusInfo visaStatusInfo = getVisaInfoByUserId(userId, index);
+            if (visaStatusInfo != null) {visaStatusInfoList.add(visaStatusInfo); index++;}
+        }
 
         return visaStatusInfoList;
     }
