@@ -1,93 +1,182 @@
 package com.app.groupprojectapplication.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+
 import com.app.groupprojectapplication.domain.House;
 import com.app.groupprojectapplication.domain.HouseElement.HouseEmployeeInfo;
 import com.app.groupprojectapplication.domain.HouseElement.HouseFacilityInfo;
+import com.app.groupprojectapplication.domain.HouseElement.HouseFacilityReportDetail;
+import com.app.groupprojectapplication.domain.HouseElement.HouseFacilityReportInfo;
 import com.app.groupprojectapplication.domain.HouseElement.HousePageInfo;
 import com.app.groupprojectapplication.service.IHouseService;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import java.util.Collections;
+import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
 
-import static org.mockito.Mockito.*;
-
+@ExtendWith(SpringExtension.class)
+@WebMvcTest(HousingController.class)
 class HousingControllerTest {
 
-    @Mock
-    IHouseService iHouseService;
-    @InjectMocks
-    HousingController housingController;
+    @Autowired
+    private MockMvc mockMvc;
+    @MockBean
+    private IHouseService mockIHouseService;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.initMocks(this);
+    @Test
+    void testPostAllHouse() throws Exception {
+        // Setup
+
+        // Configure IHouseService.getAllHouse(...).
+        final List<HousePageInfo> housePageInfos = Arrays.asList(new HousePageInfo(0, "address", "landlord", "phone", 0,
+            Arrays.asList(new HouseEmployeeInfo(0, "employeeName", "employeePhone", "employeeEmail", "employeeCar")),
+            Arrays.asList(new HouseFacilityInfo(0, 0, 0, 0, 0, Arrays.asList(
+                new HouseFacilityReportInfo(0, "houseFacilityReportTitle", "houseFacilityReportDate",
+                    "houseFacilityReportDescription", "houseFacilityReportStatus",
+                    Arrays.asList(new HouseFacilityReportDetail(0, 0, "comments", "createDate"))))))));
+        when(mockIHouseService.getAllHouse()).thenReturn(housePageInfos);
+
+        // Run the test
+        final MockHttpServletResponse response = mockMvc
+            .perform(get("/housing/get-houses").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        // Verify the results
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("expectedResponse", response.getContentAsString());
     }
 
     @Test
-    void testPostAllHouse() {
-        when(iHouseService.getAllHouse()).thenReturn(Arrays.<HousePageInfo>asList(
-            new HousePageInfo(Integer.valueOf(0), "address", "landlord", "phone", Integer.valueOf(0),
-                Arrays.<HouseEmployeeInfo>asList(null), Arrays.<HouseFacilityInfo>asList(null))));
+    void testPostAllHouse_IHouseServiceReturnsNoItems() throws Exception {
+        // Setup
+        when(mockIHouseService.getAllHouse()).thenReturn(Collections.emptyList());
 
-        Map<String, Object> result = housingController.postAllHouse();
-        Assertions
-            .assertEquals(new HashMap<String, Object>() {{put("String", "replaceMeWithExpectedResult");}}, result);
+        // Run the test
+        final MockHttpServletResponse response = mockMvc
+            .perform(get("/housing/get-houses").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        // Verify the results
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("expectedResponse", response.getContentAsString());
     }
 
     @Test
-    void testGetHouseById() {
-        when(iHouseService.getHouseById(anyInt())).thenReturn(
-            new HousePageInfo(Integer.valueOf(0), "address", "landlord", "phone", Integer.valueOf(0),
-                Arrays.<HouseEmployeeInfo>asList(null), Arrays.<HouseFacilityInfo>asList(null)));
+    void testGetHouseById() throws Exception {
+        // Setup
 
-        Map<String, Object> result = housingController.getHouseById(Integer.valueOf(0));
-        Assertions
-            .assertEquals(new HashMap<String, Object>() {{put("String", "replaceMeWithExpectedResult");}}, result);
+        // Configure IHouseService.getHouseById(...).
+        final HousePageInfo housePageInfo = new HousePageInfo(0, "address", "landlord", "phone", 0,
+            Arrays.asList(new HouseEmployeeInfo(0, "employeeName", "employeePhone", "employeeEmail", "employeeCar")),
+            Arrays.asList(new HouseFacilityInfo(0, 0, 0, 0, 0, Arrays.asList(
+                new HouseFacilityReportInfo(0, "houseFacilityReportTitle", "houseFacilityReportDate",
+                    "houseFacilityReportDescription", "houseFacilityReportStatus",
+                    Arrays.asList(new HouseFacilityReportDetail(0, 0, "comments", "createDate")))))));
+        when(mockIHouseService.getHouseById(0)).thenReturn(housePageInfo);
+
+        // Run the test
+        final MockHttpServletResponse response = mockMvc
+            .perform(get("/housing/get-house/{houseId}", 0).accept(MediaType.APPLICATION_JSON)).andReturn()
+            .getResponse();
+
+        // Verify the results
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("expectedResponse", response.getContentAsString());
     }
 
     @Test
-    void testUpdateHouseById() {
-        Map<String, Object> result = housingController.updateHouseById(
-            new HousePageInfo(Integer.valueOf(0), "address", "landlord", "phone", Integer.valueOf(0),
-                Arrays.<HouseEmployeeInfo>asList(null), Arrays.<HouseFacilityInfo>asList(null)));
-        Assertions
-            .assertEquals(new HashMap<String, Object>() {{put("String", "replaceMeWithExpectedResult");}}, result);
+    void testUpdateHouseById() throws Exception {
+        // Setup
+
+        // Run the test
+        final MockHttpServletResponse response = mockMvc.perform(
+            post("/housing/update-house").content("content").contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        // Verify the results
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("expectedResponse", response.getContentAsString());
+        verify(mockIHouseService).updateHouse(any(HousePageInfo.class));
     }
 
     @Test
-    void testGetHouseByUserId() {
-        when(iHouseService.getHouseById(anyInt())).thenReturn(
-            new HousePageInfo(Integer.valueOf(0), "address", "landlord", "phone", Integer.valueOf(0),
-                Arrays.<HouseEmployeeInfo>asList(null), Arrays.<HouseFacilityInfo>asList(null)));
-        when(iHouseService.getHouseByUserId(anyInt())).thenReturn(new House("address", 0));
+    void testGetHouseByUserId() throws Exception {
+        // Setup
+        when(mockIHouseService.getHouseByUserId(0)).thenReturn(new House("address", 0));
 
-        String result = housingController.getHouseByUserId(Integer.valueOf(0));
-        Assertions.assertEquals("replaceMeWithExpectedResult", result);
+        // Configure IHouseService.getHouseById(...).
+        final HousePageInfo housePageInfo = new HousePageInfo(0, "address", "landlord", "phone", 0,
+            Arrays.asList(new HouseEmployeeInfo(0, "employeeName", "employeePhone", "employeeEmail", "employeeCar")),
+            Arrays.asList(new HouseFacilityInfo(0, 0, 0, 0, 0, Arrays.asList(
+                new HouseFacilityReportInfo(0, "houseFacilityReportTitle", "houseFacilityReportDate",
+                    "houseFacilityReportDescription", "houseFacilityReportStatus",
+                    Arrays.asList(new HouseFacilityReportDetail(0, 0, "comments", "createDate")))))));
+        when(mockIHouseService.getHouseById(0)).thenReturn(housePageInfo);
+
+        // Run the test
+        final MockHttpServletResponse response = mockMvc
+            .perform(get("/housing/get-user-house/{userId}", 0).accept(MediaType.APPLICATION_JSON)).andReturn()
+            .getResponse();
+
+        // Verify the results
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("expectedResponse", response.getContentAsString());
     }
 
     @Test
-    void testGetTestHouses() {
-        when(iHouseService.getAllTestHouses()).thenReturn(Arrays.<House>asList(new House("address", 0)));
+    void testGetTestHouses() throws Exception {
+        // Setup
+        when(mockIHouseService.getAllTestHouses()).thenReturn(Arrays.asList(new House("address", 0)));
 
-        Map<String, Object> result = housingController.getTestHouses();
-        Assertions
-            .assertEquals(new HashMap<String, Object>() {{put("String", "replaceMeWithExpectedResult");}}, result);
+        // Run the test
+        final MockHttpServletResponse response = mockMvc
+            .perform(get("/housing/test-houses").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        // Verify the results
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("expectedResponse", response.getContentAsString());
     }
 
     @Test
-    void testAddHouseByUserId() {
-        String result = housingController.addHouseByUserId(Integer.valueOf(0),
-            new HousePageInfo(Integer.valueOf(0), "address", "landlord", "phone", Integer.valueOf(0),
-                Arrays.<HouseEmployeeInfo>asList(null), Arrays.<HouseFacilityInfo>asList(null)));
-        Assertions.assertEquals("replaceMeWithExpectedResult", result);
+    void testGetTestHouses_IHouseServiceReturnsNoItems() throws Exception {
+        // Setup
+        when(mockIHouseService.getAllTestHouses()).thenReturn(Collections.emptyList());
+
+        // Run the test
+        final MockHttpServletResponse response = mockMvc
+            .perform(get("/housing/test-houses").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        // Verify the results
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("expectedResponse", response.getContentAsString());
+    }
+
+    @Test
+    void testAddHouseByUserId() throws Exception {
+        // Setup
+
+        // Run the test
+        final MockHttpServletResponse response = mockMvc.perform(
+            post("/housing/add-house/{userId}", 0).content("content").contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        // Verify the results
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("expectedResponse", response.getContentAsString());
+        verify(mockIHouseService).addHouseByUserId(any(HousePageInfo.class), eq(0));
     }
 
 }
-
-//Generated with love by TestMe :) Please report issues and submit feature requests at: http://weirddev.com/forum#!/testme
