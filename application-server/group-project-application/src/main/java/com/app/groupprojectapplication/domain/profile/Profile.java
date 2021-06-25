@@ -3,13 +3,11 @@ package com.app.groupprojectapplication.domain.profile;
 import lombok.*;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
+@Data
+@Builder
 public class Profile {
     private Integer employee_id;
     private NameSection nameSection;

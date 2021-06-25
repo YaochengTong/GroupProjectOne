@@ -23,5 +23,8 @@ public class PointCuts {
     @Pointcut("bean(*Controller)")
     public void inEndPoints() {}
 
+    @Pointcut("execution( * com.app.groupprojectapplication.controller.ProfileController.get*(..))")
+    public void inProfileController() {}
+
 
 }

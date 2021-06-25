@@ -8,16 +8,22 @@ import com.app.groupprojectapplication.domain.*;
 import com.app.groupprojectapplication.domain.profile.*;
 import com.app.groupprojectapplication.file.AmazonS3FileService;
 import com.app.groupprojectapplication.service.IProfileService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import sun.java2d.cmm.ProfileDeferralInfo;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CountedCompleter;
 
 @Service
+@Slf4j
 @Transactional
 public class ProfileServiceImpl implements IProfileService {
 
@@ -40,6 +46,7 @@ public class ProfileServiceImpl implements IProfileService {
     AmazonS3FileService amazonS3FileService;
 
     @Override
+    @Async("taskExecutor")
     @Transactional
     public List<Profile> getProfile() {
         List<Profile> profileList = new ArrayList<>();
@@ -53,6 +60,7 @@ public class ProfileServiceImpl implements IProfileService {
 
 
     @Override
+    @Async("taskExecutor")
     @Transactional
     public Profile getProfileByEmployeeId(Integer user_id) {
         Integer employee_id = iUserDao.getEmployeeIdByUserId(user_id);
@@ -62,20 +70,60 @@ public class ProfileServiceImpl implements IProfileService {
 
 
 
-    private Profile getProfileByEmployee(Employee employee) {
-        profile = new Profile();
+    @Async("taskExecutor")
+    public Profile getProfileByEmployee(Employee employee) {
         Person person = employee.getPerson();
-        profile.setEmployee_id(employee.getId());
-        profile.setNameSection(setNameSection(employee, person));
-        profile.setAddressSection(setAddressSection(person));
-        profile.setContactInfoSection(setContactInfoSection(employee, person));
-        profile.setEmploymentSection(setEmploymentSection(employee));
-        profile.setEmergencyContactList(setEmergencyContactList(person));
-        profile.setDocumentSectionList(setDocumentSectionList(iEmployeeDao.getUserIdByEmployeeId(employee.getId())));
-        return profile;
+
+        CompletableFuture<NameSection> nameSectionCompletableFuture = setNameSection(employee,person);
+        CompletableFuture<List<DocumentSection>> documentSectionCompletableFuture = setDocumentSectionList(iEmployeeDao.getUserIdByEmployeeId(employee.getId()));
+        CompletableFuture<AddressSection> addressSectionCompletableFuture = setAddressSection(person);
+        CompletableFuture<ContactInfoSection> contactInfoSectionCompletableFuture = setContactInfoSection(employee,person);
+        CompletableFuture<EmploymentSection> employmentSectionCompletableFuture = setEmploymentSection(employee);
+        CompletableFuture<EmergencyContactList> emergencyListCompletableFuture = setEmergencyContactList(person);
+
+
+        CompletableFuture<Profile> profileFuture = CompletableFuture.allOf(
+                nameSectionCompletableFuture,
+                documentSectionCompletableFuture,
+                addressSectionCompletableFuture,
+                contactInfoSectionCompletableFuture,
+                employmentSectionCompletableFuture,
+                emergencyListCompletableFuture
+        ).thenApply((dummy) -> {
+            return Profile.builder()
+                    .nameSection(nameSectionCompletableFuture.join())
+                    .addressSection(addressSectionCompletableFuture.join())
+                    .contactInfoSection(contactInfoSectionCompletableFuture.join())
+                    .employmentSection(employmentSectionCompletableFuture.join())
+                    .emergencyContactList(emergencyListCompletableFuture.join())
+                    .documentSectionList(documentSectionCompletableFuture.join())
+                    .build();
+        });
+
+
+//        Profile profile = Profile.builder()
+//                .nameSection(nameSectionCompletableFuture.join())
+//                .addressSection(addressSectionCompletableFuture.join())
+//                .contactInfoSection(contactInfoSectionCompletableFuture.join())
+//                .employmentSection(employmentSectionCompletableFuture.join())
+//                .emergencyContactList(emergencyListCompletableFuture.join())
+//                .documentSectionList(documentSectionCompletableFuture.join())
+//                .build();
+
+//        profile.setEmployee_id(employee.getId());
+//        profile.setNameSection(setNameSection(employee, person));
+//        profile.setAddressSection(setAddressSection(person));
+//        profile.setContactInfoSection(setContactInfoSection(employee, person));
+//        profile.setEmploymentSection(setEmploymentSection(employee));
+//        profile.setEmergencyContactList(setEmergencyContactList(person));
+//        profile.setDocumentSectionList(setDocumentSectionList(iEmployeeDao.getUserIdByEmployeeId(employee.getId())));
+
+        return profileFuture.join();
+//        return profile;
     }
 
-    private List<DocumentSection> setDocumentSectionList(Integer userId) {
+    @Async("taskExecutor")
+    public CompletableFuture<List<DocumentSection>> setDocumentSectionList(Integer userId) {
         List<String> names = amazonS3FileService.printFilesInOneFolder(String.valueOf(userId));
         List<DocumentSection> documentSectionList = new ArrayList<>();
         for (String name : names) {
@@ -84,12 +132,13 @@ public class ProfileServiceImpl implements IProfileService {
             documentSection.setPath("https://gp1storage.s3.us-east-2.amazonaws.com/" + userId + "/" + name.split("_")[0]+ ".txt");
             documentSectionList.add(documentSection);
         }
-        return documentSectionList;
+        return CompletableFuture.completedFuture(documentSectionList);
 
 
     }
 
-    private EmergencyContactList setEmergencyContactList(Person person) {
+    @Async("taskExecutor")
+    public CompletableFuture<EmergencyContactList> setEmergencyContactList(Person person) {
         EmergencyContactList emergencyContactList = new EmergencyContactList();
         List<Contact> contactList = iContactDao.getEmergencyByPersonId(person.getId());
 
@@ -98,7 +147,7 @@ public class ProfileServiceImpl implements IProfileService {
             Person emergencyPerson = iPersonDao.getPersonById(contactList.get(1).getRelated_person_id());
             emergencyContact.setFullName(getFullName(emergencyPerson));
             emergencyContact.setPhone(emergencyPerson.getPrimaryPhone());
-            emergencyContact.setAddress(setAddressSection(emergencyPerson));
+            emergencyContact.setAddress(setAddressSection(emergencyPerson).join());
             emergencyContactList.setEmergencyPerson1(emergencyContact);
         }
 
@@ -106,14 +155,14 @@ public class ProfileServiceImpl implements IProfileService {
         Person emergencyPerson = iPersonDao.getPersonById(contactList.get(0).getRelated_person_id());
         emergencyContact.setFullName(getFullName(emergencyPerson));
         emergencyContact.setPhone(emergencyPerson.getPrimaryPhone());
-        emergencyContact.setAddress(setAddressSection(emergencyPerson));
+        emergencyContact.setAddress(setAddressSection(emergencyPerson).join());
         emergencyContactList.setEmergencyPerson1(emergencyContact);
 
-        return emergencyContactList;
+        return CompletableFuture.completedFuture(emergencyContactList);
      }
 
-
-    private EmploymentSection setEmploymentSection(Employee employee) {
+    @Async("taskExecutor")
+    public CompletableFuture<EmploymentSection> setEmploymentSection(Employee employee) {
         EmploymentSection employmentSection = new EmploymentSection();
         VisaStatus visaStatus = employee.getVisaStatus();
         employmentSection.setWorkAuthorization(visaStatus.getVisaType());
@@ -122,10 +171,11 @@ public class ProfileServiceImpl implements IProfileService {
         employmentSection.setEmploymentStartDate(employee.getStartDate());
         employmentSection.setEmploymentEndDate(employee.getEndDate());
         employmentSection.setTitle(employee.getTitle());
-        return employmentSection;
+        return CompletableFuture.completedFuture(employmentSection);
     }
 
-    private ContactInfoSection setContactInfoSection(Employee employee, Person person) {
+    @Async("taskExecutor")
+    public CompletableFuture<ContactInfoSection> setContactInfoSection(Employee employee, Person person) {
         ContactInfoSection contactInfoSection = new ContactInfoSection();
         contactInfoSection.setPersonalEmail(person.getEmail());
         // work email?
@@ -133,10 +183,11 @@ public class ProfileServiceImpl implements IProfileService {
         contactInfoSection.setCeilphone(person.getPrimaryPhone());
         // work phone? =? alternative phone
         contactInfoSection.setWorkPhone(person.getAlternatePhone());
-        return contactInfoSection;
+        return CompletableFuture.completedFuture(contactInfoSection);
     }
 
-    public NameSection setNameSection(Employee employee, Person person) {
+    @Async("taskExecutor")
+    public CompletableFuture<NameSection> setNameSection(Employee employee, Person person) {
         NameSection nameSection = new NameSection();
         nameSection.setFullName(getFullName(person));
         nameSection.setPreferredName(nameSection.getFullName());
@@ -144,10 +195,11 @@ public class ProfileServiceImpl implements IProfileService {
         nameSection.setDOB(person.getDob());
         nameSection.setSSN(person.getSsn());
         nameSection.setAge(iPersonDao.getAge(person.getId()));
-        return nameSection;
+        return CompletableFuture.completedFuture(nameSection);
     }
 
-    public AddressSection setAddressSection(Person person) {
+    @Async("taskExecutor")
+    public CompletableFuture<AddressSection> setAddressSection(Person person) {
         AddressSection addressSection = new AddressSection();
         List<Address> addressList = new ArrayList<>(person.getAddresses());
         List<Map<String, String>> addrMapList = new ArrayList<>();
@@ -175,7 +227,7 @@ public class ProfileServiceImpl implements IProfileService {
         }
 
 
-        return addressSection;
+        return CompletableFuture.completedFuture(addressSection);
     }
 
     public String getFullName(Person person) {

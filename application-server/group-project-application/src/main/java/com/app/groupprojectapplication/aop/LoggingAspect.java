@@ -24,19 +24,29 @@ import java.util.Map;
 public class LoggingAspect {
     Logger log = LoggerFactory.getLogger((this.getClass()));
 
-//    @Around("com.app.groupprojectapplication.aop.PointCuts.inDaoLayer()")
-//    public Object daoExecutionDurationAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-//        String signature = proceedingJoinPoint.getSignature().getClass().toString();
-//
-//        long startTime = System.currentTimeMillis();
-//        Object result = proceedingJoinPoint.proceed();
-//        long elapsedTime = System.currentTimeMillis() - startTime;
-//
-//        log.info(signature + "execution time: " + elapsedTime +" ms");
-//        log.info("return value: " + result.toString());
-//
-//        return result;
-//    }
+    @Around("com.app.groupprojectapplication.aop.PointCuts.inDaoLayer()")
+    public Object daoExecutionDurationAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        String signature = proceedingJoinPoint.getTarget().getClass().getName().toString().split("\\.")[5];
+
+        long startTime = System.currentTimeMillis();
+        Object result = proceedingJoinPoint.proceed();
+        long elapsedTime = System.currentTimeMillis() - startTime;
+
+        log.info(signature + " execution time: " + elapsedTime +" ms");
+
+        return result;
+    }
+
+    @Around("com.app.groupprojectapplication.aop.PointCuts.inProfileController()")
+    public void profileControllerExecutionDurationAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        String signature = proceedingJoinPoint.getTarget().getClass().getName().toString().split("\\.")[4];
+
+        long startTime = System.currentTimeMillis();
+        proceedingJoinPoint.proceed();
+        long elapsedTime = System.currentTimeMillis() - startTime;
+
+        log.info(signature + " execution time: " + elapsedTime +" ms");
+    }
 
 //    @Around("com.app.groupprojectapplication.aop.PointCuts.inEndPoints()")
 //    public void getRequestAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
