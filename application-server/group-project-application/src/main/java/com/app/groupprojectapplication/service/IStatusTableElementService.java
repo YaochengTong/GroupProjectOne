@@ -4,8 +4,9 @@ import com.app.groupprojectapplication.domain.statusTableElement.StatusTableElem
 import com.app.groupprojectapplication.domain.statusTableElement.StatusTableElement;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public interface IStatusTableElementService {
-    List<StatusTableElement> getStatus();
-    StatusTableElement getStatusByUserId(Integer userId);
+    List<StatusTableElement> getStatus() throws ExecutionException, InterruptedException;
+    StatusTableElement getStatusByUserId(Integer userId) throws ExecutionException, InterruptedException;
 }

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.concurrent.ExecutionException;
+
 @Service
 @Transactional
 public class UpdateContactSectionImpl implements IUpdateContactSectionService {
@@ -24,8 +26,8 @@ public class UpdateContactSectionImpl implements IUpdateContactSectionService {
 
 
     @Override
-    public boolean updateContactInfo(String cellPhone, String personalEmail, String workEmail, String workPhone, Integer userId) {
-        Person person = iUserDao.getPersonByUserId(userId);
+    public boolean updateContactInfo(String cellPhone, String personalEmail, String workEmail, String workPhone, Integer userId) throws ExecutionException, InterruptedException {
+        Person person = iUserDao.getPersonByUserId(userId).get();
         person.setEmail(personalEmail);
         person.setPrimaryPhone(cellPhone);
         person.setAlternatePhone(workPhone);

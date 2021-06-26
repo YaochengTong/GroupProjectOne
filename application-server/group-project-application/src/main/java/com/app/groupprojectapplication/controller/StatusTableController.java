@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/statusTable")
@@ -19,7 +20,7 @@ public class StatusTableController {
     private IStatusTableElementService iStatusTableElementService;
 
     @GetMapping("/all")
-    public Map<String, Object> getStatusList() {
+    public Map<String, Object> getStatusList() throws ExecutionException, InterruptedException {
         Map<String, Object> statusList = new HashMap<>();
         statusList.put("AllStatus", iStatusTableElementService.getStatus());
         return statusList;

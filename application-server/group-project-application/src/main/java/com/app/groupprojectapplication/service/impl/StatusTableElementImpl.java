@@ -18,6 +18,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class StatusTableElementImpl implements IStatusTableElementService {
@@ -39,7 +40,7 @@ public class StatusTableElementImpl implements IStatusTableElementService {
 
     @Override
     @Transactional
-    public List<StatusTableElement> getStatus() {
+    public List<StatusTableElement> getStatus() throws ExecutionException, InterruptedException {
          List<StatusTableElement> statusList = new ArrayList<>();
 
 //         List<Employee> employeeList = new ArrayList<>();
@@ -57,14 +58,14 @@ public class StatusTableElementImpl implements IStatusTableElementService {
 
     @Override
     @Transactional
-    public StatusTableElement getStatusByUserId(Integer userId) {
-        Integer employeeId = iUserDao.getEmployeeIdByUserId(userId);
-        Employee employee = iEmployeeDao.getEmployeeById(employeeId);
+    public StatusTableElement getStatusByUserId(Integer userId) throws ExecutionException, InterruptedException {
+        Integer employeeId = iUserDao.getEmployeeIdByUserId(userId).get();
+        Employee employee = iEmployeeDao.getEmployeeById(employeeId).get();
         return getStatusByEmployee(employee, userId);
     }
 
 
-    private StatusTableElement getStatusByEmployee(Employee employee, Integer userId) {
+    private StatusTableElement getStatusByEmployee(Employee employee, Integer userId) throws ExecutionException, InterruptedException {
         Integer employeeId = employee.getId();
         statusTableElement = new StatusTableElement();
         Person person = employee.getPerson();
@@ -115,12 +116,12 @@ public class StatusTableElementImpl implements IStatusTableElementService {
         }
         return nextStep;
     }
-    public VisaInfo setVisaInfo(Integer userId, Employee employee) {
+    public VisaInfo setVisaInfo(Integer userId, Employee employee) throws ExecutionException, InterruptedException {
         VisaInfo visaInfo = new VisaInfo();
         visaInfo.setVisaType(employee.getVisaStatus().getVisaType());
         visaInfo.setExpirationDate(employee.getVisaEndDate());
-        visaInfo.setDayLeft(iVisaStatusDao.getVisaAuthorizationLeftDay(employee.getId()));
-        visaInfo.setNextStep(determineNextStep(iApplicationWorkFlowDao.getApplicationWorkFlowByUserIdAndApplicationType(userId, applicationType).get(0).getStatus()));
+        visaInfo.setDayLeft(iVisaStatusDao.getVisaAuthorizationLeftDay(employee.getId()).get());
+        visaInfo.setNextStep(determineNextStep(iApplicationWorkFlowDao.getApplicationWorkFlowByUserIdAndApplicationType(userId, applicationType).get().get(0).getStatus()));
         return visaInfo;
     }
 }

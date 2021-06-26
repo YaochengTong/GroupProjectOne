@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Timestamp;
 import java.util.*;
 import java.sql.Date;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 //don't forget to add @Service in the service implementation classes.
 @Service
@@ -41,7 +43,7 @@ public class TestServiceImpl implements ITestService {
     @Override
     //use transactional annotation here.
     @Transactional
-    public void do_something(Map<String, Object> paramMap) {
+    public void do_something(Map<String, Object> paramMap) throws ExecutionException, InterruptedException {
         //get the values from the map, and create POJO here if needed.
 //        iTestDao.test();
         iUserDao.getUserById(123);
@@ -89,7 +91,9 @@ public class TestServiceImpl implements ITestService {
         // Facility facility = new Facility("bed", "queen size", 3);
 
         // issert visa status by user
-        User user = iUserDao.getUserById(89);
+        CompletableFuture<User> futureUser = iUserDao.getUserById(89);
+        User user = futureUser.get();
+
         VisaStatus visaStatus = new VisaStatus("OPT", (byte)1, new Timestamp(System.currentTimeMillis()));
         visaStatus.setUser(user);
         iVisaStatusDao.insertVisa(visaStatus);

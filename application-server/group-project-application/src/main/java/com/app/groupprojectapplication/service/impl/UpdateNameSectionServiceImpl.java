@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @Transactional
@@ -30,8 +31,8 @@ public class UpdateNameSectionServiceImpl implements IUpdateNameSectionService {
     IUserDao iUserDao;
 
     @Override
-    public boolean updateFullName(String fullName, Integer userId) {
-       Person person = iUserDao.getPersonByUserId(userId);
+    public boolean updateFullName(String fullName, Integer userId) throws ExecutionException, InterruptedException {
+       Person person = iUserDao.getPersonByUserId(userId).get();
        String firstName = fullName.split(" ")[0];
        String lastName = fullName.split(" ")[1];
        person.setFirstName(firstName);
@@ -42,8 +43,8 @@ public class UpdateNameSectionServiceImpl implements IUpdateNameSectionService {
     }
 
     @Override
-    public boolean updateAge(Integer age, Integer userId) {
-        Person person = iUserDao.getPersonByUserId(userId);
+    public boolean updateAge(Integer age, Integer userId) throws ExecutionException, InterruptedException {
+        Person person = iUserDao.getPersonByUserId(userId).get();
         Calendar calendar = Calendar.getInstance();
         Integer year = calendar.get(Calendar.YEAR);
         Integer month = calendar.get(Calendar.MONTH) + 1;
@@ -57,19 +58,19 @@ public class UpdateNameSectionServiceImpl implements IUpdateNameSectionService {
     }
 
     @Override
-    public boolean updateSSN(Integer ssn, Integer userId) {
-        Person person = iUserDao.getPersonByUserId(userId);
+    public boolean updateSSN(Integer ssn, Integer userId) throws ExecutionException, InterruptedException {
+        Person person = iUserDao.getPersonByUserId(userId).get();
         person.setSsn(String.valueOf(ssn));
         iPersonDao.updatePerson(person);
         return true;
     }
 
     @Override
-    public boolean updateAvatar(String avatar, Integer userId) {
+    public boolean updateAvatar(String avatar, Integer userId) throws ExecutionException, InterruptedException {
         System.out.println("avatar");
         System.out.println(avatar);
-        Integer employeeId = iUserDao.getEmployeeIdByUserId(userId);
-        Employee employee = iEmployeeDao.getEmployeeById(employeeId);
+        Integer employeeId = iUserDao.getEmployeeIdByUserId(userId).get();
+        Employee employee = iEmployeeDao.getEmployeeById(employeeId).get();
         employee.setAvartar(avatar);
 //        iEmployeeDao.updateEmployee(employee);
 
@@ -77,8 +78,8 @@ public class UpdateNameSectionServiceImpl implements IUpdateNameSectionService {
     }
 
     @Override
-    public boolean updateDOB(String DOB, Integer userId) {
-        Person person = iUserDao.getPersonByUserId(userId);
+    public boolean updateDOB(String DOB, Integer userId) throws ExecutionException, InterruptedException {
+        Person person = iUserDao.getPersonByUserId(userId).get();
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        Timestamp dob = Timestamp.valueOf(DOB);

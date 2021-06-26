@@ -22,6 +22,7 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/test")
@@ -63,7 +64,7 @@ public class TestController {
     }
 
     @GetMapping("/sendEmail")
-    public Map<String, Object> testEmail(@RequestParam Map<String, Object> paramMap){
+    public Map<String, Object> testEmail(@RequestParam Map<String, Object> paramMap) throws ExecutionException, InterruptedException {
         //emailService.sendMail("tjfy1992@gmail.com", "Test email", "Test text");
         iHireService.generateAToken("zhongqiu_gao@126.com", 556);
         return new HashMap<>();

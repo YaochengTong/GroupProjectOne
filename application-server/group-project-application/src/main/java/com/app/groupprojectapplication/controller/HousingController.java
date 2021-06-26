@@ -7,6 +7,8 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,7 +56,7 @@ public class HousingController {
     }
 
     @GetMapping("/get-user-house/{userId}")
-    public String getHouseByUserId(@PathVariable Integer userId) {
+    public String getHouseByUserId(@PathVariable Integer userId) throws ExecutionException, InterruptedException {
         Gson g = new Gson();
         House h = iHouseService.getHouseByUserId(userId);
         if (h == null) { return g.toJson("failed"); }
@@ -71,7 +73,7 @@ public class HousingController {
     }
 
     @PostMapping("/add-house/{userId}")
-    public String addHouseByUserId(@PathVariable Integer userId, @RequestBody HousePageInfo housePageInfo) {
+    public String addHouseByUserId(@PathVariable Integer userId, @RequestBody HousePageInfo housePageInfo) throws ExecutionException, InterruptedException {
         iHouseService.addHouseByUserId(housePageInfo, userId);
         return "success";
     }

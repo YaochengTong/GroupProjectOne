@@ -4,10 +4,11 @@ import com.app.groupprojectapplication.domain.Employee;
 import com.app.groupprojectapplication.domain.House;
 import com.app.groupprojectapplication.domain.Person;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public interface IEmployeeDao {
     List<Employee> getEmployee();
-    Employee getEmployeeById(Integer id);
+    CompletableFuture<Employee> getEmployeeById(Integer id);
     Integer insertEmployee(Employee employee);
     void deleteUserById(Integer id);
     Integer getUserIdByEmployeeId(Integer employeeId);

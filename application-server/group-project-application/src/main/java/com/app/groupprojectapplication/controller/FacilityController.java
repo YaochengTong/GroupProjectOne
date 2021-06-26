@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.ExecutionException;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/facility-report")
@@ -20,7 +22,7 @@ public class FacilityController {
 
     @PostMapping("/post-facility-report/{userId}")
     private String getFacilityReportsByEmployeeId(@PathVariable Integer userId,
-        @RequestBody HouseFacilityReportInfo fri) {
+        @RequestBody HouseFacilityReportInfo fri) throws ExecutionException, InterruptedException {
         System.out.println("received");
         iFacilityService.addFacilityReportByUserId(fri, userId);
         return "success";

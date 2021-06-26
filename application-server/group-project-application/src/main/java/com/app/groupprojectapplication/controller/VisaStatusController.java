@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/visa-status-management")
@@ -38,7 +39,7 @@ public class VisaStatusController {
     }
 
     @PostMapping("/update")
-    public Map<String, Object> updateVisaStatusInfo(@RequestParam Map<String, Object> params) {
+    public Map<String, Object> updateVisaStatusInfo(@RequestParam Map<String, Object> params) throws ExecutionException, InterruptedException {
         Map<String, Object> resultMap = new HashMap<>();
         if (params != null) {
             System.out.println(params);
@@ -54,7 +55,7 @@ public class VisaStatusController {
     }
 
     @PostMapping("/send-notification")
-    public Map<String, Object> sendNotification(@RequestParam Map<String, Object> params) {
+    public Map<String, Object> sendNotification(@RequestParam Map<String, Object> params) throws ExecutionException, InterruptedException {
         Map<String, Object> resultMap = new HashMap<>();
         if (params != null) {
             System.out.println(params);
@@ -75,7 +76,7 @@ public class VisaStatusController {
     @PostMapping("/{userId}/upload")
     public Map<String, Object> getUploadFile(@RequestParam Map<String, Object> paramMap,
                                                         HttpServletRequest request,
-                                             @PathVariable Integer userId){
+                                             @PathVariable Integer userId) throws ExecutionException, InterruptedException {
         List<MultipartFile> files = ((MultipartHttpServletRequest) request)
                 .getFiles("file");
         System.out.println(files);

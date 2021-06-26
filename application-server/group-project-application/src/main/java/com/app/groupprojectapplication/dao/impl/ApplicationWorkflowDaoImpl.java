@@ -7,9 +7,13 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 
 @Repository
@@ -43,7 +47,9 @@ public class ApplicationWorkflowDaoImpl implements IApplicationWorkFlowDao {
     }
 
     @Override
-    public List<ApplicationWorkflow> getApplicationWorkFlowByUserIdAndApplicationType(Integer userId, String applicationType) {
+    @Async("taskExecutor")
+    @Transactional
+    public CompletableFuture<List<ApplicationWorkflow>>  getApplicationWorkFlowByUserIdAndApplicationType(Integer userId, String applicationType) {
         Session session = sessionFactory.getCurrentSession();
         String query = "FROM ApplicationWorkflow WHERE user.id = :userId AND type = :type";
         List<ApplicationWorkflow> applicationWorkflowList = session.createQuery(query).setParameter("userId", userId).setParameter("type", applicationType).getResultList();
@@ -51,7 +57,7 @@ public class ApplicationWorkflowDaoImpl implements IApplicationWorkFlowDao {
         applicationWorkflowList.stream().forEach(a -> System.out.println(a.toString()));
         applicationWorkflowList.sort((a,b) -> { return b.getCreateDate().compareTo(a.getCreateDate()); });
         applicationWorkflowList.stream().forEach(a -> System.out.println(a.toString()));
-        return applicationWorkflowList;
+        return CompletableFuture.completedFuture(applicationWorkflowList);
     }
 
     @Override

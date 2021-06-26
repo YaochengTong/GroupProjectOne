@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @Transactional
@@ -58,15 +60,15 @@ public class HireServiceImpl implements IHireService {
     private AmazonS3FileService amazonS3FileService;
 
     @Override
-    public boolean generateAToken(String email, Integer userId) {
+    public boolean generateAToken(String email, Integer userId) throws ExecutionException, InterruptedException {
         //generate a UUID
         UUID token = UUID.randomUUID();
 
         //store the email and token into database
-        Integer employeeId = iUserDao.getEmployeeIdByUserId(userId);
+        Integer employeeId = iUserDao.getEmployeeIdByUserId(userId).get();
         if(employeeId == null)
             return false;
-        Employee employee = iEmployeeDao.getEmployeeById(employeeId);
+        Employee employee = iEmployeeDao.getEmployeeById(employeeId).get();
         if(employee == null)
             return false;
         RegistrationToken registrationToken = new RegistrationToken();
@@ -88,10 +90,11 @@ public class HireServiceImpl implements IHireService {
     }
 
     @Override
-    public Map<String, Object> onboardSubmission(List<MultipartFile> files, Map<String, Object> paramMap) {
+    public Map<String, Object> onboardSubmission(List<MultipartFile> files, Map<String, Object> paramMap) throws ExecutionException, InterruptedException {
         Map<String, Object> resultMap = new HashMap<>();
         Integer userId = Integer.parseInt(paramMap.get("user_id").toString());
-        User user = iUserDao.getUserById(userId);
+        CompletableFuture<User> futureUser = iUserDao.getUserById(userId);
+        User user = futureUser.get();
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
         Person existedPerson = user.getPerson();
@@ -248,9 +251,9 @@ public class HireServiceImpl implements IHireService {
         // and employee
         Employee employee;
         VisaStatus visaStatus;
-        Integer existedEmployeeId = iUserDao.getEmployeeIdByUserId(user.getId());
+        Integer existedEmployeeId = iUserDao.getEmployeeIdByUserId(user.getId()).get();
         if(existedEmployeeId != null) {
-            employee = iEmployeeDao.getEmployeeById(existedEmployeeId);
+            employee = iEmployeeDao.getEmployeeById(existedEmployeeId).get();
             visaStatus = employee.getVisaStatus();
         }
         else {
@@ -394,7 +397,7 @@ public class HireServiceImpl implements IHireService {
     }
 
     @Override
-    public Map<String, Object> getOnboardApplications(Map<String, Object> paramMap) {
+    public Map<String, Object> getOnboardApplications(Map<String, Object> paramMap) throws ExecutionException, InterruptedException {
         Map<String, Object> resultMap = new HashMap<>();
         String type = "Onboarding";
         List<ApplicationWorkflow> resultList;
@@ -438,7 +441,7 @@ public class HireServiceImpl implements IHireService {
 
             //employee
             Employee employee = iEmployeeDao.getEmployeeById(
-                    iUserDao.getEmployeeIdByUserId(user.getId()));
+                    iUserDao.getEmployeeIdByUserId(user.getId()).get()).get();
             map.put("DriverLicense", employee.getDriverLicense());
             map.put("DriverLicenseExpireDate", employee.getDriverLicenseExpirationDate());
             map.put("car", employee.getCar());
@@ -461,7 +464,7 @@ public class HireServiceImpl implements IHireService {
             map.put("documents", documentMapList);
 
             //visa status
-            String visaType = iVisaStatusDao.getVisaTypeByEmployeeId(employee.getId());
+            String visaType = iVisaStatusDao.getVisaTypeByEmployeeId(employee.getId()).get();
             map.put("visaType", visaType);
 
             //contacts
@@ -531,7 +534,7 @@ public class HireServiceImpl implements IHireService {
     }
 
     @Override
-    public Map<String, Object> auditApplications(Map<String, Object> paramMap) {
+    public Map<String, Object> auditApplications(Map<String, Object> paramMap) throws ExecutionException, InterruptedException {
         String approve = paramMap.get("approve").toString();
         String comments = paramMap.get("comments").toString();
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -550,7 +553,9 @@ public class HireServiceImpl implements IHireService {
              * Step 2: start a new visa status application workflow
              */
             visaWorkflow.setStatus("OPT Receipt");
-            visaWorkflow.setUser(iUserDao.getUserById(user_id));
+
+            CompletableFuture<User> futureUser = iUserDao.getUserById(user_id);
+            visaWorkflow.setUser(futureUser.get());
             visaWorkflow.setCreateDate(timestamp);
             visaWorkflow.setModificationDate(timestamp);
             visaWorkflow.setType("visa status application");

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.beans.Transient;
+import java.util.concurrent.ExecutionException;
 
 
 @Service
@@ -37,8 +38,8 @@ public class HomeElementImpl implements IHomeElementService {
 
     @Override
     @Transactional
-    public HomeElement getHomeElementByEmployeeId(Integer employeeId) {
-        Employee employee = iEmployeeDao.getEmployeeById(employeeId);
+    public HomeElement getHomeElementByEmployeeId(Integer employeeId) throws ExecutionException, InterruptedException {
+        Employee employee = iEmployeeDao.getEmployeeById(employeeId).get();
         return getHomeElementByEmployee(employee);
     }
 

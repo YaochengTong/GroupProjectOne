@@ -14,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.sql.Timestamp;
@@ -83,25 +85,28 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
     }
 
     @Override
-    @Transactional
     public VisaStatusInfo getVisaInfo(Integer userId) {
         return getVisaInfoByUserId(userId, 0);
     }
 
     public VisaStatusInfo getVisaInfoByUserId(Integer userId, Integer index) {
-        User user = iUserDao.getUserById(userId);
+
+        CompletableFuture<User> futureUser = iUserDao.getUserById(userId);
         VisaStatusInfo visaStatusInfo = null;
         try {
-            Employee employee = iEmployeeDao.getEmployeeById(iUserDao.getEmployeeIdByUserId(user.getId()));
-            Person person = iUserDao.getPersonByUserId(userId);
-            Integer dayLeft = iVisaStatusDao.getVisaAuthorizationLeftDay(employee.getId());
-            String currentStep = iApplicationWorkFlowDao.getApplicationWorkFlowByUserIdAndApplicationType(userId, applicationType).get(0).getStatus();
+            User user = futureUser.get();
+            CompletableFuture<Integer> employeeId = iUserDao.getEmployeeIdByUserId(user.getId());
+            CompletableFuture<Employee> future_employee = iEmployeeDao.getEmployeeById(employeeId.get());
+            Employee employee = future_employee.get();
+            Person person = iUserDao.getPersonByUserId(userId).get();
+            Integer dayLeft = iVisaStatusDao.getVisaAuthorizationLeftDay(employee.getId()).get();
+            String currentStep = iApplicationWorkFlowDao.getApplicationWorkFlowByUserIdAndApplicationType(userId, applicationType).get().get(0).getStatus();
             System.out.println(currentStep);
             visaStatusInfo = new VisaStatusInfo();
             visaStatusInfo.setUserId(userId);
             visaStatusInfo.setIdx(index);
             visaStatusInfo.setFullName(setFullName(person));
-            visaStatusInfo.setWorkAuthorization(iVisaStatusDao.getVisaTypeByEmployeeId(employee.getId()));
+            visaStatusInfo.setWorkAuthorization(iVisaStatusDao.getVisaTypeByEmployeeId(employee.getId()).get());
             visaStatusInfo.setAuthorizationStartDate(employee.getVisaStartDate().toString().substring(0, 10));
             visaStatusInfo.setAuthorizationEndDate(employee.getVisaEndDate().toString().substring(0, 10));
             visaStatusInfo.setAuthorizationDayLeft(dayLeft);
@@ -110,6 +115,7 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
             visaStatusInfo.setMessage(message(currentStep, dayLeft));
             visaStatusInfo.setCurrStep(map.get(currentStep).get(2));
         } catch (Exception e) {
+            e.printStackTrace();
             System.err.println("No such employee with user id "+ userId);
         }
 
@@ -118,14 +124,14 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
 
     @Override
     @Transactional
-    public String findEmailByUserId(Integer userId) {
-        Person person = iUserDao.getPersonByUserId(userId);
+    public String findEmailByUserId(Integer userId) throws ExecutionException, InterruptedException {
+        Person person = iUserDao.getPersonByUserId(userId).get();
         return person.getEmail();
     }
 
     @Override
     @Transactional
-    public boolean updateInfo(Map<String, Object> params) {
+    public boolean updateInfo(Map<String, Object> params) throws ExecutionException, InterruptedException {
         String fullName = params.get("fullName").toString();
         Integer userId = Integer.parseInt(params.get("userId").toString());
         String AED = params.get("authorizationEndDate").toString();
@@ -134,14 +140,19 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
 
         String firstName = fullName.split(" ")[0];
         String lastName = fullName.split(" ")[1];
-        Person person = iUserDao.getPersonByUserId(userId);
+        Person person = iUserDao.getPersonByUserId(userId).get();
         person.setFirstName(firstName);
         person.setLastName(lastName);
         iPersonDao.updatePerson(person);
 
 
-        Integer employeeId = iUserDao.getEmployeeIdByUserId(userId);
-        Employee employee = iEmployeeDao.getEmployeeById(employeeId);
+        //Integer employeeId = iUserDao.getEmployeeIdByUserId(userId);
+        //Employee employee = iEmployeeDao.getEmployeeById(employeeId);
+
+        CompletableFuture<Integer> employeeId = iUserDao.getEmployeeIdByUserId(userId);
+        CompletableFuture<Employee> future_employee = iEmployeeDao.getEmployeeById(employeeId.get());
+        Employee employee = future_employee.get();
+
         Timestamp formatASD = Timestamp.valueOf(ASD + " 00:00:00");
         Timestamp formatAED = Timestamp.valueOf(AED + " 00:00:00");
         employee.setVisaEndDate(formatAED);
@@ -157,9 +168,10 @@ public class VisaStatusServiceImpl implements IVisaStatusService {
 
     @Override
     @Transactional
-    public Map<String, Object> uploadAndUpdate(List<MultipartFile> files, Map<String, Object> paramMap, Integer userId) {
+    public Map<String, Object> uploadAndUpdate(List<MultipartFile> files, Map<String, Object> paramMap, Integer userId) throws ExecutionException, InterruptedException {
         Map<String, Object> resultMap = new HashMap<>();
-        User user = iUserDao.getUserById(userId);
+        CompletableFuture<User> futureUser = iUserDao.getUserById(userId);
+        User user = futureUser.get();
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         /**
          * Step 1: update backend

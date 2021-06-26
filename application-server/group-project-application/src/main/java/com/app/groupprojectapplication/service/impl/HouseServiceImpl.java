@@ -29,6 +29,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -201,11 +203,11 @@ public class HouseServiceImpl implements IHouseService {
     //}
 
     @Transactional
-    public FacilityReportDetail getBackFacilityReportDetail(HouseFacilityReportDetail hrd) {
+    public FacilityReportDetail getBackFacilityReportDetail(HouseFacilityReportDetail hrd) throws ExecutionException, InterruptedException {
         FacilityReportDetail res = new FacilityReportDetail();
         int reportDetailId = hrd.getReportDetailId();
         res.setId(reportDetailId);
-        res.setEmployee(iEmployeeDao.getEmployeeById(hrd.getEmployeeId()));
+        res.setEmployee(iEmployeeDao.getEmployeeById(hrd.getEmployeeId()).get());
         res.setComments(hrd.getComments());
         res.setCreateDate(Timestamp.valueOf(hrd.getCreateDate()));
         res.setFacilityReport(iFacilityReportDetailDao.getFacilityReportByReportDetailId(reportDetailId));
@@ -213,7 +215,7 @@ public class HouseServiceImpl implements IHouseService {
         return res;
     }
 
-    public Set<FacilityReportDetail> transferBackFacilityReportDetail(List<HouseFacilityReportDetail> list) {
+    public Set<FacilityReportDetail> transferBackFacilityReportDetail(List<HouseFacilityReportDetail> list) throws ExecutionException, InterruptedException {
         Set<FacilityReportDetail> frd = new HashSet<>();
         for (HouseFacilityReportDetail hFrd : list) {
             FacilityReportDetail f = getBackFacilityReportDetail(hFrd);
@@ -223,7 +225,7 @@ public class HouseServiceImpl implements IHouseService {
     }
 
     @Transactional
-    public FacilityReport getBackFacilityReport(HouseFacilityReportInfo h) {
+    public FacilityReport getBackFacilityReport(HouseFacilityReportInfo h) throws ExecutionException, InterruptedException {
         FacilityReport res = new FacilityReport();
         int id = h.getHouseFacilityReportId();
         res.setId(id);
@@ -322,8 +324,9 @@ public class HouseServiceImpl implements IHouseService {
 
     @Override
     @Transactional
-    public House getHouseByUserId(Integer userId) {
-        User u = iUserDao.getUserById(userId);
+    public House getHouseByUserId(Integer userId) throws ExecutionException, InterruptedException {
+        CompletableFuture<User> futureUser = iUserDao.getUserById(userId);
+        User u = futureUser.get();
         System.out.println(u.toString());
         Employee e = iEmployeeDao.getEmployeeByPerson(u.getPerson());
         if (e == null) { return null; }
@@ -339,8 +342,8 @@ public class HouseServiceImpl implements IHouseService {
 
     @Override
     @Transactional
-    public void addHouseByUserId(HousePageInfo housePageInfo, Integer userId) {
-        Person p = iUserDao.getPersonByUserId(userId);
+    public void addHouseByUserId(HousePageInfo housePageInfo, Integer userId) throws ExecutionException, InterruptedException {
+        Person p = iUserDao.getPersonByUserId(userId).get();
         Contact c = iContactDao.getContactByPersonId(p.getId()).get(0);
         House h = new House();
         h.setNumberOfPerson(housePageInfo.getNumberOfPerson());

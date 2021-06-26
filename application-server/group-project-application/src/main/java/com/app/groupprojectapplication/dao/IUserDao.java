@@ -6,19 +6,20 @@ import com.app.groupprojectapplication.domain.Person;
 import com.app.groupprojectapplication.domain.User;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Shida Sheng
  */
 public interface IUserDao {
-    User getUserById(Integer id);
+    CompletableFuture<User> getUserById(Integer id);
     void insertUser(User user);
     void deleteUserById(Integer id);
     void updateUser(User user);
     List<User> getAllUsers();
-    Integer getEmployeeIdByUserId(Integer userId);
+    CompletableFuture<Integer> getEmployeeIdByUserId(Integer userId);
     Integer getPersonIdByUserId(Integer userId);
-    Person getPersonByUserId(Integer userId);
+    CompletableFuture<Person> getPersonByUserId(Integer userId);
 
     void addHouse(House h);
 

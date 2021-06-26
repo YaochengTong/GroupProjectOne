@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 @CrossOrigin
 @RestController
@@ -19,7 +20,7 @@ public class HireController {
     private IHireService iHireService;
 
     @PostMapping("/generateToken")
-    public Map<String, Object> generateToken(@RequestParam Map<String, Object> params){
+    public Map<String, Object> generateToken(@RequestParam Map<String, Object> params) throws ExecutionException, InterruptedException {
         Map<String, Object> resultMap = new HashMap<>();
         String email = params.get("email").toString();
         Integer userId = Integer.parseInt(params.get("user_id").toString());
@@ -30,7 +31,7 @@ public class HireController {
 
     @PostMapping("/submitOnboard")
     public Map<String, Object> submitOnboardApplication(@RequestParam Map<String, Object> paramMap,
-                                                      HttpServletRequest request){
+                                                      HttpServletRequest request) throws ExecutionException, InterruptedException {
         Map<String, Object> resultMap = new HashMap<>();
         List<MultipartFile> files = ((MultipartHttpServletRequest) request)
                 .getFiles("file");
@@ -39,7 +40,7 @@ public class HireController {
     }
 
     @GetMapping("/getOnboardApplications")
-    public Map<String, Object> getOnboardApplication(@RequestParam Map<String, Object> paramMap) throws ApplicationNotFoundException {
+    public Map<String, Object> getOnboardApplication(@RequestParam Map<String, Object> paramMap) throws ApplicationNotFoundException, ExecutionException, InterruptedException {
         Map<String, Object> resultMap = iHireService.getOnboardApplications(paramMap);
         List<Map<String, Object>> list = (List<Map<String, Object>>) resultMap.get("OngoingApplications");
         if(list.size() == 0){
@@ -49,7 +50,7 @@ public class HireController {
     }
 
     @PostMapping("/auditOnboard")
-    public Map<String, Object> auditOnboardApplication(@RequestParam Map<String, Object> paramMap){
+    public Map<String, Object> auditOnboardApplication(@RequestParam Map<String, Object> paramMap) throws ExecutionException, InterruptedException {
         Map<String, Object> resultMap = new HashMap<>();
         iHireService.auditApplications(paramMap);
         resultMap.put("result", "success");
@@ -58,7 +59,7 @@ public class HireController {
 
     @PostMapping("/resubmitOnboard")
     public Map<String, Object> resubmitOnboardApplication(@RequestParam Map<String, Object> paramMap,
-                                                        HttpServletRequest request){
+                                                        HttpServletRequest request) throws ExecutionException, InterruptedException {
         Map<String, Object> resultMap = new HashMap<>();
         List<MultipartFile> files = ((MultipartHttpServletRequest) request)
                 .getFiles("file");

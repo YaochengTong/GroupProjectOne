@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/profile")
@@ -49,7 +50,7 @@ public class ProfileController {
     private IUpdateEmergencyListService iUpdateEmergencyListService;
 
     @GetMapping("/{user_id}")
-    public Map<String, Object> getProfile(@PathVariable Integer user_id) {
+    public Map<String, Object> getProfile(@PathVariable Integer user_id) throws ExecutionException, InterruptedException {
         Map<String, Object> profile = new HashMap<>();
         profile.put("profile", iProfileService.getProfileByEmployeeId(user_id));
         return profile;
@@ -70,7 +71,7 @@ public class ProfileController {
     }
 
     @PostMapping("/{user_id}/avatar")
-    public Map<String, Object> updateAvatar(@RequestParam Map<String, Object> paramMap, HttpServletRequest request) {
+    public Map<String, Object> updateAvatar(@RequestParam Map<String, Object> paramMap, HttpServletRequest request) throws ExecutionException, InterruptedException {
         MultipartHttpServletRequest params = ((MultipartHttpServletRequest) request);
         List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
         return iProfileService.uploadAvatar(files, paramMap);
@@ -78,7 +79,7 @@ public class ProfileController {
 
     @PostMapping("/{user_id}/updateNameSection")
     public Map<String, Object> updateProfileNameSection(@RequestParam Map<String, Object> params,
-                                             @PathVariable Integer user_id) {
+                                             @PathVariable Integer user_id) throws ExecutionException, InterruptedException {
         Map<String, Object> resultMap = new HashMap<>();
         Integer age = Integer.parseInt(params.get("age").toString());
         String avatar = params.get("avatar").toString();
@@ -122,7 +123,7 @@ public class ProfileController {
 
     @PostMapping("/{user_id}/updateContactSection")
     public Map<String, Object> updateProfileContactSection(@RequestParam Map<String, Object> params,
-                                                        @PathVariable Integer user_id) {
+                                                        @PathVariable Integer user_id) throws ExecutionException, InterruptedException {
         Map<String, Object> resultMap = new HashMap<>();
         String ceilphone = params.get("ceilphone").toString();
         String personalEmail = params.get("personalEmail").toString();
@@ -179,7 +180,7 @@ public class ProfileController {
 
     @PostMapping("/{user_id}/updateEmploymentSection")
     public Map<String, Object> updateProfileEmploymentSection(@RequestParam Map<String, Object> params,
-                                                        @PathVariable Integer user_id) {
+                                                        @PathVariable Integer user_id) throws ExecutionException, InterruptedException {
         Map<String, Object> resultMap = new HashMap<>();
         String title = params.get("title").toString();
         String workAuthorization = params.get("workAuthorization").toString();

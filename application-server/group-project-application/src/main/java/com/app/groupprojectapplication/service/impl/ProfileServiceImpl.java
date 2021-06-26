@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @Transactional
@@ -54,9 +55,9 @@ public class ProfileServiceImpl implements IProfileService {
 
     @Override
     @Transactional
-    public Profile getProfileByEmployeeId(Integer user_id) {
-        Integer employee_id = iUserDao.getEmployeeIdByUserId(user_id);
-        Employee employee = iEmployeeDao.getEmployeeById(employee_id);
+    public Profile getProfileByEmployeeId(Integer user_id) throws ExecutionException, InterruptedException {
+        Integer employee_id = iUserDao.getEmployeeIdByUserId(user_id).get();
+        Employee employee = iEmployeeDao.getEmployeeById(employee_id).get();
         return getProfileByEmployee(employee);
     }
 
@@ -202,10 +203,10 @@ public class ProfileServiceImpl implements IProfileService {
     }
 
     @Override
-    public Map<String, Object> uploadAvatar(List<MultipartFile> files, Map<String, Object> paramMap) {
+    public Map<String, Object> uploadAvatar(List<MultipartFile> files, Map<String, Object> paramMap) throws ExecutionException, InterruptedException {
         Map<String, Object> resultMap = new HashMap<>();
         Integer userId = Integer.parseInt((String) paramMap.get("userId"));
-        Integer employeeId = iUserDao.getEmployeeIdByUserId(userId);
+        Integer employeeId = iUserDao.getEmployeeIdByUserId(userId).get();
         try {
             System.out.println("???");
             InputStream ips = files.get(0).getInputStream();

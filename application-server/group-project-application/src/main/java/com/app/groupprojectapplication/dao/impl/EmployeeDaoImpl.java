@@ -5,11 +5,14 @@ import com.app.groupprojectapplication.domain.Employee;
 import com.app.groupprojectapplication.domain.Person;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class EmployeeDaoImpl implements IEmployeeDao {
@@ -25,7 +28,9 @@ public class EmployeeDaoImpl implements IEmployeeDao {
     }
 
     @Override
-    public Employee getEmployeeById(Integer id) {
+    @Async("taskExecutor")
+    @Transactional
+    public CompletableFuture<Employee> getEmployeeById(Integer id) {
         Session session = sessionFactory.getCurrentSession();
         //Employee employee = session.get(Employee.class, id);
         //Session session = sessionFactory.getCurrentSession();
@@ -35,7 +40,8 @@ public class EmployeeDaoImpl implements IEmployeeDao {
         if (query.getResultList().size() != 1) {
             return null;
         }
-        return (Employee) query.getResultList().get(0);
+        Employee result = (Employee) query.getResultList().get(0);
+        return CompletableFuture.completedFuture(result);
     }
 
     @Override

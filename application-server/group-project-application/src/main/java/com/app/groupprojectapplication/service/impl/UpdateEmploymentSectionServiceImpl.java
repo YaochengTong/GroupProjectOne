@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.concurrent.ExecutionException;
 
 
 @Service
@@ -28,9 +29,9 @@ public class UpdateEmploymentSectionServiceImpl implements IUpdateEmploymentSect
     IVisaStatusDao iVisaStatusDao;
 
     @Override
-    public boolean updateEmployment(String title, String workAuthorization, String authorizationStartDate, String authorizationEndDate, String employmentStartDate, String employmentEndDate, Integer userId) {
-        Integer employeeId = iUserDao.getEmployeeIdByUserId(userId);
-        Employee employee = iEmployeeDao.getEmployeeById(employeeId);
+    public boolean updateEmployment(String title, String workAuthorization, String authorizationStartDate, String authorizationEndDate, String employmentStartDate, String employmentEndDate, Integer userId) throws ExecutionException, InterruptedException {
+        Integer employeeId = iUserDao.getEmployeeIdByUserId(userId).get();
+        Employee employee = iEmployeeDao.getEmployeeById(employeeId).get();
 
         employee.setTitle(title);
 

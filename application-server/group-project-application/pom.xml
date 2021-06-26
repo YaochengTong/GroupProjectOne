@@ -131,6 +131,12 @@
                 <configuration>
                     <excludes>
                         <exclude>com/app/groupprojectapplication/domain/**</exclude>
+                        <exclude>com/app/groupprojectapplication/file/**</exclude>
+                        <exclude>com/app/groupprojectapplication/aop/**</exclude>
+                        <exclude>com/app/groupprojectapplication/filter/**</exclude>
+                        <exclude>com/app/groupprojectapplication/exception/**</exclude>
+                        <exclude>com/app/groupprojectapplication/config/**</exclude>
+                        <exclude>com/app/groupprojectapplication/email/**</exclude>
                     </excludes>
 
                 </configuration>
