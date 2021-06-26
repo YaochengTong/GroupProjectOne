@@ -12,6 +12,12 @@ public interface IProfileService {
     List<Profile> getProfile();
     Profile getProfileByEmployeeId(Integer user_id);
     List<Summary> getSummary();
+//    CompletableFuture<List<DocumentSection>> setDocumentSectionList(Integer userId);
+//    CompletableFuture<EmergencyContactList> setEmergencyContactList(Person person);
+//    CompletableFuture<EmploymentSection> setEmploymentSection(Employee employee);
+//    ContactInfoSection setContactInfoSection(Employee employee, Person person);
+//    NameSection setNameSection(Employee employee, Person person);
+//    AddressSection setAddressSection(Person person);
 
     Map<String, Object> uploadAvatar(List<MultipartFile> files, Map<String, Object> paramMap);
 }

@@ -24,39 +24,49 @@ import java.util.Map;
 public class LoggingAspectShida {
     Logger log = LoggerFactory.getLogger((this.getClass()));
 
-//    @Around("com.app.groupprojectapplication.aop.PointCuts.inDaoLayer()")
-//    public Object daoExecutionDurationAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-//        String signature = proceedingJoinPoint.getSignature().getClass().toString();
-//
-//        long startTime = System.currentTimeMillis();
-//        Object result = proceedingJoinPoint.proceed();
-//        long elapsedTime = System.currentTimeMillis() - startTime;
-//
-//        log.info(signature + "execution time: " + elapsedTime +" ms");
-//        log.info("return value: " + result.toString());
-//
-//        return result;
-//    }
+    @Around("com.app.groupprojectapplication.aop.PointCuts.inDaoLayer()")
+    public Object daoExecutionDurationAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        String signature = proceedingJoinPoint.getTarget().getClass().getName().toString().split("\\.")[5];
 
-    @Around("com.app.groupprojectapplication.aop.PointCuts.inEndPoints()")
-    public void getRequestAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        log.info("" + proceedingJoinPoint.getSignature().getClass());
-        Object[] objs = proceedingJoinPoint.getArgs();
-        String[] argNames = ((MethodSignature) proceedingJoinPoint.getSignature()).getParameterNames();
-        Map<String, Object> paramMap = new HashMap<String, Object>();
-        for (int i = 0; i < objs.length; i++) {
-            if (!(objs[i] instanceof ExtendedServletRequestDataBinder)) {
-                paramMap.put(argNames[i], objs[i]);
-            }
-        }
-        log.info("\nrequest: {}\nparameter:{}", proceedingJoinPoint.getSignature(), paramMap);
+        long startTime = System.currentTimeMillis();
         Object result = proceedingJoinPoint.proceed();
-        log.info("response: {}" + result.toString());
+        long elapsedTime = System.currentTimeMillis() - startTime;
+
+        log.info(signature + " execution time: " + elapsedTime +" ms");
+
+        return result;
     }
 
-//    @AfterThrowing(value = "bean(visaStatusController)", throwing = "ex")
-//    public void afterThrowingAdvice(Exception ex) {
-//        log.error("This log shows the error message" + ex.toString());
-//
+    @Around("com.app.groupprojectapplication.aop.PointCuts.inProfileController()")
+    public void profileControllerExecutionDurationAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        String signature = proceedingJoinPoint.getTarget().getClass().getName().toString().split("\\.")[4];
+
+        long startTime = System.currentTimeMillis();
+        proceedingJoinPoint.proceed();
+        long elapsedTime = System.currentTimeMillis() - startTime;
+
+        log.info(signature + " execution time: " + elapsedTime +" ms");
+    }
+
+//    @Around("com.app.groupprojectapplication.aop.PointCuts.inEndPoints()")
+//    public void getRequestAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+//        log.info("" + proceedingJoinPoint.getSignature().getClass());
+//        Object[] objs = proceedingJoinPoint.getArgs();
+//        String[] argNames = ((MethodSignature) proceedingJoinPoint.getSignature()).getParameterNames();
+//        Map<String, Object> paramMap = new HashMap<String, Object>();
+//        for (int i = 0; i < objs.length; i++) {
+//            if (!(objs[i] instanceof ExtendedServletRequestDataBinder)) {
+//                paramMap.put(argNames[i], objs[i]);
+//            }
+//        }
+//        log.info("\nrequest: {}\nparameter:{}", proceedingJoinPoint.getSignature(), paramMap);
+//        Object result = proceedingJoinPoint.proceed();
+//        log.info("response: {}" + result.toString());
 //    }
+
+    @AfterThrowing(value = "bean(visaStatusController)", throwing = "ex")
+    public void afterThrowingAdvice(Exception ex) {
+        log.error(ex.toString());
+
+    }
 }
